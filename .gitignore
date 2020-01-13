@@ -1,6 +1,7 @@
-.settings
-targets
+.settings/
+target/
 .classpath
 .factorypath
 .project
 .idea
+node_modules/
