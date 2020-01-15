@@ -2,9 +2,8 @@
 <template>
     <div class="user" id="login" >
         <div class="wrapC">
-            <h1 >로그인을 하고 나면 <br>좋은 일만 있을 거예요.</h1>
-
-
+                <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150">
+                <h1 >로그인을 하고 나면 <br>롤 티어 상승.</h1>
             <div class="input-with-label">
                 <input v-model="email" v-bind:class="{error : error.email, complete:!error.email&&email.length!==0}"
                        @keyup.enter="login"
@@ -40,7 +39,7 @@
                     <p>SNS 간편 로그인</p>
                     <div class="bar"></div>
                 </div>
-
+                
                 <kakaoLogin :component="component"/>
                 <GoogleLogin :component="component"/>
 
@@ -132,7 +131,7 @@
 
                     UserApi.requestLogin(data,res=>{
                         //통신을 통해 전달받은 값 콘솔에 출력
-//                        console.log(res);
+                        console.log(res);
 
                         //요청이 끝나면 버튼 활성화
                         this.isSubmit = true;

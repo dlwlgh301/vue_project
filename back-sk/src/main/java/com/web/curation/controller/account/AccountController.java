@@ -45,6 +45,8 @@ public class AccountController{
         dummyUser.put("email","test@test.com");
         dummyUser.put("nickname","test_nickname");
         
+        System.out.println(email);
+        System.out.println(password);
     
         final BasicResponse result = new BasicResponse();
         result.status = true;
