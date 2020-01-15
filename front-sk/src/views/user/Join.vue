@@ -5,17 +5,17 @@
     Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
  -->
 <template>
-    <div>
-        <h1>가입하기</h1>
-        <div>
-            <div>
+    <div class="wrapB" style="padding-top: 100px;">
+        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+        <div class="join">
+            <div class="input-with-label">
                 <input v-model="nickName"
                        id="nickname"
                        placeholder="닉네임을 입력하세요." type="text"/>
                 <label for="nickname">닉네임</label>
             </div>
 
-            <div>
+            <div class="input-with-label">
                 <input v-model="email"
                        id="email" placeholder="이메일을 입력하세요."
                        type="text"/>
@@ -23,14 +23,14 @@
 
             </div>
 
-            <div>
+            <div class="input-with-label">
                 <input v-model="password"
                        id="password" :type="passwordType"
                        placeholder="비밀번호를 입력하세요."/>
                 <label for="password">비밀번호</label>
             </div>
 
-            <div>
+            <div class="input-with-label">
                 <input v-model="passwordConfirm" :type="passwordConfirmType"
                         id="password-confirm"
                        placeholder="비밀번호를 다시한번 입력하세요."/>
@@ -45,7 +45,7 @@
 
         <span @click="termPopup=true">약관보기</span>
 
-        <button>
+        <button class="btn btn--back">
             가입하기
         </button>
 
