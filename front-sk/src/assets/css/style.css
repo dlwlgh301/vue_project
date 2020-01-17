@@ -629,13 +629,13 @@ p {
     line-height: 1em;
     padding: 0 15px 0 105px;
     box-sizing: border-box;
-    color: #000;
-    border: 1px solid #000;
+    color: #009FF4;
+    border: 1px solid #009FF4;
     border-radius: 3px; }
     .input-with-label input[type="text"]:hover, .input-with-label input[type="text"]:focus,
     .input-with-label input[type="password"]:hover,
     .input-with-label input[type="password"]:focus {
-      border: 2px solid #000; }
+      border: 2px solid #009FF4; }
     .input-with-label input[type="text"].error,
     .input-with-label input[type="password"].error {
       border-radius: 0;

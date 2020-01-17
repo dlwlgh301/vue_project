@@ -53,9 +53,9 @@
       text-align: right; }
       .user#login .sns-login .bar {
         width: calc(100% - 100px); }
-      .user#login .sns-login .btn--naver, .user#login .sns-login #kakao-login, .user#login .sns-login .google-login {
+      .user#login .sns-login .btn--naver, .user#login .sns-login #kakao-login, .user#login .sns-login .google-login , .user#login .sns-login .twitter-login, .user#login .sns-login .facebook-login{
         display: inline-block; }
-      .user#login .sns-login #kakao-login {
+      .user#login .sns-login #kakao-login,  .user#login .sns-login .twitter-login,  .user#login .sns-login .facebook-login {
         margin: 0 10px; }
       .user#login .sns-login #naverIdLogin_loginButton img {
         width: 55px;
