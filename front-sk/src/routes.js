@@ -7,6 +7,8 @@ import Components from './views/Components.vue'
 import FindCert from './views/user/FindCert.vue'
 import NotFound from './views/user/NotFound.vue'
 import Change from './views/user/Change.vue'
+import ChangeComplete from './views/user/ChangeComplete.vue'
+import CertComplete from './views/user/CertComplete.vue'
 export default [
 
 
@@ -36,6 +38,11 @@ export default [
         component: Certification
     },
     {
+        path: '/user/certComplete',
+        name: 'CertComplete',
+        component: CertComplete
+    },
+    {
         path: '/user/complete',
         name: 'LoginComplete',
         component: LoginComplete
@@ -44,6 +51,11 @@ export default [
         path: '/user/change',
         name: 'Change',
         component: Change
+    },
+    {
+        path: '/user/changeComplete',
+        name: 'ChangeComplete',
+        component: ChangeComplete
     },
     {
         path: '/user/findcert/:email',

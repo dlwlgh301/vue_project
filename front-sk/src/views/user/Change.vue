@@ -28,6 +28,10 @@
                     {{ error.passwordConfirm }}
                 </div>
             </div>
+             <button class="btn btn--back btn--login" v-on:click="change" :disabled="!isSubmit"
+                :class="{ disabled: !isSubmit }">
+                비밀번호 변경
+            </button>
         </div>
     </div>
 </template>
@@ -90,7 +94,7 @@
                 });
                 this.isSubmit = isSubmit;
             },
-            join() {
+            change() {
                 if (this.isSubmit) {
                     let {
                         password
@@ -102,7 +106,7 @@
                     //요청 후에는 버튼 비활성화
                     this.isSubmit = false;
 
-                    this.$router.push('/user/certification');
+                    this.$router.push('/user/changeComplete');
                     // UserApi.requestLogin(data,res=>{
                     //     //통신을 통해 전달받은 값 콘솔에 출력
                     //     console.log(res);

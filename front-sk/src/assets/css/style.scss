@@ -529,7 +529,7 @@ p {
 
 .btn--back {
     width: $c100;
-    background-color: #000;
+    background-color: #009FF4;
     border-radius: 3px;
     font-weight: $f600;
     box-shadow: none;
@@ -802,10 +802,10 @@ p {
         padding: 0 15px 0 105px;
         box-sizing: border-box;
         color: #000;
-        border: 1px solid #000;
+        border: 1px solid #009FF4;
         border-radius: 3px;
         &:hover, &:focus {
-            border:2px solid #000
+            border:2px solid #009FF4
         }
         &.error {
             border-radius: 0;
