@@ -10,14 +10,20 @@
             <div class="title">
                 <h1>404 Not Found</h1>
             </div>
-            <button class="btn btn--back btn--login">
-                이전화면으로 돌아가기
+            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+                로그인 화면으로 돌아가기
             </button>
         </div>
     </div>
 </template>
 <script>
-export default {};
+    export default {
+        methods: {
+            back() {
+                this.$router.push('/');
+            }
+        }
+    }
 </script>
 <style>
 .title {

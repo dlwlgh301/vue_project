@@ -13,6 +13,9 @@
              <button class="btn btn--back btn--login" v-on:click="cert">
                 입력
             </button>
+            <button class="btn btn--back btn--login" style="margin-top:10px">
+                메일이 도착하지 않았나요?
+            </button>
         </div>
     </div>
 </template>
