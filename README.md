@@ -1,4 +1,4 @@
-# 🎉SSAFY 공통프로젝트 (SUB-1)
+# 🎉SSAFY 공통프로젝트 ([SUB-1](https://jira.ssafy.com/projects/S02P11D133/summary))
 
  웹 큐레이션 서비스를 개발하였으며 프론트엔드 로그인 작업을 끝마쳤습니다.
 
