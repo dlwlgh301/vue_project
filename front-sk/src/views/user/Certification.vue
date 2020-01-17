@@ -10,6 +10,9 @@
                 <input v-model="key" id="key" placeholder="인증키를 입력하세요." type="text" />
                 <label for="nickname">인증키</label>
             </div>
+             <button class="btn btn--back btn--login" v-on:click="cert">
+                입력
+            </button>
         </div>
     </div>
 </template>
@@ -25,6 +28,11 @@ export default {
             isSubmit: false,
             component: this
         };
+    },
+    methods:{
+        cert(){
+              this.$router.push('/user/certComplete');
+        }
     }
 };
 </script>

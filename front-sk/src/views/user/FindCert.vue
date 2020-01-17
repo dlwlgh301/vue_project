@@ -17,10 +17,7 @@
             </div>
             <button
                 class="btn btn--back btn--login"
-                v-on:click="cert"
-                :disabled="!isSubmit"
-                :class="{ disabled: !isSubmit }"
-            >
+                v-on:click="cert">
                 입력
             </button>
         </div>

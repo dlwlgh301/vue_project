@@ -43,10 +43,10 @@
             .bar {
                 width: calc(100% - 100px);
             }
-            .btn--naver, #kakao-login, .google-login {
+            .btn--naver, #kakao-login, .google-login, .twitter-login, .facebook-login {
                 display: inline-block;
             }
-            #kakao-login {
+            #kakao-login, .google-login, .twitter-login, .facebook-login {
                 margin: 0 10px;
             }
             #naverIdLogin_loginButton {

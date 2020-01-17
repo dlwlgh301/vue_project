@@ -51,7 +51,10 @@
         </div>
 
         <label>
-            <input v-model="isTerm" type="checkbox" id="term" />
+            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{
+                        error: error.isTerm,
+                        complete:
+                            !error.isTerm}" />
             <span>약관을 동의합니다.</span>
         </label>
 
@@ -59,6 +62,9 @@
 
         <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
             가입하기
+        </button>
+        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+            이전화면으로 돌아가기
         </button>
     </div>
 </template>
@@ -82,7 +88,7 @@
                     password: false,
                     nickName: false,
                     passwordConfirm: false,
-                    term: false
+                    isTerm: false
                 },
                 isSubmit: false,
                 passwordType: 'password',
@@ -92,14 +98,10 @@
         },
         created() {
             this.passwordSchema
-                .is()
-                .min(8)
-                .is()
-                .max(100)
-                .has()
-                .digits()
-                .has()
-                .letters();
+                .is().min(8)
+                .is().max(100)
+                .has().digits()
+                .has().letters();
         },
         watch: {
             password: function (v) {
@@ -109,6 +111,9 @@
                 this.checkForm();
             },
             passwordConfirm: function (v) {
+                this.checkForm();
+            },
+            isTerm: function (v) {
                 this.checkForm();
             }
         },
@@ -129,11 +134,15 @@
                     this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
                 else this.error.passwordConfirm = false;
 
+                if (this.isTerm == false)
+                    this.error.isTerm = true;
+                else this.error.isTerm = false;
                 let isSubmit = true;
                 Object.values(this.error).map(v => {
                     if (v) isSubmit = false;
                 });
                 this.isSubmit = isSubmit;
+
             },
             join() {
                 if (this.isSubmit) {
@@ -163,6 +172,9 @@
                     //     this.isSubmit = true;
                     // })
                 }
+            },
+            back() {
+                this.$router.push('/');
             }
         }
     };
