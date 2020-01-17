@@ -38,9 +38,10 @@
                     <p>SNS 간편 로그인</p>
                     <div class="bar"></div>
                 </div>
-
                 <kakaoLogin :component="component" />
                 <GoogleLogin :component="component" />
+                <TwitterLogin :component="component"/>
+                <FacebookLogin :component="component"/>
             </div>
             <div class="add-option">
                 <div class="text">
@@ -67,12 +68,16 @@
     import * as EmailValidator from 'email-validator';
     import KakaoLogin from '../../components/user/snsLogin/Kakao.vue';
     import GoogleLogin from '../../components/user/snsLogin/Google.vue';
+    import TwitterLogin from '../../components/user/snsLogin/Twitter.vue';
+    import FacebookLogin from '../../components/user/snsLogin/Facebook.vue';
     import UserApi from '../../apis/UserApi';
 
     export default {
         components: {
             KakaoLogin,
-            GoogleLogin
+            GoogleLogin,
+            FacebookLogin,
+            TwitterLogin
         },
         created() {
             this.component = this;
@@ -123,7 +128,7 @@
 
                     //요청 후에는 버튼 비활성화
                     this.isSubmit = false;
-
+                    this.$router.push('/user/complete');
                     UserApi.requestLogin(
                         data,
                         res => {
