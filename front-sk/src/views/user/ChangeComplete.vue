@@ -1,8 +1,7 @@
 <template>
     <div class="user" id="login">
         <div class="wrapC">
-            <img src="../../assets/images/light-bulb.png" style="display:block; margin: 0px auto" width="150"
-                height="150" />
+            <img src="../../assets/images/light-bulb.png" style="display:block; margin: 0px auto" width="150" height="150" />
             <div class="title">
                 <h1>
                     비밀번호 변경 성공!
@@ -15,18 +14,18 @@
     </div>
 </template>
 <style>
-    .title {
-        padding-top: 2em;
-        text-align: center;
-    }
+.title {
+    padding-top: 2em;
+    text-align: center;
+}
 </style>
 
 <script>
-    export default {
-        methods: {
-            back() {
-                this.$router.push('/');
-            }
+export default {
+    methods: {
+        back() {
+            this.$router.push('/');
         }
     }
+};
 </script>

@@ -6,17 +6,17 @@
     min-height: 100%;
     box-sizing: border-box;
     h1 {
-        color:#000;
+        color: #000;
         font-weight: $f600;
         margin-bottom: 30px;
     }
 
     /*로그인*/
     &#login {
-        margin-top:50px;
+        margin-top: 50px;
         h1 {
             margin-bottom: 30px;
-            color:#000;
+            color: #000;
         }
         .btn--login {
             margin-top: 5px;
@@ -43,10 +43,17 @@
             .bar {
                 width: calc(100% - 100px);
             }
-            .btn--naver, #kakao-login, .google-login, .twitter-login, .facebook-login {
+            .btn--naver,
+            #kakao-login,
+            .google-login,
+            .twitter-login,
+            .facebook-login {
                 display: inline-block;
             }
-            #kakao-login, .google-login, .twitter-login, .facebook-login {
+            #kakao-login,
+            .google-login,
+            .twitter-login,
+            .facebook-login {
                 margin: 0 10px;
             }
             #naverIdLogin_loginButton {
@@ -69,7 +76,7 @@
             }
             a {
                 float: right;
-                color:#000;
+                color: #000;
                 font-weight: $f600;
             }
         }
@@ -83,29 +90,28 @@
             span {
                 font-size: 1em;
                 position: absolute;
-                right:10px;
-                top:15px;
+                right: 10px;
+                top: 15px;
                 .fa-eye {
                     font-size: 20px;
                     width: auto;
-                    color:rgba(0, 0, 0, .3);
-
+                    color: rgba(0, 0, 0, 0.3);
                 }
                 &.active {
                     .fa-eye {
-                        color:$ssafy;
+                        color: $ssafy;
                     }
                 }
             }
         }
         .go-term {
-            float:right;
-            color:#000;
-            font-weight:$f600;
+            float: right;
+            color: #000;
+            font-weight: $f600;
             margin-top: 5px;
             font-size: $font-size__5;
         }
-        input[type=password] {
+        input[type='password'] {
             padding-right: 50px;
         }
     }
@@ -118,21 +124,20 @@
             span {
                 font-size: 1em;
                 position: absolute;
-                right:10px;
-                top:15px;
+                right: 10px;
+                top: 15px;
                 .fa-eye {
                     font-size: 20px;
                     width: auto;
-                    color:rgba(0, 0, 0, .3);
-
+                    color: rgba(0, 0, 0, 0.3);
                 }
                 &.active {
                     .fa-eye {
-                        color:$ssafy;
+                        color: $ssafy;
                     }
                 }
             }
-            input[type=password] {
+            input[type='password'] {
                 padding-right: 50px;
             }
         }
@@ -141,21 +146,20 @@
     // 탈퇴
     &.secession {
         .terms {
-            color:#333;
+            color: #333;
             font-weight: $f600;
             a {
-                color:$ssafy;
+                color: $ssafy;
             }
         }
         .complete-secession {
-
         }
     }
 
     // 만든이
     &.creator {
         h5 {
-            color:#787878;
+            color: #787878;
             margin-bottom: 20px;
             font-weight: $f600;
         }
@@ -167,7 +171,7 @@
         width: 100%;
         height: 100vh;
         left: 0;
-        top:0;
+        top: 0;
         background: #fff;
         z-index: 99;
         padding-top: 50px;
@@ -183,7 +187,10 @@
         //회원가입
         &.join {
             .btn-bottom {
-                position: inherit; @include wrap; margin-top: 60px; margin-bottom: 20px;
+                position: inherit;
+                @include wrap;
+                margin-top: 60px;
+                margin-bottom: 20px;
             }
         }
     }

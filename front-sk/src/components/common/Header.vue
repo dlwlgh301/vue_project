@@ -1,17 +1,16 @@
 <template>
     <div class="header-default">
-
         <button class="menu" v-if="!isBack"></button>
         <button v-if="isBack" class="back">
             <i class="fas fa-chevron-left"></i>
         </button>
 
         <h4 class="title">
-            {{headerTitle}}
+            {{ headerTitle }}
         </h4>
 
-        <button v-if="rightText" class="right-text" :class="{disabled:isDisabled}" :disabled="isDisabled">
-            {{rightText}}
+        <button v-if="rightText" class="right-text" :class="{ disabled: isDisabled }" :disabled="isDisabled">
+            {{ rightText }}
         </button>
 
         <button class="btn-search" v-if="isSearch">
@@ -21,8 +20,8 @@
 </template>
 
 <script>
-    export default {
-        name: "header",
-        props : ['headerTitle', 'isBack', 'isSearch', 'rightText', 'isDisabled'],
-    }
+export default {
+    name: 'header',
+    props: ['headerTitle', 'isBack', 'isSearch', 'rightText', 'isDisabled']
+};
 </script>

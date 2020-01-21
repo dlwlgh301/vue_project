@@ -4,29 +4,29 @@ $h100: 100%;
 
 /* COLOR */
 
-$ssafy: #6BFF79;
+$ssafy: #6bff79;
 $black: #707070;
-$red: #EE4B55;
-$grey: #CCCCCC;
+$red: #ee4b55;
+$grey: #cccccc;
 
 /* FONT */
 
 $font-size__1: 1.786em; /*25px*/
 $font-size__2: 1.429em; /*20px*/
-$font-size__3: 1.286em; /*18px*/ 
+$font-size__3: 1.286em; /*18px*/
 $font-size__4: 1em; /*14px*/
 $font-size__5: 0.857em; /*12px*/
 
 /*12px*/
 
-$f100:100;
-$f200:200;
-$f300:300;
-$f400:400;
-$f500:500;
-$f600:600;
-$f700:700;
-$f900:900;
+$f100: 100;
+$f200: 200;
+$f300: 300;
+$f400: 400;
+$f500: 500;
+$f600: 600;
+$f700: 700;
+$f900: 900;
 @mixin wrap {
     width: 100%;
     float: left;
@@ -39,10 +39,10 @@ $f900:900;
 }
 
 @mixin ellipsis {
-    text-overflow: ellipsis; 
-    white-space: nowrap; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
-    word-wrap:normal;
+    word-wrap: normal;
 }
 
 @mixin background-img {
@@ -64,7 +64,7 @@ $f900:900;
     box-sizing: border-box;
     height: 50px;
     border-radius: 3px;
-    padding:0 40px 0 20px;
+    padding: 0 40px 0 20px;
     background-image: url('../../assets/images/select-arrow.png');
     background-repeat: no-repeat;
     background-size: 13px;
@@ -90,23 +90,25 @@ $avatar-offset: 52 + 16;
 
 @mixin background-gradient {
     background-image: linear-gradient(90deg, $base-color 0px, $shine-color 40px, $base-color 80px);
-    background-size: 600px
+    background-size: 600px;
 }
 
 @keyframes shine-lines {
     0% {
-        background-position: -100px
+        background-position: -100px;
     }
-    40%, 100% {
-        background-position: 140px
+    40%,
+    100% {
+        background-position: 140px;
     }
 }
 
 @keyframes shine-avatar {
     0% {
-        background-position: -100px + $avatar-offset
+        background-position: -100px + $avatar-offset;
     }
-    40%, 100% {
-        background-position: 140px + $avatar-offset
+    40%,
+    100% {
+        background-position: 140px + $avatar-offset;
     }
 }
