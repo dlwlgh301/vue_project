@@ -1,7 +1,7 @@
 <template>
     <div class="header-default">
         <button class="menu" v-if="!isBack"></button>
-        <button v-if="isBack" class="back">
+        <button v-if="isBack" class="back" @click="$router.go(-1)">
             <i class="fas fa-chevron-left"></i>
         </button>
 

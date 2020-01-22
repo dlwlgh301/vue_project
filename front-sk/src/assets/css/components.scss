@@ -2,8 +2,8 @@
 @import './common';
 
 .components-page {
-    padding-top: 50px;
-    padding-bottom: 100px;
+    // padding-top: 50px;
+    // padding-bottom: 100px;
     h1 {
         text-align: center;
         font-weight: $f600;
@@ -231,13 +231,16 @@
 
     // header
     .header-default {
+        @include wrap;
         padding: 10px;
+        position: fixed;
+        background-color: #fff;
         width: calc(100% - 20px);
         float: left;
         border-bottom: 1px solid $grey;
         margin-bottom: 10px;
         .title {
-            margin-top: 6px;
+            // margin-top: 6px;
             float: left;
             width: calc(100% - 100px);
             @include ellipsis;
