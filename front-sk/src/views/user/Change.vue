@@ -19,7 +19,6 @@
                 <label for="password">비밀번호</label>
                 <div class="error-text" v-if="error.password">{{ error.password }}</div>
             </div>
-
             <div class="input-with-label">
                 <input
                     v-model="passwordConfirm"
