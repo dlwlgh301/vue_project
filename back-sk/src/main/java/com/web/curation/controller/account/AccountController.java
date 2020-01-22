@@ -7,18 +7,20 @@ import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.SignupRequest;
 // import com.web.curation.model.user.User;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.json.JSONObject;
+// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.json.JSONObject;
-// import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiOperation;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = BasicResponse.class),
@@ -26,6 +28,8 @@ import io.swagger.annotations.ApiOperation;
         @ApiResponse(code = 500, message = "Failure", response = BasicResponse.class) })
 
 @RestController
+@EnableAutoConfiguration
+@RequestMapping(value = "/test")
 public class AccountController {
     // 디비 셋팅 후 주석을 푸세요.
     // @Autowired
@@ -35,7 +39,6 @@ public class AccountController {
     @ApiOperation(value = "로그인")
     public Object login(@RequestParam(required = true) final String email,
             @RequestParam(required = true) final String password) {
-
         JSONObject dummyUser = new JSONObject();
 
         dummyUser.put("uid", "test_uid");
@@ -44,7 +47,6 @@ public class AccountController {
 
         System.out.println(email);
         System.out.println(password);
-
         final BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "success";
