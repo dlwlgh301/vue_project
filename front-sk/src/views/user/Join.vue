@@ -17,10 +17,7 @@
             <div class="input-with-label">
                 <input
                     v-model="email"
-                    v-bind:class="{
-                        error: error.email,
-                        complete: !error.email && email.length !== 0
-                    }"
+                    v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
                     id="email"
                     placeholder="이메일을 입력하세요."
                     type="text"
@@ -34,10 +31,7 @@
             <div class="input-with-label">
                 <input
                     v-model="password"
-                    v-bind:class="{
-                        error: error.password,
-                        complete: !error.password && password.length !== 0
-                    }"
+                    v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
                     id="password"
                     :type="passwordType"
                     placeholder="비밀번호를 입력하세요."
@@ -53,10 +47,7 @@
                     v-model="passwordConfirm"
                     :type="passwordConfirmType"
                     id="password-confirm"
-                    v-bind:class="{
-                        error: error.passwordConfirm,
-                        complete: !error.passwordConfirm && passwordConfirm.length != 0
-                    }"
+                    v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length != 0 }"
                     placeholder="비밀번호를 다시한번 입력하세요."
                 />
                 <label for="password-confirm">비밀번호 확인</label>
@@ -67,15 +58,7 @@
         </div>
 
         <label>
-            <input
-                v-model="isTerm"
-                type="checkbox"
-                id="term"
-                v-bind:class="{
-                    error: error.isTerm,
-                    complete: !error.isTerm
-                }"
-            />
+            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
             <span>약관을 동의합니다.</span>
         </label>
         <div v-if="showModal">
@@ -168,7 +151,8 @@ export default {
             if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else this.error.email = false;
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             if (this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
