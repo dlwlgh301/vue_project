@@ -7,24 +7,23 @@
     h1 {
         text-align: center;
         font-weight: $f600;
-        transform: rotate(.1deg);
+        transform: rotate(0.1deg);
     }
     h2 {
         @include wrap;
         font-weight: $f600;
         margin-top: 50px;
         margin-bottom: 20px;
-        color:$ssafy;
+        color: $ssafy;
     }
-
 
     // input
     .input-with-label {
         @include wrap;
         position: relative;
         margin-bottom: 10px;
-        input[type="text"],
-        input[type="password"] {
+        input[type='text'],
+        input[type='password'] {
             @include wrap;
             height: 50px;
             line-height: 1em;
@@ -33,30 +32,32 @@
             color: #000;
             border: 1px solid #000;
             border-radius: 3px;
-            &:hover, &:focus {
-                border:2px solid #000
+            &:hover,
+            &:focus {
+                border: 2px solid #000;
             }
             &.error {
                 border-radius: 0;
-                border:none;
+                border: none;
                 border-bottom: 1px solid $red;
             }
             &.complete {
                 border-radius: 0;
-                border:none;
+                border: none;
                 border-bottom: 1px solid $ssafy;
             }
             &.disabled {
                 background: #eee;
-                color:#333;
+                color: #333;
                 font-weight: $f600;
-                &:hover, &:focus {
-                    border:1px solid #000;
+                &:hover,
+                &:focus {
+                    border: 1px solid #000;
                 }
             }
         }
-        input[type="password"] {
-            padding-right:50px;
+        input[type='password'] {
+            padding-right: 50px;
         }
         label {
             position: absolute;
@@ -80,16 +81,16 @@
         .eyes-icon {
             position: absolute;
             font-size: 1em;
-            right:10px;
-            top:15px;
+            right: 10px;
+            top: 15px;
             .fa-eye {
-                font-size:20px;
-                width:auto;
-                color:rgba(0, 0, 0, .3);
+                font-size: 20px;
+                width: auto;
+                color: rgba(0, 0, 0, 0.3);
             }
             &.active {
                 .fa-eye {
-                    color:$ssafy;
+                    color: $ssafy;
                 }
             }
         }
@@ -99,21 +100,21 @@
     .textarea-wrap {
         @include wrap;
         position: relative;
-        border:1px solid #000;
-        padding:15px 15px 10px;
+        border: 1px solid #000;
+        padding: 15px 15px 10px;
         margin-bottom: 10px;
         box-sizing: border-box;
         background: #fff;
         border-radius: 3px;
         h4 {
-            float:left;
+            float: left;
             font-weight: $f600;
-            color:#666;
+            color: #666;
             + span {
-                float:right;
+                float: right;
                 font-size: $font-size__5;
                 margin-top: 4px;
-                color:#707070;
+                color: #707070;
             }
         }
         textarea {
@@ -130,16 +131,16 @@
         height: 50px;
         line-height: 50px;
         box-sizing: border-box;
-        color:#fff;
+        color: #fff;
         background: #444;
         border-radius: 3px;
         margin-bottom: 10px;
         font-weight: $f600;
-        transform: rotate(.1deg);
+        transform: rotate(0.1deg);
         &.noneBackground {
             background: #fff;
-            color:#000;
-            border:1px solid #000;
+            color: #000;
+            border: 1px solid #000;
         }
     }
 
@@ -148,17 +149,17 @@
         height: 40px;
         line-height: 40px;
         border-radius: 30px;
-        color:#fff;
+        color: #fff;
         background: #444;
         margin-bottom: 10px;
         margin-right: 10px;
         font-weight: $f600;
-        transform: rotate(.1deg);
+        transform: rotate(0.1deg);
         font-size: $font-size__5;
         &.noneBackground {
             background: #fff;
-            color:#000;
-            border:1px solid #000;
+            color: #000;
+            border: 1px solid #000;
         }
     }
 
@@ -166,11 +167,11 @@
         @include wrap;
         margin-bottom: 10px;
         button {
-            width:50%;
-            float:left;
+            width: 50%;
+            float: left;
             height: 50px;
             line-height: 50px;
-            border:1px solid #444;
+            border: 1px solid #444;
             border-radius: 3px 0 0 3px;
             font-weight: $f600;
             &:last-of-type {
@@ -179,7 +180,7 @@
             }
             &.highlight {
                 background: #444;
-                color:#fff;
+                color: #fff;
             }
         }
     }
@@ -191,7 +192,6 @@
     }
 
     .checkbox-component {
-
     }
 
     .switch-component {
@@ -199,30 +199,32 @@
         height: 18px;
         border-radius: 30px;
         background: #999;
-        float:left;
+        float: left;
         position: relative;
         font-size: $font-size__5;
         text-align: left;
-        color:rgba(255, 255, 255, .5);
-        padding:0 8px;
+        color: rgba(255, 255, 255, 0.5);
+        padding: 0 8px;
         margin-bottom: 50px;
         &:before {
-            content:"";
-            position:absolute;
-            width: 26px; height: 26px; border-radius: 26px;
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            border-radius: 26px;
             background: #eee;
-            left:-2px;
-            top:-4px;
+            left: -2px;
+            top: -4px;
             box-sizing: border-box;
-            transition: .2s;
+            transition: 0.2s;
         }
         &.active {
-            background: rgba(56, 147, 168, .5);
-            color:#fff;
+            background: rgba(56, 147, 168, 0.5);
+            color: #fff;
             text-align: right;
             &:before {
                 background: $ssafy;
-                left:15px;
+                left: 15px;
             }
         }
     }
@@ -236,7 +238,7 @@
         margin-bottom: 10px;
         .title {
             margin-top: 6px;
-            float:left;
+            float: left;
             width: calc(100% - 100px);
             @include ellipsis;
         }
@@ -250,7 +252,7 @@
             margin-right: 10px;
         }
         .back {
-            float:left;
+            float: left;
             margin-right: 10px;
             padding: 6px 6px 0;
             .fa-chevron-left {
@@ -259,15 +261,14 @@
             }
         }
         .right-text {
-            float:right;
-            color:$ssafy;
+            float: right;
+            color: $ssafy;
             font-weight: $f600;
-            transform: rotate(.1deg);
+            transform: rotate(0.1deg);
             padding-top: 6px;
             &.disabled {
-                color:#444
+                color: #444;
             }
-
         }
         .btn-search {
             float: right;
@@ -282,28 +283,28 @@
     // tab
     .tab-component {
         width: 33.333%;
-        float:left;
+        float: left;
         height: 50px;
         line-height: 50px;
         cursor: pointer;
-        transition: .2s;
+        transition: 0.2s;
         text-align: center;
         background: #eee;
-        color:rgba(0, 0, 0, .5);
-        border:1px solid #707070;
+        color: rgba(0, 0, 0, 0.5);
+        border: 1px solid #707070;
         margin-left: -1px;
         box-sizing: border-box;
         &:hover {
-            color:#000;
+            color: #000;
             background: #fff;
         }
         &.active {
             background: #fff;
-            color:#000;
+            color: #000;
             border-bottom: 2px solid #000;
         }
         .count {
-            color:$ssafy;
+            color: $ssafy;
         }
     }
 
@@ -313,21 +314,21 @@
         position: relative;
         background: #eee;
         border-radius: 3px;
-        padding:18px 20px;
+        padding: 18px 20px;
         box-sizing: border-box;
         margin-bottom: 5px;
         .title {
             font-size: 1em;
             font-weight: $f600;
             line-height: 1em;
-            color:#787878;
+            color: #787878;
         }
         button {
             position: absolute;
             right: 0;
-            top:0;
-            padding:18px 20px 16px;
-            color:$red;
+            top: 0;
+            padding: 18px 20px 16px;
+            color: $red;
         }
     }
 
@@ -336,7 +337,7 @@
         position: relative;
         input {
             @include wrap;
-            border:1px solid #000;
+            border: 1px solid #000;
             border-radius: 3px;
             padding-right: 50px;
             padding-left: 20px;
@@ -344,57 +345,56 @@
         button {
             position: absolute;
             right: 0;
-            top:0;
-            padding:17px 20px;
-            color:$ssafy;
+            top: 0;
+            padding: 17px 20px;
+            color: $ssafy;
         }
     }
 
     // curation
     .curation-component {
-        padding:15px;
-        border:1px solid #000;
+        padding: 15px;
+        border: 1px solid #000;
         border-radius: 3px;
         box-sizing: border-box;
         margin-bottom: 10px;
-        transition: .2s;
+        transition: 0.2s;
         &.selected {
             background: $ssafy;
             cursor: pointer;
             .title {
-                color:#fff;
+                color: #fff;
             }
         }
         .title {
-            float:left;
+            float: left;
             font-weight: $f600;
-            transform: rotate(.1deg);
+            transform: rotate(0.1deg);
             @include ellipsis;
             width: calc(100% - 100px);
         }
         .btns {
-            float:right;
+            float: right;
             button {
-                float:right;
+                float: right;
                 font-size: $font-size__5;
-                color:$ssafy;
+                color: $ssafy;
                 font-weight: $f600;
-                transform: rotate(.1deg);
-                padding:3px 0;
+                transform: rotate(0.1deg);
+                padding: 3px 0;
                 &:first-of-type {
                     margin-left: 20px;
                 }
             }
         }
         .select-text {
-            float:right;
+            float: right;
             font-size: $font-size__5;
             font-weight: $f600;
-            transform: rotate(.1deg);
-            color:#fff;
-            padding:3px 0;
+            transform: rotate(0.1deg);
+            color: #fff;
+            padding: 3px 0;
         }
-
     }
 
     // toast
@@ -402,45 +402,23 @@
         @include wrap;
         background: #333;
         box-sizing: border-box;
-        padding:15px 20px;
+        padding: 15px 20px;
         margin-bottom: 10px;
         &.error {
             background: $red;
         }
         h5 {
-            color:#fff;
+            color: #fff;
             font-weight: $f600;
-            transform: rotate(.1deg);
-            width:calc(100% - 50px);
-            float:left;
+            transform: rotate(0.1deg);
+            width: calc(100% - 50px);
+            float: left;
         }
         button {
-            float:right;
+            float: right;
             font-size: $font-size__5;
-            color:$red;
-            padding:1px 0;
+            color: $red;
+            padding: 1px 0;
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

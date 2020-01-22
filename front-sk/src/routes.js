@@ -1,17 +1,15 @@
-import Certification from './views/user/Certification.vue'
-import Login from './views/user/Login.vue'
-import Join from './views/user/Join.vue'
-import Find from './views/user/Find.vue'
-import LoginComplete from './views/user/LoginComplete.vue'
-import Components from './views/Components.vue'
-import FindCert from './views/user/FindCert.vue'
-import NotFound from './views/user/NotFound.vue'
-import Change from './views/user/Change.vue'
-import ChangeComplete from './views/user/ChangeComplete.vue'
-import CertComplete from './views/user/CertComplete.vue'
+import Certification from './views/user/Certification.vue';
+import Login from './views/user/Login.vue';
+import Join from './views/user/Join.vue';
+import Find from './views/user/Find.vue';
+import LoginComplete from './views/user/LoginComplete.vue';
+import Components from './views/Components.vue';
+import FindCert from './views/user/FindCert.vue';
+import NotFound from './views/user/NotFound.vue';
+import Change from './views/user/Change.vue';
+import ChangeComplete from './views/user/ChangeComplete.vue';
+import CertComplete from './views/user/CertComplete.vue';
 export default [
-
-
     {
         path: '/',
         name: 'Login',
@@ -64,10 +62,10 @@ export default [
     },
     {
         path: '*',
-        redirect: '/404',
+        redirect: '/404'
     },
     {
         path: '/404',
         component: NotFound
     }
-]
+];

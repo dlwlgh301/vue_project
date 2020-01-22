@@ -1,7 +1,7 @@
 <template>
-    <div class="wrap curation-component" :class="{selected:isSelect}">
+    <div class="wrap curation-component" :class="{ selected: isSelect }">
         <h4 class="title">
-            {{curationTitle}}
+            {{ curationTitle }}
         </h4>
 
         <div class="btns" v-if="!isSelect">
@@ -11,28 +11,25 @@
         <span v-if="isSelect" class="select-text" @click="cancelSelect">
             선택됨
         </span>
-
-
-
     </div>
 </template>
 
 <script>
-    export default {
-        name: "curation",
-        props : ['curationTitle'],
-        data: () => {
-            return {
-                isSelect:false,
-            }
+export default {
+    name: 'curation',
+    props: ['curationTitle'],
+    data: () => {
+        return {
+            isSelect: false
+        };
+    },
+    methods: {
+        selectTriggle() {
+            this.isSelect = true;
         },
-        methods: {
-            selectTriggle(){
-                this.isSelect = true
-            },
-            cancelSelect() {
-                this.isSelect = false;
-            }
-        },
+        cancelSelect() {
+            this.isSelect = false;
+        }
     }
+};
 </script>
