@@ -130,7 +130,7 @@ export default {
 
                 //요청 후에는 버튼 비활성화
                 this.isSubmit = false;
-                this.$router.push('/user/complete');
+                this.$router.push('/Components');
                 UserApi.requestLogin(
                     data,
                     res => {

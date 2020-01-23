@@ -151,7 +151,7 @@ button {
 
 textarea {
     vertical-align: top;
-    border: none;
+
     font-size: 1em;
     resize: none;
 }
@@ -784,6 +784,7 @@ p {
     margin-bottom: 10px;
 }
 .input-with-label input[type='text'],
+.input-with-label input[type='textarea'],
 .input-with-label input[type='password'] {
     width: 100%;
     float: left;
@@ -797,6 +798,8 @@ p {
 }
 .input-with-label input[type='text']:hover,
 .input-with-label input[type='text']:focus,
+.input-with-label input[type='textarea']:hover,
+.input-with-label input[type='textarea']:focus,
 .input-with-label input[type='password']:hover,
 .input-with-label input[type='password']:focus {
     border: 2px solid #009ff4;
@@ -808,6 +811,7 @@ p {
     border-bottom: 1px solid #ee4b55;
 }
 .input-with-label input[type='text'].complete,
+.input-with-label input[type='textarea'].complete,
 .input-with-label input[type='password'].complete {
     border-radius: 0;
     border: none;
@@ -821,6 +825,8 @@ p {
 }
 .input-with-label input[type='text'].disabled:hover,
 .input-with-label input[type='text'].disabled:focus,
+.input-with-label input[type='textarea'].disabled:hover,
+.input-with-label input[type='textarea'].disabled:focus,
 .input-with-label input[type='password'].disabled:hover,
 .input-with-label input[type='password'].disabled:focus {
     border: 1px solid #000;
@@ -907,75 +913,6 @@ p {
     float: right;
     line-height: 1em;
     margin-top: 3px;
-}
-
-[type='checkbox']:checked,
-[type='checkbox']:not(:checked),
-[type='radio']:checked,
-[type='radio']:not(:checked) {
-    position: absolute;
-    left: -9999px;
-}
-
-[type='checkbox']:checked + span,
-[type='checkbox']:not(:checked) + span,
-[type='radio']:checked + span,
-[type='radio']:not(:checked) + span {
-    position: relative;
-    padding-left: 38px;
-    cursor: pointer;
-    display: inline-block;
-    color: #666;
-    font-weight: 600;
-    line-height: 30px;
-}
-
-[type='checkbox']:checked + span,
-[type='radio']:checked + span {
-    color: #000;
-}
-
-[type='checkbox']:checked + span:before,
-[type='checkbox']:not(:checked) + span:before,
-[type='radio']:checked + span:before,
-[type='radio']:not(:checked) + span:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 25px;
-    height: 25px;
-    border: 1px solid #000;
-    background-color: #fff;
-    border-radius: 100%;
-}
-
-[type='checkbox']:checked + span:before,
-[type='radio']:checked + span:before {
-    background: #3893a8;
-    border: 1px solid #3893a8;
-}
-
-[type='checkbox']:not(:checked) + span:after,
-[type='checkbox']:checked + span:after,
-[type='radio']:not(:checked) + span:after,
-[type='radio']:checked + span:after {
-    content: '';
-    width: 14px;
-    height: 15px;
-    background-image: url('../../assets/images/check_w.png');
-    background-size: cover;
-    position: absolute;
-    top: 6px;
-    left: 7px;
-    border-radius: 100%;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-[type='checkbox']:not(:checked) + span:after,
-[type='radio']:not(:checked) + span:after {
-    background-image: url('../../assets/images/check_b.png');
 }
 
 /*사이드바*/

@@ -5,13 +5,20 @@ import Find from './views/user/Find.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
 import FindCert from './views/user/FindCert.vue';
+import Profile from './views/user/Profile.vue';
 import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
+
 export default [
     {
         path: '/',
+        name: 'Profile',
+        component: Profile
+    },
+    {
+        path: '/user/Login',
         name: 'Login',
         component: Login
     },

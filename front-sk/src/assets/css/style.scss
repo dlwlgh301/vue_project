@@ -131,7 +131,6 @@ button {
 
 textarea {
     vertical-align: top;
-    border: none;
     font-size: 1em;
     resize: none;
 }
@@ -807,6 +806,25 @@ p {
             }
         }
     }
+    textarea {
+        border: 1px solid #009ff4;
+        width: 300;
+        height: 50;
+
+        &:hover,
+        &:focus {
+            border: 2px solid #009ff4;
+        }
+        &.disabled {
+            background: #eee;
+            color: #333;
+            font-weight: $f600;
+            &:hover,
+            &:focus {
+                border: 1px solid #000;
+            }
+        }
+    }
     input[type='password'] {
         padding-right: 50px;
     }
@@ -895,76 +913,6 @@ p {
         line-height: 1em;
         margin-top: 3px;
     }
-}
-
-// 체크박스
-[type='checkbox']:checked,
-[type='checkbox']:not(:checked),
-[type='radio']:checked,
-[type='radio']:not(:checked) {
-    position: absolute;
-    left: -9999px;
-}
-
-[type='checkbox']:checked + span,
-[type='checkbox']:not(:checked) + span,
-[type='radio']:checked + span,
-[type='radio']:not(:checked) + span {
-    position: relative;
-    padding-left: 38px;
-    cursor: pointer;
-    display: inline-block;
-    color: #666;
-    font-weight: $f600;
-    line-height: 30px;
-}
-
-[type='checkbox']:checked + span,
-[type='radio']:checked + span {
-    color: #000;
-}
-
-[type='checkbox']:checked + span:before,
-[type='checkbox']:not(:checked) + span:before,
-[type='radio']:checked + span:before,
-[type='radio']:not(:checked) + span:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 25px;
-    height: 25px;
-    border: 1px solid #000;
-    background-color: #fff;
-    border-radius: 100%;
-}
-
-[type='checkbox']:checked + span:before,
-[type='radio']:checked + span:before {
-    background: $ssafy;
-    border: 1px solid $ssafy;
-}
-
-[type='checkbox']:not(:checked) + span:after,
-[type='checkbox']:checked + span:after,
-[type='radio']:not(:checked) + span:after,
-[type='radio']:checked + span:after {
-    content: '';
-    width: 14px;
-    height: 15px;
-    background-image: url('../../assets/images/check_w.png');
-    background-size: cover;
-    position: absolute;
-    top: 6px;
-    left: 7px;
-    border-radius: 100%;
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-[type='checkbox']:not(:checked) + span:after,
-[type='radio']:not(:checked) + span:after {
-    background-image: url('../../assets/images/check_b.png');
 }
 
 /*사이드바*/
