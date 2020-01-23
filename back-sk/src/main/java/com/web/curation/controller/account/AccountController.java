@@ -1,20 +1,23 @@
 package com.web.curation.controller.account;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
-// import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.SignupRequest;
-// import com.web.curation.model.user.User;
+import com.web.curation.model.user.User;
+import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
-// import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,25 +31,28 @@ import io.swagger.annotations.ApiResponses;
         @ApiResponse(code = 500, message = "Failure", response = BasicResponse.class) })
 
 @RestController
-@EnableAutoConfiguration
-@RequestMapping(value = "/test")
+@CrossOrigin
+// @EnableAutoConfiguration
+// @RequestMapping(value = "/test")
 public class AccountController {
-    // 디비 셋팅 후 주석을 푸세요.
-    // @Autowired
-    // UserDao userDao;
+    @Autowired
+    UserService UserService;
 
     @PostMapping("/account/login")
     @ApiOperation(value = "로그인")
     public Object login(@RequestParam(required = true) final String email,
-            @RequestParam(required = true) final String password) {
+            @RequestParam(required = true) final String password) throws Exception {
         JSONObject dummyUser = new JSONObject();
 
+        // List<User> list = UserService.getAll();
+        // return new ResponseEntity<List<User>>(list, HttpStatus.OK);
         dummyUser.put("uid", "test_uid");
         dummyUser.put("email", "test@test.com");
         dummyUser.put("nickname", "test_nickname");
 
         System.out.println(email);
         System.out.println(password);
+
         final BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "success";
