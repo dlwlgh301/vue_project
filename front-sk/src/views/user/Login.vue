@@ -71,6 +71,7 @@
 import '../../assets/css/style.scss';
 import '../../assets/css/user.scss';
 import PV from 'password-validator';
+
 import * as EmailValidator from 'email-validator';
 import KakaoLogin from '../../components/user/snsLogin/Kakao.vue';
 import GoogleLogin from '../../components/user/snsLogin/Google.vue';
