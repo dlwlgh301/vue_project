@@ -1,13 +1,12 @@
 <template>
     <div id="app">
+        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons" />
         <div class="components-page">
-            <div class="wrapB">
-                <div class="header-default">
-                    <HeaderComponent headerTitle="" :isBack="true" :isSearch="true" v-if="$store.state.navOff" />
-                </div>
-                <div class="bottom-nav">
-                    <BottomNavComponent headerTitle="" :isBack="true" :isSearch="true" v-if="$store.state.navOff" />
-                </div>
+            <div class="header-default">
+                <HeaderComponent headerTitle="" :isBack="true" :isSearch="true" v-if="$store.state.navOff" />
+            </div>
+            <div class="bottom-nav">
+                <BottomNavComponent v-if="$store.state.navOff" />
             </div>
         </div>
         <router-view class="page"></router-view>
