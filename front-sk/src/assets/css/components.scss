@@ -231,13 +231,16 @@
 
     // header
     .header-default {
-        padding: 10px;
+        z-index: 10;
+        position: fixed;
+        top: 0em;
         width: calc(100% - 20px);
         float: left;
         border-bottom: 1px solid $grey;
         margin-bottom: 10px;
+        background: rgba(#ffffff, 1);
         .title {
-            margin-top: 6px;
+            margin-bottom: 6px;
             float: left;
             width: calc(100% - 100px);
             @include ellipsis;
@@ -280,55 +283,59 @@
         }
     }
 
-    // tab
-    .tab-component {
-        width: 33.333%;
+    // bottomNav
+    .bottom-nav {
+        @media (min-width: 1201px) {
+            display: none;
+        }
+        z-index: 10;
+        position: fixed;
+        bottom: 0em;
+        width: calc(100%);
         float: left;
-        height: 50px;
-        line-height: 50px;
-        cursor: pointer;
-        transition: 0.2s;
-        text-align: center;
-        background: #eee;
-        color: rgba(0, 0, 0, 0.5);
-        border: 1px solid #707070;
-        margin-left: -1px;
-        box-sizing: border-box;
-        &:hover {
-            color: #000;
-            background: #fff;
-        }
-        &.active {
-            background: #fff;
-            color: #000;
-            border-bottom: 2px solid #000;
-        }
-        .count {
-            color: $ssafy;
-        }
-    }
-
-    // keyword
-    .keyword-del {
-        @include wrap;
-        position: relative;
-        background: #eee;
-        border-radius: 3px;
-        padding: 18px 20px;
-        box-sizing: border-box;
-        margin-bottom: 5px;
+        border-top: 1px solid $grey;
+        margin-top: 10px;
         .title {
-            font-size: 1em;
-            font-weight: $f600;
-            line-height: 1em;
-            color: #787878;
+            margin-top: 6px;
+            float: left;
+            width: calc(100% - 100px);
+            @include ellipsis;
         }
-        button {
-            position: absolute;
-            right: 0;
-            top: 0;
-            padding: 18px 20px 16px;
-            color: $red;
+        .menu {
+            width: 30px;
+            height: 30px;
+            @include background-img;
+            background-image: url('../../assets/images/profile_default.png');
+            border-radius: $c100;
+            float: left;
+            margin-right: 10px;
+        }
+        .back {
+            float: left;
+            margin-right: 10px;
+            padding: 6px 6px 0;
+            .fa-chevron-left {
+                width: auto;
+                font-size: 17px;
+            }
+        }
+        .right-text {
+            float: right;
+            color: $ssafy;
+            font-weight: $f600;
+            transform: rotate(0.1deg);
+            padding-top: 6px;
+            &.disabled {
+                color: #444;
+            }
+        }
+        .btn-search {
+            float: right;
+            color: #333;
+            margin-top: 5px;
+            .fa-search {
+                font-size: $font-size__1 / 1.3;
+            }
         }
     }
 
