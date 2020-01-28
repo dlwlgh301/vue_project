@@ -2,10 +2,10 @@
     <div>
         <div class="phone-viewport">
             <md-bottom-bar md-sync-route>
-                <md-bottom-bar-item to="/" exact md-label="Home" md-icon="home"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/components/bottom-bar/posts" md-label="Search" md-icon="search"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/find" md-label="Favorites" md-icon="bookmark"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/profile" md-label="Profile" md-icon="account_box"></md-bottom-bar-item>
+                <md-bottom-bar-item to="/" md-icon="home"></md-bottom-bar-item>
+                <md-bottom-bar-item to="/components/bottom-bar/posts" md-icon="search"></md-bottom-bar-item>
+                <md-bottom-bar-item to="/user/find" md-icon="bookmark"></md-bottom-bar-item>
+                <md-bottom-bar-item to="/user/profile" md-icon="account_box"></md-bottom-bar-item>
             </md-bottom-bar>
         </div>
     </div>

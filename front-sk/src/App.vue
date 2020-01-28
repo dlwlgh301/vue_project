@@ -3,17 +3,15 @@
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons" />
         <div class="components-page">
             <div class="header-default">
-                <HeaderComponent headerTitle="" :isBack="true" :isSearch="true" v-if="$store.state.navOff" />
+                <HeaderComponent headerTitle="" :isBack="true" :isSearch="true" />
             </div>
-            <div class="bottom-nav">
-                <BottomNavComponent v-if="$store.state.navOff" />
-            </div>
+            <BottomNavComponent class="bottom-nav" />
         </div>
         <router-view class="page"></router-view>
     </div>
 </template>
 <script>
-import HeaderComponent from './components/common/Header';
+import HeaderComponent from './components/common/NavBar';
 import BottomNavComponent from './components/common/BottomNav';
 import './assets/css/components.scss';
 
@@ -25,8 +23,7 @@ export default {
     },
     data: () => {
         return {
-            route: this.$router,
-            isSubmit: false
+            route: this.$router
         };
     }
 };

@@ -21,7 +21,7 @@
 
 <script>
 export default {
-    name: 'header',
+    name: 'Navbar',
     props: ['headerTitle', 'isBack', 'isSearch', 'rightText', 'isDisabled']
 };
 </script>
