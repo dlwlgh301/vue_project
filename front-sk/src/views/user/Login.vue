@@ -71,6 +71,7 @@
 import '../../assets/css/style.scss';
 import '../../assets/css/user.scss';
 import PV from 'password-validator';
+
 import * as EmailValidator from 'email-validator';
 import KakaoLogin from '../../components/user/snsLogin/Kakao.vue';
 import GoogleLogin from '../../components/user/snsLogin/Google.vue';
@@ -111,7 +112,8 @@ export default {
             if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else this.error.email = false;
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             let isSubmit = true;
