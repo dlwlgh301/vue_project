@@ -1,15 +1,17 @@
 package com.web.curation.controller.account;
 
-import java.util.List;
+// import java.util.List;
 
 import javax.validation.Valid;
 
+import com.web.curation.dao.user.UserDao;
+// import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.SignupRequest;
 import com.web.curation.model.user.User;
 import com.web.curation.service.UserService;
 
-import org.json.JSONObject;
+// import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -36,27 +38,33 @@ import io.swagger.annotations.ApiResponses;
 // @RequestMapping(value = "/test")
 public class AccountController {
     @Autowired
-    UserService UserService;
+    UserService userService;
+
+    @Autowired
+    UserDao userDao;
 
     @PostMapping("/account/login")
     @ApiOperation(value = "로그인")
     public Object login(@RequestParam(required = true) final String email,
             @RequestParam(required = true) final String password) throws Exception {
-        JSONObject dummyUser = new JSONObject();
+        // JSONObject dummyUser = new JSONObject();
 
-        // List<User> list = UserService.getAll();
-        // return new ResponseEntity<List<User>>(list, HttpStatus.OK);
-        dummyUser.put("uid", "test_uid");
-        dummyUser.put("email", "test@test.com");
-        dummyUser.put("nickname", "test_nickname");
+        User user = userDao.findUserByEmailAndPassword(email.substring(1, email.length() - 1).toLowerCase(),
+                password.substring(1, password.length() - 1));
 
-        System.out.println(email);
-        System.out.println(password);
+        // dummyUser.put("uid", "test_uid");
+        // dummyUser.put("email", "test@test.com");
+        // dummyUser.put("nickname", "test_nickname");
 
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "success";
-        result.object = dummyUser.toMap();
+        if (user != null) {
+            result.status = true;
+            result.data = "success";
+            result.object = user;
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

@@ -4,4 +4,9 @@
     <select id="getAll" resultType="com.web.curation.model.user.User">
         SELECT * FROM user
     </select>
+    
+    <select id="getUserByEmail" resultType="com.web.curation.model.user.User">
+        SELECT * FROM user where email=#{email}
+    </select>
+
 </mapper>
