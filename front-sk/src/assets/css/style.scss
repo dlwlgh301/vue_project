@@ -53,11 +53,11 @@ span {
 
 input {
     background: transparent;
-    font-size: 1em;
-    height: 50px;
+    // font-size: 1em;
+    // height: 20px;
     line-height: 1em;
     border: 1px solid $grey;
-    padding: 0 20px;
+    // padding: 0 20px;
     box-sizing: border-box;
     transition: 0.2s;
     outline: none;
@@ -127,12 +127,6 @@ button {
     background-color: transparent;
     outline: none;
     cursor: pointer;
-}
-
-textarea {
-    vertical-align: top;
-    font-size: 1em;
-    resize: none;
 }
 
 .wrap {
@@ -768,10 +762,37 @@ p {
     height: 100vh;
 }
 
+fieldset {
+    border: 1px solid #009ff4;
+    width: 300;
+    height: 50;
+
+    &:hover,
+    &:focus {
+        border: 2px solid #009ff4;
+    }
+    &.disabled {
+        background: #eee;
+        color: #333;
+        font-weight: $f600;
+        &:hover,
+        &:focus {
+            border: 1px solid #000;
+        }
+    }
+}
+.followBtn {
+    height: 40px;
+    width: 80px;
+    line-height: 1em;
+    border: 2px solid #009ff4;
+    background-color: #009ff4;
+}
 .input-with-label {
     @include wrap;
     position: relative;
     margin-bottom: 10px;
+
     input[type='text'],
     input[type='password'] {
         @include wrap;
@@ -806,9 +827,28 @@ p {
             }
         }
     }
+    // fieldset {
+    //     border: 1px solid #009ff4;
+    //     width: 300;
+    //     height: 50;
+
+    //     &:hover,
+    //     &:focus {
+    //         border: 2px solid #009ff4;
+    //     }
+    //     &.disabled {
+    //         background: #eee;
+    //         color: #333;
+    //         font-weight: $f600;
+    //         &:hover,
+    //         &:focus {
+    //             border: 1px solid #000;
+    //         }
+    //     }
+    // }
     textarea {
         border: 1px solid #009ff4;
-        width: 300;
+        width: 50;
         height: 50;
 
         &:hover,
@@ -825,6 +865,7 @@ p {
             }
         }
     }
+
     input[type='password'] {
         padding-right: 50px;
     }

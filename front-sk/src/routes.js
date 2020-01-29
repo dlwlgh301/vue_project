@@ -10,7 +10,7 @@ import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
-
+import Board from './views/user/Board.vue';
 export default [
     {
         path: '/',
@@ -31,6 +31,11 @@ export default [
         path: '/user/find',
         name: 'Find',
         component: Find
+    },
+    {
+        path: '/user/Board',
+        name: 'Board',
+        component: Board
     },
     {
         path: '/components',
