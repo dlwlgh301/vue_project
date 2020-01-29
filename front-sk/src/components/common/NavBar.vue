@@ -1,27 +1,33 @@
 <template>
-    <div class="header-default">
-        <button class="menu" v-if="!isBack"></button>
-        <button v-if="isBack" class="back" @click="$router.go(-1)">
-            <i class="fas fa-chevron-left"></i>
-        </button>
+    <div class="Navbar">
+        <md-toolbar>
+            <div class="md-toolbar-row">
+                <div class="md-toolbar-section-start">
+                    <md-button class="md-icon-button" @click="$router.go(-1)">
+                        <md-icon>keyboard_arrow_left</md-icon>
+                    </md-button>
+                    <h3 class="md-title" style="flex: 1">{{ navTitle }}</h3>
+                </div>
 
-        <h4 class="title">
-            {{ headerTitle }}
-        </h4>
+                <div class="md-toolbar-section-end">
+                    <md-button class="md-icon-button">
+                        <md-icon>search</md-icon>
+                    </md-button>
 
-        <button v-if="rightText" class="right-text" :class="{ disabled: isDisabled }" :disabled="isDisabled">
-            {{ rightText }}
-        </button>
-
-        <button class="btn-search" v-if="isSearch">
-            <i class="fas fa-search"></i>
-        </button>
+                    <md-badge class="badge" md-content="1">
+                        <md-button class="md-icon-button">
+                            <md-icon>notifications</md-icon>
+                        </md-button>
+                    </md-badge>
+                </div>
+            </div>
+        </md-toolbar>
     </div>
 </template>
 
 <script>
 export default {
     name: 'Navbar',
-    props: ['headerTitle', 'isBack', 'isSearch', 'rightText', 'isDisabled']
+    props: ['navTitle']
 };
 </script>
