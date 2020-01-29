@@ -1,6 +1,5 @@
 package com.web.curation.model.user;
 
-
 import lombok.*;
 
 @Data
@@ -9,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class AuthenticationRequest {
-    
+
     String email;
     String password;
     String name;
-    
+
 }

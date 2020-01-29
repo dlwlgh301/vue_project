@@ -3,7 +3,7 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">인증하기</h1>
         <div class="cert">
             <div class="input-with-label">
-                <input v-model="email" id="email" placeholder="이메일을 입력하세요." type="text" />
+                <input v-model="email" id="email" placeholder="이메일을 입력하세요." type="text" readonly />
                 <label for="email">이메일</label>
             </div>
             <div class="input-with-label">
@@ -16,11 +16,13 @@
     </div>
 </template>
 <script>
+import UserApi from '../../apis/UserApi';
 export default {
     data: () => {
         return {
             email: '',
             key: '',
+            sbody: '',
             error: {
                 email: false
             },
@@ -28,8 +30,28 @@ export default {
             component: this
         };
     },
+    created() {
+        //var sbody = localStorage.getItem('body');
+        var email = sessionStorage.getItem('email');
+
+        this.email = email;
+        console.log(email);
+    },
     methods: {
         cert() {
+            var email = sessionStorage.getItem('email');
+            var password = sessionStorage.getItem('password');
+            var name = sessionStorage.getItem('name');
+            var nickName = sessionStorage.getItem('nickName');
+            var comment = sessionStorage.getItem('comment');
+            var body = {
+                password: password,
+                email: email,
+                nickName: nickName,
+                name: name,
+                comment: comment
+            };
+            UserApi.join(body);
             this.$router.push('/user/certComplete');
         }
     }
