@@ -78,7 +78,7 @@
       <artifactId>mybatis-spring</artifactId>
       <version>1.2.3</version>
     </dependency>
-
+    
     <!-- send email -->
     <dependency>
         <groupId>org.springframework.boot</groupId>

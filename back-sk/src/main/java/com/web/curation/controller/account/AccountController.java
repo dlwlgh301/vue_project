@@ -2,14 +2,9 @@ package com.web.curation.controller.account;
 
 import java.util.Random;
 
-// import java.util.List;
-
 import javax.validation.Valid;
 
-import com.web.curation.dao.user.UserDao;
-// import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
-import com.web.curation.model.user.SignupRequest;
 import com.web.curation.model.user.User;
 import com.web.curation.service.UserService;
 
@@ -30,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import javassist.bytecode.ExceptionTable;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = BasicResponse.class),
@@ -43,10 +37,7 @@ import javassist.bytecode.ExceptionTable;
 // @RequestMapping(value = "/test")
 public class AccountController {
     @Autowired
-    UserService userService;
-
-    @Autowired
-    UserDao userDao;
+    UserService userServiceImpl;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -56,7 +47,7 @@ public class AccountController {
     public Object login(@RequestParam(required = true) final String email,
             @RequestParam(required = true) final String password) throws Exception {
 
-        User user = userDao.findUserByEmailAndPassword(email.substring(1, email.length() - 1).toLowerCase(),
+        User user = userServiceImpl.login(email.substring(1, email.length() - 1).toLowerCase(),
                 password.substring(1, password.length() - 1));
 
         final BasicResponse result = new BasicResponse();
@@ -68,19 +59,49 @@ public class AccountController {
             result.status = false;
             result.data = "fail";
         }
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/account/signup")
     @ApiOperation(value = "가입하기")
-
-    public Object signup(@Valid @RequestBody SignupRequest request) {
+    public Object signup(@Valid @RequestBody final User user) throws Exception {
         // 이메일, 닉네임 중복처리 필수
         // 회원가입단을 생성해 보세요.
 
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "success";
+
+        System.out.println(user);
+        String email = userServiceImpl.getEmail(user.getEmail());
+
+        System.out.println("db에 이메일이 있는지 확인 :" + email);
+
+        System.out.println(user.getNickName() + " 검사");
+        String nickname = userServiceImpl.getNickName(user.getNickName());
+
+        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
+
+        // 이메일 중복검사
+        if (email != null && email.equals(user.getEmail())) {
+            result.data = "이메일이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        // 닉네임 중복검사
+        else if (nickname != null && nickname.equals(user.getNickName())) {
+            result.data = "닉네임이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        else {
+            System.out.println("가입하기 들어옴");
+            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+                    user.getComment(), user.getKeyword());
+
+            userServiceImpl.join(puser);
+            result.status = true;
+            result.data = "success";
+        }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
