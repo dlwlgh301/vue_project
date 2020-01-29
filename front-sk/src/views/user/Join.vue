@@ -41,6 +41,7 @@
                 />
                 <label for="password-confirm">비밀번호 확인</label>
                 <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+
             </div>
 
             <div class="input-with-label">
@@ -113,8 +114,10 @@
 
 <script>
 import PV from 'password-validator';
+// import axios from 'axios';
 import * as EmailValidator from 'email-validator';
-//import UserApi from '../../apis/UserApi';
+import UserApi from '../../apis/UserApi';
+
 export default {
     data: () => {
         return {
@@ -125,6 +128,7 @@ export default {
             nickName: '',
             name: '',
             comment: '',
+            keyword: '',
             isTerm: false,
             isLoading: false,
             error: {
@@ -219,17 +223,36 @@ export default {
                 //요청 후에는 버튼 비활성화
                 this.isSubmit = false;
 
-                this.$router.push('/user/certification');
-                // UserApi.requestLogin(data,res=>{
-                //     //통신을 통해 전달받은 값 콘솔에 출력
-                //     console.log(res);
-                //
-                //     //요청이 끝나면 버튼 활성화
-                //     this.isSubmit = true;
-                // },error=>{
-                //     //요청이 끝나면 버튼 활성화
-                //     this.isSubmit = true;
-                // })
+                console.log('axios 하기전!!!');
+
+                var body = {
+                    password: this.password,
+                    email: this.email,
+                    nickName: this.nickName,
+                    name: this.name,
+                    comment: this.comment,
+                    keyword: this.keyword
+                };
+
+                UserApi.join(body);
+
+                console.log('axios 함!!!');
+
+                // UserApi.requestLogin(
+                //     data,
+                //     res => {
+                //         //통신을 통해 전달받은 값 콘솔에 출력
+                //         console.log(res);
+
+                //         //요청이 끝나면 버튼 활성화
+                //         this.isSubmit = true;
+                //     },
+                //     error => {
+                //         //요청이 끝나면 버튼 활성화
+                //         console.log(error);
+                //         this.isSubmit = true;
+                //     }
+                // );
             }
         },
         back() {

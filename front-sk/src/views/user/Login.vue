@@ -42,6 +42,7 @@
                     <i class="fas fa-eye"></i>
                 </span>
             </div>
+
             <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
             <div class="error-text" v-if="error.message">{{ error.message }}</div>
             <div class="sns-login">
@@ -69,6 +70,11 @@
                 </div>
             </div>
         </div>
+        <md-badge md-content="1">
+            <md-button class="md-icon-button" md-dense>
+                <md-icon>notifications</md-icon>
+            </md-button>
+        </md-badge>
     </div>
 </template>
 
