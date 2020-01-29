@@ -3,9 +3,11 @@
  */
 import axios from 'axios';
 const requestLogin = data => {
-    axios.post('http://localhost:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password'])).then(res => {
-        console.log(res);
-    });
+    axios
+        .post('http://localhost:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .then(res => {
+            console.log(res);
+        });
 };
 
 const UserApi = {

@@ -4,7 +4,11 @@ import Router from 'vue-router';
 import routes from './routes';
 import store from './vuex/store';
 import VueMaterial from 'vue-material';
+import Vuetify from 'vuetify';
 import 'vue-material/dist/vue-material.min.css';
+import vuetify from './plugins/vuetify';
+
+Vue.use(Vuetify);
 
 Vue.use(VueMaterial);
 
@@ -20,5 +24,6 @@ new Vue({
     router,
     store,
     VueMaterial,
+    vuetify,
     render: h => h(App)
 }).$mount('#app');

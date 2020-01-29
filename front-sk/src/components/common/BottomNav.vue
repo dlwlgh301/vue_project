@@ -2,10 +2,18 @@
     <div>
         <div class="phone-viewport">
             <md-bottom-bar md-sync-route>
-                <md-bottom-bar-item to="/" md-icon="home"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/components/bottom-bar/posts" md-icon="search"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/find" md-icon="bookmark"></md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/profile" md-icon="account_box"></md-bottom-bar-item>
+                <md-bottom-bar-item to="/">
+                    <md-icon style="color: #009ff4 ">home</md-icon>
+                </md-bottom-bar-item>
+                <md-bottom-bar-item to="/components/bottom-bar/posts">
+                    <md-icon style="color: #009ff4 ">search</md-icon>
+                </md-bottom-bar-item>
+                <md-bottom-bar-item to="/user/find">
+                    <md-icon style="color: #009ff4 ">bookmark</md-icon>
+                </md-bottom-bar-item>
+                <md-bottom-bar-item to="/user/profile">
+                    <md-icon style="color: #009ff4 ">account_box</md-icon>
+                </md-bottom-bar-item>
             </md-bottom-bar>
         </div>
     </div>
@@ -25,7 +33,10 @@ export default {
     display: inline-flex;
     align-items: flex-end;
     overflow: hidden;
-    border: 1px solid rgba(#000, 0.26);
+    border-top: 0.01rem solid rgba(#000, 0.26);
     background: rgba(#ffffff, 1);
+    md-icon {
+        color: #009ff4;
+    }
 }
 </style>

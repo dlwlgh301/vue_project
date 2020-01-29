@@ -7,7 +7,8 @@ import mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
-    isUser: false
+    isUser: false,
+    pageTitle: 'pagetitle'
 };
 
 export default new Vuex.Store({
