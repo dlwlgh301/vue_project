@@ -8,17 +8,9 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
         <div class="join">
             <div class="input-with-label">
-                <input v-model="nickName" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
-                <label for="nickname">닉네임</label>
-            </div>
-
-            <div class="input-with-label">
                 <input
                     v-model="email"
-                    v-bind:class="{
-                        error: error.email,
-                        complete: !error.email && email.length !== 0
-                    }"
+                    v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
                     id="email"
                     placeholder="이메일을 입력하세요."
                     type="text"
@@ -30,10 +22,7 @@
             <div class="input-with-label">
                 <input
                     v-model="password"
-                    v-bind:class="{
-                        error: error.password,
-                        complete: !error.password && password.length !== 0
-                    }"
+                    v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
                     id="password"
                     :type="passwordType"
                     placeholder="비밀번호를 입력하세요."
@@ -47,27 +36,51 @@
                     v-model="passwordConfirm"
                     :type="passwordConfirmType"
                     id="password-confirm"
-                    v-bind:class="{
-                        error: error.passwordConfirm,
-                        complete: !error.passwordConfirm && passwordConfirm.length != 0
-                    }"
+                    v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length != 0 }"
                     placeholder="비밀번호를 다시한번 입력하세요."
                 />
                 <label for="password-confirm">비밀번호 확인</label>
                 <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+
+            </div>
+
+            <div class="input-with-label">
+                <input
+                    v-model="name"
+                    v-bind:class="{ error: error.name, complete: !error.name && name.length != 0 }"
+                    id="name"
+                    placeholder="이름을 입력하세요."
+                    type="text"
+                />
+                <label for="name">이름</label>
+                <div class="error-text" v-if="error.name">{{ error.name }}</div>
+            </div>
+            <div class="input-with-label">
+                <input
+                    v-model="nickName"
+                    v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length != 0 }"
+                    id="nickname"
+                    placeholder="닉네임을 입력하세요."
+                    type="text"
+                />
+                <label for="nickname">닉네임</label>
+                <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
+            </div>
+            <div class="input-with-label">
+                <input
+                    v-model="comment"
+                    v-bind:class="{ error: error.comment, complete: !error.comment && comment.length != 0 }"
+                    id="comment"
+                    placeholder="한줄 소개를 입력하세요."
+                    type="text"
+                />
+                <label for="nickname">한줄소개</label>
+                <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
         </div>
 
         <label>
-            <input
-                v-model="isTerm"
-                type="checkbox"
-                id="term"
-                v-bind:class="{
-                    error: error.isTerm,
-                    complete: !error.isTerm
-                }"
-            />
+            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
             <span>약관을 동의합니다.</span>
         </label>
         <div v-if="showModal">
@@ -91,6 +104,7 @@
                 </div>
             </transition>
         </div>
+
         <button @click="showModal = true">약관보기</button>
 
         <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
@@ -121,6 +135,8 @@ export default {
                 email: false,
                 password: false,
                 nickName: false,
+                name: false,
+                comment: false,
                 passwordConfirm: false,
                 isTerm: false
             },
@@ -151,6 +167,15 @@ export default {
         passwordConfirm: function() {
             this.checkForm();
         },
+        nickName: function() {
+            this.checkForm();
+        },
+        name: function() {
+            this.checkForm();
+        },
+        comment: function() {
+            this.checkForm();
+        },
         isTerm: function() {
             this.checkForm();
         }
@@ -164,8 +189,18 @@ export default {
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
-            if (this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else this.error.passwordConfirm = false;
+
+            if (this.name.length < 2) this.error.name = '이름을 입력해주세요';
+            else this.error.name = false;
+
+            if (this.nickName.length < 2) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
+            else this.error.nickName = false;
+
+            if (this.comment.length == 0) this.error.comment = '한줄소개를 입력해주세요';
+            else this.error.comment = false;
 
             if (this.isTerm == false) this.error.isTerm = true;
             else this.error.isTerm = false;

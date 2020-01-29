@@ -98,7 +98,7 @@ import HalfButton from '../components/common/ButtonHalf';
 import SelectComponent from '../components/common/Select';
 import CheckboxComponent from '../components/common/Checkbox';
 import SwitchComponent from '../components/common/Switch';
-import HeaderComponent from '../components/common/Header';
+import HeaderComponent from '../components/common/NavBar';
 import TabComponent from '../components/common/Tab';
 import KeywordDelComponent from '../components/common/KeywordDel';
 import KeywordAddComponent from '../components/common/KeywordAdd';
