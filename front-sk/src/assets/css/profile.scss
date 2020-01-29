@@ -134,9 +134,14 @@ body {
     // border: 0.25rem #fff solid;
     // margin: 15px 0px 0px 35px;
     // font-weight: 1rem;
+    padding-top: 10px;
+    //  height: 50px;
     font-size: 1em;
-
-    color: rgba(30, 30, 30, 1);
+    //padding: 0 15px 0 105px;
+    // box-sizing: border-box;
+    color: #000;
+    // border: 1px solid #009ff4;
+    // border-radius: 3px;
 }
 .follow_count {
     // border-radius: 50%;
@@ -148,7 +153,9 @@ body {
     // border: 0.25rem #fff solid;
     //font-weight: 3em;
     font-size: 2em;
-    color: rgba(140, 140, 140, 1);
+    //padding: 0 15px 0 105px;
+    // box-sizing: border-box;
+    color: #000;
 }
 .tags {
     padding: 0;
@@ -180,12 +187,12 @@ body {
     height: 340px;
 }
 .left_col {
-    width: 40%;
+    width: 35%;
     padding-top: 85px;
     box-sizing: border-box;
 }
 .right_col {
-    width: 60%;
+    width: 65%;
     margin-left: -1px;
     border-bottom-right-radius: 5px;
 }
@@ -203,14 +210,14 @@ body {
     border: 4px solid rgba(255, 255, 255, 1);
 }
 h2.name {
-    font-size: 3vw;
+    font-size: 3em;
     font-weight: 300;
     color: rgba(30, 30, 30, 1);
     padding: 0;
     margin: 20px 10px 0px 30px;
 }
 h3.location {
-    font-size: 1vw;
+    font-size: 1em;
     font-weight: 300;
     color: rgba(30, 30, 30, 1);
     padding: 0;
