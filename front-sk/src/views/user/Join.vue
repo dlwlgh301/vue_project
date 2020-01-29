@@ -34,10 +34,7 @@
             <div class="input-with-label">
                 <input
                     v-model="password"
-                    v-bind:class="{
-                        error: error.password,
-                        complete: !error.password && password.length !== 0
-                    }"
+                    v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
                     id="password"
                     :type="passwordType"
                     placeholder="비밀번호를 입력하세요."
