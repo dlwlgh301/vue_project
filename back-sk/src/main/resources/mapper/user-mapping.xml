@@ -19,4 +19,9 @@
         insert into user(email,password,name,nickName,comment,keyword) 
         values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword})
     </insert>
+
+    <select id="login" parameterType="com.web.curation.model.user.User" resultType="com.web.curation.model.user.User">
+        select * from user 
+        where email=#{email} and password=#{password}
+    </select>
 </mapper>
