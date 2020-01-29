@@ -1,10 +1,11 @@
 <template>
     <div id="app">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons" />
+        <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
+            rel="stylesheet"
+        />
         <div class="components-page">
-            <div class="header-default">
-                <HeaderComponent headerTitle="" :isBack="true" :isSearch="true" />
-            </div>
+            <HeaderComponent class="NavBar" :navTitle="Title" />
             <BottomNavComponent class="bottom-nav" />
         </div>
         <router-view class="page"></router-view>
@@ -23,7 +24,8 @@ export default {
     },
     data: () => {
         return {
-            route: this.$router
+            route: this.$router,
+            Title: 'name'
         };
     }
 };
