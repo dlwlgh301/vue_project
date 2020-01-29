@@ -4,4 +4,19 @@
     <select id="getAll" resultType="com.web.curation.model.user.User">
         SELECT * FROM user
     </select>
+
+    <select id="getEmail" resultType="string" parameterType="string">
+        select email from user
+        where email= #{value}                   
+    </select>
+
+    <select id="getNickname" resultType="string" parameterType="string">
+        select nickName from user
+        where nickName = #{value}
+    </select>
+
+    <insert id="join" parameterType="com.web.curation.model.user.User">
+        insert into user(email,password,name,nickName,comment,keyword) 
+        values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword})
+    </insert>
 </mapper>

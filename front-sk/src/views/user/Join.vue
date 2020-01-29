@@ -5,9 +5,7 @@
  -->
 <template>
     <div class="wrapB" style="padding-top: 100px;">
-        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
-            가입하기
-        </h1>
+        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
         <div class="join">
             <div class="input-with-label">
                 <input v-model="nickName" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
@@ -26,9 +24,7 @@
                     type="text"
                 />
                 <label for="email">이메일</label>
-                <div class="error-text" v-if="error.email">
-                    {{ error.email }}
-                </div>
+                <div class="error-text" v-if="error.email">{{ error.email }}</div>
             </div>
 
             <div class="input-with-label">
@@ -43,9 +39,7 @@
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="password">비밀번호</label>
-                <div class="error-text" v-if="error.password">
-                    {{ error.password }}
-                </div>
+                <div class="error-text" v-if="error.password">{{ error.password }}</div>
             </div>
 
             <div class="input-with-label">
@@ -60,9 +54,7 @@
                     placeholder="비밀번호를 다시한번 입력하세요."
                 />
                 <label for="password-confirm">비밀번호 확인</label>
-                <div class="error-text" v-if="error.passwordConfirm">
-                    {{ error.passwordConfirm }}
-                </div>
+                <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
             </div>
         </div>
 
@@ -84,14 +76,13 @@
                     <div class="modal-wrapper">
                         <div class="modal-container">
                             <div class="modal-header">
-                                <slot name="header">
-                                    약관동의
-                                </slot>
+                                <slot name="header">약관동의</slot>
                             </div>
                             <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    동의하십니까?<br />
+                                    동의하십니까?
+                                    <br />
                                     <button @click="showmodal">확인</button>
                                 </slot>
                             </div>
@@ -102,19 +93,17 @@
         </div>
         <button @click="showModal = true">약관보기</button>
 
-        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-            가입하기
-        </button>
-        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
-            이전화면으로 돌아가기
-        </button>
+        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
+        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
     </div>
 </template>
 
 <script>
 import PV from 'password-validator';
+// import axios from 'axios';
 import * as EmailValidator from 'email-validator';
-//import UserApi from '../../apis/UserApi';
+import UserApi from '../../apis/UserApi';
+
 export default {
     data: () => {
         return {
@@ -123,6 +112,9 @@ export default {
             passwordSchema: new PV(),
             passwordConfirm: '',
             nickName: '',
+            name: '',
+            comment: '',
+            keyword: '',
             isTerm: false,
             isLoading: false,
             error: {
@@ -168,7 +160,8 @@ export default {
             if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else this.error.email = false;
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             if (this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
@@ -195,17 +188,36 @@ export default {
                 //요청 후에는 버튼 비활성화
                 this.isSubmit = false;
 
-                this.$router.push('/user/certification');
-                // UserApi.requestLogin(data,res=>{
-                //     //통신을 통해 전달받은 값 콘솔에 출력
-                //     console.log(res);
-                //
-                //     //요청이 끝나면 버튼 활성화
-                //     this.isSubmit = true;
-                // },error=>{
-                //     //요청이 끝나면 버튼 활성화
-                //     this.isSubmit = true;
-                // })
+                console.log('axios 하기전!!!');
+
+                var body = {
+                    password: this.password,
+                    email: this.email,
+                    nickName: this.nickName,
+                    name: this.name,
+                    comment: this.comment,
+                    keyword: this.keyword
+                };
+
+                UserApi.join(body);
+
+                console.log('axios 함!!!');
+
+                // UserApi.requestLogin(
+                //     data,
+                //     res => {
+                //         //통신을 통해 전달받은 값 콘솔에 출력
+                //         console.log(res);
+
+                //         //요청이 끝나면 버튼 활성화
+                //         this.isSubmit = true;
+                //     },
+                //     error => {
+                //         //요청이 끝나면 버튼 활성화
+                //         console.log(error);
+                //         this.isSubmit = true;
+                //     }
+                // );
             }
         },
         back() {

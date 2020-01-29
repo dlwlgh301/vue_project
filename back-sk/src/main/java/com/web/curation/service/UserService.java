@@ -1,19 +1,16 @@
+//디비 셋팅 주석 
 package com.web.curation.service;
 
-import java.util.List;
-
-import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.user.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+public interface UserService {
+    User getUserByEmail(String email);
 
-@Service
-public class UserService {
-    @Autowired
-    UserDao userDao;
+    User findUserByEmailAndPassword(String email, String password);
 
-    public List<User> getAll() throws Exception {
-        return userDao.findAll();
-    }
+    String getEmail(String email) throws Exception;
+
+    String getNickName(String nickName) throws Exception;
+
+    int join(User user) throws Exception;
 }
