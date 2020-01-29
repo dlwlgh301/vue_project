@@ -148,21 +148,20 @@ export default {
                 };
 
                 //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
+
                 UserApi.requestLogin(
                     data,
                     res => {
                         console.log(res);
+                        this.isSubmit = false;
                         if (res.data.data == 'fail') {
                             console.log(res.data.status);
                             this.password = '';
                             this.error.message = '이메일 혹은 비밀번호가 잘못되었습니다.';
-                            this.isSubmit = true;
                         } else {
                             console.log(res.data.status);
                             this.$router.push('/user/complete');
                             //요청이 끝나면 버튼 활성화
-                            this.isSubmit = true;
                         }
                     },
                     error => {

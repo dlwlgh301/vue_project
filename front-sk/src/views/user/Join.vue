@@ -244,7 +244,9 @@ export default {
                     data,
                     res => {
                         console.log(res);
-                        this.key = res.data.key;
+                        console.log(res.data.object.key);
+                        this.key = res.data.object.key;
+                        console.log(this.key);
                         sessionStorage.setItem('key', this.key);
                     },
                     error => {
