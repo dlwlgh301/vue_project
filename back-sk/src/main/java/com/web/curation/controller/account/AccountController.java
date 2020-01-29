@@ -1,5 +1,7 @@
 package com.web.curation.controller.account;
 
+import java.util.Random;
+
 // import java.util.List;
 
 import javax.validation.Valid;
@@ -11,11 +13,13 @@ import com.web.curation.model.user.SignupRequest;
 import com.web.curation.model.user.User;
 import com.web.curation.service.UserService;
 
-// import org.json.JSONObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javassist.bytecode.ExceptionTable;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = BasicResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = BasicResponse.class),
@@ -43,18 +48,16 @@ public class AccountController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     @PostMapping("/account/login")
     @ApiOperation(value = "로그인")
     public Object login(@RequestParam(required = true) final String email,
             @RequestParam(required = true) final String password) throws Exception {
-        // JSONObject dummyUser = new JSONObject();
 
         User user = userDao.findUserByEmailAndPassword(email.substring(1, email.length() - 1).toLowerCase(),
                 password.substring(1, password.length() - 1));
-
-        // dummyUser.put("uid", "test_uid");
-        // dummyUser.put("email", "test@test.com");
-        // dummyUser.put("nickname", "test_nickname");
 
         final BasicResponse result = new BasicResponse();
         if (user != null) {
@@ -82,4 +85,24 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/account/emailcert")
+    public Object sendEmail(@RequestParam(required = true) final String email) {
+        Random r = new Random();
+        int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
+        final BasicResponse result = new BasicResponse();
+        JSONObject dummyUser = new JSONObject();
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+
+        msg.setSubject("SHOP+ 인증메일입니다.");
+        msg.setText("인증번호 " + dice + " 입니다.");
+        javaMailSender.send(msg);
+        dummyUser.put("key", dice);
+        result.status = true;
+        result.data = "success";
+        result.object = dummyUser.toMap();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
