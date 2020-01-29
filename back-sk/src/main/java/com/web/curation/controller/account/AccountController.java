@@ -81,11 +81,13 @@ public class AccountController {
         // 이메일 중복검사
         if (email != null && email.equals(user.getEmail())) {
             result.data = "이메일이 이미 존재합니다.";
+            result.status = true;
         }
 
         // 닉네임 중복검사
         else if (nickname != null && nickname.equals(user.getNickName())) {
             result.data = "닉네임이 이미 존재합니다.";
+            result.status = true;
         }
 
         else {
@@ -94,10 +96,9 @@ public class AccountController {
                     user.getComment(), user.getKeyword());
 
             userServiceImpl.join(puser);
+            result.status = true;
+            result.data = "success";
         }
-
-        result.status = true;
-        result.data = "success";
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
