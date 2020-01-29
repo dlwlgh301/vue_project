@@ -1,20 +1,24 @@
 package com.web.curation.controller.account;
 
+import java.util.Random;
+
 import javax.validation.Valid;
 
-// import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.BasicResponse;
-import com.web.curation.model.user.SignupRequest;
-// import com.web.curation.model.user.User;
+import com.web.curation.model.user.User;
+import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
-// import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,44 +32,98 @@ import io.swagger.annotations.ApiResponses;
         @ApiResponse(code = 500, message = "Failure", response = BasicResponse.class) })
 
 @RestController
-@EnableAutoConfiguration
-@RequestMapping(value = "/test")
+@CrossOrigin
+// @EnableAutoConfiguration
+// @RequestMapping(value = "/test")
 public class AccountController {
-    // 디비 셋팅 후 주석을 푸세요.
-    // @Autowired
-    // UserDao userDao;
+    @Autowired
+    UserService userServiceImpl;
+
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     @PostMapping("/account/login")
     @ApiOperation(value = "로그인")
     public Object login(@RequestParam(required = true) final String email,
-            @RequestParam(required = true) final String password) {
-        JSONObject dummyUser = new JSONObject();
+            @RequestParam(required = true) final String password) throws Exception {
 
-        dummyUser.put("uid", "test_uid");
-        dummyUser.put("email", "test@test.com");
-        dummyUser.put("nickname", "test_nickname");
+        User user = userServiceImpl.login(email.substring(1, email.length() - 1).toLowerCase(),
+                password.substring(1, password.length() - 1));
 
-        System.out.println(email);
-        System.out.println(password);
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "success";
-        result.object = dummyUser.toMap();
+        if (user != null) {
+            result.status = true;
+            result.data = "success";
+            result.object = user;
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/account/signup")
     @ApiOperation(value = "가입하기")
-
-    public Object signup(@Valid @RequestBody SignupRequest request) {
+    public Object signup(@Valid @RequestBody final User user) throws Exception {
         // 이메일, 닉네임 중복처리 필수
         // 회원가입단을 생성해 보세요.
 
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "success";
+
+        System.out.println(user);
+        String email = userServiceImpl.getEmail(user.getEmail());
+
+        System.out.println("db에 이메일이 있는지 확인 :" + email);
+
+        System.out.println(user.getNickName() + " 검사");
+        String nickname = userServiceImpl.getNickName(user.getNickName());
+
+        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
+
+        // 이메일 중복검사
+        if (email != null && email.equals(user.getEmail())) {
+            result.data = "이메일이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        // 닉네임 중복검사
+        else if (nickname != null && nickname.equals(user.getNickName())) {
+            result.data = "닉네임이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        else {
+            System.out.println("가입하기 들어옴");
+            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+                    user.getComment(), user.getKeyword());
+
+            userServiceImpl.join(puser);
+            result.status = true;
+            result.data = "success";
+        }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/account/emailcert")
+    public Object sendEmail(@RequestParam(required = true) final String email) {
+        Random r = new Random();
+        int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
+        final BasicResponse result = new BasicResponse();
+        JSONObject dummyUser = new JSONObject();
+
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(email);
+
+        msg.setSubject("SHOP+ 인증메일입니다.");
+        msg.setText("인증번호 " + dice + " 입니다.");
+        javaMailSender.send(msg);
+        dummyUser.put("key", dice);
+        result.status = true;
+        result.data = "success";
+        result.object = dummyUser.toMap();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

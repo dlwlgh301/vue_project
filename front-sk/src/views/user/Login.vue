@@ -37,6 +37,7 @@
                 <label for="password">비밀번호</label>
                 <div class="error-text" v-if="error.password">{{ error.password }}</div>
             </div>
+
             <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
 
             <div class="sns-login">
@@ -65,6 +66,11 @@
                 </div>
             </div>
         </div>
+        <md-badge md-content="1">
+            <md-button class="md-icon-button" md-dense>
+                <md-icon>notifications</md-icon>
+            </md-button>
+        </md-badge>
     </div>
 </template>
 
@@ -72,6 +78,7 @@
 import '../../assets/css/style.scss';
 import '../../assets/css/user.scss';
 import PV from 'password-validator';
+
 import * as EmailValidator from 'email-validator';
 import KakaoLogin from '../../components/user/snsLogin/Kakao.vue';
 import GoogleLogin from '../../components/user/snsLogin/Google.vue';

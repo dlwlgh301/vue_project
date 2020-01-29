@@ -1,168 +1,46 @@
-// import java.util.List;
-// import java.util.Optional;
+//디비 셋팅 주석 
+package com.web.curation.dao.user;
 
-// import com.web.curation.model.user.User;
+import com.web.curation.model.user.User;
 
-// import org.springframework.data.domain.Example;
-// import org.springframework.data.domain.Page;
-// import org.springframework.data.domain.Pageable;
-// import org.springframework.data.domain.Sort;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-// public class UserDaoImpl implements UserDao {
-//     @Override
-//     public User getUserByEmail(String email) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+@Repository
+public class UserDaoImpl implements UserDao {
+    @Autowired
+    SqlSession sqlSession;
 
-//     @Override
-//     public User findUserByEmailAndPassword(String email, String password) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    @Override
+    public User getUserByEmail(String email) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-//     @Override
-//     public List<User> findAll() {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    @Override
+    public User login(String email, String password) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+        return sqlSession.selectOne("login", user);
+    }
 
-//     @Override
-//     public List<User> findAll(Sort sort) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    @Override
+    public String getEmail(String email) throws Exception {
+        System.out.println("here dao email impl");
+        return sqlSession.selectOne("getEmail", email);
+    }
 
-//     @Override
-//     public List<User> findAllById(Iterable<String> ids) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    @Override
+    public String getNickName(String nickName) throws Exception {
+        System.out.println("here dao impl");
+        return sqlSession.selectOne("getNickname", nickName);
+    }
 
-//     @Override
-//     public <S extends User> List<S> saveAll(Iterable<S> entities) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
+    @Override
+    public int join(User user) throws Exception {
+        return sqlSession.insert("join", user);
+    }
 
-//     @Override
-//     public void flush() {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public <S extends User> S saveAndFlush(S entity) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public void deleteInBatch(Iterable<User> entities) {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public void deleteAllInBatch() {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public User getOne(String id) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public <S extends User> List<S> findAll(Example<S> example) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public <S extends User> List<S> findAll(Example<S> example, Sort sort) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public Page<User> findAll(Pageable arg0) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public long count() {
-//         // TODO Auto-generated method stub
-//         return 0;
-//     }
-
-//     @Override
-//     public void delete(User arg0) {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public void deleteAll() {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public void deleteAll(Iterable<? extends User> arg0) {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public void deleteById(String arg0) {
-//         // TODO Auto-generated method stub
-
-//     }
-
-//     @Override
-//     public boolean existsById(String arg0) {
-//         // TODO Auto-generated method stub
-//         return false;
-//     }
-
-//     @Override
-//     public Optional<User> findById(String arg0) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public <S extends User> S save(S arg0) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public <S extends User> long count(Example<S> arg0) {
-//         // TODO Auto-generated method stub
-//         return 0;
-//     }
-
-//     @Override
-//     public <S extends User> boolean exists(Example<S> arg0) {
-//         // TODO Auto-generated method stub
-//         return false;
-//     }
-
-//     @Override
-//     public <S extends User> Page<S> findAll(Example<S> arg0, Pageable arg1) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-
-//     @Override
-//     public <S extends User> Optional<S> findOne(Example<S> arg0) {
-//         // TODO Auto-generated method stub
-//         return null;
-//     }
-    
-// }
+}

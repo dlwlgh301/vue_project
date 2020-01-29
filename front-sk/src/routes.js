@@ -10,6 +10,7 @@ import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
+import UserUpdate from './views/user/UserUpdate.vue';
 import Board from './views/user/Board.vue';
 export default [
     {
@@ -79,5 +80,10 @@ export default [
     {
         path: '/404',
         component: NotFound
+    },
+    {
+        path: '/user/userUpdate',
+        name: 'UserUpdate',
+        component: UserUpdate
     }
 ];
