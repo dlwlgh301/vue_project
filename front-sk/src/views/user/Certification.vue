@@ -4,11 +4,11 @@
         <div class="cert">
             <div class="input-with-label">
                 <input v-model="email" id="email" placeholder="이메일을 입력하세요." type="text" />
-                <label for="nickname">이메일</label>
+                <label for="email">이메일</label>
             </div>
             <div class="input-with-label">
                 <input v-model="key" id="key" placeholder="인증키를 입력하세요." type="text" />
-                <label for="nickname">인증키</label>
+                <label for="key">인증키</label>
             </div>
             <button class="btn btn--back btn--login" v-on:click="cert">입력</button>
             <button class="btn btn--back btn--login" style="margin-top:10px">메일이 도착하지 않았나요?</button>

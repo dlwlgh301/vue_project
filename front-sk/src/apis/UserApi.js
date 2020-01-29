@@ -2,10 +2,15 @@
  User API 예시
  */
 import axios from 'axios';
-const requestLogin = data => {
-    axios.post('http://localhost:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password'])).then(res => {
-        console.log(res);
-    });
+const requestLogin = (data, callback, errorCallback) => {
+    axios
+        .post('http://192.168.100.58:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            errorCallback(error);
+        });
 };
 
 const UserApi = {
