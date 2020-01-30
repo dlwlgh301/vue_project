@@ -1,6 +1,6 @@
 <template>
     <div id="kakao-login">
-        <button>
+        <button v-on:click="kakaologin">
             <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
                 <g id="그룹_247" data-name="그룹 247" transform="translate(-237 -406)">
                     <g id="구성_요소_2" data-name="구성 요소 2" transform="translate(237 406)">
@@ -24,5 +24,25 @@
 </template>
 
 <script>
-export default {};
+import Kakao from './kakao.js';
+export default {
+    data: () => {
+        return {};
+    },
+    mounted() {
+        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
+    },
+    methods: {
+        kakaologin() {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    alert(JSON.stringify(authObj));
+                },
+                fail: function(err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+        }
+    }
+};
 </script>

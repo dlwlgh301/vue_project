@@ -10,6 +10,7 @@ import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
+import Main from './views/Main.vue';
 export default [
     {
         path: '/',
@@ -73,5 +74,10 @@ export default [
         path: '/user/userUpdate',
         name: 'UserUpdate',
         component: UserUpdate
+    },
+    {
+        path: '/main',
+        name: 'Main',
+        component: Main
     }
 ];
