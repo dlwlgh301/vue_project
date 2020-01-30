@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
+import com.web.curation.service.AlarmService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
@@ -38,6 +39,9 @@ import io.swagger.annotations.ApiResponses;
 public class AccountController {
     @Autowired
     UserService userServiceImpl;
+
+    @Autowired
+    AlarmService alarmServiceImpl;
 
     @Autowired
     private JavaMailSender javaMailSender;

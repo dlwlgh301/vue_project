@@ -12,7 +12,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(basePackages = "com.web.curation.dao.user")
+@MapperScan(basePackages = "com.web.curation.dao.UserDao")
 @EnableTransactionManagement
 public class DatabaseConfig {
 
