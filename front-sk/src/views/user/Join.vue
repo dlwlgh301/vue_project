@@ -239,22 +239,25 @@ export default {
                 sessionStorage.setItem('nickName', this.nickName);
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
-                // UserApi.join(body);
                 UserApi.cert(
                     data,
                     res => {
-                        console.log(res);
-                        console.log(res.data.object.key);
+                        //console.log(res);
+                        //console.log(res.data.object.key);
                         this.key = res.data.object.key;
                         console.log(this.key);
+                        sessionStorage.clear;
                         sessionStorage.setItem('key', this.key);
+                        console.log('join 인증키 발급');
                     },
                     error => {
                         console.log(error);
                     }
                 );
-                // console.log('axios 함!!!');
                 this.$router.push('/user/certification');
+                // UserApi.join(body);
+                console.log('join 라우터');
+                // console.log('axios 함!!!');
             }
         },
         back() {
