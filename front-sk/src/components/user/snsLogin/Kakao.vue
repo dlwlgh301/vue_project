@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Kakao from './kakao.js';
+import Kakao from '../../../kakao';
 export default {
     data: () => {
         return {};
