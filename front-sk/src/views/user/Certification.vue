@@ -27,7 +27,10 @@ import UserApi from '../../apis/UserApi';
 export default {
     watch: {
         inputkey: function() {
-            this.checkForm();
+            if (sessionStorage.getItem('key') != null) {
+                this.key = sessionStorage.getItem('key');
+                this.checkForm();
+            }
         }
     },
     data: () => {
@@ -46,13 +49,14 @@ export default {
     },
     mounted() {
         //var sbody = localStorage.getItem('body');
+        console.log('certification mounted');
         var email = sessionStorage.getItem('email');
-        var key = sessionStorage.getItem('key');
+        //var key = sessionStorage.getItem('key');
 
-        this.key = key;
+        //this.key = key;
         this.email = email;
         console.log(email);
-        console.log(key);
+        //console.log(key);
     },
     methods: {
         checkForm() {
