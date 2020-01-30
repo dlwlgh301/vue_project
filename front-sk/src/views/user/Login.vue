@@ -25,7 +25,8 @@
             <div class="input-with-label">
                 <input
                     v-model="password"
-                    type="password"
+                    :type="password ? type : 'text'"
+                    @input="changeInput($event, inputValue)"
                     v-bind:class="{
                         error: error.password,
                         complete: !error.password && password.length !== 0
@@ -36,10 +37,14 @@
                 />
                 <label for="password">비밀번호</label>
                 <div class="error-text" v-if="error.password">{{ error.password }}</div>
+
+                <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
+                    <i class="fas fa-eye"></i>
+                </span>
             </div>
 
             <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
-
+            <div class="error-text" v-if="error.message">{{ error.message }}</div>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>
@@ -114,6 +119,12 @@ export default {
         }
     },
     methods: {
+        viewPassword() {
+            this.type = this.type === 'password' ? 'text' : 'password';
+        },
+        changeInput(event, type) {
+            this.enterInput(event.target.value, type);
+        },
         checkForm() {
             if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else this.error.email = false;
@@ -137,21 +148,24 @@ export default {
                 };
 
                 //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-                this.$router.push('/user/complete');
+
                 UserApi.requestLogin(
                     data,
                     res => {
-                        //통신을 통해 전달받은 값 콘솔에 출력
                         console.log(res);
-
-                        //요청이 끝나면 버튼 활성화
-                        this.isSubmit = true;
+                        this.isSubmit = false;
+                        if (res.data.data == 'fail') {
+                            console.log(res.data.status);
+                            this.password = '';
+                            this.error.message = '이메일 혹은 비밀번호가 잘못되었습니다.';
+                        } else {
+                            console.log(res.data.status);
+                            this.$router.push('/user/complete');
+                            //요청이 끝나면 버튼 활성화
+                        }
                     },
-                    // eslint-disable-next-line no-unused-vars
                     error => {
-                        //요청이 끝나면 버튼 활성화
-                        this.isSubmit = true;
+                        console.log(error);
                     }
                 );
             }
@@ -161,10 +175,14 @@ export default {
         return {
             email: '',
             password: '',
+            message: '',
+            type: 'password',
+            text: '',
             passwordSchema: new PV(),
             error: {
                 email: false,
-                passowrd: false
+                passowrd: false,
+                message: false
             },
             isSubmit: false,
             component: this

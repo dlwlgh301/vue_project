@@ -7,9 +7,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-
-
-
 @Valid
 @ToString
 public class SignupRequest {
@@ -32,11 +29,9 @@ public class SignupRequest {
         this.email = email;
     }
 
-
     public String getPassword() {
         return password;
     }
-
 
     public void setPassword(String password) {
         this.password = password;
