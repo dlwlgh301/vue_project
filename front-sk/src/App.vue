@@ -21,9 +21,12 @@ export default {
     },
     data: () => {
         return {
-            route: this.$router,
+            route: '',
             Title: 'name'
         };
+    },
+    mounted() {
+        this.route = this.$router;
     }
 };
 </script>
