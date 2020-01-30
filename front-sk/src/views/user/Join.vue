@@ -137,7 +137,8 @@ export default {
                 name: false,
                 comment: false,
                 passwordConfirm: false,
-                isTerm: false
+                isTerm: false,
+                submit: false
             },
             isSubmit: false,
             passwordType: 'password',
@@ -181,28 +182,50 @@ export default {
     },
     methods: {
         checkForm() {
-            if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
+            if (this.email.length == 0) {
+                this.error.submit = true;
+                this.error.email = '';
+            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else this.error.email = false;
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+            if (this.password.length == 0) {
+                this.error.submit = true;
+                this.error.password = '';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
-            if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+            if (this.passwordConfirm.length == 0) {
+                this.error.submit = true;
+                this.error.passwordConfirm = '';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
                 this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else this.error.passwordConfirm = false;
 
-            if (this.name.length === 0) this.error.name = '이름을 입력해주세요';
+            if (this.name.length == 0) {
+                this.error.submit = true;
+                this.error.name = '';
+            } else if (this.name.length === 0) this.error.name = '이름을 입력해주세요';
             else this.error.name = false;
 
-            if (this.nickName.length === 0) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
+            if (this.nickName.length == 0) {
+                this.error.submit = true;
+                this.error.nickName = '';
+            } else if (this.nickName.length === 0) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
             else this.error.nickName = false;
 
-            if (this.comment.length === 0) this.error.comment = '한줄소개를 입력해주세요';
+            if (this.comment.length == 0) {
+                this.error.submit = true;
+                this.error.comment = '';
+            } else if (this.comment.length === 0) this.error.comment = '한줄소개를 입력해주세요';
             else this.error.comment = false;
 
-            if (this.isTerm == false) this.error.isTerm = true;
+            if (this.isTerm.length == 0) {
+                this.error.submit = true;
+                this.error.isTemr = '';
+            } else if (this.isTerm == false) this.error.isTerm = true;
             else this.error.isTerm = false;
+
             let isSubmit = true;
             Object.values(this.error).map(v => {
                 if (v) isSubmit = false;
