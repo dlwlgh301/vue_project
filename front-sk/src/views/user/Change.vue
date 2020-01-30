@@ -117,6 +117,9 @@ export default {
                 // })
             }
         }
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '비밀번호 변경');
     }
 };
 </script>

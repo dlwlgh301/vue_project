@@ -263,6 +263,9 @@ export default {
         showmodal() {
             this.showModal = false;
         }
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '회원가입');
     }
 };
 </script>

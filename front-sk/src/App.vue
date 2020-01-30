@@ -1,14 +1,14 @@
 <template>
-    <div id="app">
-        <v-app>
+    <v-app>
+        <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
                 <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" />
                 <router-view class="page"></router-view>
                 <BottomNavComponent class="bottom-nav" />
             </div>
-        </v-app>
-    </div>
+        </div>
+    </v-app>
 </template>
 <script>
 import HeaderComponent from './components/common/NavBar';
@@ -29,19 +29,12 @@ export default {
     },
     data: () => {
         return {
-            route: this.$router
+            route: ''
         };
     },
-    methods: {
-        checkPage: function() {
-            this.$store.state.pageTitle = this.name;
-        }
+    mounted() {
+        this.route = this.$router;
+        this.$store.commit('setPageTitle', 'SHOP+');
     }
 };
 </script>
-
-<style scoped>
-.page {
-    z-index: 0;
-}
-</style>

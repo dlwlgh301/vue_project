@@ -105,6 +105,9 @@ export default {
             isSubmit: false,
             component: this
         };
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '유저 정보');
     }
 };
 </script>

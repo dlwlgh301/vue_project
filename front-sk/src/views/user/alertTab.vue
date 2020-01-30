@@ -1,34 +1,27 @@
 <template>
     <div class="components-page">
-        <div class="phone-viewport" id="tab-component">
-            <!-- <md-tabs md-sync-route md-active-tab="tab-pages" md-alignment="center" md-swipeable="true">
-                <md-tab id="tab-home" md-label="Home" to="/user/find" exact>
-                    Home Tab
-                </md-tab>
-
-                <md-tab id="tab-pages" md-label="Pages" to="#">
-                    Pages tab
-                    <p>
-                        Unde provident nemo reiciendis officia, possimus repellendus. Facere dignissimos dicta quis rem. Aliquam aspernatur dolor
-                        atque nisi id deserunt laudantium quam repellat.
-                    </p>
-                </md-tab>
-                <md-tab id="tab-favorites" md-label="Favorites" to="/components/tabs/favorites">
-                    Favorites tab
-                    <p>
-                        Maiores, dolorum. Beatae, optio tempore fuga odit aperiam velit, consequuntur magni inventore sapiente alias sequi odio qui
-                        harum dolorem sunt quasi corporis.
-                    </p>
-                </md-tab>
-            </md-tabs> -->
-            <v-app>
-                <v-tabs slot="extension" v-model="tab" color="cyan" grow>
-                    <v-tabs-slider color="yellow"></v-tabs-slider>
-                    <v-tab v-for="item in items" :key="item">
-                        {{ item }}
-                    </v-tab>
-                </v-tabs>
-            </v-app>
+        <div class="tab-component">
+            <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
+                <v-tabs-slider color="#009ff4"></v-tabs-slider>
+                <v-tab v-for="item in items" :key="item">
+                    {{ item }}
+                    <v-list two-line>
+                        <template v-for="(alert_item, index) in items">
+                            <v-subheader v-if="item.header" :key="alert_item.header">{{ alert_item.header }}</v-subheader>
+                            <v-divider v-else-if="alert_item.divider" :inset="alert_item.inset" :key="index"></v-divider>
+                            <v-list-tile v-else :key="alert_item.title" avatar>
+                                <v-list-tile-avatar>
+                                    <img :src="item.avatar" />
+                                </v-list-tile-avatar>
+                                <v-list-tile-content>
+                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                                    <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </template>
+                    </v-list>
+                </v-tab>
+            </v-tabs>
         </div>
     </div>
 </template>
@@ -41,13 +34,16 @@ export default {
     data() {
         return {
             tab: null,
-            items: ['web', 'shopping', 'videos', 'images', 'news']
+            items: ['알림', '팔로우 요청']
         };
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '알림');
     }
 };
 </script>
 <style scoped>
-.md-tabs {
-    margin-top: 57px;
+.tab-component {
+    margin-top: 3.5rem;
 }
 </style>

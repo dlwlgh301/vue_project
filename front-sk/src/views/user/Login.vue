@@ -182,6 +182,9 @@ export default {
             isSubmit: false,
             component: this
         };
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '로그인');
     }
 };
 </script>

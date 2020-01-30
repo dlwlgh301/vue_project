@@ -2,7 +2,7 @@
  User API 예시
  */
 import axios from 'axios';
-questLogin = (data, callback, errorCallback) => {
+const requestLogin = (data, callback, errorCallback) => {
     axios
         .post('http://192.168.100.93:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {

@@ -176,6 +176,9 @@ export default {
         showmodal() {
             this.showModal = false;
         }
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '정보 변경');
     }
 };
 </script>

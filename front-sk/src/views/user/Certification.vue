@@ -53,6 +53,8 @@ export default {
         this.email = email;
         console.log(email);
         console.log(key);
+
+        this.$store.commit('setPageTitle', '회원가입');
     },
     methods: {
         checkForm() {

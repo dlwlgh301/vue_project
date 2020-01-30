@@ -22,6 +22,9 @@ export default {
         back() {
             this.$router.push('/');
         }
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '회원가입');
     }
 };
 </script>
