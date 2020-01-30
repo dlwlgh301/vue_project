@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.curation.dao.notice.NoticeDao">
+
+    <select id="getNotice" parameterType="string" resultType="com.web.curation.model.vo.Notice">
+        select * from notice
+        where person1 = #{value}
+    </select>
+
+    <insert id="insertNotice" parameterType="com.web.curation.model.vo.Notice">
+        insert into notice(person1, person1nickName, person2, person2nickName, msg) 
+        values(#{person1}, #{person1nickName}, #{person2}, #{person2nickName}, #{msg})
+    </insert>
+</mapper>

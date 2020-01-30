@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.curation.dao.request.RequestDao">
+ 
+    <select id="getRequest" parameterType="string" resultType="com.web.curation.model.vo.Request">
+        select * from request
+        where person1 = #{value}
+    </select>
+
+    <insert id="insertNotice" parameterType="com.web.curation.model.vo.Request">
+        insert into request(person1, person1nickName, person2, person2nickName) 
+        values(#{person1}, #{person1nickName}, #{person2}, #{person2nickName})
+    </insert>
+
+    <delete id="deleteRequest" parameterType="com.web.curation.model.vo.Request">
+        delete from request where person1=#{person1} and person2=#{person2}
+    </delete>
+</mapper>

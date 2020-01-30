@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
-import com.web.curation.service.AlarmService;
+import com.web.curation.service.NoticeService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
@@ -41,7 +41,7 @@ public class AccountController {
     UserService userServiceImpl;
 
     @Autowired
-    AlarmService alarmServiceImpl;
+    NoticeService alarmServiceImpl;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -121,7 +121,7 @@ public class AccountController {
         msg.setTo(email);
 
         msg.setSubject("SHOP+ 인증메일입니다.");
-        msg.setText("인증번호 " + dice + " 입니다.");
+        msg.setText("인증번호 " + dice + "입니다.");
         javaMailSender.send(msg);
         dummyUser.put("key", dice);
         result.status = true;
