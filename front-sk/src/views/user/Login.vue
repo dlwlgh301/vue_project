@@ -26,7 +26,6 @@
                 <input
                     v-model="password"
                     :type="password ? type : 'text'"
-                    @input="changeInput($event, inputValue)"
                     v-bind:class="{
                         error: error.password,
                         complete: !error.password && password.length !== 0
@@ -153,7 +152,6 @@ export default {
                     data,
                     res => {
                         console.log(res);
-                        this.isSubmit = false;
                         if (res.data.data == 'fail') {
                             console.log(res.data.status);
                             this.password = '';
