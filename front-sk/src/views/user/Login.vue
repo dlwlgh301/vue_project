@@ -26,7 +26,6 @@
                 <input
                     v-model="password"
                     :type="password ? type : 'text'"
-                    @input="changeInput($event, inputValue)"
                     v-bind:class="{
                         error: error.password,
                         complete: !error.password && password.length !== 0
@@ -44,7 +43,6 @@
             </div>
 
             <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
-            <div class="error-text" v-if="error.message">{{ error.message }}</div>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>
@@ -153,11 +151,10 @@ export default {
                     data,
                     res => {
                         console.log(res);
-                        this.isSubmit = false;
                         if (res.data.data == 'fail') {
                             console.log(res.data.status);
                             this.password = '';
-                            this.error.message = '이메일 혹은 비밀번호가 잘못되었습니다.';
+                            alert('아이디 혹은 패스워드가 틀렸습니다.');
                         } else {
                             console.log(res.data.status);
                             this.$router.push('/user/complete');
@@ -181,8 +178,7 @@ export default {
             passwordSchema: new PV(),
             error: {
                 email: false,
-                passowrd: false,
-                message: false
+                passowrd: false
             },
             isSubmit: false,
             component: this
