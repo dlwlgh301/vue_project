@@ -4,7 +4,7 @@
 import axios from 'axios';
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post('http://192.168.100.93:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post('http://192.168.100.90:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -20,7 +20,7 @@ const UserApi = {
 };
 const cert = (data, callback) => {
     axios
-        .post('http://192.168.100.93:8080/account/emailcert?email=' + JSON.stringify(data['email']))
+        .post('http://192.168.100.90:8080/account/emailcert?email=' + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -42,7 +42,7 @@ const join = body => {
     console.log(value);
 
     axios({
-        url: 'http://192.168.100.93:8080/account/signup',
+        url: 'http://192.168.100.90:8080/account/signup',
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }

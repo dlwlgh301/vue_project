@@ -124,12 +124,25 @@ export default {
             this.enterInput(event.target.value, type);
         },
         checkForm() {
-            if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
-            else this.error.email = false;
+            if (this.email.length == 0) {
+                this.error.submit = true;
+                this.error.email = '';
+            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
+            else {
+                this.error.email = false;
+                this.error.submit = false;
+            }
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+            if (this.password.length == 0) {
+                this.error.submit = true;
+                this.error.password = '';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) {
+                console.log('형식맞음!!!');
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
-            else this.error.password = false;
+            } else {
+                this.error.password = false;
+                this.error.submit = false;
+            }
 
             let isSubmit = true;
             Object.values(this.error).map(v => {
@@ -178,7 +191,8 @@ export default {
             passwordSchema: new PV(),
             error: {
                 email: false,
-                passowrd: false
+                passowrd: false,
+                submit: false
             },
             isSubmit: false,
             component: this
