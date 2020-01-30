@@ -1,9 +1,6 @@
 Arguments: 
-<<<<<<< HEAD
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add sweetalert2
-=======
   C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add vue-simple-alert
->>>>>>> bc9f46531127a915d91e5e82de242c0171230438
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\multicampus\bin;C:\Program Files\Python35\Scripts;C:\Program Files\Python35;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Intel\WiFi\bin;C:\Program Files\Common Files\Intel\WirelessCommon;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Zulu\zulu-8\bin;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Program Files\ojdkbuild\java-1.8.0-openjdk-1.8.0.232-2\bin;C:\Program Files\ojdkbuild\java-1.8.0-openjdk-1.8.0.232-2\jre\bin;C:\Program Files\apache-maven-3.5.4\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\multicampus\AppData\Local\Microsoft\WindowsApps;C:\Users\multicampus\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\multicampus\AppData\Roaming\npm;C:\Users\multicampus\AppData\Local\Yarn\bin

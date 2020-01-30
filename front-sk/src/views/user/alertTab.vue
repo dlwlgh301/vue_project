@@ -3,25 +3,49 @@
         <div class="tab-component">
             <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
                 <v-tabs-slider color="#009ff4"></v-tabs-slider>
-                <v-tab v-for="item in items" :key="item">
-                    {{ item }}
-                    <v-list two-line>
-                        <template v-for="(alert_item, index) in items">
-                            <v-subheader v-if="item.header" :key="alert_item.header">{{ alert_item.header }}</v-subheader>
-                            <v-divider v-else-if="alert_item.divider" :inset="alert_item.inset" :key="index"></v-divider>
-                            <v-list-tile v-else :key="alert_item.title" avatar>
-                                <v-list-tile-avatar>
-                                    <img :src="item.avatar" />
-                                </v-list-tile-avatar>
-                                <v-list-tile-content>
-                                    <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                                    <v-list-tile-sub-title v-html="item.subtitle"></v-list-tile-sub-title>
-                                </v-list-tile-content>
-                            </v-list-tile>
-                        </template>
-                    </v-list>
+                <v-tab v-for="tab_name in tab_names" :key="tab_name">
+                    {{ tab_name }}
                 </v-tab>
             </v-tabs>
+            <v-tabs-items v-model="tab">
+                <v-tab-item v-for="tab_name in tab_names" :key="tab_name">
+                    <v-list v-if="tab == 0" two-line>
+                        <template v-for="(alert_item, index) in alert_items">
+                            <v-subheader v-if="alert_item.header" :key="alert_item.header">{{ alert_item.header }}</v-subheader>
+                            <v-divider v-else-if="alert_item.divider" :inset="alert_item.inset" :key="index"></v-divider>
+                            <v-list-item v-else :key="alert_item.userId" avatar>
+                                <v-list-item-avatar>
+                                    <img :src="alert_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title v-html="alert_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="alert_item.subtitle"></v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative">수락</v-btn>
+                                <v-btn text icon color="#666666">
+                                    <v-icon size="0.8rem">mdi-trash-can-outline</v-icon>
+                                </v-btn>
+                            </v-list-item>
+                        </template>
+                    </v-list>
+                    <v-list v-if="tab == 1">
+                        <template v-for="(alert_item, index) in alert_items">
+                            <v-subheader v-if="alert_item.header" :key="alert_item.header">{{ alert_item.header }}</v-subheader>
+                            <v-divider v-else-if="alert_item.divider" :inset="alert_item.inset" :key="index"></v-divider>
+                            <v-list-item v-else :key="alert_item.userId" avatar v-show="!alert_item.accept">
+                                <v-avatar>
+                                    <img :src="alert_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                </v-avatar>
+
+                                <v-list-item-content>
+                                    <v-list-item-title v-html="alert_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="alert_item.subtitle"></v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                    </v-list>
+                </v-tab-item>
+            </v-tabs-items>
         </div>
     </div>
 </template>
@@ -34,8 +58,59 @@ export default {
     data() {
         return {
             tab: null,
-            items: ['알림', '팔로우 요청']
+            tab_names: ['알림', '팔로우 요청'],
+            alert_items: [
+                { header: '새 알람' },
+                {
+                    avatar:
+                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
+                    userId: '이지호',
+                    subtitle: '내 글에 댓글을 달았습니다',
+                    accept: null
+                },
+                { divider: true, inset: true },
+                {
+                    avatar: '/static/doc-images/lists/2.jpg',
+                    title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
+                    subtitle:
+                        "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+                },
+                { divider: true, inset: true },
+                {
+                    avatar: '/static/doc-images/lists/3.jpg',
+                    title: 'Oui oui',
+                    subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
+                }
+            ],
+            follow_items: [
+                { header: '새 알람' },
+                {
+                    avatar:
+                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
+                    userId: '이지호',
+                    subtitle: '내 글에 댓글을 달았습니다'
+                },
+                { divider: true, inset: true },
+                {
+                    avatar: '/static/doc-images/lists/2.jpg',
+                    title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
+                    subtitle:
+                        "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+                },
+                { divider: true, inset: true },
+                {
+                    avatar: '/static/doc-images/lists/3.jpg',
+                    title: 'Oui oui',
+                    subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
+                }
+            ]
         };
+    },
+    methods: {
+        followAccept: function() {
+            this.alert_items.accept = true;
+            console.log('썩쎽스!');
+        }
     },
     mounted() {
         this.$store.commit('setPageTitle', '알림');
@@ -45,5 +120,8 @@ export default {
 <style scoped>
 .tab-component {
     margin-top: 3.5rem;
+}
+v-list-item {
+    padding-right: 0rem;
 }
 </style>
