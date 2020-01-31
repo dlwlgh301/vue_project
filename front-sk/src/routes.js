@@ -15,13 +15,13 @@ import Board from './views/user/Board.vue';
 export default [
     {
         path: '/',
-        name: 'Profile',
-        component: Profile
-    },
-    {
-        path: '/user/Login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/user/Profile',
+        name: 'Profile',
+        component: Profile
     },
     {
         path: '/user/join',
