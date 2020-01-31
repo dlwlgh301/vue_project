@@ -5,17 +5,24 @@ import Find from './views/user/Find.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
 import FindCert from './views/user/FindCert.vue';
+import Profile from './views/user/Profile.vue';
 import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
+import Board from './views/user/Board.vue';
 export default [
     {
         path: '/',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/user/Profile',
+        name: 'Profile',
+        component: Profile
     },
     {
         path: '/user/join',
@@ -26,6 +33,11 @@ export default [
         path: '/user/find',
         name: 'Find',
         component: Find
+    },
+    {
+        path: '/user/Board',
+        name: 'Board',
+        component: Board
     },
     {
         path: '/components',
