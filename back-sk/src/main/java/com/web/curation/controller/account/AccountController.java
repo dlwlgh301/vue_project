@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
+import com.web.curation.service.NoticeService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
@@ -43,6 +44,9 @@ public class AccountController {
     UserService userServiceImpl;
 
     @Autowired
+    NoticeService alarmServiceImpl;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @PostMapping("/account/login")
@@ -61,6 +65,25 @@ public class AccountController {
         } else {
             result.status = false;
             result.data = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/account/snslogin")
+    @ApiOperation(value = "SNS로그인")
+    public Object login(@RequestParam(required = true) final String email) throws Exception {
+        System.out.println("sns로그인:" + email);
+        User user = userServiceImpl.getUser(email.substring(1, email.length() - 1).toLowerCase());
+
+        final BasicResponse result = new BasicResponse();
+        if (user != null) {
+            result.status = true;
+            result.data = "member";
+            result.object = user;
+        } else {
+            result.status = false;
+            result.data = "non-member";
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -166,7 +189,7 @@ public class AccountController {
         msg.setTo(email);
 
         msg.setSubject("SHOP+ 인증메일입니다.");
-        msg.setText("인증번호 " + dice + " 입니다.");
+        msg.setText("인증번호 " + dice + "입니다.");
         javaMailSender.send(msg);
         dummyUser.put("key", dice);
         result.status = true;

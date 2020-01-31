@@ -25,4 +25,8 @@
         where email=#{email} and password=#{password}
     </select>
 
+    <select id="getUser" resultType="com.web.curation.model.user.User" parameterType="string">
+        select * from user
+        where email=#{value}
+    </select>
 </mapper>
