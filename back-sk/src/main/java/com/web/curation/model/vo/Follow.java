@@ -16,15 +16,15 @@ import javax.persistence.Id;
 public class Follow {
     @Id
     private int num;
-    private String person1;
-    private String person1nickName;
-    private String person2;
-    private String person2nickName;
+    private String follower;
+    private String followernickName;
+    private String folloing;
+    private String folloingnickName;
 
-    public Follow(String person1, String person1nickName, String person2, String person2nickName) {
-        this.person1 = person1;
-        this.person1nickName = person1nickName;
-        this.person2 = person2;
-        this.person2nickName = person2nickName;
+    public Follow(String follower, String followernickName, String folloing, String folloingnickName) {
+        this.follower = follower;
+        this.followernickName = followernickName;
+        this.folloing = folloing;
+        this.folloingnickName = folloingnickName;
     }
 }
