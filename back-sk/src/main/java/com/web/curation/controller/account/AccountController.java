@@ -67,6 +67,25 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/account/snslogin")
+    @ApiOperation(value = "SNS로그인")
+    public Object login(@RequestParam(required = true) final String email) throws Exception {
+        System.out.println("sns로그인:" + email);
+        User user = userServiceImpl.getUser(email.substring(1, email.length() - 1).toLowerCase());
+
+        final BasicResponse result = new BasicResponse();
+        if (user != null) {
+            result.status = true;
+            result.data = "member";
+            result.object = user;
+        } else {
+            result.status = false;
+            result.data = "non-member";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/account/signup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody final User user) throws Exception {

@@ -42,4 +42,9 @@ public class UserServiceImpl implements UserService {
     public int join(User user) throws Exception {
         return userDaoImpl.join(user);
     }
+
+    @Override
+    public User getUser(String email) throws Exception {
+        return userDaoImpl.getUser(email);
+    }
 }

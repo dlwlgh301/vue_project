@@ -43,4 +43,8 @@ public class UserDaoImpl implements UserDao {
         return sqlSession.insert("join", user);
     }
 
+    @Override
+    public User getUser(String email) throws Exception {
+        return sqlSession.selectOne("getUser", email);
+    }
 }
