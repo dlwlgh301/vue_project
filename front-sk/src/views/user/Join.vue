@@ -79,7 +79,12 @@
         </div>
 
         <label>
-            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
+            <input
+                v-model="isTerm"
+                type="checkbox"
+                id="term"
+                v-bind:class="{ error: error.isTerm, complete: !error.isTerm }"
+            />
             <span>약관을 동의합니다.</span>
         </label>
         <div v-if="showModal">
@@ -106,7 +111,12 @@
 
         <button @click="showModal = true">약관보기</button>
 
-        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
+        <button
+            class="btn btn--back"
+            v-on:click="join"
+            :disabled="!isSubmit"
+            :class="{ disabled: !isSubmit }"
+        >가입하기</button>
         <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
     </div>
 </template>
