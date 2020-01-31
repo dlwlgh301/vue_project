@@ -8,7 +8,7 @@ const UserApi = {
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
-    doubleCheck: data => doubleCheck(data)
+    doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback)
 };
 const snsDuplicate = (data, callback) => {
     axios
@@ -42,7 +42,7 @@ const cert = (data, callback) => {
         });
 };
 
-const doubleCheck = data => {
+const doubleCheck = (data, callback, errorCallback) => {
     var str = '';
 
     if (data.num == 1) {
@@ -60,9 +60,13 @@ const doubleCheck = data => {
             value: str,
             num: data.num
         }
-    }).then(res => {
-        console.log(res);
-    });
+    })
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            errorCallback(error);
+        });
 };
 
 const join = body => {
