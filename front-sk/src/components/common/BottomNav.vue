@@ -39,4 +39,7 @@ export default {
         color: #009ff4;
     }
 }
+.md-bottom-bar.md-type-fixed .md-bottom-bar-item {
+    max-width: none;
+}
 </style>
