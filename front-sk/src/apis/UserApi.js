@@ -81,7 +81,7 @@ const join = body => {
     console.log(value);
 
     axios({
-        url: 'http://192.168.100.90:8080/account/signup',
+        url: 'http://192.168.100.58:8080/account/signup',
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
