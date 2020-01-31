@@ -35,7 +35,7 @@ const UserApi = {
 };
 const cert = (data, callback) => {
     axios
-        .post('http://192.168.100.90:8080/account/emailcert?email=' + JSON.stringify(data['email']))
+        .post('http://192.168.100.58:8080/account/emailcert?email=' + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -56,7 +56,7 @@ const doubleCheck = data => {
     }
 
     axios({
-        url: 'http://192.168.100.90:8080/account/doubleCheck',
+        url: 'http://192.168.100.58:8080/account/doubleCheck',
         method: 'post',
         params: {
             value: str,

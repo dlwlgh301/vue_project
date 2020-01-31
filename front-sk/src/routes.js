@@ -10,7 +10,7 @@ import Change from './views/user/Change.vue';
 import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
-import alertTab from './views/user/alertTab';
+import noticeTab from './views/user/noticeTab';
 export default [
     {
         path: '/',
@@ -63,9 +63,9 @@ export default [
         component: FindCert
     },
     {
-        path: '/user/alertTab',
-        name: 'alertTab',
-        component: alertTab
+        path: '/user/noticeTab',
+        name: 'noticeTab',
+        component: noticeTab
     },
     {
         path: '*',

@@ -118,7 +118,7 @@ export default {
             UserApi.requestNotice(
                 data,
                 res => {
-                    console.log(res);
+                    console.log(res.data);
                     // if (res.data.data == 'fail') {
                     //     console.log(res.data.status);
                     //     this.password = '';

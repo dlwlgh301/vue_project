@@ -15,7 +15,7 @@
                     </md-button>
 
                     <md-badge class="badge" md-content="1">
-                        <router-link to="/user/alertTab">
+                        <router-link to="/user/noticeTab">
                             <md-button class="md-icon-button">
                                 <md-icon style="color: #009ff4 ;">notifications</md-icon>
                             </md-button>
