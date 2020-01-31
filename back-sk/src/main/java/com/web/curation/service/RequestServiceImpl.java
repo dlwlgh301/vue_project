@@ -17,12 +17,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public boolean insertRequest(String p1, String p2) {
-        return requestDaoImpl.insertRequest(p1, p2);
+    public boolean insertRequest(String requester, String requestee) {
+        return requestDaoImpl.insertRequest(requester, requestee);
     }
 
     @Override
-    public boolean deleteRequest(String p1, String p2) {
-        return requestDaoImpl.deleteRequest(p1, p2);
+    public boolean deleteRequest(String requester, String requestee) {
+        return requestDaoImpl.deleteRequest(requester, requestee);
     }
 }

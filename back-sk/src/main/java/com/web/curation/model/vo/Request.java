@@ -14,20 +14,20 @@ import javax.persistence.Id;
 public class Request {
     @Id
     private int rid;
-    private String person1;
-    private String person1nickName;
-    private String person2;
-    private String person2nickName;
+    private String requester;
+    private String requesterNick;
+    private String requestee;
+    private String requesteeNick;
 
-    public Request(String person1, String person1nickName, String person2, String person2nickName) {
-        this.person1 = person1;
-        this.person1nickName = person1nickName;
-        this.person2 = person2;
-        this.person2nickName = person2nickName;
+    public Request(String requester, String requesterNick, String requestee, String requesteeNick) {
+        this.requester = requester;
+        this.requesterNick = requesterNick;
+        this.requestee = requestee;
+        this.requesteeNick = requesteeNick;
     }
 
-    public Request(String person1, String person2) {
-        this.person1 = person1;
-        this.person2 = person2;
+    public Request(String requester, String requestee) {
+        this.requester = requester;
+        this.requestee = requestee;
     }
 }

@@ -17,10 +17,10 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean insertRequest(String p1, String p2) {
-        String p1N = sqlSession.selectOne("getNickName", p1);
-        String p2N = sqlSession.selectOne("getNickName", p2);
-        Request request = new Request(p1, p1N, p2, p2N);
+    public boolean insertRequest(String requester, String requestee) {
+        String requesterN = sqlSession.selectOne("getNickName", requester);
+        String requesteeN = sqlSession.selectOne("getNickName", requestee);
+        Request request = new Request(requester, requesterN, requestee, requesteeN);
         int row = sqlSession.insert("insertNotice", request);
         if (row > 0)
             return true;
@@ -29,8 +29,8 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean deleteRequest(String p1, String p2) {
-        Request request = new Request(p1, p2);
+    public boolean deleteRequest(String requester, String requestee) {
+        Request request = new Request(requester, requestee);
         int row = sqlSession.delete("deleteRequest", request);
         if (row > 0)
             return true;

@@ -6,7 +6,7 @@ import com.web.curation.model.vo.Request;
 public interface RequestService {
     Request getRequest(String email) throws Exception;
 
-    boolean insertRequest(String p1, String p2);
+    boolean insertRequest(String requester, String requestee);
 
-    boolean deleteRequest(String p1, String p2);
+    boolean deleteRequest(String requester, String requestee);
 }
