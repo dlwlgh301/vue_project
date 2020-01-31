@@ -1,6 +1,6 @@
 <template>
     <div id="kakao-login">
-        <button>
+        <button v-on:click="kakaologin">
             <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 55 55">
                 <g id="그룹_247" data-name="그룹 247" transform="translate(-237 -406)">
                     <g id="구성_요소_2" data-name="구성 요소 2" transform="translate(237 406)">
@@ -24,5 +24,62 @@
 </template>
 
 <script>
-export default {};
+import Kakao from '../../../kakao';
+import UserApi from '../../../apis/UserApi';
+import router from '../../../routes';
+export default {
+    data: () => {
+        return {
+            data: '',
+            email: ''
+        };
+    },
+    mounted() {
+        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
+    },
+    methods: {
+        kakaologin() {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    alert(JSON.stringify(authObj));
+                    Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: function(res) {
+                            this.data = res;
+                            this.email = this.data.kakao_account.email;
+                            let { email } = this;
+                            let data = {
+                                email
+                            };
+                            UserApi.snsDuplicate(
+                                data,
+                                res => {
+                                    console.log(res);
+                                    console.log(res.data.status);
+                                    if (res.data.status == true) {
+                                        //이미 가입되어있던 사람
+                                        console.log('가입');
+                                        router.push('/main');
+                                    } else {
+                                        console.log('미가입');
+                                        router.push('/user/join');
+                                    }
+                                },
+                                error => {
+                                    console.log(error);
+                                }
+                            );
+                        },
+                        fail: function(error) {
+                            alert(JSON.stringify(error));
+                        }
+                    });
+                },
+                fail: function(err) {
+                    alert(JSON.stringify(err));
+                }
+            });
+        }
+    }
+};
 </script>

@@ -1,0 +1,14 @@
+{
+    "id": 1271712045,
+    "connected_at": "2020-01-31T00:12:13Z",
+    "properties": { "nickname": "이지호" },
+    "kakao_account": {
+        "profile_needs_agreement": false,
+        "profile": { "nickname": "이지호" },
+        "has_email": true,
+        "email_needs_agreement": false,
+        "is_email_valid": true,
+        "is_email_verified": true,
+        "email": "dlwlgh301@naver.com"
+    }
+}

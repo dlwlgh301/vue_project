@@ -2,6 +2,24 @@
  User API 예시
  */
 import axios from 'axios';
+
+const UserApi = {
+    requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
+    join: data => join(data),
+    cert: (data, callback) => cert(data, callback),
+    snsDuplicate: (data, callback) => snsDuplicate(data, callback),
+    doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback)
+};
+const snsDuplicate = (data, callback) => {
+    axios
+        .post('http://192.168.100.58:8080/account/snslogin?email=' + JSON.stringify(data['email']))
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            alert(error);
+        });
+};
 const requestLogin = (data, callback, errorCallback) => {
     axios
         .post('http://192.168.100.58:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
@@ -44,7 +62,7 @@ const cert = (data, callback) => {
         });
 };
 
-const doubleCheck = data => {
+const doubleCheck = (data, callback, errorCallback) => {
     var str = '';
 
     if (data.num == 1) {
@@ -62,9 +80,13 @@ const doubleCheck = data => {
             value: str,
             num: data.num
         }
-    }).then(res => {
-        console.log(res);
-    });
+    })
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            errorCallback(error);
+        });
 };
 
 const join = body => {

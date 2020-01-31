@@ -171,7 +171,7 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-                            this.$router.push('/user/complete');
+                            this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
                         }
                     },

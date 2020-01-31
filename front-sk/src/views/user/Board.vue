@@ -34,11 +34,7 @@
 
                         <article style="float : left">
                             <div>
-                                <i
-                                    class="far fa-heart"
-                                    aria-hidden="true"
-                                    style="display : none ; margin: 10px; color:black; width:10%; height:10%"
-                                ></i>
+                                <i class="far fa-heart" aria-hidden="true" style="display : none ; margin: 10px; color:black; width:10%; height:10%"></i>
                                 <button class="wpO6b " type="button">
                                     <svg aria-label="좋아요 취소" class="_8-yf5 " fill="#ed4956" height="24" viewBox="0 0 48 48" width="24">
                                         <path
@@ -59,12 +55,7 @@
                                     </svg>
                                 </button>
 
-                                <button
-                                    v-on:click="check()"
-                                    class="fas fa-heart"
-                                    aria-hidden="true"
-                                    style="margin: 10px; color:black; width:10%; height:10%"
-                                ></button>
+                                <button v-on:click="check()" class="fas fa-heart" aria-hidden="true" style="margin: 10px; color:black; width:10%; height:10%"></button>
                                 <i class="fas fa-comments" aria-hidden="true" style="margin: 10px ;color:black; width:10%; height:10%"></i>
                             </div>
                         </article>
@@ -78,7 +69,7 @@
                             안녕하세요 안녕하세요 안녕하세안녕하세요 테스트 입스트안녕하세요안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                             안녕하세요 안녕하세요 안녕하세요 안녕하세안녕하세요 테스트 입스트안녕하세요안녕하세요 안녕하세요 안녕하세요 안녕하세요
                             안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 테스트
-                            입스트안녕하세요안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세안녕하세요
+                            입스트안녕하세요안녕하세요 안녕하세 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세안녕하세요
                             테스트 입스트안녕하세요안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                             안녕하세안녕하세요 테스트 입스트안녕하세요안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요
                             안녕하세요 안녕하세 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 테스트 입스트
