@@ -25,9 +25,13 @@
 
 <script>
 import Kakao from '../../../kakao';
+import UserApi from '../../../apis/UserApi';
 export default {
     data: () => {
-        return {};
+        return {
+            data: '',
+            email: ''
+        };
     },
     mounted() {
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
@@ -37,6 +41,38 @@ export default {
             Kakao.Auth.login({
                 success: function(authObj) {
                     alert(JSON.stringify(authObj));
+                    Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: function(res) {
+                            this.data = res;
+                            this.email = this.data.kakao_account.email;
+                            let { email } = this;
+                            let data = {
+                                email
+                            };
+                            UserApi.snsDuplicate(
+                                data,
+                                res => {
+                                    console.log(res);
+                                    console.log(res.data.status);
+                                    if (res.data.status == true) {
+                                        //이미 가입되어있던 사람
+                                        console.log('가입');
+                                        this.$router.push('/main');
+                                    } else {
+                                        console.log('미가입');
+                                        this.$router.push('/user/join');
+                                    }
+                                },
+                                error => {
+                                    console.log(error);
+                                }
+                            );
+                        },
+                        fail: function(error) {
+                            alert(JSON.stringify(error));
+                        }
+                    });
                 },
                 fail: function(err) {
                     alert(JSON.stringify(err));
