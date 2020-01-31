@@ -15,17 +15,17 @@ import javax.persistence.Id;
 public class Notice {
     @Id
     private int nid;
-    private String person1;
-    private String person1nickName;
-    private String person2;
-    private String person2nickName;
+    private String sender;
+    private String senderNick;
+    private String receiver;
+    private String receiverNick;
     private String msg;
 
-    public Notice(String person1, String person1nickName, String person2, String person2nickName, String msg) {
-        this.person1 = person1;
-        this.person1nickName = person1nickName;
-        this.person2 = person2;
-        this.person2nickName = person2nickName;
+    public Notice(String sender, String senderNick, String receiver, String receiverNick, String msg) {
+        this.sender = sender;
+        this.senderNick = senderNick;
+        this.receiver = receiver;
+        this.receiverNick = receiverNick;
         this.msg = msg;
     }
 }

@@ -1,5 +1,7 @@
 package com.web.curation.service;
 
+import java.util.List;
+
 import com.web.curation.dao.notice.NoticeDao;
 import com.web.curation.model.vo.Notice;
 
@@ -12,13 +14,13 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeDao noticeDaoImpl;
 
     @Override
-    public Notice getNotice(String email) throws Exception {
+    public List<Notice> getNotice(String email) throws Exception {
         return noticeDaoImpl.getNotice(email);
     }
 
     @Override
-    public boolean insertNotice(String p1, String p2, String msg) {
-        return noticeDaoImpl.insertNotice(p1, p2, msg);
+    public boolean insertNotice(String sender, String receiver, String msg) {
+        return noticeDaoImpl.insertNotice(sender, receiver, msg);
     }
 
 }

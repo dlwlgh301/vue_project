@@ -4,11 +4,11 @@
 
     <select id="getNotice" parameterType="string" resultType="com.web.curation.model.vo.Notice">
         select * from notice
-        where person1 = #{value}
+        where receiver = #{value}
     </select>
 
     <insert id="insertNotice" parameterType="com.web.curation.model.vo.Notice">
-        insert into notice(person1, person1nickName, person2, person2nickName, msg) 
-        values(#{person1}, #{person1nickName}, #{person2}, #{person2nickName}, #{msg})
+        insert into notice(sender, senderNick, receiver, receiverNick, msg) 
+        values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg})
     </insert>
 </mapper>
