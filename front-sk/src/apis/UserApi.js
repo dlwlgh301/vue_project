@@ -4,7 +4,7 @@
 import axios from 'axios';
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post('http://192.168.100.93:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post('http://192.168.100.58:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -13,10 +13,23 @@ const requestLogin = (data, callback, errorCallback) => {
         });
 };
 
+const requestNotice = (data, callback) => {
+    axios
+        .post('http://192.168.100.58:8080/notice/getnotice?email=' + JSON.stringify(data['email']))
+        .then(res => {
+            console.log('들어오나');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
+
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     join: data => join(data),
-    cert: (data, callback) => cert(data, callback)
+    cert: (data, callback) => cert(data, callback),
+    requestNotice: (data, callback) => requestNotice(data, callback)
 };
 const cert = (data, callback) => {
     axios
