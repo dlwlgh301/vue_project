@@ -151,7 +151,7 @@ button {
 
 textarea {
     vertical-align: top;
-    border: none;
+
     font-size: 1em;
     resize: none;
 }
@@ -784,6 +784,7 @@ p {
     margin-bottom: 10px;
 }
 .input-with-label input[type='text'],
+.input-with-label input[type='textarea'],
 .input-with-label input[type='password'] {
     width: 100%;
     float: left;
@@ -797,6 +798,8 @@ p {
 }
 .input-with-label input[type='text']:hover,
 .input-with-label input[type='text']:focus,
+.input-with-label input[type='textarea']:hover,
+.input-with-label input[type='textarea']:focus,
 .input-with-label input[type='password']:hover,
 .input-with-label input[type='password']:focus {
     border: 2px solid #009ff4;
@@ -808,6 +811,7 @@ p {
     border-bottom: 1px solid #ee4b55;
 }
 .input-with-label input[type='text'].complete,
+.input-with-label input[type='textarea'].complete,
 .input-with-label input[type='password'].complete {
     border-radius: 0;
     border: none;
@@ -821,6 +825,8 @@ p {
 }
 .input-with-label input[type='text'].disabled:hover,
 .input-with-label input[type='text'].disabled:focus,
+.input-with-label input[type='textarea'].disabled:hover,
+.input-with-label input[type='textarea'].disabled:focus,
 .input-with-label input[type='password'].disabled:hover,
 .input-with-label input[type='password'].disabled:focus {
     border: 1px solid #000;
