@@ -13,4 +13,6 @@ public interface UserService {
     String getNickName(String nickName) throws Exception;
 
     int join(User user) throws Exception;
+
+    User getUser(String email) throws Exception;
 }

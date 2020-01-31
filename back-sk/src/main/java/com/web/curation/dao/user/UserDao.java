@@ -14,4 +14,6 @@ public interface UserDao {
 
     int join(User user) throws Exception;
 
+    User getUser(String email) throws Exception;
+
 }
