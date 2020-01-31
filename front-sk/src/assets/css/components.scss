@@ -2,8 +2,8 @@
 @import './common';
 
 .components-page {
-    padding-top: 50px;
-    padding-bottom: 100px;
+    // padding-top: 50px;
+    // padding-bottom: 100px;
     h1 {
         text-align: center;
         font-weight: $f600;
@@ -16,7 +16,9 @@
         margin-bottom: 20px;
         color: $ssafy;
     }
-
+    &#tab-component {
+        margin-top: 80px;
+    }
     // input
     .input-with-label {
         @include wrap;

@@ -4,6 +4,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
+    isUser: false,
+    pageTitle: 'pagetitle',
     username: '',
     password: ''
 };

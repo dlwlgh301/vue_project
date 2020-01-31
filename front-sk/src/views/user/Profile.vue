@@ -85,6 +85,9 @@ export default {
             component: this
         };
     },
+    mounted() {
+        this.$store.commit('setPageTitle', '유저 정보');
+    },
     methods: {
         board() {
             this.$router.push('/user/Board');

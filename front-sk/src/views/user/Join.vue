@@ -356,6 +356,9 @@ export default {
                 }
             );
         }
+    },
+    mounted() {
+        this.$store.commit('setPageTitle', '회원가입');
     }
 };
 </script>

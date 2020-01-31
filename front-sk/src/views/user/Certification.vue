@@ -56,6 +56,8 @@ export default {
         //this.key = key;
         this.email = email;
         console.log(email);
+
+        this.$store.commit('setPageTitle', '회원가입');
         //console.log(key);
     },
     methods: {
