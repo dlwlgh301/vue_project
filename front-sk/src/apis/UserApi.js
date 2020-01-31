@@ -8,7 +8,8 @@ const UserApi = {
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
-    doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback)
+    doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
+    requestNotice: (data, callback) => requestNotice(data, callback)
 };
 const snsDuplicate = (data, callback) => {
     axios
@@ -44,13 +45,6 @@ const requestNotice = (data, callback) => {
         });
 };
 
-const UserApi = {
-    requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
-    join: data => join(data),
-    cert: (data, callback) => cert(data, callback),
-    requestNotice: (data, callback) => requestNotice(data, callback),
-    doubleCheck: data => doubleCheck(data)
-};
 const cert = (data, callback) => {
     axios
         .post('http://192.168.100.58:8080/account/emailcert?email=' + JSON.stringify(data['email']))
