@@ -8,6 +8,7 @@
         <router-view class="page"></router-view>
     </div>
 </template>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 import HeaderComponent from './components/common/NavBar';
 import BottomNavComponent from './components/common/BottomNav';
