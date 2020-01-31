@@ -1,0 +1,26 @@
+package com.web.curation.service;
+
+import java.util.List;
+
+import com.web.curation.dao.notice.NoticeDao;
+import com.web.curation.model.vo.Notice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NoticeServiceImpl implements NoticeService {
+    @Autowired
+    NoticeDao noticeDaoImpl;
+
+    @Override
+    public List<Notice> getNotice(String email) throws Exception {
+        return noticeDaoImpl.getNotice(email);
+    }
+
+    @Override
+    public boolean insertNotice(String sender, String receiver, String msg) {
+        return noticeDaoImpl.insertNotice(sender, receiver, msg);
+    }
+
+}

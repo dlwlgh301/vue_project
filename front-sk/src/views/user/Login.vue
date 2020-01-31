@@ -26,7 +26,6 @@
                 <input
                     v-model="password"
                     :type="password ? type : 'text'"
-                    @input="changeInput($event, inputValue)"
                     v-bind:class="{
                         error: error.password,
                         complete: !error.password && password.length !== 0
@@ -44,7 +43,6 @@
             </div>
 
             <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
-            <div class="error-text" v-if="error.message">{{ error.message }}</div>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>
@@ -90,6 +88,7 @@ import GoogleLogin from '../../components/user/snsLogin/Google.vue';
 import TwitterLogin from '../../components/user/snsLogin/Twitter.vue';
 import FacebookLogin from '../../components/user/snsLogin/Facebook.vue';
 import UserApi from '../../apis/UserApi';
+import Swal from 'sweetalert2';
 
 export default {
     components: {
@@ -127,12 +126,25 @@ export default {
             this.enterInput(event.target.value, type);
         },
         checkForm() {
-            if (this.email.length >= 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
-            else this.error.email = false;
+            if (this.email.length == 0) {
+                this.error.submit = true;
+                this.error.email = '';
+            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
+            else {
+                this.error.email = false;
+                this.error.submit = false;
+            }
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+            if (this.password.length == 0) {
+                this.error.submit = true;
+                this.error.password = '';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) {
+                console.log('형식맞음!!!');
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
-            else this.error.password = false;
+            } else {
+                this.error.password = false;
+                this.error.submit = false;
+            }
 
             let isSubmit = true;
             Object.values(this.error).map(v => {
@@ -154,11 +166,14 @@ export default {
                     data,
                     res => {
                         console.log(res);
-                        this.isSubmit = false;
                         if (res.data.data == 'fail') {
                             console.log(res.data.status);
                             this.password = '';
-                            this.error.message = '이메일 혹은 비밀번호가 잘못되었습니다.';
+                            Swal.fire({
+                                icon: 'error',
+                                title: '로그인 실패',
+                                text: '아이디 혹은 비밀번호가 틀렸습니다'
+                            });
                         } else {
                             console.log(res.data.status);
                             this.$router.push('/user/complete');
@@ -183,7 +198,7 @@ export default {
             error: {
                 email: false,
                 passowrd: false,
-                message: false
+                submit: false
             },
             isSubmit: false,
             component: this
