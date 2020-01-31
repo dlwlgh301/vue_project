@@ -20,25 +20,26 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uid;
     private String password;
+    @Id
     private String email;
+
     private String nickName;
     private String name;
     private String comment;
     private String keyword;
+    private String imgURL;
 
-    public User(String password, String email, String nickName, String name, String comment, String keyword) {
+    public User(String password, String email, String nickName, String name, String comment, String keyword,
+            String imgURL) {
         this.password = password;
         this.email = email;
         this.nickName = nickName;
         this.name = name;
         this.comment = comment;
         this.keyword = keyword;
+        this.imgURL = imgURL;
     }
     // @Column(insertable = false, updatable = false)
     // private LocalDateTime createDate;
