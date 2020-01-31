@@ -87,6 +87,7 @@ import GoogleLogin from '../../components/user/snsLogin/Google.vue';
 import TwitterLogin from '../../components/user/snsLogin/Twitter.vue';
 import FacebookLogin from '../../components/user/snsLogin/Facebook.vue';
 import UserApi from '../../apis/UserApi';
+import Swal from 'sweetalert2';
 
 export default {
     components: {
@@ -167,7 +168,11 @@ export default {
                         if (res.data.data == 'fail') {
                             console.log(res.data.status);
                             this.password = '';
-                            alert('아이디 혹은 패스워드가 틀렸습니다.');
+                            Swal.fire({
+                                icon: 'error',
+                                title: '로그인 실패',
+                                text: '아이디 혹은 비밀번호가 틀렸습니다'
+                            });
                         } else {
                             console.log(res.data.status);
                             this.$router.push('/user/complete');
