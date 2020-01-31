@@ -1,15 +1,15 @@
 * {
     box-sizing: border-box;
 }
-html {
-    background-color: #42c6e7;
-    background-image: linear-gradient(45deg, rgba(255, 93, 177, 1) 0%, rgba(12, 242, 185, 0) 100%),
-        linear-gradient(135deg, rgba(12, 242, 185, 1) 0%, rgba(255, 93, 177, 0) 100%);
-    background-repeat: no-repeat;
-    height: 100%;
-    background-attatchment: fixed;
-    font-family: 'Source Sans Pro', san-serif;
-}
+// html {
+//     background-color: #42c6e7;
+//     background-image: linear-gradient(45deg, rgba(255, 93, 177, 1) 0%, rgba(12, 242, 185, 0) 100%),
+//         linear-gradient(135deg, rgba(12, 242, 185, 1) 0%, rgba(255, 93, 177, 0) 100%);
+//     background-repeat: no-repeat;
+//     height: 100%;
+//     background-attatchment: fixed;
+//     font-family: 'Source Sans Pro', san-serif;
+// }
 body {
     color: #fff;
     a {

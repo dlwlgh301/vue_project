@@ -26,6 +26,7 @@
 <script>
 import Kakao from '../../../kakao';
 import UserApi from '../../../apis/UserApi';
+import router from '../../../routes';
 export default {
     data: () => {
         return {
@@ -58,10 +59,10 @@ export default {
                                     if (res.data.status == true) {
                                         //이미 가입되어있던 사람
                                         console.log('가입');
-                                        this.$router.push('/main');
+                                        router.push('/main');
                                     } else {
                                         console.log('미가입');
-                                        this.$router.push('/user/join');
+                                        router.push('/user/join');
                                     }
                                 },
                                 error => {
