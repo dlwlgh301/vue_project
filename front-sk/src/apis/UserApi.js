@@ -16,7 +16,8 @@ const requestLogin = (data, callback, errorCallback) => {
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     join: data => join(data),
-    cert: (data, callback) => cert(data, callback)
+    cert: (data, callback) => cert(data, callback),
+    doubleCheck: data => doubleCheck(data)
 };
 const cert = (data, callback) => {
     axios
@@ -28,6 +29,30 @@ const cert = (data, callback) => {
             alert('error' + error);
         });
 };
+
+const doubleCheck = data => {
+    var str = '';
+
+    if (data.num == 1) {
+        console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
+        str = data.email;
+    } else if (data.num == 2) {
+        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
+        str = data.nickName;
+    }
+
+    axios({
+        url: 'http://192.168.100.90:8080/account/doubleCheck',
+        method: 'post',
+        params: {
+            value: str,
+            num: data.num
+        }
+    }).then(res => {
+        console.log(res);
+    });
+};
+
 const join = body => {
     var value = {
         password: body.password,

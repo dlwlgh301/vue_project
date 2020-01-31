@@ -6,6 +6,7 @@
 <template>
     <div class="wrapB" style="padding-top: 100px;">
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+
         <div class="join">
             <div class="input-with-label">
                 <input
@@ -16,6 +17,7 @@
                     type="text"
                 />
                 <label for="email">이메일</label>
+                <button id="doubleCheck" @click="doubleCheck(1)">중복확인</button>
                 <div class="error-text" v-if="error.email">{{ error.email }}</div>
             </div>
 
@@ -63,6 +65,7 @@
                     type="text"
                 />
                 <label for="nickname">닉네임</label>
+                <button @click="doubleCheck(2)">중복확인</button>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
@@ -79,7 +82,12 @@
         </div>
 
         <label>
-            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
+            <input
+                v-model="isTerm"
+                type="checkbox"
+                id="term"
+                v-bind:class="{ error: error.isTerm, complete: !error.isTerm }"
+            />
             <span>약관을 동의합니다.</span>
         </label>
         <div v-if="showModal">
@@ -106,7 +114,12 @@
 
         <button @click="showModal = true">약관보기</button>
 
-        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
+        <button
+            class="btn btn--back"
+            v-on:click="join"
+            :disabled="!isSubmit"
+            :class="{ disabled: !isSubmit }"
+        >가입하기</button>
         <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
     </div>
 </template>
@@ -128,6 +141,7 @@ export default {
             name: '',
             comment: '',
             key: '',
+            imgURL: '',
             isTerm: false,
             isLoading: false,
             error: {
@@ -232,6 +246,7 @@ export default {
             });
             this.isSubmit = isSubmit;
         },
+
         join() {
             if (this.isSubmit) {
                 var { email, password, nickName, comment, name } = this;
@@ -242,7 +257,8 @@ export default {
                     password,
                     nickName,
                     comment,
-                    name
+                    name,
+                    imgURL
                 };
                 console.log(this.email);
                 //요청 후에는 버튼 비활성화
@@ -288,6 +304,18 @@ export default {
         },
         showmodal() {
             this.showModal = false;
+        },
+        doubleCheck(num) {
+            var body = {
+                password: this.password,
+                email: this.email,
+                nickName: this.nickName,
+                name: this.name,
+                comment: this.comment,
+                num: num
+            };
+
+            UserApi.doubleCheck(body);
         }
     }
 };

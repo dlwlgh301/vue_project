@@ -13,23 +13,20 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Board {
+public class Comment {
     @Id
+    private int num;
     private int boardNumber;
+    private String comment;
     private String email;
-    private String contents;
-    private String keyword;
-    private int likeNumber;
-    private int productNumber;
+    private String nickName;
     private String imgURL;
 
-    public Board(String email, String contents, String keyword, int likeNumber, int productNumber, String imgURL) {
+    public Comment(int boardNumber, String comment, String email, String nickName, String imgURL) {
+        this.boardNumber = boardNumber;
+        this.comment = comment;
         this.email = email;
-        this.contents = contents;
-        this.keyword = keyword;
-        this.likeNumber = likeNumber;
-        this.productNumber = productNumber;
+        this.nickName = nickName;
         this.imgURL = imgURL;
     }
-
 }
