@@ -7,16 +7,9 @@ import store from './vuex/store';
 import VueMaterial from 'vue-material';
 import Vuetify from 'vuetify';
 import 'vue-material/dist/vue-material.min.css';
-<<<<<<< HEAD
 import vuetify from './plugins/vuetify';
 
 Vue.use(Vuetify);
-=======
-//import MilkUI from '@guruahn/milkui';
-//import '@guruahn/milkui/src/plugins/milkui/styles/Style.scss';
-
-//Vue.use(MilkUI);
->>>>>>> 11956e535f27d784de147c1ecd9f185726c5acda
 
 Vue.use(VueMaterial);
 
