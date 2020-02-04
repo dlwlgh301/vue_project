@@ -19,8 +19,8 @@
     </select>
 
     <insert id="join" parameterType="com.web.curation.model.user.User">
-        insert into user(email,password,name,nickName,comment,keyword) 
-        values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword})
+        insert into user(email,password,name,nickName,comment,keyword,imgURL) 
+        values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword}, #{imgURL} )
     </insert>
 
     <select id="login" resultType="com.web.curation.model.user.User" parameterType="com.web.curation.model.user.User" >

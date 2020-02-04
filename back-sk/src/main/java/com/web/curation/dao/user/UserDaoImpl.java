@@ -14,6 +14,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByEmail(String email) {
+        System.out.println("dao : " + email);
         return sqlSession.selectOne("getUserByEmail", email);
     }
 

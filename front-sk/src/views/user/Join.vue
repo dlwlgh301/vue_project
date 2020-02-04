@@ -8,6 +8,12 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
 
         <div class="join">
+            <div>
+                <div class="img-box"></div>
+                <label for="img">사진 : </label>
+                <input v-on:change="fileSelect()" type="file" ref="imgURL" id="img" />
+            </div>
+
             <div class="input-with-label">
                 <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
                 <label for="email">이메일</label>
@@ -67,13 +73,13 @@
                     <div class="modal-wrapper">
                         <div class="modal-container">
                             <div class="modal-header">
-                                <slot name="header">약관동의</slot>
+                                <slot name="header"></slot>
                             </div>
                             <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    동의하십니까?
-                                    <br />
+                                    약관입니다.
+                                    <br /><br />
                                     <button @click="showmodal">확인</button>
                                 </slot>
                             </div>
@@ -174,8 +180,7 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
-                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -184,8 +189,7 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
-                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
@@ -236,6 +240,8 @@ export default {
         },
 
         join() {
+            console.log('ddddddddddddddddddddddd ' + this.imgURL);
+
             if (this.isSubmit) {
                 var { email, password, nickName, comment, name, imgURL } = this;
 
@@ -266,9 +272,12 @@ export default {
                 sessionStorage.setItem('nickName', this.nickName);
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
+                sessionStorage.setItem('imgURL', this.imgURL);
+
                 UserApi.cert(
                     data,
                     res => {
+                        console.log('???????????????');
                         //console.log(res);
                         //console.log(res.data.object.key);
                         this.key = res.data.object.key;
@@ -287,6 +296,7 @@ export default {
                 // console.log('axios 함!!!');
             }
         },
+        async test() {},
         back() {
             this.$router.push('/');
         },
@@ -300,7 +310,8 @@ export default {
                 nickName: this.nickName,
                 name: this.name,
                 comment: this.comment,
-                num: num
+                num: num,
+                imgURL: this.imgURL
             };
 
             UserApi.doubleCheck(
@@ -355,6 +366,13 @@ export default {
                     console.log(error);
                 }
             );
+        },
+
+        fileSelect() {
+            this.imgURL = this.$refs.imgURL.files[0];
+            console.log(this.imgURL);
+            console.log(this.imgURL.name);
+            this.imgURL = this.imgURL.name;
         }
     },
     mounted() {

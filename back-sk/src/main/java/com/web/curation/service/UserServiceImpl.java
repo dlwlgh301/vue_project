@@ -15,6 +15,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
+        System.out.println("service : " + email);
         return userDaoImpl.getUserByEmail(email);
     }
 

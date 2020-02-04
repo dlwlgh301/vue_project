@@ -1,6 +1,7 @@
 package com.web.curation.controller.account;
 
 import java.util.Random;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -99,7 +100,7 @@ public class AccountController {
 
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(user);
+        System.out.println("uuuuuuuuuuuuuu" + user);
         String email = userServiceImpl.getEmail(user.getEmail());
 
         System.out.println("db에 이메일이 있는지 확인 :" + email);
@@ -123,8 +124,18 @@ public class AccountController {
 
         else {
             System.out.println("가입하기 들어옴");
+
+            StringTokenizer st = new StringTokenizer(user.getImgURL(), ".");
+
+            String hi = st.nextToken();
+            System.out.println(hi);
+
             User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
-                    user.getComment(), user.getKeyword(), user.getImgURL());
+                    user.getComment(), user.getKeyword(), hi);
+
+            System.out.println("====================");
+            System.out.println(puser);
+            System.out.println("====================");
 
             userServiceImpl.join(puser);
             result.status = true;
@@ -182,6 +193,9 @@ public class AccountController {
     @PostMapping("/account/emailcert")
     @ApiOperation(value = "메일 인증번호 확인하기")
     public Object sendEmail(@RequestParam(required = true) final String email) {
+
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + email);
+
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
         final BasicResponse result = new BasicResponse();
@@ -203,7 +217,7 @@ public class AccountController {
 
     @PostMapping("/account/profile")
     @ApiOperation(value = "프로필 띄우기")
-    public Object profile(@Valid @RequestBody final String email) throws Exception {
+    public Object profile(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         System.out.println("user 이메일 : " + email);
