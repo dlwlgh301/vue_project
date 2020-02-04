@@ -1,3 +1,5 @@
+import Vue from 'vue';
+import Router from 'vue-router';
 import Certification from './views/user/Certification.vue';
 import Login from './views/user/Login.vue';
 import Join from './views/user/Join.vue';
@@ -15,88 +17,94 @@ import noticeTab from './views/user/noticeTab';
 import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
 
-export default [
-    {
-        path: '/',
-        name: 'Login',
-        component: Login
-    },
-    {
-        path: '/user/Profile',
-        name: 'Profile',
-        component: Profile
-    },
-    {
-        path: '/user/join',
-        name: 'Join',
-        component: Join
-    },
-    {
-        path: '/user/find',
-        name: 'Find',
-        component: Find
-    },
-    {
-        path: '/user/Board',
-        name: 'Board',
-        component: Board
-    },
-    {
-        path: '/components',
-        name: 'Components',
-        component: Components
-    },
-    {
-        path: '/user/certification',
-        name: 'Certification',
-        component: Certification
-    },
-    {
-        path: '/user/certComplete',
-        name: 'CertComplete',
-        component: CertComplete
-    },
-    {
-        path: '/user/complete',
-        name: 'LoginComplete',
-        component: LoginComplete
-    },
-    {
-        path: '/user/change',
-        name: 'Change',
-        component: Change
-    },
-    {
-        path: '/user/changeComplete',
-        name: 'ChangeComplete',
-        component: ChangeComplete
-    },
-    {
-        path: '/user/findcert/:email',
-        name: 'FindCert',
-        component: FindCert
-    },
-    {
-        path: '/user/noticeTab',
-        name: 'noticeTab',
-        component: noticeTab
-    },
-    {
-        path: '*',
-        redirect: '/404'
-    },
-    {
-        path: '/404',
-        component: NotFound
-    },
-    {
-        path: '/user/userUpdate',
-        name: 'UserUpdate',
-        component: UserUpdate
-    },
-    {
-        path: '/main',
-        name: 'Main',
-        component: Main
-    }
-];
+Vue.use(Router);
+
+const router = new Router({
+    routes: [
+        {
+            path: '/',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/user/Profile',
+            name: 'Profile',
+            component: Profile
+        },
+        {
+            path: '/user/join',
+            name: 'Join',
+            component: Join
+        },
+        {
+            path: '/user/find',
+            name: 'Find',
+            component: Find
+        },
+        {
+            path: '/user/Board',
+            name: 'Board',
+            component: Board
+        },
+        {
+            path: '/components',
+            name: 'Components',
+            component: Components
+        },
+        {
+            path: '/user/certification',
+            name: 'Certification',
+            component: Certification
+        },
+        {
+            path: '/user/certComplete',
+            name: 'CertComplete',
+            component: CertComplete
+        },
+        {
+            path: '/user/complete',
+            name: 'LoginComplete',
+            component: LoginComplete
+        },
+        {
+            path: '/user/change',
+            name: 'Change',
+            component: Change
+        },
+        {
+            path: '/user/changeComplete',
+            name: 'ChangeComplete',
+            component: ChangeComplete
+        },
+        {
+            path: '/user/findcert/:email',
+            name: 'FindCert',
+            component: FindCert
+        },
+        {
+            path: '/user/noticeTab',
+            name: 'noticeTab',
+            component: noticeTab
+        },
+        {
+            path: '*',
+            redirect: '/404'
+        },
+        {
+            path: '/404',
+            component: NotFound
+        },
+        {
+            path: '/user/userUpdate',
+            name: 'UserUpdate',
+            component: UserUpdate
+        },
+        {
+            path: '/main',
+            name: 'Main',
+            component: Main
+        }
+    ]
+});
+
+export default router;

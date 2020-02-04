@@ -26,19 +26,18 @@
                         </template>
                     </v-list>
                     <v-list v-if="tab == 1">
-                        <template v-for="(notice_item, index) in notice_items">
-                            <v-subheader v-if="notice_item.header" :key="notice_item.header">{{ notice_item.header }}</v-subheader>
-                            <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider>
-                            <v-list-item v-else :key="notice_item.userId" avatar v-show="!notice_item.accept">
-                                <v-avatar>
-                                    <v-img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
-                                </v-avatar>
-
+                        <template v-for="(follow_item, index) in follow_items">
+                            <v-subheader v-if="follow_item.header" :key="follow_item.header">{{ follow_item.header }}</v-subheader>
+                            <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider>
+                            <v-list-item v-else :key="follow_item.userId" avatar v-show="!follow_item.accept">
+                                <v-list-item-avatar>
+                                    <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative">요청 수락</v-btn>
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
                                 <v-btn text icon color="#fff">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
@@ -63,6 +62,7 @@ export default {
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
             notice_items: [],
+<<<<<<< HEAD
             follow_items: [
                 { header: '팔로우 요청' },
                 {
@@ -84,6 +84,9 @@ export default {
                     subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
                 }
             ]
+=======
+            follow_items: []
+>>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         };
     },
     methods: {
@@ -104,6 +107,7 @@ export default {
                             subtitle: res.data[i].msg
                         };
                         this.notice_items.push(new_noticeItem);
+                        this.follow_items.push(new_noticeItem);
                     }
                 },
                 error => {
@@ -112,7 +116,7 @@ export default {
             );
         },
         followAccept: function() {
-            this.notice_items.accept = true;
+            this.isAccept = false;
         }
     },
     mounted() {
