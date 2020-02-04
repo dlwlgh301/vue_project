@@ -42,6 +42,7 @@
                 border-radius: 0;
                 border: none;
                 border-bottom: 1px solid $red;
+                background-color: transparent !important;
             }
             &.complete {
                 border-radius: 0;
