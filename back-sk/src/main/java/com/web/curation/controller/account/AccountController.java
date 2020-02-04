@@ -2,6 +2,8 @@ package com.web.curation.controller.account;
 
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
@@ -195,6 +197,24 @@ public class AccountController {
         result.status = true;
         result.data = "success";
         result.object = dummyUser.toMap();
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/account/profile")
+    @ApiOperation(value = "프로필 띄우기")
+    public Object profile(@Valid @RequestBody final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        System.out.println("user 이메일 : " + email);
+
+        User user = userServiceImpl.getUserByEmail(email);
+
+        System.out.println("가져온 user 확인 : " + user);
+
+        result.object = user;
+        result.status = true;
+        result.data = "success";
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

@@ -13,14 +13,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDaoImpl;
 
-    public List<User> getAll() throws Exception {
-        // return userDao.findAll();
-        return null;
-    }
-
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        return userDaoImpl.getUserByEmail(email);
     }
 
     @Override

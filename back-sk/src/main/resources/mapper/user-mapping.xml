@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.curation.dao.user.UserDao">
-    <select id="getAll" resultType="com.web.curation.model.user.User">
-        SELECT * FROM user
+
+    <select id="getUserByEmail" resultType="com.web.curation.model.user.User" parameterType="string">
+        select * from user
+        where email=#{value}
     </select>
+
 
     <select id="getEmail" resultType="string" parameterType="string">
         select email from user

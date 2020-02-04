@@ -14,8 +14,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByEmail(String email) {
-        // TODO Auto-generated method stub
-        return null;
+        return sqlSession.selectOne("getUserByEmail", email);
     }
 
     @Override
