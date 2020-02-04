@@ -26,20 +26,19 @@
                         </template>
                     </v-list>
                     <v-list v-if="tab == 1">
-                        <template v-for="(notice_item, index) in notice_items">
-                            <v-subheader v-if="notice_item.header" :key="notice_item.header">{{ notice_item.header }}</v-subheader>
-                            <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider>
-                            <v-list-item v-else :key="notice_item.userId" avatar v-show="!notice_item.accept">
-                                <v-avatar>
-                                    <v-img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
-                                </v-avatar>
-
+                        <template v-for="(follow_item, index) in follow_items">
+                            <v-subheader v-if="follow_item.header" :key="follow_item.header">{{ follow_item.header }}</v-subheader>
+                            <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider>
+                            <v-list-item v-else :key="index" avatar v-show="!follow_item.accept">
+                                <v-list-item-avatar>
+                                    <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative">요청 수락</v-btn>
-                                <v-btn text icon color="#fff">
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="newFollow()">요청 수락</v-btn>
+                                <v-btn text icon color="#fff" @click="removeFollow(index)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -60,9 +59,10 @@ export default {
     data() {
         return {
             email: 'ihs3583@gmail.com',
+            isremove: [],
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
-            notice_items: [],
+            notice_items: [{ header: '알림' }],
             follow_items: [
                 { header: '팔로우 요청' },
                 {
@@ -75,8 +75,7 @@ export default {
                 {
                     avatar: '/static/doc-images/lists/2.jpg',
                     title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-                    subtitle:
-                        "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
+                    subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
                 },
                 { divider: true, inset: true },
                 {
@@ -112,8 +111,22 @@ export default {
                 }
             );
         },
-        followAccept: function() {
-            this.notice_items.accept = true;
+        newFollow: function() {
+            this.follow_items.push({
+                avatar:
+                    'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
+                userId: '이지호',
+                subtitle: '팔로우 요청을 또 보냈습니다'
+            });
+            this.follow_items.push({ divider: true, inset: true });
+        },
+        removeFollow(idx) {
+            console.log(this.follow_items);
+            console.log(idx);
+            this.isremove.push(idx);
+            this.follow_items.splice(idx);
+            console.log('isremove', this.isremove);
+            // this.follow_items.splice(idx);
         }
     },
     mounted() {
