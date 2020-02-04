@@ -39,11 +39,7 @@ const profileLoad = (data, callback, errorCallback) => {
 
 const requestLogin = (data, callback, errorCallback) => {
     axios
-<<<<<<< HEAD
-        .post('http://192.168.100.90:8080/account/login?email=' + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
-=======
         .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
 
         .then(res => {
             callback(res);
@@ -55,11 +51,7 @@ const requestLogin = (data, callback, errorCallback) => {
 
 const requestNotice = (data, callback) => {
     axios
-<<<<<<< HEAD
-        .post('http://192.168.100.90:8080/notice/getnotice?email=' + JSON.stringify(data['email']))
-=======
         .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         .then(res => {
             console.log('들어오나');
             callback(res);
@@ -71,11 +63,7 @@ const requestNotice = (data, callback) => {
 
 const cert = (data, callback) => {
     axios
-<<<<<<< HEAD
-        .post('http://192.168.100.90:8080/account/emailcert?email=' + JSON.stringify(data['email']))
-=======
         .post(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         .then(res => {
             callback(res);
         })
@@ -96,11 +84,7 @@ const doubleCheck = (data, callback, errorCallback) => {
     }
 
     axios({
-<<<<<<< HEAD
-        url: 'http://192.168.100.90:8080/account/doubleCheck',
-=======
         url: `${host}/account/doubleCheck`,
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         method: 'post',
         params: {
             value: str,
@@ -129,11 +113,7 @@ const join = body => {
     console.log(value);
 
     axios({
-<<<<<<< HEAD
-        url: 'http://192.168.100.90:8080/account/signup',
-=======
         url: `${host}/account/signup`,
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
