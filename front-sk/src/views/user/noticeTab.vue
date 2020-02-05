@@ -37,7 +37,9 @@
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true"
+                                    >수락</v-btn
+                                >
                                 <v-btn text icon color="#fff">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
@@ -56,8 +58,12 @@ import UserApi from '../../apis/UserApi';
 
 export default {
     name: 'noticeTab',
+    created() {
+        this.$store.commit('setPageTitle', '알림');
+    },
     data() {
         return {
+            pageTitle: '알림',
             email: 'ihs3583@gmail.com',
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
@@ -97,7 +103,6 @@ export default {
     },
     mounted() {
         this.loadNotice();
-        this.$store.commit('setPageTitle', '알림');
     }
 };
 </script>

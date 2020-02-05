@@ -94,7 +94,7 @@ export default {
     },
     created() {
         this.component = this;
-
+        this.$store.commit('setPageTitle', '로그인');
         this.passwordSchema
             .is()
             .min(8)
@@ -183,6 +183,9 @@ export default {
                     }
                 );
             }
+        },
+        loadPage() {
+            this.$store.commit('setPageTitle', '로그인');
         }
     },
     data: () => {
@@ -201,9 +204,6 @@ export default {
             isSubmit: false,
             component: this
         };
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '로그인');
     }
 };
 </script>

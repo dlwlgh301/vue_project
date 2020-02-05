@@ -22,13 +22,13 @@
 
 <script>
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '비밀번호 변경');
+    },
     methods: {
         back() {
             this.$router.push('/');
         }
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '비밀번호 변경');
     }
 };
 </script>
