@@ -135,7 +135,7 @@ button {
 }
 
 .wrapB {
-    padding: 0 10px;
+    padding: 0 0px;
     box-sizing: border-box;
 }
 
@@ -503,7 +503,7 @@ p {
 
 .btn--back {
     width: $c100;
-    background-color: #009ff4;
+    background-color: $ssafy;
     border-radius: 3px;
     font-weight: $f600;
     box-shadow: none;
@@ -763,13 +763,13 @@ p {
 }
 
 fieldset {
-    border: 1px solid #009ff4;
+    border: 1px solid $ssafy;
     width: 300;
     height: 50;
 
     &:hover,
     &:focus {
-        border: 2px solid #009ff4;
+        border: 2px solid $ssafy;
     }
     &.disabled {
         background: #eee;
@@ -785,8 +785,8 @@ fieldset {
     height: 40px;
     width: 80px;
     line-height: 1em;
-    border: 2px solid #009ff4;
-    background-color: #009ff4;
+    border: 2px solid $ssafy;
+    background-color: $ssafy;
 }
 .input-with-label {
     @include wrap;
@@ -801,11 +801,11 @@ fieldset {
         padding: 0 15px 0 105px;
         box-sizing: border-box;
         color: #000;
-        border: 1px solid #009ff4;
+        border: 1px solid $ssafy;
         border-radius: 3px;
         &:hover,
         &:focus {
-            border: 2px solid #009ff4;
+            border: 2px solid $ssafy;
         }
         &.error {
             border-radius: 0;
@@ -847,13 +847,13 @@ fieldset {
     //     }
     // }
     textarea {
-        border: 1px solid #009ff4;
+        border: 1px solid $ssafy;
         width: 50;
         height: 50;
 
         &:hover,
         &:focus {
-            border: 2px solid #009ff4;
+            border: 2px solid $ssafy;
         }
         &.disabled {
             background: #eee;

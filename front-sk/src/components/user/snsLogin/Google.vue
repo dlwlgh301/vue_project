@@ -19,40 +19,16 @@
                     </g>
                     <g id="Google__G__Logo" transform="translate(318 424)">
                         <g id="그룹_114" data-name="그룹 114" clip-path="url(#clip-path)">
-                            <path
-                                id="패스_154"
-                                data-name="패스 154"
-                                d="M0,22.637V11l7.609,5.819Z"
-                                transform="translate(-0.895 -6.972)"
-                                fill="#fbbc05"
-                            />
+                            <path id="패스_154" data-name="패스 154" d="M0,22.637V11l7.609,5.819Z" transform="translate(-0.895 -6.972)" fill="#fbbc05" />
                         </g>
                         <g id="그룹_115" data-name="그룹 115" clip-path="url(#clip-path)">
-                            <path
-                                id="패스_156"
-                                data-name="패스 156"
-                                d="M0,4.923l7.609,5.819,3.133-2.73L21.484,6.266V0H0Z"
-                                transform="translate(-0.895 -0.895)"
-                                fill="#ea4335"
-                            />
+                            <path id="패스_156" data-name="패스 156" d="M0,4.923l7.609,5.819,3.133-2.73L21.484,6.266V0H0Z" transform="translate(-0.895 -0.895)" fill="#ea4335" />
                         </g>
                         <g id="그룹_116" data-name="그룹 116" clip-path="url(#clip-path)">
-                            <path
-                                id="패스_158"
-                                data-name="패스 158"
-                                d="M0,16.561,13.428,6.266l3.536.448L21.484,0V21.484H0Z"
-                                transform="translate(-0.895 -0.895)"
-                                fill="#34a853"
-                            />
+                            <path id="패스_158" data-name="패스 158" d="M0,16.561,13.428,6.266l3.536.448L21.484,0V21.484H0Z" transform="translate(-0.895 -0.895)" fill="#34a853" />
                         </g>
                         <g id="그룹_117" data-name="그룹 117" clip-path="url(#clip-path)">
-                            <path
-                                id="패스_160"
-                                data-name="패스 160"
-                                d="M28.666,27.561,14.79,16.819,13,15.476,28.666,11Z"
-                                transform="translate(-8.077 -6.972)"
-                                fill="#4285f4"
-                            />
+                            <path id="패스_160" data-name="패스 160" d="M28.666,27.561,14.79,16.819,13,15.476,28.666,11Z" transform="translate(-8.077 -6.972)" fill="#4285f4" />
                         </g>
                     </g>
                 </g>

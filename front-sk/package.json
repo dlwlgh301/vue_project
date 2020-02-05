@@ -27,8 +27,8 @@
         "vue": "^2.6.10",
         "vue-material": "^1.0.0-beta-11",
         "vue-router": "^3.1.5",
-        "vuetify": "^2.2.8",
         "vue-simple-alert": "^1.1.1",
+        "vuetify": "^2.2.8",
         "vuex": "^3.1.2"
     },
     "devDependencies": {
@@ -43,6 +43,7 @@
         "babel-eslint": "^10.0.3",
         "babel-jest": "^24.9.0",
         "babel-preset-jest": "^25.0.0",
+        "element-ui": "^2.13.0",
         "eslint": "^6.8.0",
         "eslint-plugin-import": "^2.19.1",
         "eslint-plugin-node": "^10.0.0",
