@@ -29,7 +29,11 @@
                         <template v-for="(follow_item, index) in follow_items">
                             <v-subheader v-if="follow_item.header" :key="follow_item.header">{{ follow_item.header }}</v-subheader>
                             <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider>
+<<<<<<< HEAD
                             <v-list-item v-else :key="index" avatar v-show="!follow_item.accept">
+=======
+                            <v-list-item v-else :key="follow_item.userId" avatar v-show="!follow_item.accept">
+>>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
                                 <v-list-item-avatar>
                                     <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
@@ -37,8 +41,13 @@
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
+<<<<<<< HEAD
                                 <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="newFollow()">요청 수락</v-btn>
                                 <v-btn text icon color="#fff" @click="removeFollow(index)">
+=======
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
+                                <v-btn text icon color="#fff">
+>>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -62,6 +71,7 @@ export default {
             isremove: [],
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
+<<<<<<< HEAD
             notice_items: [{ header: '알림' }],
             follow_items: [
                 { header: '팔로우 요청' },
@@ -84,6 +94,10 @@ export default {
                     subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
                 }
             ]
+=======
+            notice_items: [],
+            follow_items: []
+>>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         };
     },
     methods: {
@@ -104,6 +118,7 @@ export default {
                             subtitle: res.data[i].msg
                         };
                         this.notice_items.push(new_noticeItem);
+                        this.follow_items.push(new_noticeItem);
                     }
                 },
                 error => {
@@ -111,6 +126,7 @@ export default {
                 }
             );
         },
+<<<<<<< HEAD
         newFollow: function() {
             this.follow_items.push({
                 avatar:
@@ -127,6 +143,10 @@ export default {
             this.follow_items.splice(idx);
             console.log('isremove', this.isremove);
             // this.follow_items.splice(idx);
+=======
+        followAccept: function() {
+            this.isAccept = false;
+>>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         }
     },
     mounted() {
