@@ -35,7 +35,6 @@ export default {
     },
     mounted() {
         this.route = this.$router;
-    },
-    beforeDestory() {}
+    }
 };
 </script>
