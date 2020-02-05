@@ -171,13 +171,9 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-<<<<<<< HEAD
-                            this.$router.push('/user/Profile');
-=======
                             this.$store.commit('loginToken', res.data.token);
                             this.$store.state.email = this.email;
-                            this.$router.push('/main');
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
+                            this.$router.push('/user/Profile');
                             //요청이 끝나면 버튼 활성화
                         }
                     },

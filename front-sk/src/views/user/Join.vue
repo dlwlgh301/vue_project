@@ -8,6 +8,17 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
 
         <div class="join">
+            <div id="imageMain">
+                <div v-if="!image">
+                    <h2>Select an image</h2>
+                    <input type="file" @change="onFileChange" />
+                </div>
+                <div v-else>
+                    <img :src="image" />
+                    <button @click="removeImage">Remove image</button>
+                </div>
+            </div>
+
             <div>
                 <div class="img-box"></div>
                 <label for="img">사진 : </label>
@@ -130,7 +141,9 @@ export default {
             isSubmit: false,
             passwordType: 'password',
             passwordConfirmType: 'password',
-            showModal: false
+            showModal: false,
+            imageMain: '',
+            image: ''
         };
     },
     created() {
@@ -373,6 +386,26 @@ export default {
             console.log(this.imgURL);
             console.log(this.imgURL.name);
             this.imgURL = this.imgURL.name;
+        },
+
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            // var image = new Image();
+            this.image = true;
+            var reader = new FileReader();
+            var vm = this;
+
+            reader.onload = e => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImage: function() {
+            this.image = '';    
         }
     },
     mounted() {

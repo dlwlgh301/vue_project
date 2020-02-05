@@ -62,31 +62,7 @@ export default {
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
             notice_items: [],
-<<<<<<< HEAD
-            follow_items: [
-                { header: '팔로우 요청' },
-                {
-                    avatar:
-                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
-                    userId: '이지호',
-                    subtitle: '팔로우 요청을 보냈습니다'
-                },
-                { divider: true, inset: true },
-                {
-                    avatar: '/static/doc-images/lists/2.jpg',
-                    title: 'Summer BBQ <span class="grey--text text--lighten-1">4</span>',
-                    subtitle: "<span class='text--primary'>to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend."
-                },
-                { divider: true, inset: true },
-                {
-                    avatar: '/static/doc-images/lists/3.jpg',
-                    title: 'Oui oui',
-                    subtitle: "<span class='text--primary'>Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?"
-                }
-            ]
-=======
             follow_items: []
->>>>>>> 78390608ca7a365cb76719e9cdecd0e4844fc8b6
         };
     },
     methods: {

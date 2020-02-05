@@ -1,14 +1,40 @@
 import axios from 'axios';
-const host = 'http://192.168.100.58:8080';
-
+const host = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
+    follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
+    following: (data, callback, errorCallback) => following(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
-    profileLoad: (data, callback) => profileLoad(data, callback)
+    profileLoad: (data, callback, error) => profileLoad(data, callback, error)
+};
+const follower = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/followList?num=2&email=` + data['email'])
+        .then(res => {
+            console.log('팔로우성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로우 실패');
+            errorCallback(error);
+        });
+};
+const following = (data, callback, errorCallback) => {
+    console.log(data);
+    axios
+        .post(`${host}/account/followList?num=1&email=` + data['email'])
+        .then(res => {
+            console.log('팔로잉성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로잉 실패');
+            errorCallback(error);
+        });
 };
 const snsDuplicate = (data, callback) => {
     axios
@@ -20,22 +46,21 @@ const snsDuplicate = (data, callback) => {
             alert(error);
         });
 };
-const profileLoad = (data, callback) => {
+const profileLoad = (data, callback, errorCallback) => {
     axios
-        .post('http://192.168.100.90:8080/account/profile?email=' + JSON.stringify(data['email']))
+        .post(`${host}/account/profile?email=` + data['email'])
         .then(res => {
             console.log('들어오나');
             callback(res);
         })
         .catch(error => {
             console.log('실패냐');
-            alert(error);
+            errorCallback(error);
         });
 };
 const requestLogin = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
-
         .then(res => {
             callback(res);
         })
@@ -58,7 +83,6 @@ const cert = (data, callback) => {
     axios
         .post(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
         .then(res => {
-            console.log(res);
             callback(res);
         })
         .catch(error => {
@@ -66,8 +90,6 @@ const cert = (data, callback) => {
         });
 };
 const doubleCheck = (data, callback, errorCallback) => {
-    console.log('--------------------------');
-    console.log('imgURL : ' + data.imgURL);
     var str = '';
     if (data.num == 1) {
         console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
@@ -98,8 +120,7 @@ const join = body => {
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
-        keyword: body.keyword,
-        imgURL: body.imgURL
+        keyword: body.keyword
     };
     console.log('value is ');
     console.log(value);

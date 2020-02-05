@@ -1,6 +1,8 @@
 //디비 셋팅 주석 
 package com.web.curation.dao.user;
 
+import java.util.List;
+
 import com.web.curation.model.user.User;
 
 import org.apache.ibatis.session.SqlSession;
@@ -46,5 +48,15 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User getUser(String email) throws Exception {
         return sqlSession.selectOne("getUser", email);
+    }
+
+    @Override
+    public List<User> folloingList(String email) throws Exception {
+        return sqlSession.selectList("folloingList", email);
+    }
+
+    @Override
+    public List<User> followerList(String email) throws Exception {
+        return sqlSession.selectList("followerList", email);
     }
 }

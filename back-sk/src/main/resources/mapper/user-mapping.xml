@@ -32,4 +32,14 @@
         select * from user
         where email=#{value}
     </select>
+
+    <select id="folloingList" resultType="com.web.curation.model.user.User" parameterType="string">
+        select * from follow
+        where folloing = #{value}
+    </select>
+
+    <select id="followerList" resultType="com.web.curation.model.user.User" parameterType="string">
+        select * from follow
+        where follower = #{value}
+    </select>
 </mapper>

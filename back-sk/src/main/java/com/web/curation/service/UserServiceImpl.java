@@ -43,4 +43,14 @@ public class UserServiceImpl implements UserService {
     public User getUser(String email) throws Exception {
         return userDaoImpl.getUser(email);
     }
+
+    @Override
+    public List<User> folloingList(String email) throws Exception {
+        return userDaoImpl.folloingList(email);
+    }
+
+    @Override
+    public List<User> followerList(String email) throws Exception {
+        return userDaoImpl.followerList(email);
+    }
 }

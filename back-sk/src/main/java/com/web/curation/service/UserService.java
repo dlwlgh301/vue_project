@@ -1,6 +1,8 @@
 //디비 셋팅 주석 
 package com.web.curation.service;
 
+import java.util.List;
+
 import com.web.curation.model.user.User;
 
 public interface UserService {
@@ -15,4 +17,8 @@ public interface UserService {
     int join(User user) throws Exception;
 
     User getUser(String email) throws Exception;
+
+    List<User> folloingList(String email) throws Exception;
+
+    List<User> followerList(String email) throws Exception;
 }
