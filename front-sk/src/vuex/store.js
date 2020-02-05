@@ -8,9 +8,10 @@ Vue.use(Vuex);
 
 const state = {
     email: '',
-    pageTitle: 'pagetitle',
+    pageTitle: 'SHOP+',
     token: '',
-    role: ''
+    role: '',
+    showNav: true
 };
 
 export default new Vuex.Store({

@@ -18,13 +18,13 @@
 
 <script>
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '회원가입');
+    },
     methods: {
         back() {
             this.$router.push('/');
         }
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '회원가입');
     }
 };
 </script>
