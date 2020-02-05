@@ -1,0 +1,11 @@
+@import '../../../node_modules/vue-material/dist/theme/engine.scss';
+
+@include md-register-theme(
+    'default',
+    (
+        primary: #25cea5,
+        accent: md-get-palette-color(red, A200) // The accent or secondary color
+    )
+);
+
+@import '../../../node_modules/vue-material/dist/theme/all.scss';
