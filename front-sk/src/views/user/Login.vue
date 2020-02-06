@@ -84,6 +84,7 @@ import TwitterLogin from '../../components/user/snsLogin/Twitter.vue';
 import FacebookLogin from '../../components/user/snsLogin/Facebook.vue';
 import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
+import firebase from '../../apis/FirebaseService';
 
 export default {
     components: {
@@ -176,6 +177,8 @@ export default {
                             this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
                         }
+                        console.log(email);
+                        firebase.logPush(email + '님이 로그인했습니다.');
                     },
                     error => {
                         ``;
