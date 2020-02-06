@@ -23,7 +23,13 @@
             </form>
 
             <div class="input-with-label">
-                <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                <input
+                    v-model="email"
+                    v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
+                    id="email"
+                    placeholder="이메일을 입력하세요."
+                    type="text"
+                />
                 <label for="email">이메일</label>
                 <button id="doubleCheck" @click="doubleCheck(1)">중복확인</button>
                 <div class="error-text" v-if="error.email">{{ error.email }}</div>
@@ -54,18 +60,36 @@
             </div>
 
             <div class="input-with-label">
-                <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                <input
+                    v-model="name"
+                    v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
+                    id="name"
+                    placeholder="이름을 입력하세요."
+                    type="text"
+                />
                 <label for="name">이름</label>
                 <div class="error-text" v-if="error.name">{{ error.name }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <input
+                    v-model="nickName"
+                    v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
+                    id="nickname"
+                    placeholder="닉네임을 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">닉네임</label>
                 <button @click="doubleCheck(2)">중복확인</button>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <input
+                    v-model="comment"
+                    v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
+                    id="comment"
+                    placeholder="한줄 소개를 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">한줄소개</label>
                 <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
@@ -193,7 +217,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -202,7 +227,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;

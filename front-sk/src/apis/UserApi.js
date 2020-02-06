@@ -1,9 +1,5 @@
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
-<<<<<<< HEAD
-=======
-
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -13,12 +9,8 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
-<<<<<<< HEAD
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error)
-=======
-    profileLoad: (data, callback, error) => profileLoad(data, callback, error)
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -146,7 +138,6 @@ const join = body => {
             alert('error' + error);
         });
 };
-<<<<<<< HEAD
 
 const fileUpload = (data, callback, errorCallback) => {
     // axios({
@@ -166,6 +157,4 @@ const fileUpload = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-=======
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
 export default UserApi;

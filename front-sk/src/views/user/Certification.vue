@@ -7,7 +7,13 @@
                 <label for="email">이메일</label>
             </div>
             <div class="input-with-label">
-                <input v-model="inputkey" v-bind:class="{ error: error.inputkey, complete: !error.inputkey && inputkey.length !== 0 }" id="inputkey" placeholder="인증키를 입력하세요." type="text" />
+                <input
+                    v-model="inputkey"
+                    v-bind:class="{ error: error.inputkey, complete: !error.inputkey && inputkey.length !== 0 }"
+                    id="inputkey"
+                    placeholder="인증키를 입력하세요."
+                    type="text"
+                />
                 <label for="inputkey">인증키</label>
                 <div class="error-text" v-if="error.inputkey">{{ error.inputkey }}</div>
             </div>
@@ -71,23 +77,17 @@ export default {
                 var name = sessionStorage.getItem('name');
                 var nickName = sessionStorage.getItem('nickName');
                 var comment = sessionStorage.getItem('comment');
-<<<<<<< HEAD
                 var imgURL = sessionStorage.getItem('imgURL');
 
-=======
                 var keyword = sessionStorage.getItem('keyowrd');
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 var body = {
                     password: password,
                     email: email,
                     nickName: nickName,
                     name: name,
                     comment: comment,
-<<<<<<< HEAD
-                    imgURL: imgURL
-=======
+                    imgURL: imgURL,
                     keyword: keyword
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 };
                 UserApi.join(body);
                 this.$router.push('/user/certComplete');

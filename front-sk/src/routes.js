@@ -16,11 +16,8 @@ import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
-<<<<<<< HEAD
 import Test from './views/user/test.vue';
-=======
 import Keyword from './views/user/UserKeyword.vue';
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
 
 Vue.use(Router);
 

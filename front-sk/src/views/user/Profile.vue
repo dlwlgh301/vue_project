@@ -7,10 +7,6 @@
         <h1 class="title">My Profile</h1>
         <section class="profile">
             <img src="../../assets/images/tm-easy-profile.jpg" alt class="portrait" />
-<<<<<<< HEAD
-=======
-
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             <div class="follow" @click="iniciar()" v-show="ischeck1">
                 <div class="icon-instagram"></div>
                 팔로우
@@ -20,21 +16,12 @@
                 팔로잉
             </div>
             <div class="left_col">
-<<<<<<< HEAD
-                <div class="followers" @click="showFollower()">
-                    <div class="follow_count">18,541</div>
-                    Followers
-                </div>
-                <div class="following" @click="showFollowing()">
-                    <div class="follow_count">181</div>
-=======
                 <div class="followers" @click="showDialog = true">
                     <div class="follow_count">{{ followList.length }}</div>
                     Followers
                 </div>
                 <div class="following" @click="followerDialog = true">
                     <div class="follow_count">{{ followingList.length }}</div>
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                     Following
                 </div>
                 <md-dialog :md-active.sync="showDialog">
@@ -44,10 +31,6 @@
                     <br />
                     <div class="content">asdlasdjklasjd asdlasdjklasjdasdjk asdj asjd kasjd asdlasdjklasjdasdjkdjas da</div>
                 </md-dialog>
-<<<<<<< HEAD
-=======
-
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 <md-dialog :md-active.sync="followerDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로잉</h2>
@@ -72,12 +55,6 @@
                             </div> -->
                         </li>
                     </div>
-<<<<<<< HEAD
-                    <div class="Pkbci">
-                        <button class="sqdOPL3NKy_8A5w5" type="button">팔로잉</button>
-                    </div>
-=======
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 </md-dialog>
 
                 <div class="follow" @click="FollowListBtnCheck(0)" v-show="followingListCheck[0]">
@@ -106,15 +83,6 @@
                         {{ info.comment }}
                     </li>
                     <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
-<<<<<<< HEAD
-                    <!-- <li class="website">
-                        <a class="nostyle" href="https://www.instagram.com/nam_vv2/?hl=ko">nam_vv2</a>
-                    </li>
-                    <li class="mail">asdasdasda</li>
-                    <li class="phone">010-2979-6768</li>
-                    <li class="resume" v-on:click="board">게시글 보기</li>-->
-=======
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 </ul>
             </div>
             <ul class="tags">
@@ -156,23 +124,16 @@ export default {
         return {
             isButtonDisabled: false,
             ischeck1: true,
-<<<<<<< HEAD
-=======
-
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             follower: 2,
             following: 1,
             ischeck2: false,
             info: [],
-<<<<<<< HEAD
-=======
             followListCheck: [true, true], // 팔로우 버튼
             followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
             followListSize: 0,
             followingListSize: 0,
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             name: '',
             nickname: '',
             phone: '',
@@ -188,10 +149,7 @@ export default {
     },
     methods: {
         showFollowing() {
-<<<<<<< HEAD
             this.followerDialog = true;
-=======
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             let { following, email } = this;
             let data = {
                 following,
@@ -201,25 +159,12 @@ export default {
                 data,
                 res => {
                     console.log(res);
-<<<<<<< HEAD
-                    console.log('됬냐?');
-                    if (res.data.data == 'fail') {
-                        console.log(res.data.status);
-                    } else {
-                        this.info = res.data.object;
-                        // alert(info.email);
-                        console.log(res.data.status);
-                        // console.log('asdasdasd' + res.data.object.email);
-                        // this.$router.push('/main');
-                        //요청이 끝나면 버튼 활성화
-=======
                     console.log('ㅇㅇㅇㅇ');
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object;
                         console.log(res.data.status);
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                     }
                 },
                 error => {
@@ -227,16 +172,10 @@ export default {
                     console.log(error);
                 }
             );
-<<<<<<< HEAD
-        },
-        showFollower() {
-            this.showDialog = true;
-=======
 
             this.followingListSize = this.followingList.length;
         },
         showFollower() {
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             let { follow, email } = this;
             let data = {
                 follow,
@@ -249,30 +188,18 @@ export default {
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
-<<<<<<< HEAD
-                        this.info = res.data.object;
-                        // alert(info.email);
-                        console.log(res.data.status);
-                        // console.log('asdasdasd' + res.data.object.email);
-                        // this.$router.push('/main');
-                        //요청이 끝나면 버튼 활성화
-=======
                         this.followList = res.data.object;
                         // alert(info.email);
                         console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
                         console.log(res.data.status);
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                     }
                 },
                 error => {
                     console.log(error);
                 }
             );
-<<<<<<< HEAD
-=======
 
             this.followListSize = this.followList.length;
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
         },
         iniciar() {
             if (this.ischeck2) {
@@ -283,9 +210,6 @@ export default {
                 this.ischeck1 = false;
             }
         },
-<<<<<<< HEAD
-        retrieveQuestion() {
-=======
 
         FollowListBtnCheck(idx) {
             console.log(this.followingListCheck[idx] + 'asdasdasdasdasd');
@@ -302,7 +226,6 @@ export default {
         },
         retrieveQuestion() {
             this.email = this.$store.state.email;
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
             let { email } = this;
             let data = {
                 email
@@ -318,22 +241,9 @@ export default {
                             text: '연결실패'
                         });
                     } else {
-<<<<<<< HEAD
-                        Swal.fire({
-                            icon: 'error',
-                            text: '성공'
-                        });
                         this.info = res.data.object;
                         // alert(info.email);
                         console.log(res.data.status);
-                        // console.log('asdasdasd' + res.data.object.email);
-                        // this.$router.push('/main');
-                        //요청이 끝나면 버튼 활성화
-=======
-                        this.info = res.data.object;
-                        // alert(info.email);
-                        console.log(res.data.status);
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                     }
                 },
                 error => {
@@ -349,15 +259,11 @@ export default {
         }
     },
     mounted() {
-<<<<<<< HEAD
-        this.retrieveQuestion();
-=======
         //  this.email = this.$store.state.email;
 
         this.retrieveQuestion(); // 회원 정보
         this.showFollower(); // 팔로우
         this.showFollowing(); //팔로잉
->>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
     }
 };
 </script>
