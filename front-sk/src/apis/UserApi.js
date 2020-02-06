@@ -1,16 +1,41 @@
-/*
- User API 예시
- */
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
 
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
+    follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
+    following: (data, callback, errorCallback) => following(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
-    requestNotice: (data, callback) => requestNotice(data, callback)
+    requestNotice: (data, callback) => requestNotice(data, callback),
+    profileLoad: (data, callback, error) => profileLoad(data, callback, error)
+};
+const follower = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/followList?num=2&email=` + data['email'])
+        .then(res => {
+            console.log('팔로우성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로우 실패');
+            errorCallback(error);
+        });
+};
+const following = (data, callback, errorCallback) => {
+    console.log(data);
+    axios
+        .post(`${host}/account/followList?num=1&email=` + data['email'])
+        .then(res => {
+            console.log('팔로잉성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로잉 실패');
+            errorCallback(error);
+        });
 };
 const snsDuplicate = (data, callback) => {
     axios
@@ -22,10 +47,21 @@ const snsDuplicate = (data, callback) => {
             alert(error);
         });
 };
+const profileLoad = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/profile?email=` + data['email'])
+        .then(res => {
+            console.log('들어오나');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('실패냐');
+            errorCallback(error);
+        });
+};
 const requestLogin = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
-
         .then(res => {
             callback(res);
         })
@@ -33,7 +69,6 @@ const requestLogin = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-
 const requestNotice = (data, callback) => {
     axios
         .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
@@ -45,7 +80,6 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-
 const cert = (data, callback) => {
     axios
         .post(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
@@ -56,10 +90,8 @@ const cert = (data, callback) => {
             alert('error' + error);
         });
 };
-
 const doubleCheck = (data, callback, errorCallback) => {
     var str = '';
-
     if (data.num == 1) {
         console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
         str = data.email;
@@ -67,7 +99,6 @@ const doubleCheck = (data, callback, errorCallback) => {
         console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
         str = data.nickName;
     }
-
     axios({
         url: `${host}/account/doubleCheck`,
         method: 'post',
@@ -83,7 +114,6 @@ const doubleCheck = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-
 const join = body => {
     var value = {
         password: body.password,
@@ -93,10 +123,8 @@ const join = body => {
         comment: body.comment,
         keyword: body.keyword
     };
-
     console.log('value is ');
     console.log(value);
-
     axios({
         url: `${host}/account/signup`,
         method: 'post',
@@ -110,5 +138,4 @@ const join = body => {
             alert('error' + error);
         });
 };
-
 export default UserApi;

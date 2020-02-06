@@ -172,7 +172,7 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-                            this.$store.commit('loginToken', res.data.token);
+                            //this.$store.commit('loginToken', res.data.token);
                             this.$store.state.email = this.email;
                             this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
