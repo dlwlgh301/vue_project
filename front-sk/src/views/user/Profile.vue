@@ -132,7 +132,6 @@ export default {
             ischeck2: false,
             info: [],
             followListCheck: [true, true], // 팔로우 버튼
-
             followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
@@ -262,6 +261,8 @@ export default {
         }
     },
     mounted() {
+        //  this.email = this.$store.state.email;
+
         this.retrieveQuestion(); // 회원 정보
         this.showFollower(); // 팔로우
         this.showFollowing(); //팔로잉
