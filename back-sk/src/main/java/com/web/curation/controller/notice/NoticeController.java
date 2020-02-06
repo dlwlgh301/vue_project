@@ -12,8 +12,12 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,9 +37,10 @@ public class NoticeController {
     @Autowired
     NoticeService noticeServiceImpl;
 
-    @PostMapping("/getnotice")
+    @GetMapping("/old")
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
         List<Notice> list = noticeServiceImpl.getNotice(email.substring(1, email.length() - 1).toLowerCase());
+        System.out.println("old:" + email);
         final BasicResponse result = new BasicResponse();
         if (list.size() > 0) {
             result.status = true;
@@ -49,10 +54,10 @@ public class NoticeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/getnoticenum")
+    @GetMapping("/num")
     public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
-        int num = noticeServiceImpl.getNoticeNum(email);
-
+        int num = noticeServiceImpl.getNoticeNum(email.substring(1, email.length() - 1).toLowerCase());
+        System.out.println("num:" + email);
         JSONObject dummyUser = new JSONObject();
         dummyUser.put("num", num);
 
@@ -60,14 +65,14 @@ public class NoticeController {
         result.status = true;
         result.data = "success";
         result.object = dummyUser.toMap();
-        System.out.println(result);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/getnewnotice")
+    @GetMapping("/new")
     public Object getNewNotice(@RequestParam(required = true) final String email) throws Exception {
         List<Notice> list = noticeServiceImpl.getNotice(email.substring(1, email.length() - 1).toLowerCase());
+        System.out.println("new:" + email);
         final BasicResponse result = new BasicResponse();
         if (list.size() > 0) {
             result.status = true;
@@ -81,9 +86,10 @@ public class NoticeController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/deleteNotice")
+    @DeleteMapping("/nid")
     public Object deleteNotice(@RequestParam(required = true) final int nid) throws Exception {
         final BasicResponse result = new BasicResponse();
+        System.out.println(nid);
         if (noticeServiceImpl.deleteNotice(nid)) {
             result.status = true;
             result.data = "success";
