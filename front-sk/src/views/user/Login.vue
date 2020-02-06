@@ -4,7 +4,7 @@
             <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150" />
             <h1>
                 로그인을 하고 나면
-                <br />롤 티어 상승.
+                <br />좋은일이 있을거에요.
             </h1>
             <div class="input-with-label">
                 <input

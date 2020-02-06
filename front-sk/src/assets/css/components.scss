@@ -32,11 +32,11 @@
             padding: 0 15px 0 105px;
             box-sizing: border-box;
             color: #000;
-            border: 1px solid #000;
+            border: 1px solid $ssafy;
             border-radius: 3px;
             &:hover,
             &:focus {
-                border: 2px solid #000;
+                border: 2px solid $ssafy;
             }
             &.error {
                 border-radius: 0;
@@ -51,11 +51,11 @@
             }
             &.disabled {
                 background: #eee;
-                color: #333;
+                color: $ssafy;
                 font-weight: $f600;
                 &:hover,
                 &:focus {
-                    border: 1px solid #000;
+                    border: 1px solid $ssafy;
                 }
             }
         }

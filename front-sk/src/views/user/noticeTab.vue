@@ -37,9 +37,7 @@
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true"
-                                    >수락</v-btn
-                                >
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
                                 <v-btn text icon color="#fff">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
