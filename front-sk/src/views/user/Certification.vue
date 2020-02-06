@@ -71,15 +71,23 @@ export default {
                 var name = sessionStorage.getItem('name');
                 var nickName = sessionStorage.getItem('nickName');
                 var comment = sessionStorage.getItem('comment');
+<<<<<<< HEAD
                 var imgURL = sessionStorage.getItem('imgURL');
 
+=======
+                var keyword = sessionStorage.getItem('keyowrd');
+>>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 var body = {
                     password: password,
                     email: email,
                     nickName: nickName,
                     name: name,
                     comment: comment,
+<<<<<<< HEAD
                     imgURL: imgURL
+=======
+                    keyword: keyword
+>>>>>>> 7268c80f9649a699ac006ce5332e0802f787aff9
                 };
                 UserApi.join(body);
                 this.$router.push('/user/certComplete');

@@ -4,5 +4,8 @@ export default {
     },
     login({ commit }, auth) {
         commit('login', auth);
+    },
+    toggleNav(context) {
+        context.commit('toggleNav');
     }
 };

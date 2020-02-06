@@ -6,6 +6,7 @@ import com.web.curation.model.BasicResponse;
 import com.web.curation.model.vo.Notice;
 import com.web.curation.service.NoticeService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,52 @@ public class NoticeController {
             result.data = "fail";
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/getnoticenum")
+    public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
+        int num = noticeServiceImpl.getNoticeNum(email);
+
+        JSONObject dummyUser = new JSONObject();
+        dummyUser.put("num", num);
+
+        final BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.data = "success";
+        result.object = dummyUser.toMap();
+        System.out.println(result);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/getnewnotice")
+    public Object getNewNotice(@RequestParam(required = true) final String email) throws Exception {
+        List<Notice> list = noticeServiceImpl.getNotice(email.substring(1, email.length() - 1).toLowerCase());
+        final BasicResponse result = new BasicResponse();
+        if (list.size() > 0) {
+            result.status = true;
+            result.data = "success";
+            result.object = list;
+        } else {
+            result.status = false;
+            result.data = "none";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteNotice")
+    public Object deleteNotice(@RequestParam(required = true) final int nid) throws Exception {
+        final BasicResponse result = new BasicResponse();
+        if (noticeServiceImpl.deleteNotice(nid)) {
+            result.status = true;
+            result.data = "success";
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

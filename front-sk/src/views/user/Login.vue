@@ -4,7 +4,7 @@
             <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150" />
             <h1>
                 로그인을 하고 나면
-                <br />롤 티어 상승.
+                <br />좋은일이 있을거에요.
             </h1>
             <div class="input-with-label">
                 <input
@@ -84,6 +84,7 @@ import TwitterLogin from '../../components/user/snsLogin/Twitter.vue';
 import FacebookLogin from '../../components/user/snsLogin/Facebook.vue';
 import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
+import firebase from '../../apis/FirebaseService';
 
 export default {
     components: {
@@ -94,7 +95,7 @@ export default {
     },
     created() {
         this.component = this;
-
+        this.$store.commit('setPageTitle', '로그인');
         this.passwordSchema
             .is()
             .min(8)
@@ -171,11 +172,13 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-                            this.$store.commit('loginToken', res.data.token);
+                            //this.$store.commit('loginToken', res.data.token);
                             this.$store.state.email = this.email;
                             this.$router.push('/user/Profile');
                             //요청이 끝나면 버튼 활성화
                         }
+                        console.log(email);
+                        firebase.logPush(email + '님이 로그인했습니다.');
                     },
                     error => {
                         ``;
@@ -183,6 +186,9 @@ export default {
                     }
                 );
             }
+        },
+        loadPage() {
+            this.$store.commit('setPageTitle', '로그인');
         }
     },
     data: () => {
@@ -201,9 +207,6 @@ export default {
             isSubmit: false,
             component: this
         };
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '로그인');
     }
 };
 </script>

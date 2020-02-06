@@ -9,10 +9,11 @@
                     <md-icon style="color: #009ff4 ">search</md-icon>
                 </md-bottom-bar-item>
                 <md-bottom-bar-item to="/user/find">
-                    <md-icon style="color: #009ff4 ">bookmark</md-icon>
+                    <md-icon style="color: #009ff4 ">group</md-icon>
+                    <!-- <i class="fas fa-user-friends" style="color: #009ff4 "></i> -->
                 </md-bottom-bar-item>
                 <md-bottom-bar-item to="/user/profile">
-                    <md-icon style="color: #009ff4 ">account_box</md-icon>
+                    <md-icon style="color: #009ff4 ">account_circle</md-icon>
                 </md-bottom-bar-item>
             </md-bottom-bar>
         </div>

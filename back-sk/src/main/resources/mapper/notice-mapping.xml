@@ -3,12 +3,28 @@
 <mapper namespace="com.web.curation.dao.notice.NoticeDao">
 
     <select id="getNotice" parameterType="string" resultType="com.web.curation.model.vo.Notice">
-        select * from notice
-        where receiver = #{value}
+        select * from (select * from notice where receiver=#{value}) n where n.readchk = 1
     </select>
 
     <insert id="insertNotice" parameterType="com.web.curation.model.vo.Notice">
         insert into notice(sender, senderNick, receiver, receiverNick, msg) 
         values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg})
     </insert>
+
+    <select id="getNoticeNum" parameterType="string">
+        select count(*) from (select * from notice where receiver=#{value}) n where n.readchk = 0
+    </select>
+
+    <select id="getNewNotice" parameterType="string" resultType="com.web.curation.model.vo.Notice">
+        select count(*) from (select * from notice where receiver=#{value}) n where n.readchk = 0
+    </select>
+
+    <update id="updateNotice" parameterType="string">
+        update notice set readchk = 1 where nid in ( select nid from (select * from notice where receiver=#{value}) n where n.readchk = 0)
+    </update>
+
+    <delete id="deleteNotice" parameterType="integer">
+        delete from notice where nid=#{value}
+    </delete>
+    
 </mapper>

@@ -56,8 +56,12 @@ import UserApi from '../../apis/UserApi';
 
 export default {
     name: 'noticeTab',
+    created() {
+        this.$store.commit('setPageTitle', '알림');
+    },
     data() {
         return {
+            pageTitle: '알림',
             email: 'ihs3583@gmail.com',
             tab: null,
             tab_names: ['알림', '팔로우 요청'],
@@ -97,7 +101,6 @@ export default {
     },
     mounted() {
         this.loadNotice();
-        this.$store.commit('setPageTitle', '알림');
     }
 };
 </script>

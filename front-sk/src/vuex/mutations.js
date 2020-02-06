@@ -4,6 +4,11 @@ export default {
     setPageTitle: function(state, data) {
         state.pageTitle = data;
     },
+
+    toggleNav: function(state, data) {
+        state.showNav = data;
+    },
+
     loginToken: function(state, payload) {
         state.token = payload;
     },

@@ -146,6 +146,7 @@ export default {
         };
     },
     created() {
+        this.$store.commit('setPageTitle', '회원가입');
         this.passwordSchema
             .is()
             .min(8)
@@ -328,7 +329,7 @@ export default {
                         console.log(error);
                     }
                 );
-                this.$router.push('/user/certification');
+                this.$router.push('/user/keyword');
                 // UserApi.join(body);
                 console.log('join 라우터');
                 // console.log('axios 함!!!');
@@ -444,9 +445,6 @@ export default {
         removeImage: function() {
             this.image = '';
         }
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '회원가입');
     }
 };
 </script>
