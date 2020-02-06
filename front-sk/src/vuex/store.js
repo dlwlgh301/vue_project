@@ -7,10 +7,11 @@ import mutations from './mutations';
 Vue.use(Vuex);
 
 const state = {
-    isUser: false,
-    pageTitle: 'pagetitle',
-    username: '',
-    password: ''
+    email: '',
+    pageTitle: 'SHOP+',
+    token: '',
+    role: '',
+    showNav: true
 };
 
 export default new Vuex.Store({

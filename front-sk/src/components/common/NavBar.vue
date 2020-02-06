@@ -14,13 +14,11 @@
                         <md-icon>search</md-icon>
                     </md-button>
 
-                    <md-badge class="badge" md-content="1">
-                        <router-link to="/user/noticeTab">
-                            <md-button class="md-icon-button">
-                                <md-icon style="color: #009ff4 ;">notifications</md-icon>
-                            </md-button>
-                        </router-link>
-                    </md-badge>
+                    <router-link to="/user/noticeTab">
+                        <md-button class="md-icon-button">
+                            <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                        </md-button>
+                    </router-link>
                 </div>
             </div>
         </md-toolbar>
@@ -30,6 +28,7 @@
 <script>
 export default {
     name: 'Navbar',
+    isNewNotice: 10,
     props: ['navTitle']
 };
 </script>

@@ -95,7 +95,7 @@ export default {
     },
     created() {
         this.component = this;
-
+        this.$store.commit('setPageTitle', '로그인');
         this.passwordSchema
             .is()
             .min(8)
@@ -172,6 +172,8 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
+                            this.$store.commit('loginToken', res.data.token);
+                            this.$store.state.email = this.email;
                             this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
                         }
@@ -179,10 +181,14 @@ export default {
                         firebase.logPush(email + '님이 로그인했습니다.');
                     },
                     error => {
+                        ``;
                         console.log(error);
                     }
                 );
             }
+        },
+        loadPage() {
+            this.$store.commit('setPageTitle', '로그인');
         }
     },
     data: () => {
@@ -201,9 +207,6 @@ export default {
             isSubmit: false,
             component: this
         };
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '로그인');
     }
 };
 </script>

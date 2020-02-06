@@ -3,9 +3,9 @@
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
-                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" />
+                <HeaderComponent v-model="pageTitle" class="NavBar" :navTitle="$store.state.pageTitle" />
                 <router-view class="page"></router-view>
-                <BottomNavComponent class="bottom-nav" />
+                <BottomNavComponent v-model="showNav" class="bottom-nav" />
             </div>
         </div>
     </v-app>
@@ -19,23 +19,22 @@ import './assets/css/components.scss';
 
 export default {
     name: 'app',
-    watch: {
-        currentPage: function() {
-            this.checkPage();
-        }
+    created() {
+        this.$store.commit('setPageTitle', 'SHOP+');
     },
+    watch: {},
     components: {
         HeaderComponent,
         BottomNavComponent
     },
     data: () => {
         return {
-            route: ''
+            route: '',
+            showNav: false
         };
     },
     mounted() {
         this.route = this.$router;
-        this.$store.commit('setPageTitle', 'SHOP+');
     }
 };
 </script>

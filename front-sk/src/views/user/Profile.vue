@@ -69,6 +69,9 @@ import '../../assets/css/profile.scss';
 import PV from 'password-validator';
 
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '유저 정보');
+    },
     data: () => {
         return {
             name: '',
@@ -84,9 +87,6 @@ export default {
             isSubmit: false,
             component: this
         };
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '유저 정보');
     },
     methods: {
         board() {

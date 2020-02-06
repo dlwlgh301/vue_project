@@ -60,6 +60,7 @@ export default {
         };
     },
     created() {
+        this.$store.commit('setPageTitle', '비밀번호 변경');
         this.passwordSchema
             .is()
             .min(8)
@@ -117,9 +118,6 @@ export default {
                 // })
             }
         }
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '비밀번호 변경');
     }
 };
 </script>

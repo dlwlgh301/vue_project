@@ -95,6 +95,7 @@ export default {
         };
     },
     created() {
+        this.$store.commit('setPageTitle', '정보 변경');
         this.passwordSchema
             .is()
             .min(8)
@@ -176,9 +177,6 @@ export default {
         showmodal() {
             this.showModal = false;
         }
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '정보 변경');
     }
 };
 </script>
