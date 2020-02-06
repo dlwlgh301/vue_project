@@ -1,6 +1,5 @@
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
-
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -10,7 +9,9 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
-    profileLoad: (data, callback, error) => profileLoad(data, callback, error)
+    requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
+    profileLoad: (data, callback, error) => profileLoad(data, callback, error),
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -73,7 +74,17 @@ const requestNotice = (data, callback) => {
     axios
         .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
         .then(res => {
-            console.log('들어오나');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
+
+const requestNoticeNum = (data, callback) => {
+    axios
+        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .then(res => {
             callback(res);
         })
         .catch(error => {
@@ -136,6 +147,25 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const fileUpload = (data, callback, errorCallback) => {
+    // axios({
+    //     url: `${host}/account/fileUpload`,
+    //     method: 'post',
+    //     httpAgent
+    //     params: data,
+    //     success: callback,
+    //     error: errorCallback
+    // });
+    axios
+        .post(`${host}/account/fileUpload`, data)
+        .then(() => {
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 export default UserApi;

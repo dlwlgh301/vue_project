@@ -7,7 +7,6 @@
         <h1 class="title">My Profile</h1>
         <section class="profile">
             <img src="../../assets/images/tm-easy-profile.jpg" alt class="portrait" />
-
             <div class="follow" @click="iniciar()" v-show="ischeck1">
                 <div class="icon-instagram"></div>
                 팔로우
@@ -32,7 +31,6 @@
                     <br />
                     <div class="content">asdlasdjklasjd asdlasdjklasjdasdjk asdj asjd kasjd asdlasdjklasjdasdjkdjas da</div>
                 </md-dialog>
-
                 <md-dialog :md-active.sync="followerDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로잉</h2>
@@ -126,7 +124,6 @@ export default {
         return {
             isButtonDisabled: false,
             ischeck1: true,
-
             follower: 2,
             following: 1,
             ischeck2: false,
@@ -140,7 +137,7 @@ export default {
             name: '',
             nickname: '',
             phone: '',
-            email: '',
+            email: 'dhrwnmc@naver.com',
             interest: '',
             introduce: '',
             passwordSchema: new PV(),
@@ -152,6 +149,7 @@ export default {
     },
     methods: {
         showFollowing() {
+            this.followerDialog = true;
             let { following, email } = this;
             let data = {
                 following,

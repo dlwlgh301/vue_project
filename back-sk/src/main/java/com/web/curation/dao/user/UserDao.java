@@ -1,6 +1,8 @@
 //디비 셋팅 주석 
 package com.web.curation.dao.user;
 
+import java.util.List;
+
 import com.web.curation.model.user.User;
 
 public interface UserDao {
@@ -16,4 +18,7 @@ public interface UserDao {
 
     User getUser(String email) throws Exception;
 
+    List<String> folloingList(String email) throws Exception;
+
+    List<String> followerList(String email) throws Exception;
 }
