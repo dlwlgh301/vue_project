@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.curation.dao.user.UserDao">
-    <select id="getAll" resultType="com.web.curation.model.user.User">
-        SELECT * FROM user
+
+    <select id="getUserByEmail" resultType="com.web.curation.model.user.User" parameterType="string">
+        select * from user
+        where email=#{value}
     </select>
+
 
     <select id="getEmail" resultType="string" parameterType="string">
         select email from user
@@ -16,8 +19,8 @@
     </select>
 
     <insert id="join" parameterType="com.web.curation.model.user.User">
-        insert into user(email,password,name,nickName,comment,keyword) 
-        values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword})
+        insert into user(email,password,name,nickName,comment,keyword,imgURL) 
+        values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword}, #{imgURL} )
     </insert>
 
     <select id="login" resultType="com.web.curation.model.user.User" parameterType="com.web.curation.model.user.User" >
@@ -28,5 +31,15 @@
     <select id="getUser" resultType="com.web.curation.model.user.User" parameterType="string">
         select * from user
         where email=#{value}
+    </select>
+
+    <select id="folloingList" resultType="string" parameterType="string">
+        select folloingnickName from follow
+        where follower = #{value}
+    </select>
+
+    <select id="followerList" resultType="string" parameterType="string">
+        select followernickName from follow
+        where folloing = #{value}
     </select>
 </mapper>

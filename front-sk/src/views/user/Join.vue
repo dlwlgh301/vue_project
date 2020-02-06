@@ -8,8 +8,28 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
 
         <div class="join">
+            <div id="imageMain">
+                <div v-if="!image"></div>
+                <div v-else>
+                    <img :src="image" />
+                    <button @click="removeImage">Remove image</button>
+                </div>
+            </div>
+
+            <form id="myform" enctype="multipart/form-data" @submit.prevent="fileSelect">
+                파일 :
+                <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
+                <input type="submit" name="업로드" value="제출" /><br /><br />
+            </form>
+
             <div class="input-with-label">
-                <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                <input
+                    v-model="email"
+                    v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
+                    id="email"
+                    placeholder="이메일을 입력하세요."
+                    type="text"
+                />
                 <label for="email">이메일</label>
                 <button id="doubleCheck" @click="doubleCheck(1)">중복확인</button>
                 <div class="error-text" v-if="error.email">{{ error.email }}</div>
@@ -40,18 +60,36 @@
             </div>
 
             <div class="input-with-label">
-                <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                <input
+                    v-model="name"
+                    v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
+                    id="name"
+                    placeholder="이름을 입력하세요."
+                    type="text"
+                />
                 <label for="name">이름</label>
                 <div class="error-text" v-if="error.name">{{ error.name }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <input
+                    v-model="nickName"
+                    v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
+                    id="nickname"
+                    placeholder="닉네임을 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">닉네임</label>
                 <button @click="doubleCheck(2)">중복확인</button>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <input
+                    v-model="comment"
+                    v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
+                    id="comment"
+                    placeholder="한줄 소개를 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">한줄소개</label>
                 <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
@@ -67,13 +105,13 @@
                     <div class="modal-wrapper">
                         <div class="modal-container">
                             <div class="modal-header">
-                                <slot name="header">약관동의</slot>
+                                <slot name="header"></slot>
                             </div>
                             <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    동의하십니까?
-                                    <br />
+                                    약관입니다.
+                                    <br /><br />
                                     <button @click="showmodal">확인</button>
                                 </slot>
                             </div>
@@ -107,10 +145,12 @@ export default {
             nickName: '',
             name: '',
             comment: '',
+            keyword: '',
             key: '',
             imgURL: '',
             isTerm: false,
             isLoading: false,
+            file: '',
             error: {
                 email: false,
                 password: false,
@@ -124,7 +164,9 @@ export default {
             isSubmit: false,
             passwordType: 'password',
             passwordConfirmType: 'password',
-            showModal: false
+            showModal: false,
+            imageMain: '',
+            image: ''
         };
     },
     created() {
@@ -175,7 +217,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -184,7 +227,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
@@ -235,7 +279,35 @@ export default {
         },
 
         join() {
+            console.log('ddddddddddddddddddddddd ' + this.imgURL);
+
             if (this.isSubmit) {
+                const formData = new FormData();
+                formData.append('imgURL', this.imgURL);
+                formData.append('email', this.email);
+                formData.append('password', this.password);
+                formData.append('nickName', this.nickName);
+                formData.append('name', this.name);
+                formData.append('comment', this.comment);
+                formData.append('keyword', this.keyword);
+
+                for (let k of formData.entries()) {
+                    console.log('kKKKKKKKKK ' + k);
+                }
+
+                this.$http
+                    .post('http://192.168.100.90:8080/account/test', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
                 var { email, password, nickName, comment, name, imgURL } = this;
 
                 // eslint-disable-next-line no-unused-vars
@@ -265,9 +337,12 @@ export default {
                 sessionStorage.setItem('nickName', this.nickName);
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
+                sessionStorage.setItem('imgURL', this.imgURL);
+
                 UserApi.cert(
                     data,
                     res => {
+                        console.log('???????????????');
                         //console.log(res);
                         //console.log(res.data.object.key);
                         this.key = res.data.object.key;
@@ -286,6 +361,7 @@ export default {
                 // console.log('axios 함!!!');
             }
         },
+        async test() {},
         back() {
             this.$router.push('/');
         },
@@ -299,7 +375,8 @@ export default {
                 nickName: this.nickName,
                 name: this.name,
                 comment: this.comment,
-                num: num
+                num: num,
+                imgURL: this.imgURL
             };
 
             UserApi.doubleCheck(
@@ -354,6 +431,45 @@ export default {
                     console.log(error);
                 }
             );
+        },
+
+        fileSelect() {
+            let test = new FormData(document.getElementById('myform'));
+            console.log(test);
+
+            if (test != null) {
+                UserApi.fileUpload(
+                    test,
+                    Response => {
+                        console.log(Response);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+        },
+
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+            this.file = files[0];
+            console.log(this.$refs.file.files[0]);
+        },
+        createImage(file) {
+            // var image = new Image();
+            this.image = true;
+            var reader = new FileReader();
+            var vm = this;
+
+            reader.onload = e => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImage: function() {
+            this.image = '';
         }
     }
 };

@@ -174,7 +174,7 @@ export default {
                             console.log(res.data.status);
                             //this.$store.commit('loginToken', res.data.token);
                             this.$store.state.email = this.email;
-                            this.$router.push('/main');
+                            this.$router.push('/user/Profile');
                             //요청이 끝나면 버튼 활성화
                         }
                         console.log(email);

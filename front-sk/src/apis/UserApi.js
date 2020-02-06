@@ -1,6 +1,5 @@
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
-
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -10,7 +9,8 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
-    profileLoad: (data, callback, error) => profileLoad(data, callback, error)
+    profileLoad: (data, callback, error) => profileLoad(data, callback, error),
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -136,6 +136,25 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const fileUpload = (data, callback, errorCallback) => {
+    // axios({
+    //     url: `${host}/account/fileUpload`,
+    //     method: 'post',
+    //     httpAgent
+    //     params: data,
+    //     success: callback,
+    //     error: errorCallback
+    // });
+    axios
+        .post(`${host}/account/fileUpload`, data)
+        .then(() => {
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 export default UserApi;
