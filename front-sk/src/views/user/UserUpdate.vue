@@ -7,12 +7,24 @@
                 <label for="nickname">이메일</label>
             </div>
             <div class="input-with-label">
-                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <input
+                    v-model="nickName"
+                    v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
+                    id="nickname"
+                    placeholder="닉네임을 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">닉네임</label>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <input
+                    v-model="comment"
+                    v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
+                    id="comment"
+                    placeholder="한줄 소개를 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">한줄소개</label>
                 <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
@@ -119,7 +131,8 @@ export default {
             if (this.comment.length == 0) this.error.comment = '한줄소개를 지어주세요';
             else this.error.comment = false;
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             if (this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
@@ -164,10 +177,6 @@ export default {
         showmodal() {
             this.showModal = false;
         }
-    },
-    mounted() {
-        this.email = this.$store.state.email;
-        alert(this.email);
     }
 };
 </script>
