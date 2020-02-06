@@ -67,15 +67,13 @@
                 <div class="error-text" v-if="error.name">{{ error.name }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="nickName" <<<<<<< HEAD v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" ======= v-bind:class="{ error: error.nickName,
-                complete: !error.nickName && nickName.length !== 0 }" >>>>>>> c77f62990b3506aa141546b9e994434c025260cf id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
                 <label for="nickname">닉네임</label>
                 <button @click="doubleCheck(2)">중복확인</button>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="comment" <<<<<<< HEAD v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" ======= v-bind:class="{ error: error.comment, complete:
-                !error.comment && comment.length !== 0 }" >>>>>>> c77f62990b3506aa141546b9e994434c025260cf id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
                 <label for="nickname">한줄소개</label>
                 <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
