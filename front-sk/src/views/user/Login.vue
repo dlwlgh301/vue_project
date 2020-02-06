@@ -4,7 +4,7 @@
             <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150" />
             <h1>
                 로그인을 하고 나면
-                <br />롤 티어 상승.
+                <br />좋은일이 있을거에요.
             </h1>
             <div class="input-with-label">
                 <input
@@ -172,9 +172,9 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-                            this.$store.commit('loginToken', res.data.token);
+                            //this.$store.commit('loginToken', res.data.token);
                             this.$store.state.email = this.email;
-                            this.$router.push('/main');
+                            this.$router.push('/user/Profile');
                             //요청이 끝나면 버튼 활성화
                         }
                         console.log(email);

@@ -1,7 +1,20 @@
 package com.web.curation.controller.account;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.StringTokenizer;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
@@ -25,6 +38,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 // import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -97,7 +112,7 @@ public class AccountController {
 
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(user);
+        System.out.println("uuuuuuuuuuuuuu" + user);
         String email = userServiceImpl.getEmail(user.getEmail());
 
         System.out.println("db에 이메일이 있는지 확인 :" + email);
@@ -121,8 +136,13 @@ public class AccountController {
 
         else {
             System.out.println("가입하기 들어옴");
+
             User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
                     user.getComment(), user.getKeyword(), user.getImgURL());
+
+            System.out.println("====================");
+            System.out.println(puser);
+            System.out.println("====================");
 
             userServiceImpl.join(puser);
             result.status = true;
@@ -132,8 +152,6 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    // @PostMapping("/account/doubleCheck")
-    // @PostMapping("/accout/doubleCheck")
     @PostMapping("/account/doubleCheck")
     @ApiOperation(value = "중복확인하기")
     public Object doubleCheck(@RequestParam(required = true) final int num,
@@ -180,6 +198,9 @@ public class AccountController {
     @PostMapping("/account/emailcert")
     @ApiOperation(value = "메일 인증번호 확인하기")
     public Object sendEmail(@RequestParam(required = true) final String email) {
+
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + email);
+
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
         final BasicResponse result = new BasicResponse();
@@ -198,4 +219,197 @@ public class AccountController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("/account/profile")
+    @ApiOperation(value = "프로필 띄우기")
+    public Object profile(@RequestParam(required = true) final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        System.out.println("user 이메일 : " + email);
+
+        User user = userServiceImpl.getUserByEmail(email);
+
+        System.out.println("가져온 user 확인 : " + user);
+
+        result.object = user;
+        result.status = true;
+        result.data = "success";
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/account/followList")
+    @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
+    public Object followList(@RequestParam(required = true) final String num,
+            @RequestParam(required = true) final String email) throws Exception {
+
+        final BasicResponse result = new BasicResponse();
+        List<String> list = null;
+
+        System.out.println(num);
+        System.out.println(email);
+
+        if (num.equals("1")) { // 팔로잉
+            list = userServiceImpl.folloingList(email);
+        }
+
+        else if (num.equals("2")) { // 팔로워
+            list = userServiceImpl.followerList(email);
+        }
+
+        result.status = true;
+        result.object = list;
+
+        System.out.println("listSize : " + list.size());
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "account/fileUpload")
+    @ApiOperation(value = "파일 업로드하기")
+    public Object fileUpload(final MultipartFile file, HttpServletRequest request) throws Exception {
+        // 파일이 저장될 path 설정
+        // String path = req.getSession().getServletContext().getRealPath("") +
+        // "\\resources"; // 웹프로젝트 경로 위치
+        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
+        System.out.println(1);
+        System.out.println("path : " + path);
+        File copyFile = new File(path + file.getOriginalFilename());
+        System.out.println(2);
+        file.transferTo(copyFile);
+        System.out.println(3);
+
+        System.out.println("path : " + path);
+        System.out.println(file.getOriginalFilename());
+
+        // Map returnObject = new HashMap();
+        // try {
+        // // MultipartHttpServletRequest 생성
+        // // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
+        // // Iterator iter = mhsr.getFileNames();
+        // // MultipartFile mfile = null;
+        // // String fieldName = "";
+        // // List resultList = new ArrayList();
+
+        // // 디레토리가 없다면 생성
+        // File dir = new File(path);
+        // if (!dir.isDirectory()) {
+        // dir.mkdirs();
+        // }
+
+        // // 값이 나올때까지
+        // while (iter.hasNext()) {
+        // fieldName = (String) iter.next(); // 내용을 가져와서
+        // mfile = mhsr.getFile(fieldName);
+        // String origName;
+        // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
+        // "UTF-8"); // 한글꺠짐 방지
+
+        // System.out.println("origName: " + origName);
+        // // 파일명이 없다면
+        // if ("".equals(origName)) {
+        // continue;
+        // }
+
+        // // 파일 명 변경(uuid로 암호화)
+        // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
+        // // String saveFileName = getUuid() + ext;
+        // String saveFileName = origName;
+
+        // System.out.println("saveFileName : " + saveFileName);
+
+        // // 설정한 path에 파일저장
+        // File serverFile = new File(path + File.separator + saveFileName);
+        // mfile.transferTo(serverFile);
+
+        // Map file = new HashMap();
+        // file.put("origName", origName);
+        // file.put("sfile", serverFile);
+        // resultList.add(file);
+        // }
+
+        // returnObject.put("files", resultList);
+        // returnObject.put("params", mhsr.getParameterMap());
+        // } catch (UnsupportedEncodingException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (IllegalStateException e) { // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // } catch (IOException e) { // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+
+        return null;
+    }
+
+    // @RequestMapping(value = "account/fileUpload", method = RequestMethod.POST) //
+    // method = RequestMethod.GET
+    // public Map fileUpload(HttpServletRequest req, HttpServletResponse rep) {
+    // // 파일이 저장될 path 설정
+    // System.out.println("dasfasdf");
+    // String path = "c://aaa";
+    // Map returnObject = new HashMap<>();
+    // try {
+    // // MultipartHttpServletRequest 생성
+    // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
+    // Iterator<String> iter = mhsr.getFileNames();
+    // MultipartFile mfile = null;
+    // String fieldName = "";
+    // List resultList = new ArrayList<>();
+    // // 디레토리가 없다면 생성
+    // File dir = new File(path);
+    // if (!dir.isDirectory()) {
+    // dir.mkdirs();
+    // }
+
+    // // 값이 나올때까지
+    // while (iter.hasNext()) {
+    // fieldName = (String) iter.next(); // 내용을 가져와서
+    // mfile = mhsr.getFile(fieldName);
+    // String origName;
+    // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
+    // "UTF-8"); // 한글꺠짐 방지
+
+    // System.out.println("origName: " + origName);
+    // // 파일명이 없다면
+    // if ("".equals(origName)) {
+    // continue;
+    // }
+
+    // // 파일 명 변경(uuid로 암호화)
+    // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
+    // // String saveFileName = getUuid() + ext;
+    // String saveFileName = origName;
+
+    // System.out.println("saveFileName : " + saveFileName);
+
+    // // 설정한 path에 파일저장
+    // File serverFile = new File(path + File.separator + saveFileName);
+    // mfile.transferTo(serverFile);
+
+    // Map file = new HashMap();
+    // file.put("origName", origName);
+    // file.put("sfile", serverFile);
+    // resultList.add(file);
+    // }
+
+    // returnObject.put("files", resultList);
+    // returnObject.put("params", mhsr.getParameterMap());
+    // } catch (UnsupportedEncodingException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (IllegalStateException e) { // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // } catch (IOException e) { // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+
+    // return null;
+    // }
+
+    // // uuid생성
+    // public static String getUuid() {
+    // return UUID.randomUUID().toString().replaceAll("-", "");
+    // }
+
 }

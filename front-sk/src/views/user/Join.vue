@@ -8,6 +8,20 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
 
         <div class="join">
+            <div id="imageMain">
+                <div v-if="!image"></div>
+                <div v-else>
+                    <img :src="image" />
+                    <button @click="removeImage">Remove image</button>
+                </div>
+            </div>
+
+            <form id="myform" enctype="multipart/form-data" @submit.prevent="fileSelect">
+                파일 :
+                <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
+                <input type="submit" name="업로드" value="제출" /><br /><br />
+            </form>
+
             <div class="input-with-label">
                 <input
                     v-model="email"
@@ -91,13 +105,13 @@
                     <div class="modal-wrapper">
                         <div class="modal-container">
                             <div class="modal-header">
-                                <slot name="header">약관동의</slot>
+                                <slot name="header"></slot>
                             </div>
                             <div class="modal-body"></div>
                             <div class="modal-footer">
                                 <slot name="footer">
-                                    동의하십니까?
-                                    <br />
+                                    약관입니다.
+                                    <br /><br />
                                     <button @click="showmodal">확인</button>
                                 </slot>
                             </div>
@@ -131,10 +145,12 @@ export default {
             nickName: '',
             name: '',
             comment: '',
+            keyword: '',
             key: '',
             imgURL: '',
             isTerm: false,
             isLoading: false,
+            file: '',
             error: {
                 email: false,
                 password: false,
@@ -148,7 +164,9 @@ export default {
             isSubmit: false,
             passwordType: 'password',
             passwordConfirmType: 'password',
-            showModal: false
+            showModal: false,
+            imageMain: '',
+            image: ''
         };
     },
     created() {
@@ -261,7 +279,35 @@ export default {
         },
 
         join() {
+            console.log('ddddddddddddddddddddddd ' + this.imgURL);
+
             if (this.isSubmit) {
+                const formData = new FormData();
+                formData.append('imgURL', this.imgURL);
+                formData.append('email', this.email);
+                formData.append('password', this.password);
+                formData.append('nickName', this.nickName);
+                formData.append('name', this.name);
+                formData.append('comment', this.comment);
+                formData.append('keyword', this.keyword);
+
+                for (let k of formData.entries()) {
+                    console.log('kKKKKKKKKK ' + k);
+                }
+
+                this.$http
+                    .post('http://192.168.100.90:8080/account/test', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
                 var { email, password, nickName, comment, name, imgURL } = this;
 
                 // eslint-disable-next-line no-unused-vars
@@ -291,9 +337,12 @@ export default {
                 sessionStorage.setItem('nickName', this.nickName);
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
+                sessionStorage.setItem('imgURL', this.imgURL);
+
                 UserApi.cert(
                     data,
                     res => {
+                        console.log('???????????????');
                         //console.log(res);
                         //console.log(res.data.object.key);
                         this.key = res.data.object.key;
@@ -306,12 +355,13 @@ export default {
                         console.log(error);
                     }
                 );
-                this.$router.push('/user/certification');
+                this.$router.push('/user/keyword');
                 // UserApi.join(body);
                 console.log('join 라우터');
                 // console.log('axios 함!!!');
             }
         },
+        async test() {},
         back() {
             this.$router.push('/');
         },
@@ -325,7 +375,8 @@ export default {
                 nickName: this.nickName,
                 name: this.name,
                 comment: this.comment,
-                num: num
+                num: num,
+                imgURL: this.imgURL
             };
 
             UserApi.doubleCheck(
@@ -380,6 +431,45 @@ export default {
                     console.log(error);
                 }
             );
+        },
+
+        fileSelect() {
+            let test = new FormData(document.getElementById('myform'));
+            console.log(test);
+
+            if (test != null) {
+                UserApi.fileUpload(
+                    test,
+                    Response => {
+                        console.log(Response);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+        },
+
+        onFileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.createImage(files[0]);
+            this.file = files[0];
+            console.log(this.$refs.file.files[0]);
+        },
+        createImage(file) {
+            // var image = new Image();
+            this.image = true;
+            var reader = new FileReader();
+            var vm = this;
+
+            reader.onload = e => {
+                vm.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImage: function() {
+            this.image = '';
         }
     }
 };

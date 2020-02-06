@@ -16,6 +16,8 @@ import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
+import Test from './views/user/test.vue';
+import Keyword from './views/user/UserKeyword.vue';
 
 Vue.use(Router);
 
@@ -87,6 +89,11 @@ const router = new Router({
             component: noticeTab
         },
         {
+            path: '/test',
+            name: 'test',
+            component: Test
+        },
+        {
             path: '*',
             redirect: '/404'
         },
@@ -103,6 +110,11 @@ const router = new Router({
             path: '/main',
             name: 'Main',
             component: Main
+        },
+        {
+            path: '/user/keyword',
+            name: 'Keyword',
+            component: Keyword
         }
     ]
 });

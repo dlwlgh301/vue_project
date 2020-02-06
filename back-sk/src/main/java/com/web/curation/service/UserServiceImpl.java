@@ -13,14 +13,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDao userDaoImpl;
 
-    public List<User> getAll() throws Exception {
-        // return userDao.findAll();
-        return null;
-    }
-
     @Override
     public User getUserByEmail(String email) {
-        return null;
+        System.out.println("service : " + email);
+        return userDaoImpl.getUserByEmail(email);
     }
 
     @Override
@@ -46,5 +42,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String email) throws Exception {
         return userDaoImpl.getUser(email);
+    }
+
+    @Override
+    public List<String> folloingList(String email) throws Exception {
+        return userDaoImpl.folloingList(email);
+    }
+
+    @Override
+    public List<String> followerList(String email) throws Exception {
+        return userDaoImpl.followerList(email);
     }
 }
