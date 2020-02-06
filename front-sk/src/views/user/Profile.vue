@@ -7,6 +7,7 @@
         <h1 class="title">My Profile</h1>
         <section class="profile">
             <img src="../../assets/images/tm-easy-profile.jpg" alt class="portrait" />
+
             <div class="follow" @click="iniciar()" v-show="ischeck1">
                 <div class="icon-instagram"></div>
                 팔로우
@@ -29,8 +30,11 @@
                     <h2 class="content" style="text-align:center">팔로워</h2>
                     <hr />
                     <br />
-                    <div class="content">asdlasdjklasjd asdlasdjklasjdasdjk asdj asjd kasjd asdlasdjklasjdasdjkdjas da</div>
+                    <div class="content">
+                        asdlasdjklasjd asdlasdjklasjdasdjk asdj asjd kasjd asdlasdjklasjdasdjkdjas da
+                    </div>
                 </md-dialog>
+
                 <md-dialog :md-active.sync="followerDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로잉</h2>
@@ -57,14 +61,13 @@
                     </div>
                 </md-dialog>
 
-                <div class="follow" @click="FollowListBtnCheck(0)" v-show="followingListCheck[0]">
-                    <div></div>
-                    팔로우
+                <div :style="[followCheck[0] ? { color: 'blue' } : { color: 'red' }]" class="follow" @click="FollowListBtnCheck(0)">
+                    {{ followCheck[0] | handleFollowFilter }}
                 </div>
-                <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
+                <!-- <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
                     <div class="icon-ok"></div>
                     팔로잉
-                </div>
+                </div> -->
             </div>
             <div class="right_col">
                 <h2 class="name">{{ info.name }}</h2>
@@ -120,16 +123,22 @@ export default {
     created() {
         this.$store.commit('setPageTitle', '유저 정보');
     },
+    filters: {
+        handleFollowFilter: value => {
+            return value ? '팔로잉' : '팔로우';
+        }
+    },
     data: () => {
         return {
             isButtonDisabled: false,
             ischeck1: true,
+
             follower: 2,
             following: 1,
             ischeck2: false,
             info: [],
-            followListCheck: [true, true], // 팔로우 버튼
-            followingListCheck: [true, true], // 팔로잉 버튼
+            followCheck: [false, false], // 팔로우/팔로잉 버튼
+            // followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
             followListSize: 0,
@@ -137,7 +146,7 @@ export default {
             name: '',
             nickname: '',
             phone: '',
-            email: 'dhrwnmc@naver.com',
+            email: '',
             interest: '',
             introduce: '',
             passwordSchema: new PV(),
@@ -149,7 +158,6 @@ export default {
     },
     methods: {
         showFollowing() {
-            this.followerDialog = true;
             let { following, email } = this;
             let data = {
                 following,
@@ -212,17 +220,17 @@ export default {
         },
 
         FollowListBtnCheck(idx) {
-            console.log(this.followingListCheck[idx] + 'asdasdasdasdasd');
-
-            if (this.followingListCheck[idx]) {
-                this.followingListCheck[idx] = false;
-                this.followListCheck[idx] = true;
-            } else {
-                this.followingListCheck[idx] = true;
-                this.followListCheck[idx] = false;
-            }
-
-            console.log(this.followingListCheck[idx] + ' ' + idx);
+            // console.log(this.followingListCheck[idx] + 'asdasdasdasdasd');
+            console.group('FOLLOW CHECK, ', this.followCheck[idx]);
+            // if (this.followingListCheck[idx]) {
+            //     this.followingListCheck[idx] = false;
+            //     this.followListCheck[idx] = true;
+            // } else {
+            //     this.followingListCheck[idx] = true;
+            //     this.followListCheck[idx] = false;
+            // }
+            this.followCheck[idx] = !this.followCheck[idx];
+            console.groupEnd(this.followCheck[idx]);
         },
         retrieveQuestion() {
             this.email = this.$store.state.email;
