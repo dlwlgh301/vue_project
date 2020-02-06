@@ -71,13 +71,14 @@ export default {
                 var name = sessionStorage.getItem('name');
                 var nickName = sessionStorage.getItem('nickName');
                 var comment = sessionStorage.getItem('comment');
-
+                var keyword = sessionStorage.getItem('keyowrd');
                 var body = {
                     password: password,
                     email: email,
                     nickName: nickName,
                     name: name,
-                    comment: comment
+                    comment: comment,
+                    keyword: keyword
                 };
                 UserApi.join(body);
                 this.$router.push('/user/certComplete');

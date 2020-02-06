@@ -8,7 +8,6 @@ import 'vue-material/dist/vue-material.min.css';
 import vuetify from './plugins/vuetify';
 import router from './routes';
 import ElementUI from 'element-ui';
-import './style/theme/index.css';
 import 'vue-material/dist/theme/default.css';
 
 Vue.use(Vuetify);
