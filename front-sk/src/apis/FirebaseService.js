@@ -50,38 +50,40 @@ messaging
 
 messaging.getToken().then(newToken => {
     console.log('getToken start');
+    console.log(newToken);
     firestore
         .collection('tokens')
-        .doc('token')
+        .doc('test@gmail.com')
         .set({
-            msg: 'test',
             token: newToken
         });
     console.log('getToken end');
 });
-// Callback fired if Instance ID token is updated.
-// messaging.onTokenRefresh(() => {
-//     messaging
-//         .getToken()
-//         .then(refreshedToken => {
-//             console.log('Token refreshed.');
-//             // Indicate that the new Instance ID token has not yet been sent to the
-//             // app server.
-//             setTokenSentToServer(false);
-//             // Send Instance ID token to app server.
-//             sendTokenToServer(refreshedToken);
-//             // ...
-//         })
-//         .catch(err => {
-//             console.log('Unable to retrieve refreshed token ', err);
-//             showToken('Unable to retrieve refreshed token ', err);
-//         });
-// });
 
-// messaging.onMessage(payload => {
-//     console.log('Message received. ', payload);
-//     // ...
-// });
+// Callback fired if Instance ID token is updated.
+messaging.onTokenRefresh(() => {
+    messaging
+        .getToken()
+        .then(refreshedToken => {
+            console.log('Token refreshed.');
+            console.log(refreshedToken);
+            firestore
+                .collection('tokens')
+                .doc('pacedov3@gmail.com')
+                .set({
+                    token: refreshedToken
+                });
+            console.log('refreshed end');
+        })
+        .catch(err => {
+            console.log('Unable to retrieve refreshed token ', err);
+        });
+});
+
+messaging.onMessage(payload => {
+    console.log('Message received. ', payload);
+    // ...
+});
 
 export default {
     logPush(data) {

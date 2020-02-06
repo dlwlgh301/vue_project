@@ -26,7 +26,45 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
 
 exports.logPush = functions.firestore.document('/tokens/{token}').onCreate((context, change) => {
     console.log('시작');
-    const token = admin.firestore().collection('tokens');
+    admin
+        .firestore()
+        .collection('tokens')
+        .doc('pacedov3@gmail.com')
+        .get()
+        .then(res => {
+            // res.token;
+            console.log('token ==>');
+            // console.log(res.data().token);
+            let tokenlist = [];
+            tokenlist[0] = res.data().token;
+            // tokenlist.push(res.data().token);
+            console.log(tokenlist);
+            let messageInfo = {
+                data: {
+                    msg: 'test'
+                },
+                tokens: tokenlist
+            };
+
+            const sendCase = admin.messaging();
+
+            sendCase
+                .sendMulticast(messageInfo)
+                .then(res => {
+                    console.log('성공');
+                    console.log(res);
+                    return res;
+                })
+                .catch(error => {
+                    console.log('실패');
+                    console.log(error);
+                    throw error;
+                });
+            return true;
+        })
+        .catch(error => {
+            throw error;
+        });
     console.log(token);
     console.log('end');
 
