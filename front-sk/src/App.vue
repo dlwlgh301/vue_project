@@ -3,7 +3,7 @@
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
-                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" />
+                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" :newNotice="notice" />
                 <router-view class="page"></router-view>
                 <BottomNavComponent v-model="showNav" class="bottom-nav" />
             </div>
@@ -16,17 +16,17 @@ import HeaderComponent from './components/common/NavBar';
 import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
-import UserApi from '../../apis/UserApi';
+import UserApi from './apis/UserApi';
 
 export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
-        UserApi.UserApi.requestNoticeNum(
+        UserApi.requestNoticeNum(
             data,
             res => {
                 console.log(res.data);
-                res.data.num;
+                this.notice = res.data.num;
             },
             error => {
                 console.log(error);
@@ -41,9 +41,12 @@ export default {
     data: () => {
         return {
             route: '',
-            showNav: false
+            showNav: false,
+            notice: 2,
+            email: 'ihs3583@gmail.com'
         };
     },
+    methods: {},
     mounted() {
         this.route = this.$router;
     }

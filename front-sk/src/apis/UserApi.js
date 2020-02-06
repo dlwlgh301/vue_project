@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -9,6 +9,7 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error)
@@ -72,7 +73,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/num?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -80,15 +81,24 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-
-const requestNoticeNum = (data, callback) => {
+const requestNewNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/new?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log('newnotice에러' + error);
+        });
+};
+const requestNoticeNum = (data, callback) => {
+    axios
+        .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            console.log('num에러' + error);
         });
 };
 const cert = (data, callback) => {
