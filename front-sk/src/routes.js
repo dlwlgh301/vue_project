@@ -16,6 +16,11 @@ import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
+<<<<<<< HEAD
+=======
+import Keyword from './views/user/UserKeyword.vue';
+
+>>>>>>> b916671593cb07d52a812df5a384c7734307d057
 Vue.use(Router);
 
 const router = new Router({
@@ -102,6 +107,11 @@ const router = new Router({
             path: '/main',
             name: 'Main',
             component: Main
+        },
+        {
+            path: '/user/keyword',
+            name: 'Keyword',
+            component: Keyword
         }
     ]
 });

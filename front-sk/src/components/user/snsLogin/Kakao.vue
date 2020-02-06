@@ -61,12 +61,13 @@ export default {
                                         //이미 가입되어있던 사람
                                         console.log('가입');
                                         router.push('/main');
-                                        store.commit('loginToken', res.data.token);
+                                        //store.commit('loginToken', res.data.token);
                                         store.state.email = this.email;
                                         //router.push('/main');
                                     } else {
                                         console.log('미가입');
                                         router.push('/user/join');
+                                        store.state.email = this.email;
                                         //router.push('/user/join');
                                     }
                                 },

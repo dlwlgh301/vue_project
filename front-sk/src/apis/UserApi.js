@@ -1,5 +1,9 @@
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
+<<<<<<< HEAD
+=======
+
+>>>>>>> b916671593cb07d52a812df5a384c7734307d057
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
