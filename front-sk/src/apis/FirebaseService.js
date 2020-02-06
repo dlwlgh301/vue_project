@@ -1,8 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-
-// import admin from 'firebase/admin';
+import 'firebase/messaging';
 
 import 'firebase/database';
 import 'firebase/storage';
@@ -19,10 +18,10 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// const messaging = firebase.messaging();
+const messaging = firebase.messaging();
 const firestore = firebase.firestore();
 
-// messaging.usePublicVapidKey('BB04cLzKPwYo8rsGOHdhVUY2MqvZvGBUsTYpRgd7dvpV8To7bXLPBfwmi5l - gr1Y6vvt5LbMMoV4oFBZg - e - Tlk');
+messaging.usePublicVapidKey('BB04cLzKPwYo8rsGOHdhVUY2MqvZvGBUsTYpRgd7dvpV8To7bXLPBfwmi5l-gr1Y6vvt5LbMMoV4oFBZg-e-Tlk');
 
 Notification.requestPermission().then(permission => {
     console.log(permission);
@@ -35,27 +34,31 @@ Notification.requestPermission().then(permission => {
     console.log('permission...');
 });
 
-// messaging
-//     .getToken()
-//     .then(currentToken => {
-//         //로그인 되어있으면 토큰 가져오기
-//         if (currentToken) {
-//             // sendTokenToServer(currentToken);
-//             // updateUIForPushEnabled(currentToken);
-//         } else {
-//             // Show permission request.
-//             console.log('No Instance ID token available. Request permission to generate one.');
-//             // Show permission UI.
-//             // updateUIForPushPermissionRequired();
-//             // setTokenSentToServer(false);
-//         }
-//     })
-//     .catch(err => {
-//         console.log('An error occurred while retrieving token. ', err);
-//         // showToken('Error retrieving Instance ID token. ', err);
-//         // setTokenSentToServer(false);
-//     });
+messaging
+    .getToken()
+    .then(currentToken => {
+        //로그인 되어있으면 토큰 가져오기
+        if (currentToken) {
+            console.log(currentToken);
+        } else {
+            console.log('No Instance ID token available. Request permission to generate one.');
+        }
+    })
+    .catch(err => {
+        console.log('An error occurred while retrieving token. ', err);
+    });
 
+messaging.getToken().then(newToken => {
+    console.log('getToken start');
+    firestore
+        .collection('tokens')
+        .doc('token')
+        .set({
+            msg: 'test',
+            token: newToken
+        });
+    console.log('getToken end');
+});
 // Callback fired if Instance ID token is updated.
 // messaging.onTokenRefresh(() => {
 //     messaging
@@ -83,23 +86,8 @@ Notification.requestPermission().then(permission => {
 export default {
     logPush(data) {
         console.log('login service start ' + data);
-        firestore
-            .collection('messages')
-            .doc('msg')
-            .set({
-                msg: data
-            })
-            .then(function() {
-                console.log('Document successfully written!');
-            })
-            .catch(function(error) {
-                console.error('Error writing document: ', error);
-            });
-        // return firestore
-        //     .collection('messages')
-        //     .doc('test')
-        //     .set({
-        //         msg: data
-        //     });
+        firestore.collection('messages').add({
+            msg: data
+        });
     }
 };

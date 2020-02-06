@@ -24,10 +24,15 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
     res.redirect(303, snapshot.ref.toString());
 });
 
-exports.logPush = functions.firestore.document('/messages/{msg}').onCreate((context, change) => {
-    const snapshot = admin
-        .database()
-        .ref('/messages')
-        .push({ original: 'who 어디에 댓글', text: context.data().msg });
+exports.logPush = functions.firestore.document('/tokens/{token}').onCreate((context, change) => {
+    console.log('시작');
+    const token = admin.firestore().collection('tokens');
+    console.log(token);
+    console.log('end');
+
+    // const snapshot = admin
+    //     .database()
+    //     .ref('/messages')
+    //     .push({ original: 'who 어디에 댓글', text: context.data().msg });
     return true;
 });
