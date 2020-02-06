@@ -9,7 +9,16 @@
 
         <div class="join">
             <div class="input-with-label">
-                <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                <input
+                    v-model="email"
+                    v-bind:class="{
+                        error: error.email,
+                        complete: !error.email && email.length !== 0
+                    }"
+                    id="email"
+                    placeholder="이메일을 입력하세요."
+                    type="text"
+                />
                 <label for="email">이메일</label>
                 <button id="doubleCheck" @click="doubleCheck(1)">중복확인</button>
                 <div class="error-text" v-if="error.email">{{ error.email }}</div>
@@ -18,7 +27,10 @@
             <div class="input-with-label">
                 <input
                     v-model="password"
-                    v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
+                    v-bind:class="{
+                        error: error.password,
+                        complete: !error.password && password.length !== 0
+                    }"
                     id="password"
                     :type="passwordType"
                     placeholder="비밀번호를 입력하세요."
@@ -32,11 +44,16 @@
                     v-model="passwordConfirm"
                     :type="passwordConfirmType"
                     id="password-confirm"
-                    v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
+                    v-bind:class="{
+                        error: error.passwordConfirm,
+                        complete: !error.passwordConfirm && passwordConfirm.length !== 0
+                    }"
                     placeholder="비밀번호를 다시한번 입력하세요."
                 />
                 <label for="password-confirm">비밀번호 확인</label>
-                <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+                <div class="error-text" v-if="error.passwordConfirm">
+                    {{ error.passwordConfirm }}
+                </div>
             </div>
 
             <div class="input-with-label">
@@ -45,13 +62,31 @@
                 <div class="error-text" v-if="error.name">{{ error.name }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <input
+                    v-model="nickName"
+                    v-bind:class="{
+                        error: error.nickName,
+                        complete: !error.nickName && nickName.length !== 0
+                    }"
+                    id="nickname"
+                    placeholder="닉네임을 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">닉네임</label>
                 <button @click="doubleCheck(2)">중복확인</button>
                 <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
             </div>
             <div class="input-with-label">
-                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <input
+                    v-model="comment"
+                    v-bind:class="{
+                        error: error.comment,
+                        complete: !error.comment && comment.length !== 0
+                    }"
+                    id="comment"
+                    placeholder="한줄 소개를 입력하세요."
+                    type="text"
+                />
                 <label for="nickname">한줄소개</label>
                 <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
             </div>
@@ -85,8 +120,12 @@
 
         <button @click="showModal = true">약관보기</button>
 
-        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
-        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
+        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+            가입하기
+        </button>
+        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+            이전화면으로 돌아가기
+        </button>
     </div>
 </template>
 
