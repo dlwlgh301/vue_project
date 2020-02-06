@@ -51,12 +51,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> folloingList(String email) throws Exception {
+    public List<String> folloingList(String email) throws Exception {
         return sqlSession.selectList("folloingList", email);
     }
 
     @Override
-    public List<User> followerList(String email) throws Exception {
+    public List<String> followerList(String email) throws Exception {
         return sqlSession.selectList("followerList", email);
     }
 }

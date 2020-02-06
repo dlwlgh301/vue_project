@@ -45,12 +45,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> folloingList(String email) throws Exception {
+    public List<String> folloingList(String email) throws Exception {
         return userDaoImpl.folloingList(email);
     }
 
     @Override
-    public List<User> followerList(String email) throws Exception {
+    public List<String> followerList(String email) throws Exception {
         return userDaoImpl.followerList(email);
     }
 }

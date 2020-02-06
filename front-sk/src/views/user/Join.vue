@@ -9,21 +9,18 @@
 
         <div class="join">
             <div id="imageMain">
-                <div v-if="!image">
-                    <h2>Select an image</h2>
-                    <input type="file" @change="onFileChange" />
-                </div>
+                <div v-if="!image"></div>
                 <div v-else>
                     <img :src="image" />
                     <button @click="removeImage">Remove image</button>
                 </div>
             </div>
 
-            <div>
-                <div class="img-box"></div>
-                <label for="img">사진 : </label>
-                <input v-on:change="fileSelect()" type="file" ref="imgURL" id="img" />
-            </div>
+            <form id="myform" enctype="multipart/form-data" @submit.prevent="fileSelect">
+                파일 :
+                <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
+                <input type="submit" name="업로드" value="제출" /><br /><br />
+            </form>
 
             <div class="input-with-label">
                 <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
@@ -124,10 +121,12 @@ export default {
             nickName: '',
             name: '',
             comment: '',
+            keyword: '',
             key: '',
             imgURL: '',
             isTerm: false,
             isLoading: false,
+            file: '',
             error: {
                 email: false,
                 password: false,
@@ -256,6 +255,32 @@ export default {
             console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
             if (this.isSubmit) {
+                const formData = new FormData();
+                formData.append('imgURL', this.imgURL);
+                formData.append('email', this.email);
+                formData.append('password', this.password);
+                formData.append('nickName', this.nickName);
+                formData.append('name', this.name);
+                formData.append('comment', this.comment);
+                formData.append('keyword', this.keyword);
+
+                for (let k of formData.entries()) {
+                    console.log('kKKKKKKKKK ' + k);
+                }
+
+                this.$http
+                    .post('http://192.168.100.90:8080/account/test', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
                 var { email, password, nickName, comment, name, imgURL } = this;
 
                 // eslint-disable-next-line no-unused-vars
@@ -382,16 +407,28 @@ export default {
         },
 
         fileSelect() {
-            this.imgURL = this.$refs.imgURL.files[0];
-            console.log(this.imgURL);
-            console.log(this.imgURL.name);
-            this.imgURL = this.imgURL.name;
+            let test = new FormData(document.getElementById('myform'));
+            console.log(test);
+
+            if (test != null) {
+                UserApi.fileUpload(
+                    test,
+                    Response => {
+                        console.log(Response);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
         },
 
         onFileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             this.createImage(files[0]);
+            this.file = files[0];
+            console.log(this.$refs.file.files[0]);
         },
         createImage(file) {
             // var image = new Image();
@@ -405,7 +442,7 @@ export default {
             reader.readAsDataURL(file);
         },
         removeImage: function() {
-            this.image = '';    
+            this.image = '';
         }
     },
     mounted() {

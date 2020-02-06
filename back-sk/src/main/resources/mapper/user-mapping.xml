@@ -33,13 +33,13 @@
         where email=#{value}
     </select>
 
-    <select id="folloingList" resultType="com.web.curation.model.user.User" parameterType="string">
-        select * from follow
-        where folloing = #{value}
+    <select id="folloingList" resultType="string" parameterType="string">
+        select folloingnickName from follow
+        where follower = #{value}
     </select>
 
-    <select id="followerList" resultType="com.web.curation.model.user.User" parameterType="string">
-        select * from follow
-        where follower = #{value}
+    <select id="followerList" resultType="string" parameterType="string">
+        select followernickName from follow
+        where folloing = #{value}
     </select>
 </mapper>

@@ -18,7 +18,7 @@ public interface UserService {
 
     User getUser(String email) throws Exception;
 
-    List<User> folloingList(String email) throws Exception;
+    List<String> folloingList(String email) throws Exception;
 
-    List<User> followerList(String email) throws Exception;
+    List<String> followerList(String email) throws Exception;
 }
