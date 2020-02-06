@@ -3,12 +3,16 @@
         <div class="tab-component">
             <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
                 <v-tabs-slider color="#009ff4"></v-tabs-slider>
-                <v-tab :key="tab1_name"
-                    ><v-badge color="#009ff4" content="6">
+                <v-tab :key="tab1_name">
+                    <v-badge color="#009ff4" :content="notice_items.length" :value="notice_items.length">
                         {{ tab1_name }}
-                    </v-badge></v-tab
-                >
-                <v-tab :key="tab2_name">{{ tab2_name }}</v-tab>
+                    </v-badge>
+                </v-tab>
+                <v-tab :key="tab2_name">
+                    <v-badge color="#009ff4" :content="follow_items.length" :value="follow_items.length">
+                        {{ tab2_name }}
+                    </v-badge>
+                </v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
                 <v-tab-item :key="tab1_name">
@@ -44,8 +48,8 @@
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
-                                <v-btn text icon color="#fff">
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="newFollow()">요청 수락</v-btn>
+                                <v-btn text icon color="#fff" @click="removeFollow(index)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -68,13 +72,13 @@ export default {
     },
     data() {
         return {
-            pageTitle: '알림',
             email: 'ihs3583@gmail.com',
             tab: null,
             tab1_name: '알림',
             tab2_name: '팔로우 요청',
             notice_items: [],
-            follow_items: []
+            follow_items: [],
+            isremove: []
         };
     },
     methods: {
@@ -103,8 +107,22 @@ export default {
                 }
             );
         },
-        followAccept: function() {
-            this.isAccept = false;
+        newFollow: function() {
+            this.follow_items.push({
+                avatar:
+                    'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
+                userId: '이지호',
+                subtitle: '팔로우 요청을 또 보냈습니다'
+            });
+            // this.follow_items.push({ divider: true, inset: true });
+        },
+        removeFollow(idx) {
+            console.log(this.follow_items);
+            console.log(idx);
+            this.isremove.push(idx);
+            this.follow_items.splice(idx, 1);
+            console.log('isremove', this.isremove);
+            // this.follow_items.splice(idx);
         }
     },
     mounted() {
