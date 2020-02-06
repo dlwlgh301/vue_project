@@ -9,10 +9,12 @@
 
         <div class="join">
             <div id="imageMain">
-                <div v-if="!image"></div>
+                <div v-if="!image">
+                    <img src="../../assets/images/프로필아이콘.png" />
+                </div>
                 <div v-else>
-                    <img :src="image" />
-                    <button @click="removeImage">Remove image</button>
+                    <img :src="image" style="width:200px" />
+                    <button @click="removeImage">삭제하기</button>
                 </div>
             </div>
 
@@ -31,8 +33,9 @@
                     type="text"
                 />
                 <label for="email">이메일</label>
-                <button id="doubleCheck" @click="doubleCheck(1)">중복확인</button>
+                <button id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
                 <div class="error-text" v-if="error.email">{{ error.email }}</div>
+                <input v-model="emailAuth" placeholder="인증 코드 적으세요." type="text" />
             </div>
 
             <div class="input-with-label">
@@ -128,6 +131,18 @@
     </div>
 </template>
 
+<style>
+#imageMain {
+    text-align: center;
+}
+img {
+    width: 30%;
+    margin: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+</style>
+
 <script>
 import PV from 'password-validator';
 // import axios from 'axios';
@@ -138,6 +153,8 @@ import Swal from 'sweetalert2';
 export default {
     data: () => {
         return {
+            emailAuth: '',
+            files: '',
             email: '',
             password: '',
             passwordSchema: new PV(),
@@ -182,6 +199,15 @@ export default {
             .letters();
     },
     watch: {
+        emailAuth: function() {
+            if (sessionStorage.getItem('key') != null) {
+                let key = sessionStorage.getItem('key');
+                console.log('success');
+
+                if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
+                else this.error.emailAuth = false;
+            }
+        },
         password: function() {
             this.checkForm();
         },
@@ -282,32 +308,6 @@ export default {
             console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
             if (this.isSubmit) {
-                const formData = new FormData();
-                formData.append('imgURL', this.imgURL);
-                formData.append('email', this.email);
-                formData.append('password', this.password);
-                formData.append('nickName', this.nickName);
-                formData.append('name', this.name);
-                formData.append('comment', this.comment);
-                formData.append('keyword', this.keyword);
-
-                for (let k of formData.entries()) {
-                    console.log('kKKKKKKKKK ' + k);
-                }
-
-                this.$http
-                    .post('http://192.168.100.90:8080/account/test', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-
                 var { email, password, nickName, comment, name, imgURL } = this;
 
                 // eslint-disable-next-line no-unused-vars
@@ -361,6 +361,24 @@ export default {
                 // console.log('axios 함!!!');
             }
         },
+        sendEmailAuth() {
+            UserApi.cert(
+                { email: this.email },
+                res => {
+                    console.log('???????????????');
+                    //console.log(res);
+                    //console.log(res.data.object.key);
+                    this.key = res.data.object.key;
+                    console.log(this.key);
+                    sessionStorage.clear;
+                    sessionStorage.setItem('key', this.key);
+                    console.log('join 인증키 발급');
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
         async test() {},
         back() {
             this.$router.push('/');
@@ -368,7 +386,42 @@ export default {
         showmodal() {
             this.showModal = false;
         },
+        isEmailOverlap() {
+            if (this.email.length <= 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '이메일을 입력해 주세요.'
+                });
+                this.error.submit = true;
+                return;
+            }
+            UserApi.doubleCheck(
+                { email: this.email, num: 1 },
+                res => {
+                    console.log(res);
+                    if (res.data.status == true) {
+                        this.sendEmailAuth();
+
+                        Swal.fire({
+                            icon: 'success', //"info,success,warning,error" 중 택1
+                            title: '사용가능한 이메일입니다'
+                        });
+                        this.error.submit = false;
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: res.data.data
+                        });
+                        this.error.submit = true;
+                    }
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
         doubleCheck(num) {
+            // 1을 이메일 중복체크, 2는 닉네임 중복 체크
             var body = {
                 password: this.password,
                 email: this.email,
@@ -384,7 +437,7 @@ export default {
                 res => {
                     console.log(res);
 
-                    if (body.num == 1) {
+                    if (num == 1) {
                         if (this.email == '') {
                             Swal.fire({
                                 icon: 'error',
@@ -437,7 +490,7 @@ export default {
             let test = new FormData(document.getElementById('myform'));
             console.log(test);
 
-            if (test != null) {
+            if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
                     Response => {
@@ -451,10 +504,10 @@ export default {
         },
 
         onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-            this.file = files[0];
+            this.files = e.target.files || e.dataTransfer.files;
+            if (!this.files.length) return;
+            this.createImage(this.files[0]);
+            this.file = this.files[0];
             console.log(this.$refs.file.files[0]);
         },
         createImage(file) {
