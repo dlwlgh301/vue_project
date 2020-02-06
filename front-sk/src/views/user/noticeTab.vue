@@ -3,11 +3,16 @@
         <div class="tab-component">
             <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
                 <v-tabs-slider color="#009ff4"></v-tabs-slider>
-                <v-tab v-for="tab_name in tab_names" :key="tab_name">{{ tab_name }}</v-tab>
+                <v-tab :key="tab1_name"
+                    ><v-badge color="#009ff4" content="6">
+                        {{ tab1_name }}
+                    </v-badge></v-tab
+                >
+                <v-tab :key="tab2_name">{{ tab2_name }}</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
-                <v-tab-item v-for="tab_name in tab_names" :key="tab_name">
-                    <v-list v-if="tab == 0" two-line>
+                <v-tab-item :key="tab1_name">
+                    <v-list two-line>
                         <template v-for="(notice_item, index) in notice_items">
                             <v-subheader v-if="notice_item.header" :key="notice_item.header">{{ notice_item.header }}</v-subheader>
                             <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider>
@@ -25,7 +30,9 @@
                             </v-list-item>
                         </template>
                     </v-list>
-                    <v-list v-if="tab == 1">
+                </v-tab-item>
+                <v-tab-item :key="tab2_name">
+                    <v-list>
                         <template v-for="(follow_item, index) in follow_items">
                             <v-subheader v-if="follow_item.header" :key="follow_item.header">{{ follow_item.header }}</v-subheader>
                             <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider>
@@ -37,9 +44,7 @@
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true"
-                                    >수락</v-btn
-                                >
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followAccept" v-show="true">수락</v-btn>
                                 <v-btn text icon color="#fff">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
@@ -66,7 +71,8 @@ export default {
             pageTitle: '알림',
             email: 'ihs3583@gmail.com',
             tab: null,
-            tab_names: ['알림', '팔로우 요청'],
+            tab1_name: '알림',
+            tab2_name: '팔로우 요청',
             notice_items: [],
             follow_items: []
         };
