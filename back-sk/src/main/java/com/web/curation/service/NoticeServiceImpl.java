@@ -33,4 +33,14 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDaoImpl.getNewNotice(email);
     }
 
+    @Override
+    public boolean updateNotice(String eamil) throws Exception {
+        return noticeDaoImpl.updateNotice(eamil);
+    }
+
+    @Override
+    public boolean deleteNotice(int nid) throws Exception {
+        return noticeDaoImpl.deleteNotice(nid);
+    }
+
 }

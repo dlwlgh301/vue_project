@@ -13,4 +13,8 @@ public interface NoticeService {
     int getNoticeNum(String email) throws Exception;
 
     List<Notice> getNewNotice(String email) throws Exception;
+
+    boolean updateNotice(String eamil) throws Exception;
+
+    boolean deleteNotice(int nid) throws Exception;
 }

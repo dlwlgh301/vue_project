@@ -46,7 +46,7 @@ public class NoticeController {
             result.data = "fail";
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/getnoticenum")
@@ -78,7 +78,20 @@ public class NoticeController {
             result.data = "none";
         }
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/deleteNotice")
+    public Object deleteNotice(@RequestParam(required = true) final int nid) throws Exception {
+        final BasicResponse result = new BasicResponse();
+        if (noticeServiceImpl.deleteNotice(nid)) {
+            result.status = true;
+            result.data = "success";
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
