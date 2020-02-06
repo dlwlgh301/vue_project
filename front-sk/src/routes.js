@@ -16,7 +16,7 @@ import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
-
+import ChangeProfile from './views/user/ChangeProfile.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -30,6 +30,11 @@ const router = new Router({
             path: '/user/Profile',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/user/ChangeProfile',
+            name: 'ChangeProfile',
+            component: ChangeProfile
         },
         {
             path: '/user/join',
