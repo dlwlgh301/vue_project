@@ -23,4 +23,24 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeDaoImpl.insertNotice(sender, receiver, msg);
     }
 
+    @Override
+    public int getNoticeNum(String email) throws Exception {
+        return noticeDaoImpl.getNoticeNum(email);
+    }
+
+    @Override
+    public List<Notice> getNewNotice(String email) throws Exception {
+        return noticeDaoImpl.getNewNotice(email);
+    }
+
+    @Override
+    public boolean updateNotice(String eamil) throws Exception {
+        return noticeDaoImpl.updateNotice(eamil);
+    }
+
+    @Override
+    public boolean deleteNotice(int nid) throws Exception {
+        return noticeDaoImpl.deleteNotice(nid);
+    }
+
 }

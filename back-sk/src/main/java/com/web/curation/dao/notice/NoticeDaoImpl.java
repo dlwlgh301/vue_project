@@ -29,4 +29,32 @@ public class NoticeDaoImpl implements NoticeDao {
         else
             return false;
     }
+
+    @Override
+    public int getNoticeNum(String email) throws Exception {
+        return sqlSession.selectOne("getNoticeNum", email);
+    }
+
+    @Override
+    public List<Notice> getNewNotice(String email) throws Exception {
+        return sqlSession.selectList("getNewNotice", email);
+    }
+
+    @Override
+    public boolean updateNotice(String eamil) throws Exception {
+        int row = sqlSession.update("updateNotice", eamil);
+        if (row > 0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean deleteNotice(int nid) throws Exception {
+        int row = sqlSession.delete("updateNotice", nid);
+        if (row > 0)
+            return true;
+        else
+            return false;
+    }
 }

@@ -29,7 +29,8 @@ export default {
             currentDate: new Date()
         };
     },
-    methods: {}
+    methods: {},
+    created() {}
 };
 </script>
 <style>
