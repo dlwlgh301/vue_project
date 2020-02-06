@@ -119,6 +119,9 @@ import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
 //
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '유저 정보');
+    },
     data: () => {
         return {
             isButtonDisabled: false,

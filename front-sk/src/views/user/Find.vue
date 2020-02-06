@@ -32,6 +32,9 @@
 <script>
 import * as EmailValidator from 'email-validator';
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '비밀번호 찾기');
+    },
     watch: {
         email: function() {
             this.checkForm();
@@ -70,9 +73,6 @@ export default {
             isSubmit: false,
             component: this
         };
-    },
-    mounted() {
-        this.$store.commit('setPageTitle', '비밀번호 찾기');
     }
 };
 </script>
