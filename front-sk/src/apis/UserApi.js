@@ -10,7 +10,8 @@ const UserApi = {
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
-    requestNotice: (data, callback) => requestNotice(data, callback)
+    requestNotice: (data, callback) => requestNotice(data, callback),
+    requestNoticeNum: (data, callback) => requestNoticeNum(data, callback)
 };
 const snsDuplicate = (data, callback) => {
     axios
@@ -38,7 +39,17 @@ const requestNotice = (data, callback) => {
     axios
         .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
         .then(res => {
-            console.log('들어오나');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
+
+const requestNoticeNum = (data, callback) => {
+    axios
+        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .then(res => {
             callback(res);
         })
         .catch(error => {
