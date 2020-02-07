@@ -23,7 +23,7 @@
         update notice set readchk = 1 where nid in ( select nid from (select * from notice where receiver=#{value}) n where n.readchk = 0)
     </update>
 
-    <delete id="deleteNotice" parameterType="integer">
+    <delete id="deleteNotice" parameterType="int">
         delete from notice where nid=#{value}
     </delete>
     
