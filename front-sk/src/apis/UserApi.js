@@ -1,5 +1,6 @@
 import axios from 'axios';
 const host = 'http://192.168.100.90:8080';
+const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -11,7 +12,8 @@ const UserApi = {
     requestNotice: (data, callback) => requestNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
+    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -72,7 +74,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`http://192.168.100.58:8080/notice/show?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -83,7 +85,8 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .get(`http://192.168.100.58:8080/notice/num`, {
+        front-sk/src/apis/UserApi.js
+        .get(`${noticePort}/notice/num`, {
             params: {
                 email: data
             }
@@ -121,6 +124,18 @@ const doubleCheck = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
+
+const deleteNotice = (nid, callback, errorCallback) => {
+    axios
+        .delete(`${noticePort}/notice/` + nid)
+        .then(() => {
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
+        });
+};
+
 const join = body => {
     var value = {
         password: body.password,
