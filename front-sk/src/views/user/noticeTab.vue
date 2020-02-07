@@ -3,12 +3,12 @@
         <div class="tab-component">
             <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
                 <v-tabs-slider color="#009ff4"></v-tabs-slider>
-                <v-tab :key="tab1_name" @click="is_new_notice = false">
+                <v-tab :key="tab1_name" @click="is_new_notice = 0">
                     <v-badge color="#009ff4" :content="new_notice_items.length" :value="is_new_notice">
                         {{ tab1_name }}
                     </v-badge>
                 </v-tab>
-                <v-tab :key="tab2_name" @click="is_new_follow = false">
+                <v-tab :key="tab2_name" @click="is_new_follow = 0">
                     <v-badge color="#009ff4" :content="new_follow_items.length" :value="is_new_follow">
                         {{ tab2_name }}
                     </v-badge>
@@ -18,21 +18,6 @@
                 <v-tab-item :key="tab1_name">
                     <v-list two-line>
                         <v-subheader>{{ new_notice_header }}</v-subheader>
-                        <template v-for="(notice_item, index) in notice_items">
-                            <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
-                            <v-list-item :key="index" avatar>
-                                <v-list-item-avatar>
-                                    <img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
-                                </v-list-item-avatar>
-                                <v-list-item-content>
-                                    <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
-                                </v-list-item-content>
-                                <v-btn text icon color="#fff">
-                                    <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
-                                </v-btn>
-                            </v-list-item>
-                        </template>
                         <template v-for="(notice_item, index) in notice_items">
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
@@ -113,41 +98,10 @@ export default {
                 num: null
             };
             let new_noticeItem = {};
-            let noticeItem = {};
+            // let noticeItem = {};
             UserApi.requestNewNotice(
                 data,
                 res => {
-<<<<<<< HEAD
-                    console.log(res.data);
-                    for (let i = res.data.length - 1; i > -1; i--) {
-                        new_noticeItem = {
-                            nid: res.data[i].nid,
-                            avatar: require('../../assets/images/light-bulb.png'),
-                            userId: res.data[i].senderNick,
-                            subtitle: res.data[i].msg
-                        };
-                        this.new_notice_items.push(new_noticeItem);
-                        this.new_follow_items.push(new_noticeItem);
-                    }
-                },
-                error => {
-                    console.log(error);
-                }
-            );
-            UserApi.requestNotice(
-                data,
-                res => {
-                    console.log(res.data);
-                    for (let i = res.data.length - 1; i > -1; i--) {
-                        noticeItem = {
-                            nid: res.data[i].nid,
-                            avatar: require('../../assets/images/light-bulb.png'),
-                            userId: res.data[i].senderNick,
-                            subtitle: res.data[i].msg
-                        };
-                        this.notice_items.push(noticeItem);
-                        this.follow_items.push(noticeItem);
-=======
                     let old = res.data.object.oldNotice;
                     if (old != null) {
                         for (let i = old.length - 1; i >= 0; i--) {
@@ -160,7 +114,6 @@ export default {
                             this.notice_items.push(new_noticeItem);
                             this.follow_items.push(new_noticeItem);
                         }
->>>>>>> 17b976196a204825fd2204b5100fcb26af2b6252
                     }
                 },
                 error => {

@@ -74,11 +74,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-<<<<<<< HEAD
-        .get(`${host}/notice/num?email=` + JSON.stringify(data['email']))
-=======
         .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
->>>>>>> 17b976196a204825fd2204b5100fcb26af2b6252
         .then(res => {
             callback(res);
         })
