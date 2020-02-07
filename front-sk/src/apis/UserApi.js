@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -102,19 +102,11 @@ const cert = (data, callback) => {
         });
 };
 const doubleCheck = (data, callback, errorCallback) => {
-    var str = '';
-    if (data.num == 1) {
-        console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
-        str = data.email;
-    } else if (data.num == 2) {
-        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
-        str = data.nickName;
-    }
     axios({
         url: `${host}/account/doubleCheck`,
         method: 'post',
         params: {
-            value: str,
+            value: data.value,
             num: data.num
         }
     })
