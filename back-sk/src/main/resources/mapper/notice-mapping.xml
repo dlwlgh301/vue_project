@@ -11,7 +11,7 @@
         values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg})
     </insert>
 
-    <select id="getNoticeNum" parameterType="string" resultType="integer">
+    <select id="getNoticeNum" parameterType="string" resultType="int">
         select count(*) from (select * from notice where receiver=#{value}) n where n.readchk = 0
     </select>
 
