@@ -120,7 +120,7 @@ export default {
     },
     created() {
         this.$store.commit('setPageTitle', '정보 변경');
-        this.email = 'wns4773@naver.com';
+        this.email = sessionStorage.getItem('email');
         // this.email = this.$store.state.email;
 
         this.passwordSchema
