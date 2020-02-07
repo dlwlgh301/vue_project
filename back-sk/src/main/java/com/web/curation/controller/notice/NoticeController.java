@@ -11,9 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,26 +40,29 @@ public class NoticeController {
     @Autowired
     NoticeService noticeServiceImpl;
 
-    @PostMapping("/getnotice")
+    @GetMapping("/show")
+    @Transactional
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
-        List<Notice> list = noticeServiceImpl.getNotice(email.substring(1, email.length() - 1).toLowerCase());
+        String userEmail = email.substring(1, email.length() - 1).toLowerCase();
         final BasicResponse result = new BasicResponse();
-        if (list.size() > 0) {
+        JSONObject data = new JSONObject();
+        data.put("oldNotice", noticeServiceImpl.getNotice(userEmail));
+        data.put("newNotice", noticeServiceImpl.getNewNotice(userEmail));
+        boolean check = noticeServiceImpl.updateNotice(userEmail);
+        if (check) {
             result.status = true;
             result.data = "success";
-            result.object = list;
+            result.object = data.toMap();
         } else {
             result.status = false;
             result.data = "fail";
         }
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/getnoticenum")
+    @GetMapping("/num")
     public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
-        int num = noticeServiceImpl.getNoticeNum(email);
-
+        int num = noticeServiceImpl.getNoticeNum(email.substring(1, email.length() - 1).toLowerCase());
         JSONObject dummyUser = new JSONObject();
         dummyUser.put("num", num);
 
@@ -60,29 +70,12 @@ public class NoticeController {
         result.status = true;
         result.data = "success";
         result.object = dummyUser.toMap();
-        System.out.println(result);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/getnewnotice")
-    public Object getNewNotice(@RequestParam(required = true) final String email) throws Exception {
-        List<Notice> list = noticeServiceImpl.getNotice(email.substring(1, email.length() - 1).toLowerCase());
-        final BasicResponse result = new BasicResponse();
-        if (list.size() > 0) {
-            result.status = true;
-            result.data = "success";
-            result.object = list;
-        } else {
-            result.status = false;
-            result.data = "none";
-        }
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    @PostMapping("/deleteNotice")
-    public Object deleteNotice(@RequestParam(required = true) final int nid) throws Exception {
+    @DeleteMapping("/{nid}")
+    public Object deleteNotice(@PathVariable("nid") int nid) throws Exception {
         final BasicResponse result = new BasicResponse();
         if (noticeServiceImpl.deleteNotice(nid)) {
             result.status = true;
