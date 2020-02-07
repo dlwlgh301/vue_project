@@ -8,12 +8,23 @@
         <h1 class="title" style="padding-bottom: 1em; font-weight : 600">유저정보변경</h1>
 
         <div class="join">
+<<<<<<< HEAD
             <div id="imageMain">
                 <div v-if="!image"></div>
                 <div v-else>
                     <img :src="image" />
                     <button @click="removeImage">Remove image</button>
                 </div>
+=======
+            <div class="input-with-label">
+                <input v-model="email" id="email" type="text" readonly />
+                <label for="nickname">이메일</label>
+            </div>
+            <div class="input-with-label">
+                <input v-model="nickName" v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }" id="nickname" placeholder="닉네임을 입력하세요." type="text" />
+                <label for="nickname">닉네임</label>
+                <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
+>>>>>>> 92b614fe7c431fcc2e02434a51df1c8f5f6c7dab
             </div>
 
             <form id="myform" enctype="multipart/form-data" @submit.prevent="fileSelect">
@@ -23,8 +34,14 @@
             </form>
 
             <div class="input-with-label">
+<<<<<<< HEAD
                 <input v-model="email" type="text" disabled />
                 <label for="email">이메일</label>
+=======
+                <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                <label for="nickname">한줄소개</label>
+                <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
+>>>>>>> 92b614fe7c431fcc2e02434a51df1c8f5f6c7dab
             </div>
 
             <div class="input-with-label">
@@ -172,14 +189,8 @@ export default {
                 this.error.submit = false;
             }
 
-            if (this.passwordConfirm.length == 0) {
-                this.error.submit = true;
-                this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
-            else {
-                this.error.passwordConfirm = false;
-                this.error.submit = false;
-            }
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else this.error.password = false;
 
             if (this.name.length == 0) {
                 this.error.submit = true;
