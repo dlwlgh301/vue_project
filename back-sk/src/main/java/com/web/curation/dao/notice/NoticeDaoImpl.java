@@ -51,7 +51,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
     @Override
     public boolean deleteNotice(int nid) throws Exception {
-        int row = sqlSession.delete("updateNotice", nid);
+        int row = sqlSession.delete("deleteNotice", nid);
         if (row > 0)
             return true;
         else
