@@ -16,7 +16,7 @@ import HeaderComponent from './components/common/NavBar';
 import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
-import UserApi from '../../apis/UserApi';
+import UserApi from './apis/UserApi';
 
 export default {
     name: 'app',

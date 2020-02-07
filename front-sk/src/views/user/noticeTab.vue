@@ -95,16 +95,18 @@ export default {
             UserApi.requestNotice(
                 data,
                 res => {
-                    console.log(res.data);
-                    for (let i = res.data.length - 1; i > -1; i--) {
-                        new_noticeItem = {
-                            nid: res.data[i].nid,
-                            avatar: require('../../assets/images/light-bulb.png'),
-                            userId: res.data[i].senderNick,
-                            subtitle: res.data[i].msg
-                        };
-                        this.notice_items.push(new_noticeItem);
-                        this.follow_items.push(new_noticeItem);
+                    let old = res.data.object.oldNotice;
+                    if (old != null) {
+                        for (let i = old.length - 1; i >= 0; i--) {
+                            new_noticeItem = {
+                                nid: old[i].nid,
+                                avatar: require('../../assets/images/light-bulb.png'),
+                                userId: old[i].senderNick,
+                                subtitle: old[i].msg
+                            };
+                            this.notice_items.push(new_noticeItem);
+                            this.follow_items.push(new_noticeItem);
+                        }
                     }
                 },
                 error => {

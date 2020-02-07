@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -11,7 +11,8 @@ const UserApi = {
     requestNotice: (data, callback) => requestNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
+    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -72,12 +73,12 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log(error);
         });
 };
 
@@ -147,6 +148,17 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const deleteNotice = (nid, callback, errorCallback) => {
+    axios
+        .delete(`${host}/notice/` + nid)
+        .then(() => {
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 
