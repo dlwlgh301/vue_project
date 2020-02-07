@@ -4,130 +4,204 @@
     Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
  -->
 <template>
-    <div class="wrapB" style="padding-top: 100px;">
-        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+    <div>
+        <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
+            <div class="wrapC" v-if="!next">
+                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <h1>
+                    키워드를
+                    <br />선택해주세요.
+                </h1>
+                <br />
+                <!-- <input type="hidden" name="email" :value="email" />
+                <input type="hidden" name="password" :value="password" />
+                <input type="hidden" name="name" :value="name" />
+                <input type="hidden" name="nickName" :value="nickName" />
+                <input type="hidden" name="keyword" :value="keyword" />
+                <input type="hidden" name="comment" :value="comment" /> -->
 
-        <div class="join">
-            <div id="imageMain">
-                <div v-if="!image">
-                    <img src="../../assets/images/프로필아이콘.png" />
+                <div class="md-layout-item">
+                    <md-field>
+                        <label for="age">나이대를 입력해주세요.</label>
+                        <md-select v-model="age" name="age" id="age">
+                            <md-option value="10대">10대</md-option>
+                            <md-option value="20대">20대</md-option>
+                            <md-option value="30대">30대</md-option>
+                            <md-option value="40대">40대</md-option>
+                            <md-option value="50대">50대</md-option>
+                            <md-option value="60대 이상">60대 이상</md-option>
+                        </md-select>
+                    </md-field>
                 </div>
-                <div v-else>
-                    <img :src="image" style="width:200px" />
-                    <button @click="removeImage">삭제하기</button>
+                <div class="md-layout-item">
+                    <md-field>
+                        <label for="gender">성별을 입력해주세요.</label>
+                        <md-select v-model="gender" name="gender" id="gender">
+                            <md-option value="남성">남성</md-option>
+                            <md-option value="여성">여성</md-option>
+                        </md-select>
+                    </md-field>
                 </div>
+                <div class="md-layout-item">
+                    <md-field>
+                        <label for="status">현재 신분을 입력해주세요.</label>
+                        <md-select v-model="status" name="status" id="status">
+                            <md-option value="학생">학생</md-option>
+                            <md-option value="대학생">대학생</md-option>
+                            <md-option value="직장인">직장인</md-option>
+                            <md-option value="자취생">자취생</md-option>
+                            <md-option value="육아맘">육아맘</md-option>
+                            <md-option value="주부">주부</md-option>
+                        </md-select>
+                    </md-field>
+                </div>
+
+                <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit2" :class="{ disabled: !isSubmit2 }">
+                    다음화면으로
+                </button>
+
+                <!-- <button class="btn btn--back btn--login" type="submit" @click="insertMember" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                    가입해보기
+                </button> -->
             </div>
 
-            <form id="myform" enctype="multipart/form-data" @submit.prevent="fileSelect">
-                파일 :
-                <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
-                <input type="submit" name="업로드" value="제출" /><br /><br />
-            </form>
-
-            <div class="input-with-label">
-                <input
-                    v-model="email"
-                    v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
-                    id="email"
-                    placeholder="이메일을 입력하세요."
-                    type="text"
-                />
-                <label for="email">이메일</label>
-                <button id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
-                <div class="error-text" v-if="error.email">{{ error.email }}</div>
-                <input v-model="emailAuth" placeholder="인증 코드 적으세요." type="text" />
-            </div>
-
-            <div class="input-with-label">
-                <input
-                    v-model="password"
-                    v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
-                    id="password"
-                    :type="passwordType"
-                    placeholder="비밀번호를 입력하세요."
-                />
-                <label for="password">비밀번호</label>
-                <div class="error-text" v-if="error.password">{{ error.password }}</div>
-            </div>
-
-            <div class="input-with-label">
-                <input
-                    v-model="passwordConfirm"
-                    :type="passwordConfirmType"
-                    id="password-confirm"
-                    v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
-                    placeholder="비밀번호를 다시한번 입력하세요."
-                />
-                <label for="password-confirm">비밀번호 확인</label>
-                <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
-            </div>
-
-            <div class="input-with-label">
-                <input
-                    v-model="name"
-                    v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
-                    id="name"
-                    placeholder="이름을 입력하세요."
-                    type="text"
-                />
-                <label for="name">이름</label>
-                <div class="error-text" v-if="error.name">{{ error.name }}</div>
-            </div>
-            <div class="input-with-label">
-                <input
-                    v-model="nickName"
-                    v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
-                    id="nickname"
-                    placeholder="닉네임을 입력하세요."
-                    type="text"
-                />
-                <label for="nickname">닉네임</label>
-                <button @click="doubleCheck(2)">중복확인</button>
-                <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
-            </div>
-            <div class="input-with-label">
-                <input
-                    v-model="comment"
-                    v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
-                    id="comment"
-                    placeholder="한줄 소개를 입력하세요."
-                    type="text"
-                />
-                <label for="nickname">한줄소개</label>
-                <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
-            </div>
-        </div>
-
-        <label>
-            <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
-            <span>약관을 동의합니다.</span>
-        </label>
-        <div v-if="showModal">
-            <transition name="modal">
-                <div class="modal-mask">
-                    <div class="modal-wrapper">
-                        <div class="modal-container">
-                            <div class="modal-header">
-                                <slot name="header"></slot>
-                            </div>
-                            <div class="modal-body"></div>
-                            <div class="modal-footer">
-                                <slot name="footer">
-                                    약관입니다.
-                                    <br /><br />
-                                    <button @click="showmodal">확인</button>
-                                </slot>
-                            </div>
+            <div class="wrapB" style="padding-top: 100px;" v-if="next">
+                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+                <div class="join">
+                    <div id="imageMain">
+                        <div v-if="!image">
+                            <img src="../../assets/images/프로필아이콘.png" />
+                        </div>
+                        <div v-else>
+                            <img :src="image" style="width:150px; height:150px" />
+                            <button @click="removeImage">삭제하기</button>
                         </div>
                     </div>
+
+                    <div>
+                        <form id="imageInputform">
+                            파일 :
+                            <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
+                            <!-- <input type="submit" name="업로드" value="제출" /><br /><br /> -->
+                        </form>
+                    </div>
+
+                    <div class="input-with-label">
+                        <input type="hidden" name="keyword" :value="keyword" />
+                        <input
+                            v-model="email"
+                            v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
+                            id="email"
+                            placeholder="이메일을 입력하세요."
+                            type="text"
+                        />
+                        <label for="email">이메일</label>
+                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
+                    </div>
+                    <div class="input-with-label" v-if="isSendEmail">
+                        <label for="emailAuth">인증 코드</label>
+                        <div class="error-text" v-if="error.email">{{ error.email }}</div>
+                        <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
+                    </div>
+
+                    <div class="input-with-label">
+                        <input
+                            v-model="password"
+                            v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
+                            id="password"
+                            :type="passwordType"
+                            placeholder="비밀번호를 입력하세요."
+                        />
+                        <label for="password">비밀번호</label>
+                        <div class="error-text" v-if="error.password">{{ error.password }}</div>
+                    </div>
+
+                    <div class="input-with-label">
+                        <input
+                            v-model="passwordConfirm"
+                            :type="passwordConfirmType"
+                            id="password-confirm"
+                            v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
+                            placeholder="비밀번호를 다시한번 입력하세요."
+                        />
+                        <label for="password-confirm">비밀번호 확인</label>
+                        <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+                    </div>
+
+                    <div class="input-with-label">
+                        <input
+                            v-model="name"
+                            v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
+                            id="name"
+                            placeholder="이름을 입력하세요."
+                            type="text"
+                        />
+                        <label for="name">이름</label>
+                        <div class="error-text" v-if="error.name">{{ error.name }}</div>
+                    </div>
+                    <div class="input-with-label">
+                        <input
+                            v-model="nickName"
+                            v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
+                            id="nickname"
+                            placeholder="닉네임을 입력하세요."
+                            type="text"
+                        />
+                        <label for="nickname">닉네임</label>
+                        <button type="button" @click="doubleCheck()">중복확인</button>
+                        <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
+                    </div>
+                    <div class="input-with-label">
+                        <input
+                            v-model="comment"
+                            v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
+                            id="comment"
+                            placeholder="한줄 소개를 입력하세요."
+                            type="text"
+                        />
+                        <label for="nickname">한줄소개</label>
+                        <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
+                    </div>
                 </div>
-            </transition>
-        </div>
 
-        <button @click="showModal = true">약관보기</button>
+                <label>
+                    <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
+                    <span>약관을 동의합니다.</span>
+                </label>
+                <div v-if="showModal">
+                    <transition name="modal">
+                        <div class="modal-mask">
+                            <div class="modal-wrapper">
+                                <div class="modal-container">
+                                    <div class="modal-header">
+                                        <slot name="header"></slot>
+                                    </div>
+                                    <div class="modal-body"></div>
+                                    <div class="modal-footer">
+                                        <slot name="footer">
+                                            약관입니다.
+                                            <br /><br />
+                                            <button @click="showmodal">확인</button>
+                                        </slot>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+                </div>
 
-        <button class="btn btn--back" v-on:click="join" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
-        <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
+                <button @click="showModal = true">약관보기</button>
+
+                <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                    다음화면으로
+                </button> -->
+
+                <button class="btn btn--back btn--login" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                    가입하기
+                </button>
+                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -149,10 +223,17 @@ import PV from 'password-validator';
 import * as EmailValidator from 'email-validator';
 import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
+import UserKeyword from './UserKeyword.vue';
+// import Axios from 'axios';
 
 export default {
+    component: {
+        UserKeyword
+    },
     data: () => {
         return {
+            next: false,
+            isSendEmail: false,
             emailAuth: '',
             files: '',
             email: '',
@@ -161,6 +242,9 @@ export default {
             passwordConfirm: '',
             nickName: '',
             name: '',
+            age: '',
+            gender: '',
+            status: '',
             comment: '',
             keyword: '',
             key: '',
@@ -179,6 +263,7 @@ export default {
                 submit: false
             },
             isSubmit: false,
+            isSubmit2: false,
             passwordType: 'password',
             passwordConfirmType: 'password',
             showModal: false,
@@ -199,6 +284,16 @@ export default {
             .letters();
     },
     watch: {
+        age: function() {
+            this.checkForm2();
+        },
+        gender: function() {
+            this.checkForm2();
+        },
+        status: function() {
+            this.checkForm2();
+        },
+
         emailAuth: function() {
             if (sessionStorage.getItem('key') != null) {
                 let key = sessionStorage.getItem('key');
@@ -231,6 +326,13 @@ export default {
         }
     },
     methods: {
+        checkForm2() {
+            if (this.age.length != 0 && this.gender.length != 0 && this.status.length != 0) {
+                this.isSubmit2 = true;
+            } else {
+                this.isSubmit2 = false;
+            }
+        },
         checkForm() {
             if (this.email.length == 0) {
                 this.error.submit = true;
@@ -288,7 +390,7 @@ export default {
 
             if (this.isTerm.length == 0) {
                 this.error.submit = true;
-                this.error.isTemr = '';
+                this.error.isTerm = '';
             } else if (this.isTerm == false) this.error.isTerm = true;
             else {
                 this.error.isTerm = false;
@@ -303,15 +405,51 @@ export default {
 
             console.log('submit:' + this.error.submit);
         },
+        insertMember() {
+            this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
+            let test = new FormData(document.getElementById('imageInputform'));
+            console.log(test);
+            var user = {
+                email: this.email,
+                password: this.password,
+                name: this.name,
+                nickName: this.nickName,
+                keyword: this.keyword,
+                comment: this.comment,
+                imgURL: this.file.name
+            };
+            console.log('userrrr');
+            console.log(user);
+            UserApi.join(user);
+
+            UserApi.fileUpload(
+                test,
+                res => {
+                    console.log(res);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+
+            this.$router.push('/');
+            // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {
+            //     alert('good');
+
+            // });
+            // UserApi.join(test);
+            // this.$router.push('/user/certComplete');
+        },
         join() {
             console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
             if (this.isSubmit) {
-                var { email, password, nickName, comment, name, imgURL } = this;
+                var { file, email, password, nickName, comment, name, imgURL } = this;
 
                 // eslint-disable-next-line no-unused-vars
                 var data = {
+                    file,
                     email,
                     password,
                     nickName,
@@ -338,6 +476,7 @@ export default {
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
                 sessionStorage.setItem('imgURL', this.imgURL);
+                sessionStorage.setItem('file', this.file);
 
                 UserApi.cert(
                     data,
@@ -365,6 +504,7 @@ export default {
             UserApi.cert(
                 { email: this.email },
                 res => {
+                    this.isSendEmail = true;
                     console.log('???????????????');
                     //console.log(res);
                     //console.log(res.data.object.key);
@@ -396,12 +536,11 @@ export default {
                 return;
             }
             UserApi.doubleCheck(
-                { email: this.email, num: 1 },
+                { num: 1, value: this.email },
                 res => {
                     console.log(res);
                     if (res.data.status == true) {
                         this.sendEmailAuth();
-
                         Swal.fire({
                             icon: 'success', //"info,success,warning,error" 중 택1
                             title: '사용가능한 이메일입니다'
@@ -420,64 +559,23 @@ export default {
                 }
             );
         },
-        doubleCheck(num) {
-            // 1을 이메일 중복체크, 2는 닉네임 중복 체크
-            var body = {
-                password: this.password,
-                email: this.email,
-                nickName: this.nickName,
-                name: this.name,
-                comment: this.comment,
-                num: num,
-                imgURL: this.imgURL
-            };
-
+        doubleCheck() {
             UserApi.doubleCheck(
-                body,
+                { num: 2, value: this.nickName },
                 res => {
                     console.log(res);
-
-                    if (num == 1) {
-                        if (this.email == '') {
-                            Swal.fire({
-                                icon: 'error',
-                                title: '이메일을 입력해 주세요.'
-                            });
-                            this.error.submit = true;
-                        } else if (res.data.status == true) {
-                            Swal.fire({
-                                icon: 'success', //"info,success,warning,error" 중 택1
-                                title: '사용가능한 이메일입니다'
-                            });
-                            this.error.submit = false;
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: res.data.data
-                            });
-                            this.error.submit = true;
-                        }
-                    } else if (body.num == 2) {
-                        if (this.nickName == '') {
-                            Swal.fire({
-                                icon: 'error',
-                                title: '닉네임을 입력해 주세요.'
-                            });
-                            this.error.submit = true;
-                        } else if (res.data.status == true) {
-                            Swal.fire({
-                                icon: 'success', //"info,success,warning,error" 중 택1
-                                title: '사용가능한 닉네임입니다!',
-                                text: '사용가능한 닉네임입니다!'
-                            });
-                            this.error.submit = false;
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: res.data.data
-                            });
-                            this.error.submit = true;
-                        }
+                    if (res.data.status == true) {
+                        Swal.fire({
+                            icon: 'success', //"info,success,warning,error" 중 택1
+                            title: '사용가능한 닉네임'
+                        });
+                        this.error.submit = false;
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: res.data.data
+                        });
+                        this.error.submit = true;
                     }
                 },
                 error => {

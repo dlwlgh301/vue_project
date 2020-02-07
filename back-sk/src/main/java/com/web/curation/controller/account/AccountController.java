@@ -222,7 +222,13 @@ public class AccountController {
     public Object signup(@Valid @RequestBody final User user) throws Exception {
         // 이메일, 닉네임 중복처리 필수
         // 회원가입단을 생성해 보세요.
+        System.out.println("signup up~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(user);
 
+        System.out.println(1);
+
+        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
+        user.setImgURL(path + user.getImgURL());
         final BasicResponse result = new BasicResponse();
 
         System.out.println("uuuuuuuuuuuuuu" + user);
@@ -271,6 +277,7 @@ public class AccountController {
         // 파일이 저장될 path 설정
         // String path = req.getSession().getServletContext().getRealPath("") +
         // "\\resources"; // 웹프로젝트 경로 위치
+        System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
         String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
         System.out.println(1);
         System.out.println("path : " + path);
