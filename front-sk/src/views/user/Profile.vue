@@ -7,83 +7,121 @@
         <h1 class="title">My Profile</h1>
         <section class="profile">
             <img src="../../assets/images/tm-easy-profile.jpg" alt class="portrait" />
-            <div class="follow" @click="iniciar()" v-show="ischeck1">
-                <div class="icon-instagram"></div>
-                팔로우
+
+            <div class="data">
+                <ul>
+                    <li>
+                        2,934
+                        <span>Posts</span>
+                    </li>
+                    <li @click="showDialog = true">
+                        {{ followList.length }}
+                        <span>Followers</span>
+                    </li>
+                    <li @click="followerDialog = true">
+                        {{ followingList.length }}
+                        <span>Following</span>
+                    </li>
+                </ul>
             </div>
-            <div class="followi" @click="iniciar()" v-show="ischeck2">
-                <div class="icon-ok"></div>
-                팔로잉
+
+            <!-- <div :class="[followCheck[0] ? { backgroundColor: '#2589cc;' } : { backgroundColor: 'green' }]" class="follow" @click="FollowListBtnCheck(0)">
+                {{ followCheck[0] | handleFollowFilter }}
+            </div> -->
+            <div>
+                <div class="follow" @click="iniciar()" v-show="ischeck1">
+                    <div class="icon-instagram"></div>
+                    팔로우
+                </div>
+                <div class="followi" @click="iniciar()" v-show="ischeck2">
+                    <div class="icon-ok"></div>
+                    팔로잉
+                </div>
             </div>
             <div class="left_col">
-                <div class="followers" @click="showDialog = true">
-                    <div class="follow_count">{{ followList.length }}</div>
-                    Followers
-                </div>
-                <div class="following" @click="followerDialog = true">
-                    <div class="follow_count">{{ followingList.length }}</div>
-                    Following
-                </div>
                 <md-dialog :md-active.sync="showDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로워</h2>
                     <hr />
                     <br />
-                    <div class="content">asdlasdjklasjd asdlasdjklasjdasdjk asdj asjd kasjd asdlasdjklasjdasdjkdjas da</div>
+                    <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
+                        <ul style="margin-left:25px;">
+                            1234
+
+                            <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                <div class="icon-instagram"></div>
+                                팔로우
+                            </div>
+                            <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                <div class="icon-ok"></div>
+                                팔로잉
+                            </div>
+                        </ul>
+                    </div>
                 </md-dialog>
+
                 <md-dialog :md-active.sync="followerDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로잉</h2>
                     <hr />
                     <br />
-                    <div style="margin 10px;" class="content" v-for="i in followingList" v-bind:key="i">
+                    <!-- <div style="margin 10px;" class="content" v-for="(i, index) in followingList" v-bind:key="i">
                         <li>
-                            <!--(i 값 ,index 인덱스 번호)-->
+                         
                             {{ i }}
-                            <!-- <div class="follow" v-on:click="followingListCheck[index] = !followingListCheck[index]" v-show="followingListCheck[index] == true">
+                            <div class="follow" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
                                 <div class="icon-instagram"></div>
                                 팔로우
                             </div>
-                            <div class="followi" @click="FollowListBtnCheck(index)" v-show="followingListCheck[index] == false">
+                            <div class="followi" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
                                 <div class="icon-ok"></div>
                                 팔로잉
-                            </div> -->
+                            </div>
+                        </li>
+                    </div> -->
 
-                            <!-- <div class="follow" :class="{ i: followingListCheck[index] }" @click="FollowListBtnCheck(index)">
+                    <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
+                        <ul style="margin-left:25px;">
+                            1234
+
+                            <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
                                 <div class="icon-instagram"></div>
                                 팔로우
-                            </div> -->
-                        </li>
+                            </div>
+                            <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                <div class="icon-ok"></div>
+                                팔로잉
+                            </div>
+                        </ul>
                     </div>
                 </md-dialog>
 
-                <div class="follow" @click="FollowListBtnCheck(0)" v-show="followingListCheck[0]">
-                    <div></div>
-                    팔로우
-                </div>
-                <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
+                <!-- <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
                     <div class="icon-ok"></div>
                     팔로잉
-                </div>
+                </div> -->
             </div>
-            <div class="right_col">
-                <h2 class="name">{{ info.name }}</h2>
-                <!-- 닉네임 이메일 -->
-                <ul class="contact_information">
-                    <li>
-                        <md-icon>face</md-icon>
-                        {{ info.nickName }}
-                    </li>
-                    <li>
-                        <md-icon>email</md-icon>
-                        {{ info.email }}
-                    </li>
-                    <li>
-                        <md-icon>comment</md-icon>
-                        {{ info.comment }}
-                    </li>
-                    <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
-                </ul>
+            <div class="main_profile">
+                <div class="right_col">
+                    <h2 class="name">{{ info.name }}</h2>
+                    <!-- 닉네임 이메일 -->
+                    <ul class="contact_information">
+                        <li>
+                            <md-icon>face</md-icon>
+                            {{ info.nickName }}
+                        </li>
+                        <li>
+                            <md-icon>email</md-icon>
+                            {{ info.email }}
+                        </li>
+                        <li>
+                            <md-icon>comment</md-icon>
+                            {{ info.comment }}
+                        </li>
+                        <li v-on:click="board"><md-icon>business_center</md-icon> 게시글 보기</li>
+                        <li v-on:click="updateuser"><md-icon>emoji_emotions</md-icon> 정보 수정</li>
+                    </ul>
+                </div>
             </div>
             <ul class="tags">
                 <li>
@@ -120,16 +158,22 @@ export default {
     created() {
         this.$store.commit('setPageTitle', '유저 정보');
     },
+    filters: {
+        handleFollowFilter: value => {
+            return value ? '팔로잉' : '팔로우';
+        }
+    },
     data: () => {
         return {
             isButtonDisabled: false,
             ischeck1: true,
+
             follower: 2,
             following: 1,
             ischeck2: false,
             info: [],
-            followListCheck: [true, true], // 팔로우 버튼
-            followingListCheck: [true, true], // 팔로잉 버튼
+            followCheck: [false, false, true, false, true], // 팔로우/팔로잉 버튼
+            // followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
             followListSize: 0,
@@ -137,7 +181,7 @@ export default {
             name: '',
             nickname: '',
             phone: '',
-            email: 'dhrwnmc@naver.com',
+            email: '',
             interest: '',
             introduce: '',
             passwordSchema: new PV(),
@@ -149,7 +193,6 @@ export default {
     },
     methods: {
         showFollowing() {
-            this.followerDialog = true;
             let { following, email } = this;
             let data = {
                 following,
@@ -212,17 +255,7 @@ export default {
         },
 
         FollowListBtnCheck(idx) {
-            console.log(this.followingListCheck[idx] + 'asdasdasdasdasd');
-
-            if (this.followingListCheck[idx]) {
-                this.followingListCheck[idx] = false;
-                this.followListCheck[idx] = true;
-            } else {
-                this.followingListCheck[idx] = true;
-                this.followListCheck[idx] = false;
-            }
-
-            console.log(this.followingListCheck[idx] + ' ' + idx);
+            this.$set(this.followCheck, idx, !this.followCheck[idx]);
         },
         retrieveQuestion() {
             this.email = this.$store.state.email;
@@ -253,6 +286,9 @@ export default {
         },
         board() {
             this.$router.push('/user/Board');
+        },
+        updateuser() {
+            this.$router.push('/user/UserUpdate');
         },
         refreshList() {
             this.retrieveQuestion();
@@ -329,7 +365,7 @@ export default {
     cursor: pointer;
 }
 .md-dialog {
-    width: 30%;
+    width: 10%;
     height: 50%;
     background-color: white;
 }
@@ -349,5 +385,95 @@ export default {
     -ms-flex-pack: center;
     justify-content: center;
     margin-left: 15px;
+}
+
+.data {
+    margin-top: 0.6em;
+    margin-bottom: 30px;
+    color: black;
+}
+.data li {
+    width: 32%;
+    text-align: center;
+    display: inline-block;
+    font-size: 1.5em;
+    font-family: 'Lato';
+    border-right: solid 1px #bdc3c7;
+}
+.data li:last-child {
+    border: none;
+}
+.data li span {
+    display: block;
+    text-transform: uppercase;
+    font-family: 'Quicksand';
+    font-size: 0.5em;
+    margin-top: 0.6em;
+    font-weight: 700;
+}
+
+.myfollowList {
+    float: right;
+    margin-right: 2.5em;
+    margin-bottom: 1em;
+    background-color: #2589cc;
+    width: 75px;
+    color: black;
+    font-family: 'Lato';
+    text-align: center;
+    padding: 0.5em;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition-property: all;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease;
+    -moz-transition-timing-function: ease;
+    -o-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+.myfollowingList {
+    float: right;
+    margin-right: 2.5em;
+    margin-bottom: 1em;
+    background-color: rgb(52, 207, 122);
+    width: 75px;
+    color: black;
+    font-family: 'Lato';
+    text-align: center;
+    padding: 0.5em;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition-property: all;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease;
+    -moz-transition-timing-function: ease;
+    -o-transition-timing-function: ease;
+    transition-timing-function: ease;
+}
+.myfollowList:hover {
+    background-color: #167abd;
+    cursor: pointer;
+}
+.myfollowingList:hover {
+    background-color: rgb(30, 211, 30);
+    cursor: pointer;
 }
 </style>

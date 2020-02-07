@@ -89,7 +89,7 @@ const router = new Router({
             component: noticeTab
         },
         {
-            path: '/test',
+            path: '/user/test',
             name: 'test',
             component: Test
         },
