@@ -85,7 +85,7 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/account/snslogin")
+    @GetMapping("/account/snslogin")
     @ApiOperation(value = "SNS로그인")
     public Object login(@RequestParam(required = true) final String email) throws Exception {
         System.out.println("sns로그인:" + email);
@@ -198,8 +198,6 @@ public class AccountController {
     @PostMapping("/account/emailcert")
     @ApiOperation(value = "메일 인증번호 확인하기")
     public Object sendEmail(@RequestParam(required = true) final String email) {
-
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + email);
 
         Random r = new Random();
         int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)

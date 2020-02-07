@@ -46,9 +46,13 @@ public class NoticeController {
         String userEmail = email.substring(1, email.length() - 1).toLowerCase();
         final BasicResponse result = new BasicResponse();
         JSONObject data = new JSONObject();
+        List<Notice> list = noticeServiceImpl.getNewNotice(userEmail);
+        data.put("newNotice", list);
         data.put("oldNotice", noticeServiceImpl.getNotice(userEmail));
-        data.put("newNotice", noticeServiceImpl.getNewNotice(userEmail));
-        boolean check = noticeServiceImpl.updateNotice(userEmail);
+        boolean check = true;
+        if (list.size() != 0)
+            check = noticeServiceImpl.updateNotice(userEmail);
+
         if (check) {
             result.status = true;
             result.data = "success";
