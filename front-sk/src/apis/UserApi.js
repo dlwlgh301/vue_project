@@ -85,7 +85,12 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .get(`${noticePort}/notice/num?email=` + JSON.stringify(data['email']))
+        front-sk/src/apis/UserApi.js
+        .get(`${noticePort}/notice/num`, {
+            params: {
+                email: data
+            }
+        })
         .then(res => {
             callback(res);
         })

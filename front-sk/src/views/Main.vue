@@ -6,7 +6,7 @@
         </md-button>
         <v-row no-gutters>
             <v-col cols="12" md="6">
-                <v-card :loading="loading" class="mx-auto my-12" max-width="374" :elevation="4">
+                <v-card class="mx-auto my-12" max-width="374" :elevation="4">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
                         <span id="pname">name</span>
@@ -35,7 +35,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12" md="6">
-                <v-card :loading="loading" class="mx-auto my-12" max-width="374" :elevation="4">
+                <v-card class="mx-auto my-12" max-width="374" :elevation="4">
                     <div style="padding: 14px;">
                         <span id="pimg">img</span>
                         <span id="pname">name</span>
