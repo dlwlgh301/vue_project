@@ -104,54 +104,6 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/account/signup")
-    @ApiOperation(value = "가입하기")
-    public Object signup(@Valid @RequestBody final User user) throws Exception {
-        // 이메일, 닉네임 중복처리 필수
-        // 회원가입단을 생성해 보세요.
-
-        final BasicResponse result = new BasicResponse();
-
-        System.out.println("uuuuuuuuuuuuuu" + user);
-        String email = userServiceImpl.getEmail(user.getEmail());
-
-        System.out.println("db에 이메일이 있는지 확인 :" + email);
-
-        System.out.println(user.getNickName() + " 검사");
-        String nickname = userServiceImpl.getNickName(user.getNickName());
-
-        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
-
-        // 이메일 중복검사
-        if (email != null && email.equals(user.getEmail())) {
-            result.data = "이메일이 이미 존재합니다.";
-            result.status = true;
-        }
-
-        // 닉네임 중복검사
-        else if (nickname != null && nickname.equals(user.getNickName())) {
-            result.data = "닉네임이 이미 존재합니다.";
-            result.status = true;
-        }
-
-        else {
-            System.out.println("가입하기 들어옴");
-
-            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
-                    user.getComment(), user.getKeyword(), user.getImgURL());
-
-            System.out.println("====================");
-            System.out.println(puser);
-            System.out.println("====================");
-
-            userServiceImpl.join(puser);
-            result.status = true;
-            result.data = "success";
-        }
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
     @PostMapping("/account/doubleCheck")
     @ApiOperation(value = "중복확인하기")
     public Object doubleCheck(@RequestParam(required = true) final int num,
@@ -265,12 +217,67 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PostMapping("/account/signup")
+    @ApiOperation(value = "가입하기")
+    public Object signup(@Valid @RequestBody final User user) throws Exception {
+        // 이메일, 닉네임 중복처리 필수
+        // 회원가입단을 생성해 보세요.
+        System.out.println("signup up~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(user);
+
+        System.out.println(1);
+
+        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
+        user.setImgURL(path + user.getImgURL());
+        final BasicResponse result = new BasicResponse();
+
+        System.out.println("uuuuuuuuuuuuuu" + user);
+        String email = userServiceImpl.getEmail(user.getEmail());
+
+        System.out.println("db에 이메일이 있는지 확인 :" + email);
+
+        System.out.println(user.getNickName() + " 검사");
+        String nickname = userServiceImpl.getNickName(user.getNickName());
+
+        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
+
+        // 이메일 중복검사
+        if (email != null && email.equals(user.getEmail())) {
+            result.data = "이메일이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        // 닉네임 중복검사
+        else if (nickname != null && nickname.equals(user.getNickName())) {
+            result.data = "닉네임이 이미 존재합니다.";
+            result.status = true;
+        }
+
+        else {
+            System.out.println("가입하기 들어옴");
+
+            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+                    user.getComment(), user.getKeyword(), user.getImgURL());
+
+            System.out.println("====================");
+            System.out.println(puser);
+            System.out.println("====================");
+
+            userServiceImpl.join(puser);
+            result.status = true;
+            result.data = "success";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping(value = "account/fileUpload")
     @ApiOperation(value = "파일 업로드하기")
     public Object fileUpload(final MultipartFile file, HttpServletRequest request) throws Exception {
         // 파일이 저장될 path 설정
         // String path = req.getSession().getServletContext().getRealPath("") +
         // "\\resources"; // 웹프로젝트 경로 위치
+        System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
         String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
         System.out.println(1);
         System.out.println("path : " + path);

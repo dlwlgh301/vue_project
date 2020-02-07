@@ -105,11 +105,11 @@ const cert = (data, callback) => {
 const doubleCheck = (data, callback, errorCallback) => {
     var str = '';
     if (data.num == 1) {
-        console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
-        str = data.email;
+        console.log('num : ' + data.num + ', ' + 'email : ' + data.value);
+        str = data.value;
     } else if (data.num == 2) {
-        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
-        str = data.nickName;
+        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.value);
+        str = data.value;
     }
     axios({
         url: `${host}/account/doubleCheck`,
@@ -133,13 +133,25 @@ const join = body => {
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
-        keyword: body.keyword
+        keyword: body.keyword,
+        imgURL: body.imgURL
     };
     console.log('value is ');
     console.log(value);
+
+    // axios
+    //     .post(`${host}/account/signup?user=` + JSON.stringify(value))
+    //     .then(res => {
+    //         console.log(res);
+    //     })
+    //     .catch(error => {
+    //         alert('error' + error);
+    //     });
+
     axios({
         url: `${host}/account/signup`,
         method: 'post',
+
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
     })
@@ -174,10 +186,10 @@ const fileUpload = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/fileUpload`, data)
         .then(() => {
-            callback;
+            callback();
         })
         .catch(() => {
-            errorCallback;
+            errorCallback();
         });
 };
 export default UserApi;
