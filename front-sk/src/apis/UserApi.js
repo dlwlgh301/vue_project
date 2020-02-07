@@ -83,7 +83,11 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .get(`http://192.168.100.58:8080/notice/num?email=` + JSON.stringify(data['email']))
+        .get(`http://192.168.100.58:8080/notice/num`, {
+            params: {
+                email: data
+            }
+        })
         .then(res => {
             callback(res);
         })
