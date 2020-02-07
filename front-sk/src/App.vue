@@ -3,7 +3,7 @@
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
-                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" />
+                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" :newNotice="notice" @updateNoticeNum="refreshNotice" />
                 <router-view class="page"></router-view>
                 <BottomNavComponent v-model="showNav" class="bottom-nav" />
             </div>
@@ -22,16 +22,7 @@ export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
-        UserApi.UserApi.requestNoticeNum(
-            data,
-            res => {
-                console.log(res.data);
-                res.data.num;
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        this.loadNoticeNum();
     },
     watch: {},
     components: {
@@ -41,8 +32,27 @@ export default {
     data: () => {
         return {
             route: '',
-            showNav: false
+            showNav: false,
+            notice: 2,
+            email: 'ihs3583@gmail.com'
         };
+    },
+    methods: {
+        loadNoticeNum() {
+            UserApi.requestNoticeNum(
+                data,
+                res => {
+                    console.log(res.data);
+                    this.notice = res.data.num;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
+        refreshNotice: function(noticeNum) {
+            this.notice = noticeNum;
+        }
     },
     mounted() {
         this.route = this.$router;

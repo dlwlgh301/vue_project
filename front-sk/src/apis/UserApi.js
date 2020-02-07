@@ -9,6 +9,7 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error)
@@ -72,7 +73,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -83,12 +84,12 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log('num에러' + error);
         });
 };
 const cert = (data, callback) => {

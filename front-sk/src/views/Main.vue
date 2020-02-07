@@ -64,6 +64,9 @@
 </template>
 <script>
 export default {
+    created() {
+        this.$store.commit('setPageTitle', 'SHOP+');
+    },
     data: () => {
         return {
             keyword: '',
@@ -72,8 +75,7 @@ export default {
             currentDate: new Date()
         };
     },
-    methods: {},
-    created() {}
+    methods: {}
 };
 </script>
 <style>
