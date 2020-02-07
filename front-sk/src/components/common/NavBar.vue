@@ -15,8 +15,10 @@
                     </md-button>
 
                     <router-link to="/user/noticeTab">
-                        <md-button class="md-icon-button">
-                            <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                        <md-button class="md-icon-button" @click="updateNoticeNum">
+                            <v-badge color="#009ff4" :content="prop_newNotice" :value="prop_newNotice" overlap>
+                                <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                            </v-badge>
                         </md-button>
                     </router-link>
                 </div>
@@ -29,6 +31,27 @@
 export default {
     name: 'Navbar',
     isNewNotice: 10,
-    props: ['navTitle']
+    props: ['navTitle', 'newNotice'],
+    data() {
+        return {
+            prop_newNotice: this.newNotice
+        };
+    },
+    methods: {
+        updateNoticeNum: function() {
+            this.prop_newNotice = 0;
+            this.$emit('updateNoticeNum', this.prop_newNotice);
+        }
+    }
 };
 </script>
+<style scoped>
+.md-fab,
+.md-icon-button {
+    border-radius: 0% !important;
+    z-index: 5;
+}
+.md-icon-button .md-ripple {
+    border-radius: 0% !important;
+}
+</style>

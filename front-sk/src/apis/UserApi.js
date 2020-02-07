@@ -72,7 +72,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -83,12 +83,12 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log('num에러' + error);
         });
 };
 const cert = (data, callback) => {
@@ -102,19 +102,11 @@ const cert = (data, callback) => {
         });
 };
 const doubleCheck = (data, callback, errorCallback) => {
-    var str = '';
-    if (data.num == 1) {
-        console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
-        str = data.email;
-    } else if (data.num == 2) {
-        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
-        str = data.nickName;
-    }
     axios({
         url: `${host}/account/doubleCheck`,
         method: 'post',
         params: {
-            value: str,
+            value: data.value,
             num: data.num
         }
     })
