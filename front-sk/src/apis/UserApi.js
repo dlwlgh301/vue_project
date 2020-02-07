@@ -73,7 +73,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -81,16 +81,7 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-const requestNewNotice = (data, callback) => {
-    axios
-        .get(`${host}/notice/new?email=` + JSON.stringify(data['email']))
-        .then(res => {
-            callback(res);
-        })
-        .catch(error => {
-            console.log('newnotice에러' + error);
-        });
-};
+
 const requestNoticeNum = (data, callback) => {
     axios
         .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))

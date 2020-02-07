@@ -48,10 +48,10 @@ export default {
 <style scoped>
 .md-fab,
 .md-icon-button {
-    border-radius: 0;
+    border-radius: 0% !important;
     z-index: 5;
 }
 .md-icon-button .md-ripple {
-    border-radius: 0%;
+    border-radius: 0% !important;
 }
 </style>
