@@ -52,6 +52,7 @@ export default {
                             let data = {
                                 email
                             };
+                            console.log(email);
                             UserApi.snsDuplicate(
                                 data,
                                 res => {
@@ -59,10 +60,11 @@ export default {
                                     console.log(res.data.status);
                                     if (res.data.status == true) {
                                         //이미 가입되어있던 사람
+                                        sessionStorage.setItem('email', this.email);
                                         console.log('가입');
                                         router.push('/main');
                                         //store.commit('loginToken', res.data.token);
-                                        store.state.email = this.email;
+
                                         //router.push('/main');
                                     } else {
                                         console.log('미가입');

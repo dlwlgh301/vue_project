@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -40,12 +40,12 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .post(`${host}/account/snslogin?email` + JSON.stringify(data['email']))
+        .get(`${host}/account/snslogin?email` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            alert(error);
+            console.log('error: ' + error);
         });
 };
 const profileLoad = (data, callback, errorCallback) => {
