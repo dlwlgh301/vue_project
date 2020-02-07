@@ -44,19 +44,23 @@
                     <h2 class="content" style="text-align:center">팔로워</h2>
                     <hr />
                     <br />
-                    <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
-                        <ul style="margin-left:25px;">
-                            1234
+                    <div style="margin 10px;" class="content" v-for="(i, index) in followList" v-bind:key="i">
+                        <li>
+                            <ul style="margin-left:25px;">
+                                {{
+                                    i
+                                }}
 
-                            <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
-                                <div class="icon-instagram"></div>
-                                팔로우
-                            </div>
-                            <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
-                                <div class="icon-ok"></div>
-                                팔로잉
-                            </div>
-                        </ul>
+                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                    <div class="icon-instagram"></div>
+                                    팔로우
+                                </div>
+                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                    <div class="icon-ok"></div>
+                                    팔로잉
+                                </div>
+                            </ul>
+                        </li>
                     </div>
                 </md-dialog>
 
@@ -65,22 +69,27 @@
                     <h2 class="content" style="text-align:center">팔로잉</h2>
                     <hr />
                     <br />
-                    <!-- <div style="margin 10px;" class="content" v-for="(i, index) in followingList" v-bind:key="i">
-                        <li>
-                         
-                            {{ i }}
-                            <div class="follow" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
-                                <div class="icon-instagram"></div>
-                                팔로우
-                            </div>
-                            <div class="followi" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
-                                <div class="icon-ok"></div>
-                                팔로잉
-                            </div>
-                        </li>
-                    </div> -->
 
-                    <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
+                    <div style="margin 10px;" class="content" v-for="(i, index) in followingList" v-bind:key="i">
+                        <li>
+                            <ul style="margin-left:25px;">
+                                {{
+                                    i
+                                }}
+
+                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                    <div class="icon-instagram"></div>
+                                    팔로우
+                                </div>
+                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                    <div class="icon-ok"></div>
+                                    팔로잉
+                                </div>
+                            </ul>
+                        </li>
+                    </div>
+
+                    <!-- <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
                         <ul style="margin-left:25px;">
                             1234
 
@@ -93,7 +102,7 @@
                                 팔로잉
                             </div>
                         </ul>
-                    </div>
+                    </div> -->
                 </md-dialog>
 
                 <!-- <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
@@ -258,7 +267,7 @@ export default {
             this.$set(this.followCheck, idx, !this.followCheck[idx]);
         },
         retrieveQuestion() {
-            this.email = this.$store.state.email;
+            this.email = sessionStorage.getItem('email');
             let { email } = this;
             let data = {
                 email
