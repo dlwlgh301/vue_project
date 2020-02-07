@@ -66,10 +66,9 @@ public class NoticeController {
 
     @GetMapping("/num")
     public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
-        int num = noticeServiceImpl.getNoticeNum(email.substring(1, email.length() - 1).toLowerCase());
+        int num = noticeServiceImpl.getNoticeNum(email);
         JSONObject dummyUser = new JSONObject();
         dummyUser.put("num", num);
-
         final BasicResponse result = new BasicResponse();
         result.status = true;
         result.data = "success";
