@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -9,10 +9,10 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
-    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -41,7 +41,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .post(`${host}/account/snslogin?email` + JSON.stringify(data['email']))
+        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -78,18 +78,18 @@ const requestNotice = (data, callback) => {
             callback(res);
         })
         .catch(error => {
-            console.log(error);
+            console.log('에러' + error);
         });
 };
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .post(`${host}/notice/getnoticenum?email=` + JSON.stringify(data['email']))
+        .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log('num에러' + error);
         });
 };
 const cert = (data, callback) => {
@@ -103,19 +103,11 @@ const cert = (data, callback) => {
         });
 };
 const doubleCheck = (data, callback, errorCallback) => {
-    var str = '';
-    if (data.num == 1) {
-        console.log('num : ' + data.num + ', ' + 'email : ' + data.email);
-        str = data.email;
-    } else if (data.num == 2) {
-        console.log('num : ' + data.num + ', ' + 'nickName : ' + data.nickName);
-        str = data.nickName;
-    }
     axios({
         url: `${host}/account/doubleCheck`,
         method: 'post',
         params: {
-            value: str,
+            value: data.value,
             num: data.num
         }
     })
@@ -148,17 +140,6 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
-        });
-};
-
-const deleteNotice = (nid, callback, errorCallback) => {
-    axios
-        .delete(`${host}/notice/` + nid)
-        .then(() => {
-            callback;
-        })
-        .catch(() => {
-            errorCallback;
         });
 };
 

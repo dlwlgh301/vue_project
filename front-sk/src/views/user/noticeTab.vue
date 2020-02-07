@@ -3,30 +3,46 @@
         <div class="tab-component">
             <v-tabs slot="extension" v-model="tab" color="#009ff4" grow>
                 <v-tabs-slider color="#009ff4"></v-tabs-slider>
-                <v-tab :key="tab1_name">
-                    <v-badge color="#009ff4" :content="notice_items.length" :value="is_new_notice">
-                        {{ tab1_name }}
-                    </v-badge>
+                <v-tab :key="tab1_name" @click="is_new_notice = 0">
+                    <!-- <v-badge color="#009ff4" :content="new_notice_items.length" :value="is_new_notice"> -->
+                    {{ tab1_name }}
+                    <!-- </v-badge> -->
                 </v-tab>
-                <v-tab :key="tab2_name" @click="is_new_follow = false">
-                    <v-badge color="#009ff4" :content="follow_items.length" :value="is_new_follow">
-                        {{ tab2_name }}
-                    </v-badge>
+                <v-tab :key="tab2_name" @click="is_new_follow = 0">
+                    <!-- <v-badge color="#009ff4" :content="new_follow_items.length" :value="is_new_follow"> -->
+                    {{ tab2_name }}
+                    <!-- </v-badge> -->
                 </v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
                 <v-tab-item :key="tab1_name">
                     <v-list two-line>
-                        <v-subheader>{{ notice_header }}</v-subheader>
-                        <template v-for="(notice_item, index) in notice_items">
+                        <v-subheader>{{ new_notice_header }}</v-subheader>
+                        <template v-for="(new_notice_items, index) in new_notice_items">
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
-                                    <img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                    <img :src="new_notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="new_notice_items.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="new_notice_items.subtitle"></v-list-item-subtitle>
+                                </v-list-item-content>
+                                <v-btn text icon color="#fff">
+                                    <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
+                                </v-btn>
+                            </v-list-item>
+                        </template>
+                        <v-subheader>이전 알림</v-subheader>
+                        <template v-for="(notice_items, index) in notice_items">
+                            <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
+                            <v-list-item :key="index" avatar>
+                                <v-list-item-avatar>
+                                    <img :src="notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                </v-list-item-avatar>
+                                <v-list-item-content>
+                                    <v-list-item-title v-html="notice_items.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="notice_items.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
                                 <v-btn text icon color="#fff">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
@@ -68,7 +84,7 @@ import UserApi from '../../apis/UserApi';
 export default {
     name: 'noticeTab',
     created() {
-        this.$store.commit('setPageTitle', '알림');
+        this.loadNotice();
     },
     data() {
         return {
@@ -76,11 +92,15 @@ export default {
             tab: null,
             tab1_name: '알림',
             tab2_name: '팔로우 요청',
-            notice_header: '새 알림',
-            follow_header: '새 팔로우 요청',
+            new_notice_header: '새 알림',
+            notice_header: '이전 알림',
+            new_follow_header: '새 팔로우 요청',
+            follow_header: '이전 팔로우 요청',
             notice_items: [],
+            new_notice_items: [],
             is_new_notice: false,
             follow_items: [],
+            new_follow_items: [],
             is_new_follow: true,
             isremove: []
         };
@@ -89,23 +109,37 @@ export default {
         loadNotice: function() {
             // let { notice_items, follow_items } = this;
             let data = {
-                email: this.email
+                email: this.email,
+                num: null
             };
             let new_noticeItem = {};
+            // let noticeItem = {};
             UserApi.requestNotice(
                 data,
                 res => {
-                    let old = res.data.object.oldNotice;
-                    if (old != null) {
-                        for (let i = old.length - 1; i >= 0; i--) {
+                    console.log(res.data);
+                    let new_data = res.data.object.newNotice;
+                    if (new_data != null) {
+                        for (let i = new_data.length - 1; i >= 0; i--) {
                             new_noticeItem = {
-                                nid: old[i].nid,
+                                nid: new_data[i].nid,
                                 avatar: require('../../assets/images/light-bulb.png'),
-                                userId: old[i].senderNick,
-                                subtitle: old[i].msg
+                                userId: new_data[i].senderNick,
+                                subtitle: new_data[i].msg
+                            };
+                            this.new_notice_items.push(new_noticeItem);
+                        }
+                    }
+                    let old_data = res.data.object.oldNotice;
+                    if (old_data != null) {
+                        for (let i = old_data.length - 1; i >= 0; i--) {
+                            new_noticeItem = {
+                                nid: old_data[i].nid,
+                                avatar: require('../../assets/images/light-bulb.png'),
+                                userId: old_data[i].senderNick,
+                                subtitle: old_data[i].msg
                             };
                             this.notice_items.push(new_noticeItem);
-                            this.follow_items.push(new_noticeItem);
                         }
                     }
                 },
@@ -136,9 +170,7 @@ export default {
             this.is_new_notice = false;
         }
     },
-    mounted() {
-        this.loadNotice();
-    }
+    mounted() {}
 };
 </script>
 <style scoped>
