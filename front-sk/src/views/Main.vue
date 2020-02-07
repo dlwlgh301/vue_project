@@ -1,7 +1,9 @@
 <template>
     <div class="wrapB">
         <div style="margin-top: 3rem "></div>
-
+        <md-button class="md-icon-button" v-on:click="logout">
+            <md-icon>exit_to_app</md-icon>
+        </md-button>
         <v-row no-gutters>
             <v-col cols="12" md="6">
                 <v-card :loading="loading" class="mx-auto my-12" max-width="374" :elevation="4">
@@ -66,6 +68,9 @@
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     data: () => {
         return {
@@ -75,7 +80,12 @@ export default {
             currentDate: new Date()
         };
     },
-    methods: {}
+    methods: {
+        logout() {
+            sessionStorage.clear();
+            this.$router.push('/');
+        }
+    }
 };
 </script>
 <style>

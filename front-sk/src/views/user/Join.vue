@@ -88,7 +88,13 @@
 
                     <div class="input-with-label">
                         <input type="hidden" name="keyword" :value="keyword" />
-                        <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                        <input
+                            v-model="email"
+                            v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }"
+                            id="email"
+                            placeholder="이메일을 입력하세요."
+                            type="text"
+                        />
                         <label for="email">이메일</label>
                         <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
                     </div>
@@ -123,7 +129,13 @@
                     </div>
 
                     <div class="input-with-label">
-                        <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                        <input
+                            v-model="name"
+                            v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
+                            id="name"
+                            placeholder="이름을 입력하세요."
+                            type="text"
+                        />
                         <label for="name">이름</label>
                         <div class="error-text" v-if="error.name">{{ error.name }}</div>
                     </div>
@@ -183,11 +195,11 @@
                 <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     다음화면으로
                 </button> -->
-
+                <div style="margin-top:10px"></div>
+                <button class="btn btn--join" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
                 <button class="btn btn--back btn--login" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입하기
                 </button>
-                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
             </div>
         </form>
     </div>
@@ -333,7 +345,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -342,7 +355,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
@@ -409,15 +423,21 @@ export default {
             console.log(user);
             UserApi.join(user);
 
-            UserApi.fileUpload(
-                test,
-                res => {
-                    console.log(res);
-                },
-                error => {
-                    console.log(error);
-                }
-            );
+            if (this.files.length > 0) {
+                UserApi.fileUpload(
+                    test,
+                    res => {
+                        console.log(res);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+            Swal.fire({
+                icon: 'success',
+                title: '회원가입이 완료 되었습니다!!'
+            });
 
             this.$router.push('/');
             // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {

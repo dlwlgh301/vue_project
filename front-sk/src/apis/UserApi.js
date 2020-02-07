@@ -72,7 +72,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
+        .get(`http://192.168.100.58:8080/notice/show?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -83,7 +83,7 @@ const requestNotice = (data, callback) => {
 
 const requestNoticeNum = (data, callback) => {
     axios
-        .get(`${host}/notice/nid?email=` + JSON.stringify(data['email']))
+        .get(`http://192.168.100.58:8080/notice/num?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
