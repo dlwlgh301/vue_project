@@ -9,7 +9,6 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
-    requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error)
