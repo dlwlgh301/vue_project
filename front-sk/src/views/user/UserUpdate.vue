@@ -23,7 +23,7 @@
             </form>
 
             <div class="input-with-label">
-                <input v-model="email" type="text" />
+                <input v-model="email" type="text" disabled />
                 <label for="email">이메일</label>
             </div>
 

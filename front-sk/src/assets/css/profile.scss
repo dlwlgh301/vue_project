@@ -182,15 +182,15 @@ body {
 .left_col,
 .right_col {
     float: left;
-    height: 340px;
+    height: 300px;
 }
 .left_col {
-    width: 35%;
+    width: 20%;
     padding-top: 20px;
     box-sizing: border-box;
 }
 .right_col {
-    width: 65%;
+    width: 80%;
     margin-left: -1px;
     border-bottom-right-radius: 5px;
 }
@@ -230,7 +230,7 @@ h3.location {
 }
 .contact_information {
     margin-top: 20px;
-    padding-left: 30px;
+    padding-right: 30px;
     list-style-type: none;
 }
 .contact_information li {
