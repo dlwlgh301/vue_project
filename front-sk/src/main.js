@@ -9,6 +9,7 @@ import vuetify from './plugins/vuetify';
 import router from './routes';
 import ElementUI from 'element-ui';
 import 'vue-material/dist/theme/default.css';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.use(Vuetify);
 

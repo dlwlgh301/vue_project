@@ -12,8 +12,7 @@ const UserApi = {
     requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
-    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -42,7 +41,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .post(`${host}/account/snslogin?email` + JSON.stringify(data['email']))
+        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -74,12 +73,12 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
+        .post(`${host}/notice/getnotice?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log(error);
+            console.log('에러' + error);
         });
 };
 const requestNewNotice = (data, callback) => {
@@ -158,17 +157,6 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
-        });
-};
-
-const deleteNotice = (nid, callback, errorCallback) => {
-    axios
-        .delete(`${host}/notice/` + nid)
-        .then(() => {
-            callback;
-        })
-        .catch(() => {
-            errorCallback;
         });
 };
 
