@@ -12,7 +12,8 @@ const UserApi = {
     requestNewNotice: (data, callback) => requestNewNotice(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error)
+    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
+    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -73,12 +74,16 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
+<<<<<<< HEAD
         .get(`${host}/notice/num?email=` + JSON.stringify(data['email']))
+=======
+        .get(`${host}/notice/show?email=` + JSON.stringify(data['email']))
+>>>>>>> 17b976196a204825fd2204b5100fcb26af2b6252
         .then(res => {
             callback(res);
         })
         .catch(error => {
-            console.log('에러' + error);
+            console.log(error);
         });
 };
 const requestNewNotice = (data, callback) => {
@@ -157,6 +162,17 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const deleteNotice = (nid, callback, errorCallback) => {
+    axios
+        .delete(`${host}/notice/` + nid)
+        .then(() => {
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 

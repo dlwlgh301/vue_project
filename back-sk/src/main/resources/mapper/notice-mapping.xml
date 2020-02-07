@@ -11,19 +11,19 @@
         values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg})
     </insert>
 
-    <select id="getNoticeNum" parameterType="string">
+    <select id="getNoticeNum" parameterType="string" resultType="integer">
         select count(*) from (select * from notice where receiver=#{value}) n where n.readchk = 0
     </select>
 
     <select id="getNewNotice" parameterType="string" resultType="com.web.curation.model.vo.Notice">
-        select count(*) from (select * from notice where receiver=#{value}) n where n.readchk = 0
+        select * from (select * from notice where receiver=#{value}) n where n.readchk = 0
     </select>
 
     <update id="updateNotice" parameterType="string">
         update notice set readchk = 1 where nid in ( select nid from (select * from notice where receiver=#{value}) n where n.readchk = 0)
     </update>
 
-    <delete id="deleteNotice" parameterType="integer">
+    <delete id="deleteNotice" parameterType="int">
         delete from notice where nid=#{value}
     </delete>
     

@@ -117,6 +117,7 @@ export default {
             UserApi.requestNewNotice(
                 data,
                 res => {
+<<<<<<< HEAD
                     console.log(res.data);
                     for (let i = res.data.length - 1; i > -1; i--) {
                         new_noticeItem = {
@@ -146,6 +147,20 @@ export default {
                         };
                         this.notice_items.push(noticeItem);
                         this.follow_items.push(noticeItem);
+=======
+                    let old = res.data.object.oldNotice;
+                    if (old != null) {
+                        for (let i = old.length - 1; i >= 0; i--) {
+                            new_noticeItem = {
+                                nid: old[i].nid,
+                                avatar: require('../../assets/images/light-bulb.png'),
+                                userId: old[i].senderNick,
+                                subtitle: old[i].msg
+                            };
+                            this.notice_items.push(new_noticeItem);
+                            this.follow_items.push(new_noticeItem);
+                        }
+>>>>>>> 17b976196a204825fd2204b5100fcb26af2b6252
                     }
                 },
                 error => {
