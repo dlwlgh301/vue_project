@@ -24,4 +24,6 @@ public interface FollowService {
 
     // 팔로우 삭제하기
     int deleteFollow(Follow follow) throws Exception;
+
+    int followCheck(Follow follow) throws Exception;
 }

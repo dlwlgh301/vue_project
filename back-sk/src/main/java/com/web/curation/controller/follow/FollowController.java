@@ -21,7 +21,6 @@ import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
 import com.web.curation.service.FollowService;
-import com.web.curation.service.NoticeService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
@@ -73,20 +72,36 @@ public class FollowController {
 
         final BasicResponse result = new BasicResponse();
         List<String> list = null;
+        List<Boolean> followCheckList = new ArrayList<>();
+
+        JSONObject data = new JSONObject();
 
         System.out.println(num);
         System.out.println(email);
 
         if (num.equals("1")) { // 팔로잉
             list = userServiceImpl.folloingList(email);
+
+            result.status = true;
+            result.object = list;
         }
 
         else if (num.equals("2")) { // 팔로워
             list = userServiceImpl.followerList(email);
-        }
 
-        result.status = true;
-        result.object = list;
+            for (int i = 0; i < list.size(); i++) {
+                if (followServiceImpl.followCheck(new Follow("", list.get(i), email, "")) > 0) {
+                    followCheckList.add(true);
+                } else {
+                    followCheckList.add(false);
+                }
+            }
+
+            result.status = true;
+            data.put("list", list);
+            data.put("followCheckList", followCheckList);
+            result.object = data.toMap();
+        }
 
         System.out.println("listSize : " + list.size());
 
@@ -96,6 +111,24 @@ public class FollowController {
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
     public Object addFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        System.out.println(follower + ",   " + folloing);
+
+        String followerNickName = userServiceImpl.getNickNameByEmail(follower);
+        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+
+        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        followServiceImpl.addFollow(follow);
+
+        result.status = true;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/follow/deleteFollow")
+    @ApiOperation(value = "팔로우 삭제하기")
+    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         System.out.println(follower + ",   " + folloing);

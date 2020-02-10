@@ -225,46 +225,25 @@ public class AccountController {
 
         System.out.println(1);
 
-        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
-        user.setImgURL(path + user.getImgURL());
+        user.setImgURL(user.getImgURL());
         final BasicResponse result = new BasicResponse();
 
         System.out.println("uuuuuuuuuuuuuu" + user);
-        String email = userServiceImpl.getEmail(user.getEmail());
 
-        System.out.println("db에 이메일이 있는지 확인 :" + email);
+        System.out.println("가입하기 들어옴");
 
-        System.out.println(user.getNickName() + " 검사");
-        String nickname = userServiceImpl.getNickName(user.getNickName());
+        User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+                user.getComment(), user.getKeyword(), user.getImgURL());
 
-        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
+        System.out.println("====================");
+        System.out.println(puser);
+        System.out.println("====================");
 
-        // 이메일 중복검사
-        if (email != null && email.equals(user.getEmail())) {
-            result.data = "이메일이 이미 존재합니다.";
-            result.status = true;
-        }
+        userServiceImpl.insertUser(puser);
 
-        // 닉네임 중복검사
-        else if (nickname != null && nickname.equals(user.getNickName())) {
-            result.data = "닉네임이 이미 존재합니다.";
-            result.status = true;
-        }
-
-        else {
-            System.out.println("가입하기 들어옴");
-
-            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
-                    user.getComment(), user.getKeyword(), user.getImgURL());
-
-            System.out.println("====================");
-            System.out.println(puser);
-            System.out.println("====================");
-
-            userServiceImpl.insertUser(puser);
-            result.status = true;
-            result.data = "success";
-        }
+        System.out.println("가입하기 완료~~!!!");
+        result.status = true;
+        result.data = "success";
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -276,7 +255,7 @@ public class AccountController {
         // String path = req.getSession().getServletContext().getRealPath("") +
         // "\\resources"; // 웹프로젝트 경로 위치
         System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
-        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
+        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\resources\\static\\image\\";
         System.out.println(1);
         System.out.println("path : " + path);
         File copyFile = new File(path + file.getOriginalFilename());

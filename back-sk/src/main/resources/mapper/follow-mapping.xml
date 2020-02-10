@@ -20,4 +20,10 @@
         delete from follow 
         where follower=#{follower} and folloing = #{folloing}
     </delete>
+
+    <select id="followCheck" resultType="int" parameterType="string">
+        select count(*) from follow
+        where follower=#{follower} and folloingnickName = #{folloingnickName}
+    </select>
+
 </mapper>

@@ -1,6 +1,6 @@
 package com.web.curation.service;
 
-import com.web.curation.dao.user.BoardDao;
+import com.web.curation.dao.board.BoardDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
