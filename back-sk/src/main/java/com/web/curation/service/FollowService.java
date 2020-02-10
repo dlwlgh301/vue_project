@@ -4,6 +4,7 @@ package com.web.curation.service;
 import java.util.List;
 
 import com.web.curation.model.user.User;
+import com.web.curation.model.vo.Follow;
 
 public interface FollowService {
     // 팔로잉 수 구하기(내가 다른 사람을)
@@ -17,4 +18,10 @@ public interface FollowService {
 
     // 본인을 팔로우 하는 유저의 리스트 구하기
     List<User> getUserListByFollower(String email) throws Exception;
+
+    // 팔로우 신청하기
+    int addFollow(Follow follow) throws Exception;
+
+    // 팔로우 삭제하기
+    int deleteFollow(Follow follow) throws Exception;
 }

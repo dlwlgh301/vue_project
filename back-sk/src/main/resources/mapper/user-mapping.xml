@@ -7,6 +7,10 @@
         where email=#{value}
     </select>
 
+    <select id="getNickNameByEmail" resultType="string" parameterType="string">
+        select nickName from user
+        where email=#{value}
+    </select>
 
     <select id="getEmail" resultType="string" parameterType="string">
         select email from user
@@ -31,16 +35,6 @@
     <select id="getUser" resultType="com.web.curation.model.user.User" parameterType="string">
         select * from user
         where email=#{value}
-    </select>
-
-    <select id="folloingList" resultType="string" parameterType="string">
-        select folloingnickName from follow
-        where follower = #{value}
-    </select>
-
-    <select id="followerList" resultType="string" parameterType="string">
-        select followernickName from follow
-        where folloing = #{value}
     </select>
 
      <update id="updateUser" parameterType="com.web.curation.model.user.User">

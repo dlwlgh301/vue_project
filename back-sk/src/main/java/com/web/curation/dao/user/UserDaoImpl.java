@@ -69,4 +69,9 @@ public class UserDaoImpl implements UserDao {
     public int updatePass(User user) throws Exception {
         return sqlSession.update("updatePass", user);
     }
+
+    @Override
+    public String getNickNameByEmail(String email) throws Exception {
+        return sqlSession.selectOne("getNickNameByEmail", email);
+    }
 }

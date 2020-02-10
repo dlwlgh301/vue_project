@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
     public int updatePass(User user) throws Exception {
         return userDaoImpl.updatePass(user);
     }
+
+    @Override
+    public String getNickNameByEmail(String email) throws Exception {
+        return userDaoImpl.getNickNameByEmail(email);
+    }
 }

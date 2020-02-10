@@ -8,6 +8,8 @@ import com.web.curation.model.user.User;
 public interface UserService {
     User getUserByEmail(String email);
 
+    String getNickNameByEmail(String email) throws Exception;
+
     User login(String email, String password);
 
     String getEmail(String email) throws Exception;

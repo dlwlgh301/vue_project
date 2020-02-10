@@ -4,6 +4,7 @@ package com.web.curation.dao.user;
 import java.util.List;
 
 import com.web.curation.model.user.User;
+import com.web.curation.model.vo.Follow;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,15 @@ public class FollowDaoImpl implements FollowDao {
     @Override
     public List<User> getUserListByFollower(String email) throws Exception {
         return sqlSession.selectList("getUserListByFollower", email);
+    }
+
+    @Override
+    public int addFollow(Follow follow) throws Exception {
+        return sqlSession.insert("addFollow", follow);
+    }
+
+    @Override
+    public int deleteFollow(Follow follow) throws Exception {
+        return sqlSession.delete("deleteFollow", follow);
     }
 }
