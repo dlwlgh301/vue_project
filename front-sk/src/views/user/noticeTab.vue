@@ -17,7 +17,7 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item :key="tab1_name">
                     <v-list two-line>
-                        <v-subheader v-if="new_notice_header">{{ new_notice_header }}</v-subheader>
+                        <v-subheader v-if="new_notice_items">{{ new_notice_header }}</v-subheader>
                         <template v-for="(new_notice_item, index) in new_notice_items">
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
@@ -28,7 +28,7 @@
                                     <v-list-item-title v-html="new_notice_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="new_notice_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn text icon color="#fff">
+                                <v-btn text icon color="#fff" @click="deleteNotice(index, new_notice_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
