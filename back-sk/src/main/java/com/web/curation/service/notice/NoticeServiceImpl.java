@@ -1,4 +1,4 @@
-package com.web.curation.service;
+package com.web.curation.service.notice;
 
 import java.util.List;
 

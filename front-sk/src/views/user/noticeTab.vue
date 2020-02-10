@@ -17,34 +17,34 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item :key="tab1_name">
                     <v-list two-line>
-                        <v-subheader>{{ new_notice_header }}</v-subheader>
-                        <template v-for="(new_notice_items, index) in new_notice_items">
+                        <v-subheader v-if="new_notice_items">{{ new_notice_header }}</v-subheader>
+                        <template v-for="(new_notice_item, index) in new_notice_items">
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
                                     <img :src="new_notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-html="new_notice_items.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="new_notice_items.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="new_notice_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="new_notice_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn text icon color="#fff">
+                                <v-btn text icon color="#fff" @click="deleteNotice(index, new_notice_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
                         </template>
-                        <v-subheader>이전 알림</v-subheader>
-                        <template v-for="(notice_items, index) in notice_items">
+                        <v-subheader>{{ notice_header }}</v-subheader>
+                        <template v-for="(notice_item, index) in notice_items">
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
-                                    <img :src="notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                    <img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-html="notice_items.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="notice_items.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn text icon color="#fff">
+                                <v-btn text icon color="#fff" @click="deleteNotice(index, notice_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -62,10 +62,10 @@
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="follow_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="newFollow()">요청 수락</v-btn>
-                                <v-btn text icon color="#fff" @click="removeFollow(index, follow_item.nid)">
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="addFollower(index)" v-show="!follow_item.is_follower">수락</v-btn>
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="addFollower(index)" v-show="follow_item.is_follower">삭제</v-btn>
+                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -94,15 +94,20 @@ export default {
             tab2_name: '팔로우 요청',
             new_notice_header: '새 알림',
             notice_header: '이전 알림',
-            new_follow_header: '새 팔로우 요청',
-            follow_header: '이전 팔로우 요청',
+            follow_header: '새 팔로우 요청',
             notice_items: [],
             new_notice_items: [],
             is_new_notice: false,
-            follow_items: [],
-            new_follow_items: [],
-            is_new_follow: true,
-            isremove: []
+
+            follow_items: [
+                {
+                    email: 'dlwlgh301.naver.com',
+                    avatar:
+                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
+                    userId: 'easy호',
+                    is_follower: false
+                }
+            ]
         };
     },
     methods: {
@@ -127,6 +132,8 @@ export default {
                                 userId: new_data[i].senderNick,
                                 subtitle: new_data[i].msg
                             };
+                            console.log(new_noticeItem);
+                            console.log('this.new_notice_items', this.new_notice_items);
                             this.new_notice_items.push(new_noticeItem);
                         }
                     }
@@ -140,6 +147,8 @@ export default {
                                 subtitle: old_data[i].msg
                             };
                             this.notice_items.push(new_noticeItem);
+                            console.log(new_noticeItem);
+                            console.log(this.notice_items);
                         }
                     }
                 },
@@ -148,26 +157,31 @@ export default {
                 }
             );
         },
-        newFollow: function() {
-            this.follow_items.push({
-                nid: 10,
-                avatar:
-                    'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
-                userId: '이지호',
-                subtitle: '팔로우 요청을 또 보냈습니다'
-            });
-            // this.follow_items.push({ divider: true, inset: true });
+        addFollower: function(idx) {
+            this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
+            let new_follower = {
+                email: sessionStorage.getItem('email'),
+                followerEmail: 'dlwlgh301.naver.com'
+            };
+            let data = new_follower;
+            UserApi.addfollower(data);
         },
-        removeFollow(idx, nid) {
-            console.log(this.follow_items);
-            console.log(idx);
-            this.isremove.push(nid);
-            this.follow_items.splice(idx, 1);
-            console.log('isremove', this.isremove);
-            // this.follow_items.splice(idx);
-        },
+        // deleteFollow(idx) {
+        //     this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
+        //     let new_follower = {
+        //         email: sessionStorage.getItem('email'),
+        //         followerEmail: 'dlwlgh301.naver.com'
+        //     };
+        //     let data = new_follower;
+        //     UserApi.deletefollower(data);
+        // },
         readNotice() {
             this.is_new_notice = false;
+        },
+        deleteNotice(idx, nid) {
+            this.notice_items.splice(idx, 1);
+            let data = nid;
+            UserApi.deleteNotice(data);
         }
     },
     mounted() {}

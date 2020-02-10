@@ -33,17 +33,18 @@ export default {
         return {
             route: '',
             showNav: false,
-            notice: 2,
-            email: 'ihs3583@gmail.com'
+            notice: 0,
+            email: ''
         };
     },
     methods: {
         loadNoticeNum() {
+            let data = sessionStorage.getItem('email');
             UserApi.requestNoticeNum(
                 data,
                 res => {
                     console.log(res.data);
-                    this.notice = res.data.num;
+                    this.notice = res.data.object.num;
                 },
                 error => {
                     console.log(error);

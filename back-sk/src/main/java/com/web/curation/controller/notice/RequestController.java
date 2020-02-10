@@ -2,20 +2,22 @@ package com.web.curation.controller.notice;
 
 import java.util.List;
 
-import com.web.curation.model.BasicResponse;
-import com.web.curation.model.vo.Notice;
-import com.web.curation.service.notice.NoticeService;
+import javax.transaction.Transactional;
 
-import org.json.JSONObject;
+import com.web.curation.model.BasicResponse;
+import com.web.curation.model.vo.Request;
+import com.web.curation.service.FollowService;
+import com.web.curation.service.notice.RequestService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,56 +34,50 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @CrossOrigin
 @EnableAutoConfiguration
-@RequestMapping(value = "/notice")
-public class NoticeController {
+@RequestMapping(value = "/request")
+public class RequestController {
     @Autowired
-    NoticeService noticeServiceImpl;
+    RequestService requServiceImpl;
+
+    @Autowired
+    FollowService followServiceImpl;
 
     @GetMapping("/show")
-    @ApiOperation(value = "알림 리스트")
-    @Transactional
+    @ApiOperation(value = "팔로워 요청 리스트")
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
         String userEmail = email.substring(1, email.length() - 1).toLowerCase();
         final BasicResponse result = new BasicResponse();
-        JSONObject data = new JSONObject();
-        List<Notice> list = noticeServiceImpl.getNewNotice(userEmail);
-        data.put("newNotice", list);
-        data.put("oldNotice", noticeServiceImpl.getNotice(userEmail));
-        boolean check = true;
-        if (list.size() != 0)
-            check = noticeServiceImpl.updateNotice(userEmail);
-
-        if (check) {
+        List<Request> list = requServiceImpl.getRequest(userEmail);
+        if (list.size() > 0) {
             result.status = true;
             result.data = "success";
-            result.object = data.toMap();
+            result.object = list;
         } else {
             result.status = false;
-            result.data = "fail";
+            result.data = "none";
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/num")
-    @ApiOperation(value = "새로운 알림 갯수")
-    public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
-        int num = noticeServiceImpl.getNoticeNum(email);
-        System.out.println("num:" + email);
-        JSONObject dummyUser = new JSONObject();
-        dummyUser.put("num", num);
+    @PostMapping("/allow/{rid}")
+    @ApiOperation(value = "팔로우 수락")
+    @Transactional
+    public Object allowFollow(@PathVariable("rid") int rid) throws Exception {
+        Request info = requServiceImpl.getInfo(rid);
+        // follow에 넣는거 추가
+        // followServiceImpl.addFollow(info.getRequestee(), info.getRequester());
+        requServiceImpl.deleteRequest(rid);
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.data = "success";
-        result.object = dummyUser.toMap();
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{nid}")
-    @ApiOperation(value = "알림 삭제")
-    public Object deleteNotice(@PathVariable("nid") int nid) throws Exception {
+    @DeleteMapping("/cancel/{rid}")
+    @ApiOperation(value = "팔로워 거절")
+    public Object cancelFollow(@PathVariable("rid") int rid) throws Exception {
+        // follow에 넣는거 추가
+        // followServiceImpl.addFollow(info.getRequestee(), info.getRequester());
         final BasicResponse result = new BasicResponse();
-        if (noticeServiceImpl.deleteNotice(nid)) {
+        if (requServiceImpl.deleteRequest(rid)) {
             result.status = true;
             result.data = "success";
         } else {
