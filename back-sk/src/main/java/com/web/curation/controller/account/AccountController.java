@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
-import com.web.curation.service.NoticeService;
+import com.web.curation.service.notice.NoticeService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;

@@ -12,6 +12,7 @@ admin.initializeApp(functions.config().firebase);
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
+
 exports.addMessage = functions.https.onRequest(async (req, res) => {
     // Grab the text parameter.
     const original = req.query.text;
@@ -24,48 +25,41 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
     res.redirect(303, snapshot.ref.toString());
 });
 
-exports.logPush = functions.firestore.document('/tokens/{token}').onCreate((context, change) => {
+exports.test = functions.firestore.document('/messages/{msg}').onCreate((context, change) => {
     console.log('시작');
+
     admin
         .firestore()
         .collection('tokens')
-        .doc('pacedov3@gmail.com')
+        .doc(context.data().receiver)
         .get()
         .then(res => {
-            // res.token;
-            console.log('token ==>');
-            // console.log(res.data().token);
-            let tokenlist = [];
-            tokenlist[0] = res.data().token;
-            // tokenlist.push(res.data().token);
-            console.log(tokenlist);
             let messageInfo = {
                 data: {
-                    msg: 'test'
+                    msg: context.data().msg
                 },
-                tokens: tokenlist
+                token: res.data().token
             };
 
             const sendCase = admin.messaging();
 
             sendCase
-                .sendMulticast(messageInfo)
+                .send(messageInfo)
                 .then(res => {
                     console.log('성공');
                     console.log(res);
                     return res;
                 })
-                .catch(error => {
+                .catch(err => {
                     console.log('실패');
-                    console.log(error);
-                    throw error;
+                    console.log(err);
+                    throw err;
                 });
             return true;
         })
         .catch(error => {
             throw error;
         });
-    console.log(token);
     console.log('end');
 
     // const snapshot = admin
