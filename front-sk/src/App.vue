@@ -33,7 +33,7 @@ export default {
         return {
             route: '',
             showNav: false,
-            notice: 2,
+            notice: 0,
             email: ''
         };
     },
