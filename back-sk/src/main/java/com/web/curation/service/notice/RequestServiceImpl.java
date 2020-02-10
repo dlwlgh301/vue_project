@@ -1,4 +1,6 @@
-package com.web.curation.service;
+package com.web.curation.service.notice;
+
+import java.util.List;
 
 import com.web.curation.dao.request.RequestDao;
 import com.web.curation.model.vo.Request;
@@ -12,17 +14,22 @@ public class RequestServiceImpl implements RequestService {
     RequestDao requestDaoImpl;
 
     @Override
-    public Request getRequest(String email) throws Exception {
+    public List<Request> getRequest(String email) throws Exception {
         return requestDaoImpl.getRequest(email);
     }
 
     @Override
-    public boolean insertRequest(String requester, String requestee) {
+    public boolean insertRequest(String requester, String requestee) throws Exception {
         return requestDaoImpl.insertRequest(requester, requestee);
     }
 
     @Override
-    public boolean deleteRequest(String requester, String requestee) {
-        return requestDaoImpl.deleteRequest(requester, requestee);
+    public boolean deleteRequest(int rid) throws Exception {
+        return requestDaoImpl.deleteRequest(rid);
+    }
+
+    @Override
+    public Request getInfo(int rid) throws Exception {
+        return requestDaoImpl.getInfo(rid);
     }
 }

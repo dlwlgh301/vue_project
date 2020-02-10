@@ -1,5 +1,7 @@
 package com.web.curation.dao.request;
 
+import java.util.List;
+
 import com.web.curation.model.vo.Request;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,12 +14,12 @@ public class RequestDaoImpl implements RequestDao {
     SqlSession sqlSession;
 
     @Override
-    public Request getRequest(String email) throws Exception {
-        return sqlSession.selectOne("getRequest", email);
+    public List<Request> getRequest(String email) throws Exception {
+        return sqlSession.selectList("getRequest", email);
     }
 
     @Override
-    public boolean insertRequest(String requester, String requestee) {
+    public boolean insertRequest(String requester, String requestee) throws Exception {
         String requesterN = sqlSession.selectOne("getNickName", requester);
         String requesteeN = sqlSession.selectOne("getNickName", requestee);
         Request request = new Request(requester, requesterN, requestee, requesteeN);
@@ -29,13 +31,17 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean deleteRequest(String requester, String requestee) {
-        Request request = new Request(requester, requestee);
-        int row = sqlSession.delete("deleteRequest", request);
+    public boolean deleteRequest(int rid) throws Exception {
+        int row = sqlSession.delete("deleteRequest", rid);
         if (row > 0)
             return true;
         else
             return false;
+    }
+
+    @Override
+    public Request getInfo(int rid) throws Exception {
+        return sqlSession.selectOne("getInfo", rid);
     }
 
 }
