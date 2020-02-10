@@ -103,7 +103,7 @@
     .textarea-wrap {
         @include wrap;
         position: relative;
-        border: 1px solid #000;
+        border: 1px solid $ssafy;
         padding: 15px 15px 10px;
         margin-bottom: 10px;
         box-sizing: border-box;
