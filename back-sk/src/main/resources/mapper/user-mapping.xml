@@ -18,7 +18,7 @@
         where nickName = #{value}
     </select>
 
-    <insert id="join" parameterType="com.web.curation.model.user.User">
+    <insert id="insertUser" parameterType="com.web.curation.model.user.User">
         insert into user(email,password,name,nickName,comment,keyword,imgURL) 
         values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword}, #{imgURL} )
     </insert>
@@ -42,4 +42,14 @@
         select followernickName from follow
         where folloing = #{value}
     </select>
+
+     <update id="updateUser" parameterType="com.web.curation.model.user.User">
+        update user set name=#{name}, comment=#{comment}, keyword=#{keyword}, imgURL=#{imgURL}
+        where email=#{email}
+    </update>
+
+    <update id="updatePass" parameterType="com.web.curation.model.user.User">
+        update user set password=#{password}
+        where email=#{email}
+    </update>
 </mapper>

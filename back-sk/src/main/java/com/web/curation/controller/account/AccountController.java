@@ -261,7 +261,7 @@ public class AccountController {
             System.out.println(puser);
             System.out.println("====================");
 
-            userServiceImpl.join(puser);
+            userServiceImpl.insertUser(puser);
             result.status = true;
             result.data = "success";
         }
@@ -287,134 +287,31 @@ public class AccountController {
         System.out.println("path : " + path);
         System.out.println(file.getOriginalFilename());
 
-        // Map returnObject = new HashMap();
-        // try {
-        // // MultipartHttpServletRequest 생성
-        // // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
-        // // Iterator iter = mhsr.getFileNames();
-        // // MultipartFile mfile = null;
-        // // String fieldName = "";
-        // // List resultList = new ArrayList();
-
-        // // 디레토리가 없다면 생성
-        // File dir = new File(path);
-        // if (!dir.isDirectory()) {
-        // dir.mkdirs();
-        // }
-
-        // // 값이 나올때까지
-        // while (iter.hasNext()) {
-        // fieldName = (String) iter.next(); // 내용을 가져와서
-        // mfile = mhsr.getFile(fieldName);
-        // String origName;
-        // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
-        // "UTF-8"); // 한글꺠짐 방지
-
-        // System.out.println("origName: " + origName);
-        // // 파일명이 없다면
-        // if ("".equals(origName)) {
-        // continue;
-        // }
-
-        // // 파일 명 변경(uuid로 암호화)
-        // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
-        // // String saveFileName = getUuid() + ext;
-        // String saveFileName = origName;
-
-        // System.out.println("saveFileName : " + saveFileName);
-
-        // // 설정한 path에 파일저장
-        // File serverFile = new File(path + File.separator + saveFileName);
-        // mfile.transferTo(serverFile);
-
-        // Map file = new HashMap();
-        // file.put("origName", origName);
-        // file.put("sfile", serverFile);
-        // resultList.add(file);
-        // }
-
-        // returnObject.put("files", resultList);
-        // returnObject.put("params", mhsr.getParameterMap());
-        // } catch (UnsupportedEncodingException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (IllegalStateException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (IOException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
         return null;
     }
 
-    // @RequestMapping(value = "account/fileUpload", method = RequestMethod.POST) //
-    // method = RequestMethod.GET
-    // public Map fileUpload(HttpServletRequest req, HttpServletResponse rep) {
-    // // 파일이 저장될 path 설정
-    // System.out.println("dasfasdf");
-    // String path = "c://aaa";
-    // Map returnObject = new HashMap<>();
-    // try {
-    // // MultipartHttpServletRequest 생성
-    // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
-    // Iterator<String> iter = mhsr.getFileNames();
-    // MultipartFile mfile = null;
-    // String fieldName = "";
-    // List resultList = new ArrayList<>();
-    // // 디레토리가 없다면 생성
-    // File dir = new File(path);
-    // if (!dir.isDirectory()) {
-    // dir.mkdirs();
-    // }
+    @PostMapping("/account/updateUser")
+    @ApiOperation(value = "회원정보 수정")
+    public Object updateUser(@Valid @RequestBody final User user) throws Exception {
+        final BasicResponse result = new BasicResponse();
 
-    // // 값이 나올때까지
-    // while (iter.hasNext()) {
-    // fieldName = (String) iter.next(); // 내용을 가져와서
-    // mfile = mhsr.getFile(fieldName);
-    // String origName;
-    // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
-    // "UTF-8"); // 한글꺠짐 방지
+        System.out.println(user);
 
-    // System.out.println("origName: " + origName);
-    // // 파일명이 없다면
-    // if ("".equals(origName)) {
-    // continue;
-    // }
+        userServiceImpl.updateUser(user);
+        result.status = true;
 
-    // // 파일 명 변경(uuid로 암호화)
-    // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
-    // // String saveFileName = getUuid() + ext;
-    // String saveFileName = origName;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
-    // System.out.println("saveFileName : " + saveFileName);
+    @PostMapping("/account/updatePass")
+    @ApiOperation(value = "회원정보 수정")
+    public Object updatePass(@Valid @RequestBody User user) throws Exception {
+        final BasicResponse result = new BasicResponse();
 
-    // // 설정한 path에 파일저장
-    // File serverFile = new File(path + File.separator + saveFileName);
-    // mfile.transferTo(serverFile);
+        userServiceImpl.updateUser(user);
+        result.status = true;
 
-    // Map file = new HashMap();
-    // file.put("origName", origName);
-    // file.put("sfile", serverFile);
-    // resultList.add(file);
-    // }
-
-    // returnObject.put("files", resultList);
-    // returnObject.put("params", mhsr.getParameterMap());
-    // } catch (UnsupportedEncodingException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (IllegalStateException e) { // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (IOException e) { // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-
-    // return null;
-    // }
-
-    // // uuid생성
-    // public static String getUuid() {
-    // return UUID.randomUUID().toString().replaceAll("-", "");
-    // }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }

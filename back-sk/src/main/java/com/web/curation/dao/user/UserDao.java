@@ -14,11 +14,15 @@ public interface UserDao {
 
     String getNickName(String nickName) throws Exception;
 
-    int join(User user) throws Exception;
+    int insertUser(User user) throws Exception;
 
     User getUser(String email) throws Exception;
 
     List<String> folloingList(String email) throws Exception;
 
     List<String> followerList(String email) throws Exception;
+
+    int updateUser(User user) throws Exception;
+
+    int updatePass(User user) throws Exception;
 }
