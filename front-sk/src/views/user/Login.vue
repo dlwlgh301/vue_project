@@ -177,11 +177,16 @@ export default {
                             console.log(res.data.status);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
-                            this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
+
+                            console.log(email);
+                            firebase.logPush({
+                                msg: email + '님이 로그인하였습니다.',
+                                receiver: email
+                            });
+                            this.$router.push('/main');
                         }
-                        console.log(email);
-                        firebase.logPush(email + '님이 로그인했습니다.');
+                        // firebase.logPush(email + '님이 로그인했습니다.');
                     },
                     error => {
                         ``;
