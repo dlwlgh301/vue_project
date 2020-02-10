@@ -63,8 +63,7 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="addFollower(index)" v-show="!follow_item.is_follower">수락</v-btn>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="addFollower(index)" v-show="follow_item.is_follower">삭제</v-btn>
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index)" v-show="!follow_item.is_follower">팔로우</v-btn>
                                 <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
@@ -79,6 +78,7 @@
 
 <script>
 import '../../assets/css/components.scss';
+import Swal from 'sweetalert2';
 import UserApi from '../../apis/UserApi';
 
 export default {
@@ -91,10 +91,10 @@ export default {
             email: 'ihs3583@gmail.com',
             tab: null,
             tab1_name: '알림',
-            tab2_name: '팔로우 요청',
+            tab2_name: '팔로우',
             new_notice_header: '새 알림',
             notice_header: '이전 알림',
-            follow_header: '새 팔로우 요청',
+            follow_header: '팔로우 추천',
             notice_items: [],
             new_notice_items: [],
             is_new_notice: false,
@@ -157,24 +157,48 @@ export default {
                 }
             );
         },
+        followConfirm: function(idx) {
+            Swal.fire({
+                title: `${this.follow_items[idx].userId}님을 팔로우 하시겠습니까?`,
+                // text: "You won't be able to revert this!",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#009ff4',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then(result => {
+                if (result.value) {
+                    this.addFollower(idx);
+                }
+            });
+        },
         addFollower: function(idx) {
+            this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
+            let new_follower = {
+                follower: sessionStorage.getItem('email'),
+                following: 'dlwlgh301@naver.com'
+            };
+            let data = new_follower;
+            UserApi.noticeTabFollow(
+                data,
+                res => {
+                    console.log(res.status);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
+        deleteFollow(idx) {
             this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
             let new_follower = {
                 email: sessionStorage.getItem('email'),
                 followerEmail: 'dlwlgh301.naver.com'
             };
             let data = new_follower;
-            UserApi.addfollower(data);
+            UserApi.deletefollower(data);
         },
-        // deleteFollow(idx) {
-        //     this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-        //     let new_follower = {
-        //         email: sessionStorage.getItem('email'),
-        //         followerEmail: 'dlwlgh301.naver.com'
-        //     };
-        //     let data = new_follower;
-        //     UserApi.deletefollower(data);
-        // },
         readNotice() {
             this.is_new_notice = false;
         },

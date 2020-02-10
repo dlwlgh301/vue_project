@@ -6,6 +6,7 @@ const UserApi = {
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
+    noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     following: (data, callback, errorCallback) => following(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
@@ -31,12 +32,7 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/followList?num=2&email=` + data['email'], {
-            params: {
-                email: data.email,
-                followerEmail: data.followerEmail
-            }
-        })
+        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
@@ -54,6 +50,18 @@ const deleteFollower = (data, callback, errorCallback) => {
                 followerEmail: data.followerEmail
             }
         })
+        .then(res => {
+            console.log('팔로워 추가 성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로워 추가 실패');
+            errorCallback(error);
+        });
+};
+const noticeTabFollowing = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
