@@ -18,10 +18,4 @@ messaging.setBackgroundMessageHandler(function(payload) {
     };
 
     return self.registration.showNotification(notificationTitle, notificationOptions);
-    // const title = 'Hello World';
-    // const options = {
-    //     body: payload.data.status
-    // };
-
-    // return self.registration.showNotification(title, options);
 });
