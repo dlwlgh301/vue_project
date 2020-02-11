@@ -22,21 +22,13 @@
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
-                                    <img
-                                        :src="new_notice_items.avatar"
-                                        style="width: 2rem; height: 2rem; border-radius:50%"
-                                    />
+                                    <img :src="new_notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="new_notice_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="new_notice_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn
-                                    text
-                                    icon
-                                    color="#fff"
-                                    @click="deleteNotice(index, new_notice_item.nid)"
-                                >
+                                <v-btn text icon color="#fff" @click="deleteNotice(index, new_notice_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -46,21 +38,13 @@
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
-                                    <img
-                                        :src="notice_item.avatar"
-                                        style="width: 2rem; height: 2rem; border-radius:50%"
-                                    />
+                                    <img :src="notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="notice_item.userId"></v-list-item-title>
                                     <v-list-item-subtitle v-html="notice_item.subtitle"></v-list-item-subtitle>
                                 </v-list-item-content>
-                                <v-btn
-                                    text
-                                    icon
-                                    color="#fff"
-                                    @click="deleteNotice(index, notice_item.nid)"
-                                >
+                                <v-btn text icon color="#fff" @click="deleteNotice(index, notice_item.nid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -72,47 +56,15 @@
                         <v-subheader>{{ follow_header }}</v-subheader>
                         <template v-for="(follow_item, index) in follow_items">
                             <!-- <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider> -->
-                            <v-list-item :key="index" avatar v-show="!follow_item.accept">
+                            <v-list-item :key="index" avatar v-show="!follow_item.is_follower">
                                 <v-list-item-avatar>
-                                    <img
-                                        :src="follow_item.avatar"
-                                        style="width: 2rem; height: 2rem; border-radius:50%"
-                                    />
+                                    <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-btn
-                                    class="btn-accept"
-                                    small
-                                    max-width="3rem"
-                                    style="position:relative"
-<<<<<<< HEAD
-                                    @click="followConfirm(index)"
-                                    v-show="!follow_item.is_follower"
-                                >팔로우</v-btn>
-                                <v-btn
-                                    text
-                                    icon
-                                    color="#fff"
-                                    @click="deleteFollow(index, follow_item.nid)"
-                                >
-=======
-                                    @click="addFollower(index)"
-                                    v-show="!follow_item.is_follower"
-                                    >수락</v-btn
-                                >
-                                <v-btn
-                                    class="btn-accept"
-                                    small
-                                    max-width="3rem"
-                                    style="position:relative"
-                                    @click="addFollower(index)"
-                                    v-show="follow_item.is_follower"
-                                    >삭제</v-btn
-                                >
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index)">팔로우</v-btn>
                                 <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
->>>>>>> cd3f4eb2cc717b453e4293c4e0e4be6aad644760
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -208,7 +160,6 @@ export default {
         followConfirm: function(idx) {
             Swal.fire({
                 title: `${this.follow_items[idx].userId}님을 팔로우 하시겠습니까?`,
-                // text: "You won't be able to revert this!",
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: '#009ff4',
@@ -218,17 +169,17 @@ export default {
             }).then(result => {
                 if (result.value) {
                     this.addFollower(idx);
-                    this.follow_items.splice(idx, 1);
+                    this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
                 }
             });
         },
         addFollower: function(idx) {
-            this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-            let new_follower = {
-                follower: sessionStorage.getItem('email'),
-                following: 'dlwlgh301@naver.com'
-            };
-            let data = new_follower;
+            // this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
+            // let new_follower = {
+            //     follower: sessionStorage.getItem('email'),
+            //     following: 'dlwlgh301@naver.com'
+            // };
+            let data = idx;
             UserApi.noticeTabFollowing(
                 data,
                 res => {

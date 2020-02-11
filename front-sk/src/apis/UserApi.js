@@ -61,7 +61,7 @@ const deleteFollower = (data, callback, errorCallback) => {
 };
 const noticeTabFollowing = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
+        .post(`${noticePort}/request/allow/` + data)
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
