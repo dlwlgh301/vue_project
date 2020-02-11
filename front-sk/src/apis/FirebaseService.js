@@ -37,8 +37,16 @@ Notification.requestPermission().then(permission => {
 messaging
     .getToken()
     .then(currentToken => {
-        //로그인 되어있으면 토큰 가져오기
-        if (currentToken) {
+        //로그인 되어있으면 토큰 가져오기{
+        let email = sessionStorage.getItem('email');
+        if (email != null) {
+            // if (currentToken) {
+            firestore
+                .collection('tokens')
+                .doc(email)
+                .set({
+                    token: currentToken
+                });
             console.log(currentToken);
         } else {
             console.log('No Instance ID token available. Request permission to generate one.');
@@ -48,18 +56,6 @@ messaging
         console.log('An error occurred while retrieving token. ', err);
     });
 
-messaging.getToken().then(newToken => {
-    console.log('getToken start');
-    console.log(newToken);
-    firestore
-        .collection('tokens')
-        .doc('test@gmail.com')
-        .set({
-            token: newToken
-        });
-    console.log('getToken end');
-});
-
 // Callback fired if Instance ID token is updated.
 messaging.onTokenRefresh(() => {
     messaging
@@ -67,12 +63,15 @@ messaging.onTokenRefresh(() => {
         .then(refreshedToken => {
             console.log('Token refreshed.');
             console.log(refreshedToken);
-            firestore
-                .collection('tokens')
-                .doc('pacedov3@gmail.com')
-                .set({
-                    token: refreshedToken
-                });
+            let email = sessionStorage.getItem('email');
+            if (email != null) {
+                firestore
+                    .collection('tokens')
+                    .doc(email)
+                    .set({
+                        token: refreshedToken
+                    });
+            }
             console.log('refreshed end');
         })
         .catch(err => {
@@ -82,14 +81,21 @@ messaging.onTokenRefresh(() => {
 
 messaging.onMessage(payload => {
     console.log('Message received. ', payload);
-    // ...
+    var title = '테스트';
+    var options = {
+        body: payload.data.msg
+    };
+
+    new Notification(title, options);
 });
 
 export default {
     logPush(data) {
-        console.log('login service start ' + data);
+        console.log('login service start ' + data.receiver);
         firestore.collection('messages').add({
-            msg: data
+            msg: data.msg,
+            receiver: data.receiver
         });
+        console.log('login service end');
     }
 };

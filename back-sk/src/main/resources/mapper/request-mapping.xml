@@ -12,7 +12,11 @@
         values(#{requester}, #{requesterNick}, #{requestee}, #{requesteeNick})
     </insert>
 
-    <delete id="deleteRequest" parameterType="com.web.curation.model.vo.Request">
-        delete from request where requester=#{requester} and requestee=#{requestee}
+    <delete id="deleteRequest" parameterType="int">
+        delete from request where rid = #{value}
     </delete>
+
+    <select id="getInfo" parameterType="string" resultType="com.web.curation.model.vo.Request">
+        select * from request where rid = #{value}
+    </select>
 </mapper>

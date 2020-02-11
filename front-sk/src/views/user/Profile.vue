@@ -178,7 +178,7 @@ export default {
             following: 1,
             ischeck2: false,
             info: [],
-            followCheck: [false, false, true, false, true], // 팔로우/팔로잉 버튼
+            followCheck: [], // 팔로우/팔로잉 버튼
             // followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
@@ -213,6 +213,8 @@ export default {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object;
+                        console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
+
                         console.log(res.data.status);
                     }
                 },
@@ -237,7 +239,8 @@ export default {
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
-                        this.followList = res.data.object;
+                        this.followList = res.data.object.list;
+                        this.followCheck = res.data.object.followCheckList;
                         // alert(info.email);
                         console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
                         console.log(res.data.status);
