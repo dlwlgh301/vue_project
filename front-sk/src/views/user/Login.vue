@@ -176,7 +176,11 @@ export default {
                         } else {
                             console.log(res.data.status);
                             this.keyword = res.data.keyword;
+                            this.imgURL = res.data.imgURL;
+                            this.nickName = res.data.nickName;
                             sessionStorage.setItem('keyword', this.keyword);
+                            sessionStorage.setItem('imgURL', this.imgURL);
+                            sessionStorage.setItem('nickName', this.nickName);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
                             //요청이 끝나면 버튼 활성화
@@ -206,6 +210,8 @@ export default {
             email: '',
             password: '',
             message: '',
+            nickName: '',
+            imgURL: '',
             type: 'password',
             text: '',
             keyword: '',
