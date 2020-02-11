@@ -10,9 +10,9 @@
                 </div>
 
                 <div class="md-toolbar-section-end">
-                    <md-button class="md-icon-button">
+                    <!-- <md-button class="md-icon-button">
                         <md-icon>search</md-icon>
-                    </md-button>
+                    </md-button> -->
 
                     <router-link to="/user/noticeTab">
                         <md-button class="md-icon-button" @click="updateNoticeNum">
