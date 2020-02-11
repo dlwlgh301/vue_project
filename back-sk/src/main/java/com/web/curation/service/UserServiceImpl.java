@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
         return userDaoImpl.getNickName(nickName);
     }
 
-    public int join(User user) throws Exception {
-        return userDaoImpl.join(user);
+    public int insertUser(User user) throws Exception {
+        return userDaoImpl.insertUser(user);
     }
 
     @Override
@@ -52,5 +52,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<String> followerList(String email) throws Exception {
         return userDaoImpl.followerList(email);
+    }
+
+    @Override
+    public int updateUser(User user) throws Exception {
+        return userDaoImpl.updateUser(user);
+    }
+
+    @Override
+    public int updatePass(User user) throws Exception {
+        return userDaoImpl.updatePass(user);
+    }
+
+    @Override
+    public String getNickNameByEmail(String email) throws Exception {
+        return userDaoImpl.getNickNameByEmail(email);
     }
 }
