@@ -7,7 +7,15 @@
     <div>
         <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
             <div class="wrapC" v-if="!next">
-                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <h1>
                     키워드를
                     <br />선택해주세요.
@@ -18,7 +26,7 @@
                 <input type="hidden" name="name" :value="name" />
                 <input type="hidden" name="nickName" :value="nickName" />
                 <input type="hidden" name="keyword" :value="keyword" />
-                <input type="hidden" name="comment" :value="comment" /> -->
+                <input type="hidden" name="comment" :value="comment" />-->
 
                 <div class="md-layout-item">
                     <md-field>
@@ -56,13 +64,11 @@
                     </md-field>
                 </div>
 
-                <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit2" :class="{ disabled: !isSubmit2 }">
-                    다음화면으로
-                </button>
+                <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit2" :class="{ disabled: !isSubmit2 }">다음화면으로</button>
 
                 <!-- <button class="btn btn--back btn--login" type="submit" @click="insertMember" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입해보기
-                </button> -->
+                </button>-->
             </div>
 
             <div class="wrapB" style="padding-top: 100px;" v-if="next">
@@ -88,38 +94,8 @@
 
                     <div class="input-with-label">
                         <input type="hidden" name="keyword" :value="keyword" />
-                        <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                        <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" readonly />
                         <label for="email">이메일</label>
-                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
-                    </div>
-                    <div class="input-with-label" v-if="isSendEmail">
-                        <label for="emailAuth">인증 코드</label>
-                        <div class="error-text" v-if="error.email">{{ error.email }}</div>
-                        <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
-                    </div>
-
-                    <div class="input-with-label">
-                        <input
-                            v-model="password"
-                            v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
-                            id="password"
-                            :type="passwordType"
-                            placeholder="비밀번호를 입력하세요."
-                        />
-                        <label for="password">비밀번호</label>
-                        <div class="error-text" v-if="error.password">{{ error.password }}</div>
-                    </div>
-
-                    <div class="input-with-label">
-                        <input
-                            v-model="passwordConfirm"
-                            :type="passwordConfirmType"
-                            id="password-confirm"
-                            v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
-                            placeholder="비밀번호를 다시한번 입력하세요."
-                        />
-                        <label for="password-confirm">비밀번호 확인</label>
-                        <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
                     </div>
 
                     <div class="input-with-label">
@@ -168,7 +144,8 @@
                                     <div class="modal-footer">
                                         <slot name="footer">
                                             약관입니다.
-                                            <br /><br />
+                                            <br />
+                                            <br />
                                             <button @click="showmodal">확인</button>
                                         </slot>
                                     </div>
@@ -182,12 +159,10 @@
 
                 <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     다음화면으로
-                </button> -->
+                </button>-->
                 <div style="margin-top:10px"></div>
                 <button class="btn btn--join" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
-                <button class="btn btn--back btn--login" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                    가입하기
-                </button>
+                <button class="btn btn--back btn--login" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입하기</button>
             </div>
         </form>
     </div>
@@ -206,7 +181,6 @@ img {
 </style>
 
 <script>
-import PV from 'password-validator';
 // import axios from 'axios';
 import * as EmailValidator from 'email-validator';
 import UserApi from '../../apis/UserApi';
@@ -225,9 +199,6 @@ export default {
             emailAuth: '',
             files: '',
             email: '',
-            password: '',
-            passwordSchema: new PV(),
-            passwordConfirm: '',
             nickName: '',
             name: '',
             age: '',
@@ -242,18 +213,14 @@ export default {
             file: '',
             error: {
                 email: false,
-                password: false,
                 nickName: false,
                 name: false,
                 comment: false,
-                passwordConfirm: false,
                 isTerm: false,
                 submit: false
             },
             isSubmit: false,
             isSubmit2: false,
-            passwordType: 'password',
-            passwordConfirmType: 'password',
             showModal: false,
             imageMain: '',
             image: ''
@@ -282,22 +249,7 @@ export default {
             this.checkForm2();
         },
 
-        emailAuth: function() {
-            if (sessionStorage.getItem('key') != null) {
-                let key = sessionStorage.getItem('key');
-                console.log('success');
-
-                if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
-                else this.error.emailAuth = false;
-            }
-        },
-        password: function() {
-            this.checkForm();
-        },
         email: function() {
-            this.checkForm();
-        },
-        passwordConfirm: function() {
             this.checkForm();
         },
         nickName: function() {
@@ -328,24 +280,6 @@ export default {
             } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else {
                 this.error.email = false;
-            }
-
-            if (this.password.length == 0) {
-                this.error.submit = true;
-                this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
-            else {
-                this.error.password = false;
-                this.error.submit = false;
-            }
-
-            if (this.passwordConfirm.length == 0) {
-                this.error.submit = true;
-                this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
-            else {
-                this.error.passwordConfirm = false;
-                this.error.submit = false;
             }
 
             if (this.name.length == 0) {
@@ -463,7 +397,6 @@ export default {
                     comment: this.comment
                 }; */
                 sessionStorage.setItem('email', this.email);
-                sessionStorage.setItem('password', this.password);
                 sessionStorage.setItem('nickName', this.nickName);
                 sessionStorage.setItem('name', this.name);
                 sessionStorage.setItem('comment', this.comment);
@@ -491,25 +424,6 @@ export default {
                 console.log('join 라우터');
                 // console.log('axios 함!!!');
             }
-        },
-        sendEmailAuth() {
-            UserApi.cert(
-                { email: this.email },
-                res => {
-                    this.isSendEmail = true;
-                    console.log('???????????????');
-                    //console.log(res);
-                    //console.log(res.data.object.key);
-                    this.key = res.data.object.key;
-                    console.log(this.key);
-                    sessionStorage.clear;
-                    sessionStorage.setItem('key', this.key);
-                    console.log('join 인증키 발급');
-                },
-                error => {
-                    console.log(error);
-                }
-            );
         },
         async test() {},
         back() {
