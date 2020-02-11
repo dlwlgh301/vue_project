@@ -27,7 +27,7 @@ export default {
         };
     },
     mounted() {
-        this.email = this.$route.params.email;
+        this.email = sessionStorage.getItem('email');
     },
     methods: {
         cert() {

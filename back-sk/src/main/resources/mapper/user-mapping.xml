@@ -7,6 +7,10 @@
         where email=#{value}
     </select>
 
+    <select id="getNickNameByEmail" resultType="string" parameterType="string">
+        select nickName from user
+        where email=#{value}
+    </select>
 
     <select id="getEmail" resultType="string" parameterType="string">
         select email from user
@@ -18,7 +22,7 @@
         where nickName = #{value}
     </select>
 
-    <insert id="join" parameterType="com.web.curation.model.user.User">
+    <insert id="insertUser" parameterType="com.web.curation.model.user.User">
         insert into user(email,password,name,nickName,comment,keyword,imgURL) 
         values(#{email}, #{password}, #{name}, #{nickName}, #{comment}, #{keyword}, #{imgURL} )
     </insert>
@@ -33,13 +37,13 @@
         where email=#{value}
     </select>
 
-    <select id="folloingList" resultType="string" parameterType="string">
-        select folloingnickName from follow
-        where follower = #{value}
-    </select>
+     <update id="updateUser" parameterType="com.web.curation.model.user.User">
+        update user set name=#{name}, comment=#{comment}, keyword=#{keyword}, imgURL=#{imgURL}
+        where email=#{email}
+    </update>
 
-    <select id="followerList" resultType="string" parameterType="string">
-        select followernickName from follow
-        where folloing = #{value}
-    </select>
+    <update id="updatePass" parameterType="com.web.curation.model.user.User">
+        update user set password=#{password}
+        where email=#{email}
+    </update>
 </mapper>

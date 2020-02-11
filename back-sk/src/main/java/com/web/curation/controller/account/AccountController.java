@@ -225,46 +225,25 @@ public class AccountController {
 
         System.out.println(1);
 
-        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
-        user.setImgURL(path + user.getImgURL());
+        user.setImgURL(user.getImgURL());
         final BasicResponse result = new BasicResponse();
 
         System.out.println("uuuuuuuuuuuuuu" + user);
-        String email = userServiceImpl.getEmail(user.getEmail());
 
-        System.out.println("db에 이메일이 있는지 확인 :" + email);
+        System.out.println("가입하기 들어옴");
 
-        System.out.println(user.getNickName() + " 검사");
-        String nickname = userServiceImpl.getNickName(user.getNickName());
+        User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+                user.getComment(), user.getKeyword(), user.getImgURL());
 
-        System.out.println("db에 닉네임이 있는지 확인 :" + nickname);
+        System.out.println("====================");
+        System.out.println(puser);
+        System.out.println("====================");
 
-        // 이메일 중복검사
-        if (email != null && email.equals(user.getEmail())) {
-            result.data = "이메일이 이미 존재합니다.";
-            result.status = true;
-        }
+        userServiceImpl.insertUser(puser);
 
-        // 닉네임 중복검사
-        else if (nickname != null && nickname.equals(user.getNickName())) {
-            result.data = "닉네임이 이미 존재합니다.";
-            result.status = true;
-        }
-
-        else {
-            System.out.println("가입하기 들어옴");
-
-            User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
-                    user.getComment(), user.getKeyword(), user.getImgURL());
-
-            System.out.println("====================");
-            System.out.println(puser);
-            System.out.println("====================");
-
-            userServiceImpl.join(puser);
-            result.status = true;
-            result.data = "success";
-        }
+        System.out.println("가입하기 완료~~!!!");
+        result.status = true;
+        result.data = "success";
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -276,7 +255,7 @@ public class AccountController {
         // String path = req.getSession().getServletContext().getgRealPath("") +
         // "\\resources"; // 웹프로젝트 경로 위치
         System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
-        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\webapp\\image\\";
+        String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\resources\\static\\image\\";
         System.out.println(1);
         System.out.println("path : " + path);
         File copyFile = new File(path + file.getOriginalFilename());
@@ -287,134 +266,31 @@ public class AccountController {
         System.out.println("path : " + path);
         System.out.println(file.getOriginalFilename());
 
-        // Map returnObject = new HashMap();
-        // try {
-        // // MultipartHttpServletRequest 생성
-        // // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
-        // // Iterator iter = mhsr.getFileNames();
-        // // MultipartFile mfile = null;
-        // // String fieldName = "";
-        // // List resultList = new ArrayList();
-
-        // // 디레토리가 없다면 생성
-        // File dir = new File(path);
-        // if (!dir.isDirectory()) {
-        // dir.mkdirs();
-        // }
-
-        // // 값이 나올때까지
-        // while (iter.hasNext()) {
-        // fieldName = (String) iter.next(); // 내용을 가져와서
-        // mfile = mhsr.getFile(fieldName);
-        // String origName;
-        // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
-        // "UTF-8"); // 한글꺠짐 방지
-
-        // System.out.println("origName: " + origName);
-        // // 파일명이 없다면
-        // if ("".equals(origName)) {
-        // continue;
-        // }
-
-        // // 파일 명 변경(uuid로 암호화)
-        // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
-        // // String saveFileName = getUuid() + ext;
-        // String saveFileName = origName;
-
-        // System.out.println("saveFileName : " + saveFileName);
-
-        // // 설정한 path에 파일저장
-        // File serverFile = new File(path + File.separator + saveFileName);
-        // mfile.transferTo(serverFile);
-
-        // Map file = new HashMap();
-        // file.put("origName", origName);
-        // file.put("sfile", serverFile);
-        // resultList.add(file);
-        // }
-
-        // returnObject.put("files", resultList);
-        // returnObject.put("params", mhsr.getParameterMap());
-        // } catch (UnsupportedEncodingException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (IllegalStateException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // } catch (IOException e) { // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
         return null;
     }
 
-    // @RequestMapping(value = "account/fileUpload", method = RequestMethod.POST) //
-    // method = RequestMethod.GET
-    // public Map fileUpload(HttpServletRequest req, HttpServletResponse rep) {
-    // // 파일이 저장될 path 설정
-    // System.out.println("dasfasdf");
-    // String path = "c://aaa";
-    // Map returnObject = new HashMap<>();
-    // try {
-    // // MultipartHttpServletRequest 생성
-    // MultipartHttpServletRequest mhsr = (MultipartHttpServletRequest) req;
-    // Iterator<String> iter = mhsr.getFileNames();
-    // MultipartFile mfile = null;
-    // String fieldName = "";
-    // List resultList = new ArrayList<>();
-    // // 디레토리가 없다면 생성
-    // File dir = new File(path);
-    // if (!dir.isDirectory()) {
-    // dir.mkdirs();
-    // }
+    @PostMapping("/account/updateUser")
+    @ApiOperation(value = "회원정보 수정")
+    public Object updateUser(@Valid @RequestBody final User user) throws Exception {
+        final BasicResponse result = new BasicResponse();
 
-    // // 값이 나올때까지
-    // while (iter.hasNext()) {
-    // fieldName = (String) iter.next(); // 내용을 가져와서
-    // mfile = mhsr.getFile(fieldName);
-    // String origName;
-    // origName = new String(mfile.getOriginalFilename().getBytes("8859_1"),
-    // "UTF-8"); // 한글꺠짐 방지
+        System.out.println(user);
 
-    // System.out.println("origName: " + origName);
-    // // 파일명이 없다면
-    // if ("".equals(origName)) {
-    // continue;
-    // }
+        userServiceImpl.updateUser(user);
+        result.status = true;
 
-    // // 파일 명 변경(uuid로 암호화)
-    // // String ext = origName.substring(origName.lastIndexOf('.')); // 확장자
-    // // String saveFileName = getUuid() + ext;
-    // String saveFileName = origName;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
-    // System.out.println("saveFileName : " + saveFileName);
+    @PostMapping("/account/updatePass")
+    @ApiOperation(value = "회원정보 수정")
+    public Object updatePass(@Valid @RequestBody User user) throws Exception {
+        final BasicResponse result = new BasicResponse();
 
-    // // 설정한 path에 파일저장
-    // File serverFile = new File(path + File.separator + saveFileName);
-    // mfile.transferTo(serverFile);
+        userServiceImpl.updateUser(user);
+        result.status = true;
 
-    // Map file = new HashMap();
-    // file.put("origName", origName);
-    // file.put("sfile", serverFile);
-    // resultList.add(file);
-    // }
-
-    // returnObject.put("files", resultList);
-    // returnObject.put("params", mhsr.getParameterMap());
-    // } catch (UnsupportedEncodingException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (IllegalStateException e) { // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (IOException e) { // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-
-    // return null;
-    // }
-
-    // // uuid생성
-    // public static String getUuid() {
-    // return UUID.randomUUID().toString().replaceAll("-", "");
-    // }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
 }
