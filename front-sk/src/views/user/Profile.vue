@@ -6,8 +6,11 @@
         <link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" />
         <h1 class="title">My Profile</h1>
         <section class="profile">
-            <img src="../../assets/images/tm-easy-profile.jpg" alt class="portrait" />
-
+            <!-- <li>
+                    <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
+                </li> -->
+            <img v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+            <!-- <img src="http://192.168.100.90:8080/image/케로로.jpg" alt class="portrait" /> -->
             <div class="data">
                 <ul>
                     <li>
@@ -38,8 +41,9 @@
                     팔로잉
                 </div>
             </div>
+
             <div class="left_col">
-                <md-dialog :md-active.sync="showDialog">
+                <md-dialog class="md-scrollbar" :md-active.sync="showDialog">
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">팔로워</h2>
                     <hr />
@@ -134,22 +138,13 @@
             </div>
             <ul class="tags">
                 <li>
-                    <a href="https://www.instagram.com/explore/tags/의류/">#의류</a>
+                    <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
                 </li>
                 <li>
-                    <a href="https://www.instagram.com/explore/tags/치킨/">#식품</a>
+                    <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.gender + '/'">#{{ this.gender }}</a>
                 </li>
                 <li>
-                    <a href="https://www.instagram.com/explore/tags/가전제품/">#가전제품</a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/explore/tags/생활용품/">#생활용품</a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/explore/tags/스포츠용품/">#스포츠용품</a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/explore/tags/의약품/">#의약품</a>
+                    <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.status + '/'">#{{ this.status }}</a>
                 </li>
             </ul>
         </section>
@@ -176,7 +171,9 @@ export default {
         return {
             isButtonDisabled: false,
             ischeck1: true,
-
+            age: '',
+            gender: '',
+            status: '',
             follower: 2,
             following: 1,
             ischeck2: false,
@@ -264,7 +261,22 @@ export default {
         },
 
         FollowListBtnCheck(idx) {
-            this.$set(this.followCheck, idx, !this.followCheck[idx]);
+            if (this.followCheck[idx] == false) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '팔로우를 취소하시겠습니까??',
+                    showCancelButton: true
+                }).then(YES => {
+                    if (YES.value) {
+                        this.$set(this.followCheck, idx, !this.followCheck[idx]);
+                    } else {
+                        //alert(YES.value);
+                        this.$set(this.followCheck, idx, this.followCheck[idx]);
+                    }
+                });
+            } else {
+                this.$set(this.followCheck, idx, !this.followCheck[idx]);
+            }
         },
         retrieveQuestion() {
             this.email = sessionStorage.getItem('email');
@@ -286,6 +298,22 @@ export default {
                         this.info = res.data.object;
                         // alert(info.email);
                         console.log(res.data.status);
+                        var idx = 0;
+                        for (var i = 0; i < this.info.keyword.length; i++) {
+                            if (this.info.keyword[i] == ',') {
+                                idx++;
+                                continue;
+                            }
+                            if (idx == 0) {
+                                this.age += this.info.keyword[i];
+                            }
+                            if (idx == 1) {
+                                this.gender += this.info.keyword[i];
+                            }
+                            if (idx == 2) {
+                                this.status += this.info.keyword[i];
+                            }
+                        }
                     }
                 },
                 error => {
@@ -377,6 +405,7 @@ export default {
     width: 10%;
     height: 50%;
     background-color: white;
+    overflow-y: scroll;
 }
 .md-icon {
     margin: 0px 6px 0px 0px;

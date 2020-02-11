@@ -501,26 +501,36 @@ p {
     box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.35);
 }
 
-.btn--join {
-    float: left;
-    width: 45%;
-    background-color: $ssafy;
-    border-radius: 3px;
-    font-weight: $f600;
-    box-shadow: none;
-    height: 50px;
-    line-height: 50px;
-    margin-top: 30px;
-    margin-left: 15px;
-}
+// // .btn--join {
+// //     float: left;
+// //     width: 45%;
+// //     background-color: $ssafy;
+// //     border-radius: 3px;
+// //     font-weight: $f600;
+// //     box-shadow: none;
+// //     height: 50px;
+// //     line-height: 50px;
+// //     margin-top: 30px;
+// //     margin-left: 15px;
+// // }
+
+// .btn--back {
+//     width: 45%;
+//     float: right;
+//     background-color: $ssafy;
+//     border-radius: 3px;
+//     margin-right: 15px;
+//     margin-top: 10px;
+//     font-weight: $f600;
+//     box-shadow: none;
+//     height: 50px;
+//     line-height: 50px;
+// }
 
 .btn--back {
-    width: 45%;
-    float: right;
-    background-color: $ssafy;
+    width: $c100;
+    background-color: #009ff4;
     border-radius: 3px;
-    margin-right: 15px;
-    margin-top: 10px;
     font-weight: $f600;
     box-shadow: none;
     height: 50px;

@@ -177,6 +177,8 @@ export default {
                             console.log(res.data.status);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
+                            sessionStorage.setItem('password', this.password);
+
                             this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
                         }
