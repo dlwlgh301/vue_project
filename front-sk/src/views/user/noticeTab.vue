@@ -88,7 +88,6 @@ export default {
     },
     data() {
         return {
-            email: 'ihs3583@gmail.com',
             tab: null,
             tab1_name: '알림',
             tab2_name: '팔로우',
@@ -114,7 +113,7 @@ export default {
         loadNotice: function() {
             // let { notice_items, follow_items } = this;
             let data = {
-                email: this.email,
+                email: sessionStorage.getItem('email'),
                 num: null
             };
             let new_noticeItem = {};
@@ -168,18 +167,18 @@ export default {
                 cancelButtonText: '취소'
             }).then(result => {
                 if (result.value) {
-                    this.addFollower(idx);
+                    this.addFollower();
                     this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
                 }
             });
         },
-        addFollower: function(idx) {
+        addFollower: function() {
             // this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
             // let new_follower = {
             //     follower: sessionStorage.getItem('email'),
             //     following: 'dlwlgh301@naver.com'
             // };
-            let data = idx;
+            let data = 7;
             UserApi.noticeTabFollowing(
                 data,
                 res => {
@@ -192,12 +191,16 @@ export default {
         },
         deleteFollow(idx) {
             this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-            let new_follower = {
-                email: sessionStorage.getItem('email'),
-                followerEmail: 'dlwlgh301.naver.com'
-            };
-            let data = new_follower;
-            UserApi.deletefollower(data);
+            let data = 4;
+            UserApi.noticeTabFollowing(
+                data,
+                res => {
+                    console.log(res.status);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
         },
         readNotice() {
             this.is_new_notice = false;

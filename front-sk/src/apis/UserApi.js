@@ -7,6 +7,7 @@ const UserApi = {
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
+    deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
     following: (data, callback, errorCallback) => following(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
@@ -71,6 +72,18 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
+const deletNoticeTabFollowing = (data, callback, errorCallback) => {
+    axios
+        .post(`${noticePort}/request/cancel/` + data)
+        .then(res => {
+            console.log('팔로워 추가 성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로워 추가 실패');
+            errorCallback(error);
+        });
+};
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
@@ -118,7 +131,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`${noticePort}/notice/show?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/notice/show?email=` + data.email)
         .then(res => {
             callback(res);
         })

@@ -242,6 +242,16 @@
         border-bottom: 1px solid $grey;
         margin-bottom: 10px;
         background: rgba(#ffffff, 1);
+        #btn-back {
+            @media (min-width: 1201px) {
+                display: none;
+            }
+        }
+        #btn-drawer {
+            @media (max-width: 1200px) {
+                display: none;
+            }
+        }
         .badge {
             .md-badge {
                 width: 13px;
