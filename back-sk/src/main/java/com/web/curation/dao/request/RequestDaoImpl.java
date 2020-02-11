@@ -20,10 +20,10 @@ public class RequestDaoImpl implements RequestDao {
 
     @Override
     public boolean insertRequest(String requester, String requestee) throws Exception {
-        String requesterN = sqlSession.selectOne("getNickName", requester);
-        String requesteeN = sqlSession.selectOne("getNickName", requestee);
+        String requesterN = sqlSession.selectOne("getNickNameByEmail", requester);
+        String requesteeN = sqlSession.selectOne("getNickNameByEmail", requestee);
         Request request = new Request(requester, requesterN, requestee, requesteeN);
-        int row = sqlSession.insert("insertNotice", request);
+        int row = sqlSession.insert("insertRequest", request);
         if (row > 0)
             return true;
         else

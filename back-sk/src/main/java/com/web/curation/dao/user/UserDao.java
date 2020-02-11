@@ -27,4 +27,6 @@ public interface UserDao {
     int updateUser(User user) throws Exception;
 
     int updatePass(User user) throws Exception;
+
+    String getImgURL(String email) throws Exception;
 }

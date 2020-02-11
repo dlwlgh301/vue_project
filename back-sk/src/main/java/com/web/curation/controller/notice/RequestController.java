@@ -5,10 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import com.web.curation.model.BasicResponse;
+import com.web.curation.model.vo.Follow;
 import com.web.curation.model.vo.Request;
 import com.web.curation.service.FollowService;
+import com.web.curation.service.UserService;
+import com.web.curation.service.notice.NoticeService;
 import com.web.curation.service.notice.RequestService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
@@ -42,6 +46,12 @@ public class RequestController {
     @Autowired
     FollowService followServiceImpl;
 
+    @Autowired
+    UserService userServiceImpl;
+
+    @Autowired
+    NoticeService noticeServiceImpl;
+
     @GetMapping("/show")
     @ApiOperation(value = "팔로워 요청 리스트")
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
@@ -64,19 +74,40 @@ public class RequestController {
     @Transactional
     public Object allowFollow(@PathVariable("rid") int rid) throws Exception {
         Request info = requServiceImpl.getInfo(rid);
-        // follow에 넣는거 추가
-        // followServiceImpl.addFollow(info.getRequestee(), info.getRequester());
+        String requestee = info.getRequestee();
+        String requester = info.getRequester();
+
+        String folloingNick = userServiceImpl.getNickNameByEmail(info.getRequestee());
+        String followerNick = userServiceImpl.getNickNameByEmail(info.getRequester());
+        Follow follow = new Follow(info.getRequestee(), folloingNick, info.getRequester(), followerNick);
+
+        followServiceImpl.addFollow(follow);
         requServiceImpl.deleteRequest(rid);
+        boolean check = noticeServiceImpl.insertNotice(requestee, requester, requestee + "님이 팔로우 요청을 수락하였습니다.");
         final BasicResponse result = new BasicResponse();
+        if (check) {
+            JSONObject dummyUser = new JSONObject();
+            dummyUser.put("sender", requestee);
+            dummyUser.put("senderNick", folloingNick);
+            dummyUser.put("receiver", requester);
+            dummyUser.put("msg", folloingNick + " 님이 팔로우 요청을 수락하였습니다.");
+            dummyUser.put("img", userServiceImpl.getImgURL(requestee));
+            System.out.println("ddd");
+            result.status = true;
+            result.data = "success";
+            result.object = dummyUser.toMap();
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/cancel/{rid}")
     @ApiOperation(value = "팔로워 거절")
     public Object cancelFollow(@PathVariable("rid") int rid) throws Exception {
-        // follow에 넣는거 추가
-        // followServiceImpl.addFollow(info.getRequestee(), info.getRequester());
         final BasicResponse result = new BasicResponse();
+
         if (requServiceImpl.deleteRequest(rid)) {
             result.status = true;
             result.data = "success";

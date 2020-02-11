@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.curation.dao.user.FollowDao">
+<mapper namespace="com.web.curation.dao.follow.FollowDao">
     <select id="folloingList" resultType="string" parameterType="string">
         select folloingnickName from follow
         where follower = #{value}
@@ -8,17 +8,17 @@
 
     <select id="followerList" resultType="string" parameterType="string">
         select followernickName from follow
-        where folloing = #{value}
+        where following = #{value}
     </select>
     
     <insert id="addFollow" parameterType="com.web.curation.model.vo.Follow">
-        insert into follow(follower, followernickName, folloing, folloingnickName)
-        values(#{follower}, #{followernickName}, #{folloing}, #{folloingnickName})
+        insert into follow(follower, followernickName, following, folloingnickName)
+        values(#{follower}, #{followernickName}, #{following}, #{folloingnickName})
     </insert>
 
     <delete id="deleteFollow" parameterType="com.web.curation.model.vo.Follow">
         delete from follow 
-        where follower=#{follower} and folloing = #{folloing}
+        where follower=#{follower} and following = #{following}
     </delete>
 
     <select id="followCheck" resultType="int" parameterType="string">
