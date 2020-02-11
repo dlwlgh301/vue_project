@@ -41,8 +41,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int join(User user) throws Exception {
-        return sqlSession.insert("join", user);
+    public int insertUser(User user) throws Exception {
+        return sqlSession.insert("insertUser", user);
     }
 
     @Override
@@ -58,5 +58,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<String> followerList(String email) throws Exception {
         return sqlSession.selectList("followerList", email);
+    }
+
+    @Override
+    public int updateUser(User user) throws Exception {
+        return sqlSession.update("updateUser", user);
+    }
+
+    @Override
+    public int updatePass(User user) throws Exception {
+        return sqlSession.update("updatePass", user);
+    }
+
+    @Override
+    public String getNickNameByEmail(String email) throws Exception {
+        return sqlSession.selectOne("getNickNameByEmail", email);
     }
 }

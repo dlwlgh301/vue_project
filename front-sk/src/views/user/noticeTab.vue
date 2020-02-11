@@ -87,6 +87,7 @@
                                     small
                                     max-width="3rem"
                                     style="position:relative"
+<<<<<<< HEAD
                                     @click="followConfirm(index)"
                                     v-show="!follow_item.is_follower"
                                 >팔로우</v-btn>
@@ -96,6 +97,22 @@
                                     color="#fff"
                                     @click="deleteFollow(index, follow_item.nid)"
                                 >
+=======
+                                    @click="addFollower(index)"
+                                    v-show="!follow_item.is_follower"
+                                    >수락</v-btn
+                                >
+                                <v-btn
+                                    class="btn-accept"
+                                    small
+                                    max-width="3rem"
+                                    style="position:relative"
+                                    @click="addFollower(index)"
+                                    v-show="follow_item.is_follower"
+                                    >삭제</v-btn
+                                >
+                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
+>>>>>>> cd3f4eb2cc717b453e4293c4e0e4be6aad644760
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>

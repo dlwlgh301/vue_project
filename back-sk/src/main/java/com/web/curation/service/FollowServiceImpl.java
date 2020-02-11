@@ -2,11 +2,10 @@ package com.web.curation.service;
 
 import java.util.List;
 
-import com.web.curation.dao.user.CommentDao;
-import com.web.curation.dao.user.FollowDao;
+import com.web.curation.dao.follow.FollowDao;
 import com.web.curation.model.user.User;
+import com.web.curation.model.vo.Follow;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +32,21 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public List<User> getUserListByFollower(String email) throws Exception {
         return followDao.getUserListByFollower(email);
+    }
+
+    @Override
+    public int addFollow(Follow follow) throws Exception {
+        return followDao.addFollow(follow);
+    }
+
+    @Override
+    public int deleteFollow(Follow follow) throws Exception {
+        return followDao.deleteFollow(follow);
+    }
+
+    @Override
+    public int followCheck(Follow follow) throws Exception {
+        return followDao.followCheck(follow);
     }
 
 }
