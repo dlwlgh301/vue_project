@@ -25,16 +25,6 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<User> getUserListByFollowing(String email) throws Exception {
-        return followDao.getUserListByFollowing(email);
-    }
-
-    @Override
-    public List<User> getUserListByFollower(String email) throws Exception {
-        return followDao.getUserListByFollower(email);
-    }
-
-    @Override
     public int addFollow(Follow follow) throws Exception {
         return followDao.addFollow(follow);
     }
@@ -46,7 +36,17 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public int followCheck(Follow follow) throws Exception {
+        System.out.println("servlceImpl : followCheck");
         return followDao.followCheck(follow);
     }
 
+    @Override
+    public List<Follow> folloingList(String email) throws Exception {
+        return followDao.folloingList(email);
+    }
+
+    @Override
+    public List<Follow> followerList(String email) throws Exception {
+        return followDao.followerList(email);
+    }
 }

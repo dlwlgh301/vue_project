@@ -45,16 +45,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> folloingList(String email) throws Exception {
-        return userDaoImpl.folloingList(email);
-    }
-
-    @Override
-    public List<String> followerList(String email) throws Exception {
-        return userDaoImpl.followerList(email);
-    }
-
-    @Override
     public int updateUser(User user) throws Exception {
         return userDaoImpl.updateUser(user);
     }

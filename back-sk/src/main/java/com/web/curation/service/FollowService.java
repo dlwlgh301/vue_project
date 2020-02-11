@@ -13,12 +13,6 @@ public interface FollowService {
     // 팔로워 수 구하기(다른사람이 나를)
     int getCountFollower(String email) throws Exception;
 
-    // 본인이 팔로우 하는 유저의 리스트 구하기
-    List<User> getUserListByFollowing(String email) throws Exception;
-
-    // 본인을 팔로우 하는 유저의 리스트 구하기
-    List<User> getUserListByFollower(String email) throws Exception;
-
     // 팔로우 신청하기
     int addFollow(Follow follow) throws Exception;
 
@@ -26,4 +20,8 @@ public interface FollowService {
     int deleteFollow(Follow follow) throws Exception;
 
     int followCheck(Follow follow) throws Exception;
+
+    List<Follow> folloingList(String email) throws Exception;
+
+    List<Follow> followerList(String email) throws Exception;
 }

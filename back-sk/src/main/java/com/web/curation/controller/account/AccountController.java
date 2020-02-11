@@ -188,33 +188,6 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/account/followList")
-    @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
-    public Object followList(@RequestParam(required = true) final String num,
-            @RequestParam(required = true) final String email) throws Exception {
-
-        final BasicResponse result = new BasicResponse();
-        List<String> list = null;
-
-        System.out.println(num);
-        System.out.println(email);
-
-        if (num.equals("1")) { // 팔로잉
-            list = userServiceImpl.folloingList(email);
-        }
-
-        else if (num.equals("2")) { // 팔로워
-            list = userServiceImpl.followerList(email);
-        }
-
-        result.status = true;
-        result.object = list;
-
-        System.out.println("listSize : " + list.size());
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
     @PostMapping("/account/signup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody final User user) throws Exception {

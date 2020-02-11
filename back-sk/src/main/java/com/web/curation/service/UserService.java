@@ -20,10 +20,6 @@ public interface UserService {
 
     User getUser(String email) throws Exception;
 
-    List<String> folloingList(String email) throws Exception;
-
-    List<String> followerList(String email) throws Exception;
-
     int updateUser(User user) throws Exception;
 
     int updatePass(User user) throws Exception;

@@ -34,6 +34,7 @@ import * as EmailValidator from 'email-validator';
 export default {
     created() {
         this.$store.commit('setPageTitle', '비밀번호 찾기');
+        this.email = sessionStorage.getItem('email');
     },
     watch: {
         email: function() {
@@ -58,7 +59,7 @@ export default {
                 let data = {
                     email
                 };
-                this.$router.push('/user/FindCert/' + this.email);
+                this.$router.push('/user/FindCert');
                 //요청 후에는 버튼 비활성화
                 this.isSubmit = false;
             }
