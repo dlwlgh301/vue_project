@@ -252,7 +252,7 @@ public class AccountController {
     @ApiOperation(value = "파일 업로드하기")
     public Object fileUpload(final MultipartFile file, HttpServletRequest request) throws Exception {
         // 파일이 저장될 path 설정
-        // String path = req.getSession().getServletContext().getRealPath("") +
+        // String path = req.getSession().getServletContext().getgRealPath("") +
         // "\\resources"; // 웹프로젝트 경로 위치
         System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
         String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\resources\\static\\image\\";

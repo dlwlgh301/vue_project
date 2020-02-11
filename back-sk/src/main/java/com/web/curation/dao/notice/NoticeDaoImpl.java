@@ -19,9 +19,11 @@ public class NoticeDaoImpl implements NoticeDao {
     }
 
     @Override
-    public boolean insertNotice(String sender, String receiver, String msg) {
-        String senderN = sqlSession.selectOne("getNickName", sender);
-        String receiverN = sqlSession.selectOne("getNickName", receiver);
+    public boolean insertNotice(String sender, String receiver, String msg) throws Exception {
+        String senderN = sqlSession.selectOne("getNickNameByEmail", sender);
+        String receiverN = sqlSession.selectOne("getNickNameByEmail", receiver);
+        System.out.println(senderN);
+        System.out.println(receiverN);
         Notice notice = new Notice(sender, senderN, receiver, receiverN, msg);
         int row = sqlSession.insert("insertNotice", notice);
         if (row > 0)

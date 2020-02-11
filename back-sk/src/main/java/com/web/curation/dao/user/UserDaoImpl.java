@@ -74,4 +74,9 @@ public class UserDaoImpl implements UserDao {
     public String getNickNameByEmail(String email) throws Exception {
         return sqlSession.selectOne("getNickNameByEmail", email);
     }
+
+    @Override
+    public String getImgURL(String email) throws Exception {
+        return sqlSession.selectOne("getImgURL", email);
+    }
 }

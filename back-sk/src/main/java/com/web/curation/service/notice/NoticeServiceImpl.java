@@ -19,7 +19,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    public boolean insertNotice(String sender, String receiver, String msg) {
+    public boolean insertNotice(String sender, String receiver, String msg) throws Exception {
         return noticeDaoImpl.insertNotice(sender, receiver, msg);
     }
 
