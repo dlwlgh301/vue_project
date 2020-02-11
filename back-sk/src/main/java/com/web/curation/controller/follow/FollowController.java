@@ -22,6 +22,7 @@ import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
+import com.web.curation.service.notice.NoticeService;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class FollowController {
     FollowService followServiceImpl;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    NoticeService noticeServiceImpl;
 
     @PostMapping("/follow/followList")
     @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
@@ -110,18 +111,31 @@ public class FollowController {
 
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
-    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String folloingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, folloingnickName);
         followServiceImpl.addFollow(follow);
-
-        result.status = true;
+        boolean check = noticeServiceImpl.insertNotice(follower, following, followerNickName + " 님이 팔로우 요청을 하였습니다.");
+        if (check) {
+            JSONObject dummyUser = new JSONObject();
+            dummyUser.put("sender", follower);
+            dummyUser.put("senderNick", followerNickName);
+            dummyUser.put("receiver", following);
+            dummyUser.put("msg", followerNickName + " 님이 팔로우 요청을 하였습니다.");
+            dummyUser.put("img", userServiceImpl.getImgURL(follower));
+            result.status = true;
+            result.data = "success";
+            result.object = dummyUser.toMap();
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

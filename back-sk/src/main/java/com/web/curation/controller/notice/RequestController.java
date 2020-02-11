@@ -83,7 +83,7 @@ public class RequestController {
 
         followServiceImpl.addFollow(follow);
         requServiceImpl.deleteRequest(rid);
-        boolean check = noticeServiceImpl.insertNotice(requestee, requester, requestee + "님이 팔로우 요청을 수락하였습니다.");
+        boolean check = noticeServiceImpl.insertNotice(requestee, requester, folloingNick + " 님이 팔로우 요청을 수락하였습니다.");
         final BasicResponse result = new BasicResponse();
         if (check) {
             JSONObject dummyUser = new JSONObject();
@@ -92,7 +92,6 @@ public class RequestController {
             dummyUser.put("receiver", requester);
             dummyUser.put("msg", folloingNick + " 님이 팔로우 요청을 수락하였습니다.");
             dummyUser.put("img", userServiceImpl.getImgURL(requestee));
-            System.out.println("ddd");
             result.status = true;
             result.data = "success";
             result.object = dummyUser.toMap();

@@ -32,7 +32,12 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
+        .post(`${noticePort}/follow/addFollow?follower=` + data['follower'] + '&following=' + data['following'], {
+            params: {
+                follower: data.follower,
+                following: data.following
+            }
+        })
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
