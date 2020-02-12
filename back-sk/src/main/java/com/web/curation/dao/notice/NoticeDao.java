@@ -8,7 +8,7 @@ import com.web.curation.model.vo.Notice;
 public interface NoticeDao {
     List<Notice> getNotice(String email) throws Exception;
 
-    boolean insertNotice(String sender, String receiver, String msg);
+    boolean insertNotice(String sender, String receiver, String msg) throws Exception;
 
     int getNoticeNum(String email) throws Exception;
 

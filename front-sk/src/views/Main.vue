@@ -39,6 +39,8 @@
 </template>
 <script>
 import UserApi from '../apis/UserApi';
+import firebase from '../apis/FirebaseService';
+
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
@@ -75,6 +77,7 @@ export default {
     },
     methods: {
         logout() {
+            firebase.logout(sessionStorage.getItem('email'));
             sessionStorage.clear();
             this.$router.push('/');
         }

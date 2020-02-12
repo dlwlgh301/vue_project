@@ -41,15 +41,15 @@ public class NoticeController {
     @ApiOperation(value = "알림 리스트")
     @Transactional
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
-        String userEmail = email.substring(1, email.length() - 1).toLowerCase();
+        System.out.println("show:" + email);
         final BasicResponse result = new BasicResponse();
         JSONObject data = new JSONObject();
-        List<Notice> list = noticeServiceImpl.getNewNotice(userEmail);
+        List<Notice> list = noticeServiceImpl.getNewNotice(email);
         data.put("newNotice", list);
-        data.put("oldNotice", noticeServiceImpl.getNotice(userEmail));
+        data.put("oldNotice", noticeServiceImpl.getNotice(email));
         boolean check = true;
         if (list.size() != 0)
-            check = noticeServiceImpl.updateNotice(userEmail);
+            check = noticeServiceImpl.updateNotice(email);
 
         if (check) {
             result.status = true;

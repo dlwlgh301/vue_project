@@ -18,13 +18,13 @@ public class Follow {
     private int num;
     private String follower;
     private String followernickName;
-    private String folloing;
+    private String following;
     private String folloingnickName;
 
-    public Follow(String follower, String followernickName, String folloing, String folloingnickName) {
+    public Follow(String follower, String followernickName, String following, String folloingnickName) {
         this.follower = follower;
         this.followernickName = followernickName;
-        this.folloing = folloing;
+        this.following = following;
         this.folloingnickName = folloingnickName;
     }
 }
