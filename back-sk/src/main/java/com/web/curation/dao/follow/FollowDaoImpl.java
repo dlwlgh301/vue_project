@@ -43,7 +43,7 @@ public class FollowDaoImpl implements FollowDao {
 
     @Override
     public List<Follow> followingList(String email) throws Exception {
-        return sqlSession.selectList("folloingList", email);
+        return sqlSession.selectList("followingList", email);
     }
 
     @Override

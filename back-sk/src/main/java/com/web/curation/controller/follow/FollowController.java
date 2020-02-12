@@ -128,9 +128,9 @@ public class FollowController {
         System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(following);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, following, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
         boolean check = noticeServiceImpl.insertNotice(follower, following, followerNickName + " 님이 팔로우 요청을 하였습니다.");
         if (check) {
@@ -155,15 +155,15 @@ public class FollowController {
 
     @PostMapping("/follow/deleteFollow")
     @ApiOperation(value = "팔로우 삭제하기")
-    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
 
         result.status = true;
