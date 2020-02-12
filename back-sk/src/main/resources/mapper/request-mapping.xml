@@ -7,7 +7,7 @@
         where requestee = #{value}
     </select>
 
-    <insert id="insertNotice" parameterType="com.web.curation.model.vo.Request">
+    <insert id="insertRequest" parameterType="com.web.curation.model.vo.Request">
         insert into request(requester, requesterNick, requestee, requesteeNick) 
         values(#{requester}, #{requesterNick}, #{requestee}, #{requesteeNick})
     </insert>
@@ -16,7 +16,7 @@
         delete from request where rid = #{value}
     </delete>
 
-    <select id="getInfo" parameterType="string" resultType="com.web.curation.model.vo.Request">
+    <select id="getInfo" parameterType="int" resultType="com.web.curation.model.vo.Request">
         select * from request where rid = #{value}
     </select>
 </mapper>

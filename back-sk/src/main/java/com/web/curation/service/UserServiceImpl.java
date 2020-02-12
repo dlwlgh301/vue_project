@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
     public String getNickNameByEmail(String email) throws Exception {
         return userDaoImpl.getNickNameByEmail(email);
     }
+
+    @Override
+    public String getImgURL(String email) throws Exception {
+        return userDaoImpl.getImgURL(email);
+    }
 }

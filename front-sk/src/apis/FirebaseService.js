@@ -34,28 +34,6 @@ Notification.requestPermission().then(permission => {
     console.log('permission...');
 });
 
-messaging
-    .getToken()
-    .then(currentToken => {
-        //로그인 되어있으면 토큰 가져오기{
-        let email = sessionStorage.getItem('email');
-        if (email != null) {
-            // if (currentToken) {
-            firestore
-                .collection('tokens')
-                .doc(email)
-                .set({
-                    token: currentToken
-                });
-            console.log(currentToken);
-        } else {
-            console.log('No Instance ID token available. Request permission to generate one.');
-        }
-    })
-    .catch(err => {
-        console.log('An error occurred while retrieving token. ', err);
-    });
-
 // Callback fired if Instance ID token is updated.
 messaging.onTokenRefresh(() => {
     messaging
@@ -91,11 +69,61 @@ messaging.onMessage(payload => {
 
 export default {
     logPush(data) {
-        console.log('login service start ' + data.receiver);
-        firestore.collection('messages').add({
-            msg: data.msg,
-            receiver: data.receiver
-        });
-        console.log('login service end');
+        messaging
+            .getToken()
+            .then(currentToken => {
+                //로그인 되어있으면 토큰 가져오기{
+                let email = sessionStorage.getItem('email');
+                if (email != null) {
+                    // if (currentToken) {
+                    firestore
+                        .collection('tokens')
+                        .doc(email)
+                        .set({
+                            token: currentToken
+                        })
+                        .then(res => {
+                            console.log('login service start ' + data.receiver);
+                            console.log(res);
+                            firestore
+                                .collection('messages')
+                                .doc()
+                                .set({
+                                    msg: data.msg,
+                                    receiver: data.receiver
+                                })
+                                .then(res => {
+                                    console.log(res + 'message success');
+                                })
+                                .catch(error => {
+                                    console.log(error + 'message fail');
+                                });
+                            console.log('login service end');
+                        });
+                    console.log(currentToken);
+                } else {
+                    console.log('No Instance ID token available. Request permission to generate one.');
+                }
+            })
+            .catch(err => {
+                console.log('An error occurred while retrieving token. ', err);
+            });
+    },
+    logout(data) {
+        console.log(
+            'delete:' +
+                firestore
+                    .collection('tokens')
+                    .doc('test@gmail.com')
+                    .get()
+                    .data()
+        );
+        // messaging.deleteToken(
+        //     firestore
+        //         .collection('tokens')
+        //         .doc('test@gmail.com')
+        //         .get()
+        // );
+        console.log(data);
     }
 };
