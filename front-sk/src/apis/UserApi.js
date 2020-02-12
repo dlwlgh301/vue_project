@@ -7,12 +7,15 @@ const UserApi = {
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
+    deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
     following: (data, callback, errorCallback) => following(data, callback, errorCallback),
+    updateUser: (data, callback, errorCallback) => updateUser(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestFollow: (data, callback) => requestFollow(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
@@ -21,7 +24,7 @@ const UserApi = {
 };
 const follower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/followList?num=2&email=` + data['email'])
+        .post(`${host}/follow/followList?num=2&email=` + data['email'])
         .then(res => {
             console.log('팔로우성공');
             callback(res);
@@ -33,7 +36,7 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
+        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&following=' + data['Email'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
@@ -52,17 +55,29 @@ const deleteFollower = (data, callback, errorCallback) => {
             }
         })
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('ddd 팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('ddd 팔로워 추가 실패');
             errorCallback(error);
         });
 };
 const noticeTabFollowing = (data, callback, errorCallback) => {
     axios
         .post(`${noticePort}/request/allow/` + data)
+        .then(res => {
+            console.log('nnn 팔로워 추가 성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('nnn 팔로워 추가 실패');
+            errorCallback(error);
+        });
+};
+const deletNoticeTabFollowing = (data, callback, errorCallback) => {
+    axios
+        .post(`${noticePort}/request/cancel/` + data)
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
@@ -75,7 +90,7 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
-        .post(`${host}/account/followList?num=1&email=` + data['email'])
+        .post(`${host}/follow/followList?num=1&email=` + data['email'])
         .then(res => {
             console.log('팔로잉성공');
             callback(res);
@@ -119,7 +134,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`${noticePort}/notice/show?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/notice/show?email=` + data.email)
         .then(res => {
             callback(res);
         })
@@ -127,7 +142,16 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-
+const requestFollow = (data, callback) => {
+    axios
+        .get(`${noticePort}/request/show?email=` + data.email)
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
 const requestNoticeNum = (data, callback) => {
     axios
         .get(`${noticePort}/notice/num`, {
@@ -180,6 +204,32 @@ const deleteNotice = (nid, callback, errorCallback) => {
         });
 };
 
+const updateUser = (body, callback, errorCallback) => {
+    var value = {
+        password: body.password,
+        email: body.email,
+        nickName: body.nickName,
+        name: body.name,
+        comment: body.comment,
+        keyword: body.keyword,
+        imgURL: body.imgURL
+    };
+    console.log('value is ');
+    console.log(value);
+    axios({
+        url: `${host}/account/updateUser`,
+        method: 'post',
+        data: JSON.stringify(value),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            errorCallback(error);
+        });
+};
+
 const join = body => {
     var value = {
         password: body.password,
@@ -187,7 +237,8 @@ const join = body => {
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
-        keyword: body.keyword
+        keyword: body.keyword,
+        imgURL: body.imgURL
     };
     console.log('value is ');
     console.log(value);
@@ -217,6 +268,7 @@ const fileUpload = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/fileUpload`, data)
         .then(() => {
+            console.log('사진 수정 성공!!!!');
             callback;
         })
         .catch(() => {

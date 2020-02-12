@@ -5,7 +5,7 @@
                 <md-bottom-bar-item to="/">
                     <md-icon style="color: #009ff4 ">home</md-icon>
                 </md-bottom-bar-item>
-                <md-bottom-bar-item to="/components/bottom-bar/posts">
+                <md-bottom-bar-item to="/user/updatePass">
                     <md-icon style="color: #009ff4 ">search</md-icon>
                 </md-bottom-bar-item>
                 <md-bottom-bar-item to="/user/find">

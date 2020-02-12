@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.web.curation.dao.follow.FollowDao">
-    <select id="folloingList" resultType="string" parameterType="string">
-        select folloingnickName from follow
+<mapper namespace="com.web.curation.dao.user.FollowDao">
+    <select id="followingList" resultType="com.web.curation.model.vo.Follow" parameterType="string">
+        select * from follow
         where follower = #{value}
     </select>
 
-    <select id="followerList" resultType="string" parameterType="string">
-        select followernickName from follow
+    <select id="followerList" resultType="com.web.curation.model.vo.Follow" parameterType="string">
+        select * from follow
         where following = #{value}
     </select>
     
     <insert id="addFollow" parameterType="com.web.curation.model.vo.Follow">
-        insert into follow(follower, followernickName, following, folloingnickName)
-        values(#{follower}, #{followernickName}, #{following}, #{folloingnickName})
+        insert into follow(follower, followernickName, following, followingnickName)
+        values(#{follower}, #{followernickName}, #{following}, #{followingnickName})
     </insert>
 
     <delete id="deleteFollow" parameterType="com.web.curation.model.vo.Follow">
@@ -23,7 +23,7 @@
 
     <select id="followCheck" resultType="int" parameterType="string">
         select count(*) from follow
-        where follower=#{follower} and folloingnickName = #{folloingnickName}
+        where follower=#{follower} and following = #{following}
     </select>
 
 </mapper>

@@ -22,8 +22,8 @@
                     {{ error.email }}
                 </div>
             </div>
-            <button class="btn btn--back btn--login" v-on:click="find" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                찾기
+            <button class="btn btn--back btn--login" v-on:click="sendEmailAuth" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                이메일 인증하기
             </button>
         </div>
     </div>
@@ -31,9 +31,11 @@
 
 <script>
 import * as EmailValidator from 'email-validator';
+import UserApi from '../../apis/UserApi';
 export default {
     created() {
         this.$store.commit('setPageTitle', '비밀번호 찾기');
+        this.email = sessionStorage.getItem('email');
     },
     watch: {
         email: function() {
@@ -51,17 +53,28 @@ export default {
             });
             this.isSubmit = isSubmit;
         },
-        find() {
-            if (this.isSubmit) {
-                let { email } = this;
-                // eslint-disable-next-line no-unused-vars
-                let data = {
-                    email
-                };
-                this.$router.push('/user/FindCert/' + this.email);
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-            }
+
+        sendEmailAuth() {
+            UserApi.cert(
+                { email: this.email },
+                res => {
+                    this.isSendEmail = true;
+                    console.log('???????????????');
+                    //console.log(res);
+                    //console.log(res.data.object.key);
+                    this.key = res.data.object.key;
+                    console.log(this.key);
+                    sessionStorage.clear;
+                    sessionStorage.setItem('key', this.key);
+                    console.log('join 인증키 발급');
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.$router.push('/user/FindCert');
+            //요청 후에는 버튼 비활성화
+            this.isSubmit = false;
         }
     },
     data: () => {

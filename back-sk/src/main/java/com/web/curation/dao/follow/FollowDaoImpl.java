@@ -26,16 +26,6 @@ public class FollowDaoImpl implements FollowDao {
     }
 
     @Override
-    public List<User> getUserListByFollowing(String email) throws Exception {
-        return sqlSession.selectList("getUserListByFollowing", email);
-    }
-
-    @Override
-    public List<User> getUserListByFollower(String email) throws Exception {
-        return sqlSession.selectList("getUserListByFollower", email);
-    }
-
-    @Override
     public int addFollow(Follow follow) throws Exception {
         return sqlSession.insert("addFollow", follow);
     }
@@ -47,7 +37,18 @@ public class FollowDaoImpl implements FollowDao {
 
     @Override
     public int followCheck(Follow follow) throws Exception {
+        System.out.println("DaoImpl : followCheck");
         return sqlSession.selectOne("followCheck", follow);
+    }
+
+    @Override
+    public List<Follow> followingList(String email) throws Exception {
+        return sqlSession.selectList("followingList", email);
+    }
+
+    @Override
+    public List<Follow> followerList(String email) throws Exception {
+        return sqlSession.selectList("followerList", email);
     }
 
 }

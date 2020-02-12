@@ -23,7 +23,8 @@
 export default {
     data() {
         return {
-            email: ''
+            email: '',
+            key: ''
         };
     },
     mounted() {

@@ -18,6 +18,8 @@ import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
+import UpdatePass from './views/user/UpdatePass.vue';
+
 import Write from './views/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
 Vue.use(Router);
@@ -80,7 +82,7 @@ const router = new Router({
             component: ChangeComplete
         },
         {
-            path: '/user/findcert/:email',
+            path: '/user/findcert',
             name: 'FindCert',
             component: FindCert
         },
@@ -116,6 +118,11 @@ const router = new Router({
             path: '/user/keyword',
             name: 'Keyword',
             component: Keyword
+        },
+        {
+            path: '/user/updatePass',
+            name: 'UpdatePass',
+            component: UpdatePass
         },
         {
             path: '/main/write',

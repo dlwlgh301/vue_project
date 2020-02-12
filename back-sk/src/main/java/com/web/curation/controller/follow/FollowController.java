@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
+import com.web.curation.service.notice.NoticeService;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +65,7 @@ public class FollowController {
     FollowService followServiceImpl;
 
     @Autowired
-    private JavaMailSender javaMailSender;
+    NoticeService noticeServiceImpl;
 
     @PostMapping("/follow/followList")
     @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
@@ -71,37 +73,47 @@ public class FollowController {
             @RequestParam(required = true) final String email) throws Exception {
 
         final BasicResponse result = new BasicResponse();
-        List<String> list = null;
+        List<Follow> list = null;
         List<Boolean> followCheckList = new ArrayList<>();
 
         JSONObject data = new JSONObject();
 
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
         System.out.println(num);
         System.out.println(email);
 
         if (num.equals("1")) { // 팔로잉
-            list = userServiceImpl.folloingList(email);
-
-            result.status = true;
-            result.object = list;
-        }
-
-        else if (num.equals("2")) { // 팔로워
-            list = userServiceImpl.followerList(email);
+            list = followServiceImpl.followingList(email);
 
             for (int i = 0; i < list.size(); i++) {
-                if (followServiceImpl.followCheck(new Follow("", list.get(i), email, "")) > 0) {
+                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollowing(), "")) > 0) {
                     followCheckList.add(true);
                 } else {
                     followCheckList.add(false);
                 }
             }
-
-            result.status = true;
-            data.put("list", list);
-            data.put("followCheckList", followCheckList);
-            result.object = data.toMap();
         }
+
+        else if (num.equals("2")) { // 팔로워
+            list = followServiceImpl.followerList(email);
+            System.out.println("성공~!");
+
+            for (int i = 0; i < list.size(); i++) {
+                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollower(), "")) > 0) {
+                    followCheckList.add(true);
+                } else {
+                    followCheckList.add(false);
+                }
+            }
+        }
+
+        result.status = true;
+        data.put("list", list);
+        data.put("followCheckList", followCheckList);
+
+        result.object = data.toMap();
 
         System.out.println("listSize : " + list.size());
 
@@ -110,37 +122,53 @@ public class FollowController {
 
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
-    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
-
-        result.status = true;
+        boolean check = noticeServiceImpl.insertNotice(follower, following, followerNickName + " 님이 팔로우 요청을 하였습니다.");
+        if (check) {
+            JSONObject dummyUser = new JSONObject();
+            dummyUser.put("sender", follower);
+            dummyUser.put("senderNick", followerNickName);
+            dummyUser.put("receiver", following);
+            dummyUser.put("msg", followerNickName + " 님이 팔로우 요청을 하였습니다.");
+            String img = userServiceImpl.getImgURL(follower);
+            img = (img == null) ? "default" : img;
+            dummyUser.put("img", img);
+            result.status = true;
+            result.data = "success";
+            result.object = dummyUser.toMap();
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("/follow/deleteFollow")
     @ApiOperation(value = "팔로우 삭제하기")
-    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
 
         result.status = true;
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 }
