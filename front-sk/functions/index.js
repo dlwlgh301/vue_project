@@ -25,7 +25,7 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
     res.redirect(303, snapshot.ref.toString());
 });
 
-exports.test = functions.firestore.document('/messages/{msg}').onCreate((context, change) => {
+exports.test = functions.firestore.document('/notices/{notice}').onCreate((context, change) => {
     console.log('시작');
 
     admin

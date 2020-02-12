@@ -188,13 +188,12 @@ export default {
                             this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
 
-                            firebase.logPush({
+                            firebase.loginPush({
                                 msg: email + '님이 로그인하였습니다.',
                                 receiver: email
                             });
                             this.$router.push('/main');
                         }
-                        // firebase.logPush(email + '님이 로그인했습니다.');
                     },
                     error => {
                         ``;

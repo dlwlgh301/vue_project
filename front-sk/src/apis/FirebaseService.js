@@ -68,7 +68,7 @@ messaging.onMessage(payload => {
 });
 
 export default {
-    logPush(data) {
+    loginPush(data) {
         messaging
             .getToken()
             .then(currentToken => {
@@ -116,6 +116,26 @@ export default {
             })
             .catch(function(error) {
                 console.error('Error removing document: ', error);
+            });
+    },
+    noticePush(info) {
+        console.log('notice push start');
+        console.log(info);
+        firestore
+            .collection('notices')
+            .doc()
+            .set({
+                sender: info.sender,
+                senderNick: info.senderNick,
+                receiver: info.receiver,
+                msg: info.msg,
+                img: info.img
+            })
+            .then(res => {
+                console.log(res + 'notice success');
+            })
+            .catch(error => {
+                console.log(error + 'notice fail');
             });
     }
 };

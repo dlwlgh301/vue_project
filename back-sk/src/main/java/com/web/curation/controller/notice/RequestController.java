@@ -76,20 +76,20 @@ public class RequestController {
         String requestee = info.getRequestee();
         String requester = info.getRequester();
 
-        String folloingNick = userServiceImpl.getNickNameByEmail(info.getRequestee());
+        String followingNick = userServiceImpl.getNickNameByEmail(info.getRequestee());
         String followerNick = userServiceImpl.getNickNameByEmail(info.getRequester());
-        Follow follow = new Follow(info.getRequestee(), folloingNick, info.getRequester(), followerNick);
+        Follow follow = new Follow(info.getRequestee(), followingNick, info.getRequester(), followerNick);
 
         followServiceImpl.addFollow(follow);
         requServiceImpl.deleteRequest(rid);
-        boolean check = noticeServiceImpl.insertNotice(requestee, requester, folloingNick + " 님이 팔로우 요청을 수락하였습니다.");
+        boolean check = noticeServiceImpl.insertNotice(requestee, requester, followingNick + " 님이 팔로우 요청을 수락하였습니다.");
         final BasicResponse result = new BasicResponse();
         if (check) {
             JSONObject dummyUser = new JSONObject();
             dummyUser.put("sender", requestee);
-            dummyUser.put("senderNick", folloingNick);
+            dummyUser.put("senderNick", followingNick);
             dummyUser.put("receiver", requester);
-            dummyUser.put("msg", folloingNick + " 님이 팔로우 요청을 수락하였습니다.");
+            dummyUser.put("msg", followingNick + " 님이 팔로우 요청을 수락하였습니다.");
             dummyUser.put("img", userServiceImpl.getImgURL(requestee));
             result.status = true;
             result.data = "success";
