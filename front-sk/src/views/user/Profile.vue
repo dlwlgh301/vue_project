@@ -8,15 +8,15 @@
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,300" rel="stylesheet" type="text/css" />
         <link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" />
-        <h1 class="title">My Profile</h1>
+        <h1 class="title">{{ info.name }}`s Profile</h1>
         <section class="profile">
             <!-- <li>
                     <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
             </li>-->
-            <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" /> -->
+            <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
 
             <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/'alt class="portrait" /> -->
-            <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" />
+            <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
             <div class="data">
                 <ul>
                     <li>
@@ -51,14 +51,21 @@
             <div class="left_col">
                 <md-dialog class="md-scrollbar" :md-active.sync="showDialog">
                     <!-- <section class="wrapper"> -->
-                    <h2 class="content" style="text-align:center">팔로워</h2>
+                    <div>
+                        <h2 class="content" style="text-align:center">
+                            팔로워
+                            <button type="button" class="close" aria-label="Close" style="float:right">
+                                <span @click="showDialog = false" aria-hidden="true">x</span>
+                            </button>
+                        </h2>
+                    </div>
                     <hr />
                     <br />
-                    <div style="margin 10px;" class="content" v-for="(i, index) in followList" v-bind:key="i">
+                    <div style="margin 10px;" class="content" v-for="(item, index) in followList" v-bind:key="index">
                         <li>
                             <ul style="margin-left:25px;">
                                 {{
-                                    i.followernickName
+                                    item.followernickName
                                 }}
                                 <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
                                     <div class="icon-instagram"></div>
@@ -75,15 +82,20 @@
 
                 <md-dialog :md-active.sync="followerDialog">
                     <!-- <section class="wrapper"> -->
-                    <h2 class="content" style="text-align:center">팔로잉</h2>
+                    <h2 class="content" style="text-align:center">
+                        팔로잉
+                        <button type="button" class="close" aria-label="Close" style="float:right">
+                            <span @click="followerDialog = false" aria-hidden="true">x</span>
+                        </button>
+                    </h2>
                     <hr />
                     <br />
 
-                    <div style="margin 10px;" class="content" v-for="(i, index) in followingList" v-bind:key="i">
+                    <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
                             <ul style="margin-left:25px;">
                                 {{
-                                    i.folloingnickName
+                                    item.followingnickName
                                 }}
                                 <div class="myfollowList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
@@ -116,7 +128,7 @@
                             {{ info.comment }}
                         </li>
                         <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
-                        <li v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
+                        <li style="cursor:pointer" v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
                     </ul>
                 </div>
             </div>
@@ -369,6 +381,10 @@ export default {
                 }
             );
         },
+        curPage() {
+            alert('asd');
+            this.$router.push('/user/Profile');
+        },
         board() {
             this.$router.push('/user/Board');
         },
@@ -485,6 +501,9 @@ export default {
     font-size: 1.5em;
     font-family: 'Lato';
     border-right: solid 1px #bdc3c7;
+}
+.data li:hover {
+    cursor: pointer;
 }
 .data li:last-child {
     border: none;

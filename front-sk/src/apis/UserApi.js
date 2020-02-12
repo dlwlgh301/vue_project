@@ -36,7 +36,7 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&folloing=' + data['Email'])
+        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&following=' + data['Email'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
@@ -211,7 +211,8 @@ const updateUser = (body, callback, errorCallback) => {
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
-        keyword: body.keyword
+        keyword: body.keyword,
+        imgURL: body.imgURL
     };
     console.log('value is ');
     console.log(value);
@@ -267,6 +268,7 @@ const fileUpload = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/fileUpload`, data)
         .then(() => {
+            console.log('사진 수정 성공!!!!');
             callback;
         })
         .catch(() => {
