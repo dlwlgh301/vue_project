@@ -19,12 +19,12 @@ public class Follow {
     private String follower;
     private String followernickName;
     private String following;
-    private String folloingnickName;
+    private String followingnickName;
 
-    public Follow(String follower, String followernickName, String following, String folloingnickName) {
+    public Follow(String follower, String followernickName, String following, String followingnickName) {
         this.follower = follower;
         this.followernickName = followernickName;
         this.following = following;
-        this.folloingnickName = folloingnickName;
+        this.followingnickName = followingnickName;
     }
 }

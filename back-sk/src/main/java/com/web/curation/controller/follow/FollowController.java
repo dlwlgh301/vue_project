@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -71,37 +72,47 @@ public class FollowController {
             @RequestParam(required = true) final String email) throws Exception {
 
         final BasicResponse result = new BasicResponse();
-        List<String> list = null;
+        List<Follow> list = null;
         List<Boolean> followCheckList = new ArrayList<>();
 
         JSONObject data = new JSONObject();
 
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
+        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
         System.out.println(num);
         System.out.println(email);
 
         if (num.equals("1")) { // 팔로잉
-            list = userServiceImpl.folloingList(email);
-
-            result.status = true;
-            result.object = list;
-        }
-
-        else if (num.equals("2")) { // 팔로워
-            list = userServiceImpl.followerList(email);
+            list = followServiceImpl.followingList(email);
 
             for (int i = 0; i < list.size(); i++) {
-                if (followServiceImpl.followCheck(new Follow("", list.get(i), email, "")) > 0) {
+                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollowing(), "")) > 0) {
                     followCheckList.add(true);
                 } else {
                     followCheckList.add(false);
                 }
             }
-
-            result.status = true;
-            data.put("list", list);
-            data.put("followCheckList", followCheckList);
-            result.object = data.toMap();
         }
+
+        else if (num.equals("2")) { // 팔로워
+            list = followServiceImpl.followerList(email);
+            System.out.println("성공~!");
+
+            for (int i = 0; i < list.size(); i++) {
+                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollower(), "")) > 0) {
+                    followCheckList.add(true);
+                } else {
+                    followCheckList.add(false);
+                }
+            }
+        }
+
+        result.status = true;
+        data.put("list", list);
+        data.put("followCheckList", followCheckList);
+
+        result.object = data.toMap();
 
         System.out.println("listSize : " + list.size());
 
@@ -143,4 +154,5 @@ public class FollowController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
 }
