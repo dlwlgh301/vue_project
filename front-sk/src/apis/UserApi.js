@@ -36,30 +36,27 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&following=' + data['Email'])
+        .post(`${host}/follow/addFollow?follower=` + data['followingEmail'] + '&following=' + data['followerEmail'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
+            // console.log(data['followerEmail'] + ' ' + data['followingEmail']);
             console.log('팔로워 추가 실패');
             errorCallback(error);
         });
 };
 const deleteFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/followList?num=2&email=` + data['email'], {
-            params: {
-                email: data.email,
-                followerEmail: data.followerEmail
-            }
-        })
+        .post(`${host}/follow/deleteFollow?follower=` + data['followerEmail'] + '&following=' + data['followingEmail'])
         .then(res => {
-            console.log('ddd 팔로워 추가 성공');
+            console.log('팔로잉 제거 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('ddd 팔로워 추가 실패');
+            // console.log(data['followerEmail'] + ' ' + data['followingEmail']);
+            console.log('팔로잉 제거 실패');
             errorCallback(error);
         });
 };
