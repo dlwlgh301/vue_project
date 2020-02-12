@@ -164,7 +164,7 @@ public class FollowController {
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
-        followServiceImpl.addFollow(follow);
+        followServiceImpl.deleteFollow(follow);
 
         result.status = true;
 

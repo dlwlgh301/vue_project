@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
@@ -20,7 +21,8 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback)
+    requestReview: (data, callback) => requestReview(data, callback),
+    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -253,6 +255,22 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const updatePass = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/updatePass`, data)
+        .then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: '비밀번호 수정이 완료되었습니다.'
+            });
+            console.log('비밀번호 수정 완료');
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 

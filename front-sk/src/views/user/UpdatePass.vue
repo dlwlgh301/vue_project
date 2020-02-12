@@ -40,6 +40,15 @@ export default {
     watch: {
         email: function() {
             this.checkForm();
+        },
+        emailAuth: function() {
+            if (sessionStorage.getItem('key') != null) {
+                let key = sessionStorage.getItem('key');
+                console.log('success');
+
+                if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
+                else this.error.emailAuth = false;
+            }
         }
     },
     methods: {

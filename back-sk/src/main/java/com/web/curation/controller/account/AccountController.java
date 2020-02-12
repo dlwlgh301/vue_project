@@ -256,11 +256,11 @@ public class AccountController {
     }
 
     @PostMapping("/account/updatePass")
-    @ApiOperation(value = "회원정보 수정")
+    @ApiOperation(value = "비밀번호 수정")
     public Object updatePass(@Valid @RequestBody User user) throws Exception {
         final BasicResponse result = new BasicResponse();
         System.out.println(user);
-        userServiceImpl.updateUser(user);
+        userServiceImpl.updatePass(user);
         result.status = true;
 
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -23,7 +23,7 @@
 
                     <v-card-text>
                         <v-row align="center" class="mx-0">
-                            <v-rating :value="rating" color="amber" dense half-increments readonly size="14"></v-rating>
+                            <v-rating :value="3.5" color="amber" dense half-increments readonly size="14"></v-rating>
 
                             <div class="grey--text ml-4" v-bind="rating"></div>
                         </v-row>
