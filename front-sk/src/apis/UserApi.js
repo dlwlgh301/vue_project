@@ -36,7 +36,12 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&folloing=' + data['Email'])
+        .post(`${noticePort}/follow/addFollow?follower=` + data['follower'] + '&following=' + data['following'], {
+            params: {
+                follower: data.follower,
+                following: data.following
+            }
+        })
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);
@@ -55,11 +60,11 @@ const deleteFollower = (data, callback, errorCallback) => {
             }
         })
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('ddd 팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('ddd 팔로워 추가 실패');
             errorCallback(error);
         });
 };
@@ -67,11 +72,11 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
     axios
         .post(`${noticePort}/request/allow/` + data)
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('nnn 팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('nnn 팔로워 추가 실패');
             errorCallback(error);
         });
 };

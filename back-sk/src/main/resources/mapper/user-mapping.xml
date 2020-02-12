@@ -48,6 +48,6 @@
     </update>
 
     <select id="getImgURL" parameterType="string" resultType="string">
-        select * from user where email = #{value}
+        select imgURL from user where email = #{value}
     </select>
 </mapper>
