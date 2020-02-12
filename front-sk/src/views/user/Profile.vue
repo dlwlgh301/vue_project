@@ -55,7 +55,8 @@
                         <h2 class="content" style="text-align:center">
                             팔로워
                             <button type="button" class="close" aria-label="Close" style="float:right">
-                                <span @click="showDialog = false" aria-hidden="true">x</span>
+                                <!-- <span @click="showDialog = false" aria-hidden="true">x</span> -->
+                                <span @click="restart()" aria-hidden="true">x</span>
                             </button>
                         </h2>
                     </div>
@@ -85,7 +86,7 @@
                     <h2 class="content" style="text-align:center">
                         팔로잉
                         <button type="button" class="close" aria-label="Close" style="float:right">
-                            <span @click="followerDialog = false" aria-hidden="true">x</span>
+                            <span @click="restart()" aria-hidden="true">x</span>
                         </button>
                     </h2>
                     <hr />
@@ -266,6 +267,80 @@ export default {
                 // doFollow();
             }
         },
+        FollowingListBtnCheck(idx) {
+            if (this.followingCheck[idx] == true) {
+                // 팔로잉
+                Swal.fire({
+                    icon: 'error',
+                    title: '팔로우를 취소하시겠습니까??',
+                    showCancelButton: true
+                }).then(YES => {
+                    if (YES.value) {
+                        this.followerEmail = this.followingList[idx].follower;
+                        this.followingEmail = this.followingList[idx].following;
+                        let { followerEmail, followingEmail } = this;
+                        // alert(this.followerEmail + ' ' + this.followingEmail);
+                        let data = {
+                            followingEmail, // 나
+                            followerEmail // 상대방
+                        };
+                        UserApi.deleteFollower(
+                            data,
+                            res => {
+                                console.log(res);
+                                // if (res.data.data == 'fail') {
+                                //     console.log(res.data.status);
+                                // } else {
+                                //     this.followList = res.data.object.list;
+                                //     this.followCheck = res.data.object.followCheckList;
+                                //     // alert(info.email);
+                                //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                                //     console.log(res.data.status);
+                                // }
+                            },
+                            error => {
+                                console.log(error);
+                            }
+                        );
+                        this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
+                    } else {
+                        //alert(YES.value);
+                        this.$set(this.followingCheck, idx, this.followingCheck[idx]);
+                    }
+                });
+            } else {
+                this.followerEmail = this.followList[idx].follower;
+                this.followingEmail = this.followList[idx].following;
+                let { followerEmail, followingEmail } = this;
+
+                let data = {
+                    followingEmail,
+                    followerEmail
+                };
+                // alert(followingEmail + ' ' + followerEmail);
+                //  alert(this.followerEmail);
+                UserApi.addFollower(
+                    data,
+                    res => {
+                        console.log(res);
+                        // if (res.data.data == 'fail') {
+                        //     console.log(res.data.status);
+                        // } else {
+                        //     this.followList = res.data.object.list;
+                        //     this.followCheck = res.data.object.followCheckList;
+                        //     // alert(info.email);
+                        //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                        //     console.log(res.data.status);
+                        // }
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+
+                this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
+            }
+        },
         FollowListBtnCheck(idx) {
             if (this.followCheck[idx] == true) {
                 // 팔로잉
@@ -275,6 +350,32 @@ export default {
                     showCancelButton: true
                 }).then(YES => {
                     if (YES.value) {
+                        this.followerEmail = this.followingList[idx].follower;
+                        this.followingEmail = this.followingList[idx].following;
+                        let { followerEmail, followingEmail } = this;
+                        // alert(this.followerEmail + ' ' + this.followingEmail);
+                        let data = {
+                            followingEmail, // 나
+                            followerEmail // 상대방
+                        };
+                        UserApi.deleteFollower(
+                            data,
+                            res => {
+                                console.log(res);
+                                // if (res.data.data == 'fail') {
+                                //     console.log(res.data.status);
+                                // } else {
+                                //     this.followList = res.data.object.list;
+                                //     this.followCheck = res.data.object.followCheckList;
+                                //     // alert(info.email);
+                                //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                                //     console.log(res.data.status);
+                                // }
+                            },
+                            error => {
+                                console.log(error);
+                            }
+                        );
                         this.$set(this.followCheck, idx, !this.followCheck[idx]);
                     } else {
                         //alert(YES.value);
@@ -287,24 +388,24 @@ export default {
                 let { followerEmail, followingEmail } = this;
 
                 let data = {
-                    followerEmail,
-                    followingEmail
+                    followingEmail,
+                    followerEmail
                 };
-
+                // alert(followingEmail + ' ' + followerEmail);
                 //  alert(this.followerEmail);
                 UserApi.addFollower(
                     data,
                     res => {
                         console.log(res);
-                        if (res.data.data == 'fail') {
-                            console.log(res.data.status);
-                        } else {
-                            this.followList = res.data.object.list;
-                            this.followCheck = res.data.object.followCheckList;
-                            // alert(info.email);
-                            console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
-                            console.log(res.data.status);
-                        }
+                        // if (res.data.data == 'fail') {
+                        //     console.log(res.data.status);
+                        // } else {
+                        //     this.followList = res.data.object.list;
+                        //     this.followCheck = res.data.object.followCheckList;
+                        //     // alert(info.email);
+                        //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                        //     console.log(res.data.status);
+                        // }
                     },
                     error => {
                         console.log(error);
@@ -314,33 +415,12 @@ export default {
                 this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
         },
-
-        FollowingListBtnCheck(idx) {
-            if (this.followCheck[idx] == true) {
-                // 팔로잉
-                Swal.fire({
-                    icon: 'error',
-                    title: '팔로우를 취소하시겠습니까??',
-                    showCancelButton: true
-                }).then(YES => {
-                    if (YES.value) {
-                        // let { info.email } = this;
-                        // let data = {
-                        //     info.email;
-                        // };
-                        //  UserApi.addFollower();
-                        this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
-                    } else {
-                        //alert(YES.value);
-                        this.$set(this.followingCheck, idx, this.followingCheck[idx]);
-                    }
-                });
-            } else {
-                this.$set(this.followCheck, idx, !this.followCheck[idx]);
-            }
-        },
         retrieveQuestion() {
-            this.email = sessionStorage.getItem('email');
+            this.showDialog = false;
+            this.followerDialog = false;
+            this.age = '';
+            this.gender = '';
+            (this.status = ''), (this.email = sessionStorage.getItem('email'));
             let { email } = this;
             let data = {
                 email
@@ -381,6 +461,11 @@ export default {
                     console.log(error);
                 }
             );
+        },
+        restart() {
+            this.retrieveQuestion(); // 회원 정보
+            this.showFollower(); // 팔로우
+            this.showFollowing(); //팔로잉
         },
         curPage() {
             alert('asd');
