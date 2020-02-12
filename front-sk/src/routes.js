@@ -18,7 +18,8 @@ import Main from './views/Main.vue';
 import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
-
+import Write from './views/WriteReview.vue';
+import SnsJoin from './views/user/snsJoin.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -115,6 +116,16 @@ const router = new Router({
             path: '/user/keyword',
             name: 'Keyword',
             component: Keyword
+        },
+        {
+            path: '/main/write',
+            name: 'Write',
+            component: Write
+        },
+        {
+            path: '/user/snsJoin',
+            name: 'snsJoin',
+            component: SnsJoin
         }
     ]
 });

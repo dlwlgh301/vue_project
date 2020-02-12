@@ -68,7 +68,7 @@ export default {
                                         //router.push('/main');
                                     } else {
                                         console.log('미가입');
-                                        router.push('/user/join');
+                                        router.push('/user/snsJoin');
                                         store.state.email = this.email;
                                         //router.push('/user/join');
                                     }
