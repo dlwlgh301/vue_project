@@ -59,7 +59,7 @@ messaging.onTokenRefresh(() => {
 
 messaging.onMessage(payload => {
     console.log('Message received. ', payload);
-    var title = '테스트';
+    var title = '포그라운드 알림';
     var options = {
         body: payload.data.msg
     };

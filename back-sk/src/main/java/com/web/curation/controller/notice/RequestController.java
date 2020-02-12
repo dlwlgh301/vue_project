@@ -90,7 +90,9 @@ public class RequestController {
             dummyUser.put("senderNick", followingNick);
             dummyUser.put("receiver", requester);
             dummyUser.put("msg", followingNick + " 님이 팔로우 요청을 수락하였습니다.");
-            dummyUser.put("img", userServiceImpl.getImgURL(requestee));
+            String img = userServiceImpl.getImgURL(requestee);
+            img = (img == null) ? "default" : img;
+            dummyUser.put("img", img);
             result.status = true;
             result.data = "success";
             result.object = dummyUser.toMap();
