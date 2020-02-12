@@ -14,6 +14,7 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestFollow: (data, callback) => requestFollow(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
@@ -140,7 +141,16 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-
+const requestFollow = (data, callback) => {
+    axios
+        .get(`${noticePort}/request/show?email=` + data.email)
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
 const requestNoticeNum = (data, callback) => {
     axios
         .get(`${noticePort}/notice/num`, {
