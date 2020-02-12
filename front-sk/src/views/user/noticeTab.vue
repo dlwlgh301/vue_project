@@ -56,7 +56,7 @@
                         <v-subheader>{{ follow_header }}</v-subheader>
                         <template v-for="(follow_item, index) in follow_items">
                             <!-- <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider> -->
-                            <v-list-item :key="index" avatar v-show="follow_item.is_following">
+                            <v-list-item :key="index" avatar v-show="!follow_item.is_following">
                                 <v-list-item-avatar>
                                     <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
@@ -179,8 +179,8 @@ export default {
                 cancelButtonText: '취소'
             }).then(result => {
                 if (result.value) {
-                    this.addFollower(rid);
                     this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
+                    this.addFollower(rid);
                 }
             });
         },
