@@ -322,7 +322,7 @@ export default {
                 comment: this.comment,
                 imgURL: this.file.name
             };
-            console.log('userrrr');
+            console.log('정보 수정페이지 정보 ~~~');
             console.log(user);
             // UserApi.updateUser(user);
 

@@ -13,15 +13,10 @@
             <!-- <li>
                     <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
             </li>-->
-            <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+            <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" /> -->
 
             <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/'alt class="portrait" /> -->
-            <!-- <img
-                src="http://192.168.100.90:8080/image/케로로.jpg"
-                style="width:150px; height:150px"
-                alt
-                class="portrait"
-            /> -->
+            <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" />
             <div class="data">
                 <ul>
                     <li>
