@@ -259,7 +259,7 @@ public class AccountController {
     @ApiOperation(value = "회원정보 수정")
     public Object updatePass(@Valid @RequestBody User user) throws Exception {
         final BasicResponse result = new BasicResponse();
-
+        System.out.println(user);
         userServiceImpl.updateUser(user);
         result.status = true;
 

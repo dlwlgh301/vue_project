@@ -23,7 +23,7 @@
                 </div>
             </div>
             <button class="btn btn--back btn--login" v-on:click="find" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                찾기
+                이메일 인증하기
             </button>
         </div>
     </div>
@@ -59,6 +59,26 @@ export default {
                 let data = {
                     email
                 };
+                sendEmailAuth() {
+            UserApi.cert(
+                { email: this.email },
+                res => {
+                    this.isSendEmail = true;
+                    console.log('???????????????');
+                    //console.log(res);
+                    //console.log(res.data.object.key);
+                    this.key = res.data.object.key;
+                    console.log(this.key);
+                    sessionStorage.clear;
+                    sessionStorage.setItem('key', this.key);
+                    console.log('join 인증키 발급');
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        }
+
                 this.$router.push('/user/FindCert');
                 //요청 후에는 버튼 비활성화
                 this.isSubmit = false;
