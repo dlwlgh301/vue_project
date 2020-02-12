@@ -36,7 +36,6 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public int followCheck(Follow follow) throws Exception {
-        System.out.println("servlceImpl : followCheck");
         return followDao.followCheck(follow);
     }
 
@@ -49,4 +48,5 @@ public class FollowServiceImpl implements FollowService {
     public List<Follow> followerList(String email) throws Exception {
         return followDao.followerList(email);
     }
+
 }

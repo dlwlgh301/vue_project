@@ -80,6 +80,7 @@
 import '../../assets/css/components.scss';
 import Swal from 'sweetalert2';
 import UserApi from '../../apis/UserApi';
+import firebase from '../../apis/FirebaseService';
 
 export default {
     name: 'noticeTab',
@@ -185,10 +186,20 @@ export default {
             });
         },
         addFollower: function(rid) {
+            console.log(5);
             let data = rid;
             UserApi.noticeTabFollowing(
                 data,
                 res => {
+                    let info = res.data.object;
+                    firebase.noticePush({
+                        sender: info.sender,
+                        senderNick: info.senderNick,
+                        receiver: info.receiver,
+                        msg: info.msg,
+                        img: info.img
+                    });
+
                     console.log(res.status);
                 },
                 error => {

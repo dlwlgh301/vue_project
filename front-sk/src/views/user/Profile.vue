@@ -263,6 +263,7 @@ export default {
             } else {
                 this.ischeck2 = true;
                 this.ischeck1 = false;
+                // doFollow();
             }
         },
         FollowListBtnCheck(idx) {
@@ -393,6 +394,23 @@ export default {
         },
         refreshList() {
             this.retrieveQuestion();
+        },
+        doFollow() {
+            let data = {
+                follower: sessionStorage.getItem('email'),
+                following: 'pacedov3@gmail.com'
+            };
+            UserApi.addFollower(
+                data,
+                res => {
+                    console.log('follow성공');
+                    console.log(res);
+                },
+                error => {
+                    console.log('follow에러');
+                    console.log(error);
+                }
+            );
         }
     },
     mounted() {
