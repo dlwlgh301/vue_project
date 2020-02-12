@@ -13,12 +13,6 @@
                 <br />선택해주세요.
             </h1>
             <br />
-            <!-- <input type="hidden" name="email" :value="email" />
-                <input type="hidden" name="password" :value="password" />
-                <input type="hidden" name="name" :value="name" />
-                <input type="hidden" name="nickName" :value="nickName" />
-                <input type="hidden" name="keyword" :value="keyword" />
-                <input type="hidden" name="comment" :value="comment" /> -->
 
             <div class="md-layout-item">
                 <md-field>
@@ -71,7 +65,8 @@
             <div class="join">
                 <div id="imageMain">
                     <div v-if="!image">
-                        <img src="../../assets/images/프로필아이콘.png" />
+                        <!-- <img src="../../assets/images/프로필아이콘.png" /> -->
+                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
                     </div>
                     <div v-else>
                         <img :src="image" style="width:150px; height:150px" />
@@ -323,44 +318,35 @@ export default {
                 imgURL: this.file.name
             };
             console.log('정보 수정페이지 정보 ~~~');
+            console.log(this.files);
             console.log(user);
-            // UserApi.updateUser(user);
 
-            // if (this.files.length > 0) {
-            //     UserApi.fileUpload(
-            //         test,
-            //         res => {
-            //             console.log(res);
-            //             this.$router.push('/user/Profile');
-            //         },
-            //         error => {
-            //             console.log(error);
-            //         }
-            //     );
-            // }
-            alert(this.imgURL);
+            if (this.files.length > 0) {
+                UserApi.fileUpload(
+                    test,
+                    res => {
+                        console.log('사진 수정 성공2!!!');
+                        console.log(res);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
             UserApi.updateUser(
                 user,
                 res => {
                     console.log('회원수정 RES : ' + res);
                     if (res.data.status == true) {
                         if (this.check) {
-                            if (this.files.length > 0) {
-                                UserApi.fileUpload(
-                                    test,
-                                    res => {
-                                        console.log(res);
-                                    },
-                                    error => {
-                                        console.log(error);
-                                    }
-                                );
-                            }
-                            console.log('회원정보 files : ' + this.files);
+                            console.log('회원정보 files : ');
+                            console.log(this.files);
+
                             Swal.fire({
                                 icon: 'success',
                                 title: '수정이 완료 되었습니다!!'
                             });
+
                             this.$router.push('/user/Profile');
                         }
                         console.log(this.check);
@@ -376,14 +362,6 @@ export default {
                     console.log(error);
                 }
             );
-
-            //this.$router.push('/');
-            // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {
-            //     alert('good');
-
-            // });
-            // UserApi.join(test);
-            // this.$router.push('/user/certComplete');
         },
         join() {
             console.log('ddddddddddddddddddddddd ' + this.imgURL);
@@ -544,7 +522,7 @@ export default {
             let test = new FormData(document.getElementById('myform'));
             console.log(test);
 
-            if (test != null) {
+            if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
                     Response => {
@@ -556,13 +534,11 @@ export default {
                 );
             }
         },
-
         onFileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.createImage(files[0]);
-            this.file = files[0];
-            console.log('onFileChange 함수 호출 입니다 (수정 페이지)');
+            this.files = e.target.files || e.dataTransfer.files;
+            if (!this.files.length) return;
+            this.createImage(this.files[0]);
+            this.file = this.files[0];
             console.log(this.$refs.file.files[0]);
         },
         createImage(file) {

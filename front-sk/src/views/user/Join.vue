@@ -183,10 +183,10 @@
                 <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     다음화면으로
                 </button> -->
-                <div style="margin-top:10px"></div>
+
                 <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
                 <br />
-                <button class="btn btn--back btn--login" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                <button class="btn btn--back" style="margin-top:10px" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입하기
                 </button>
             </div>
