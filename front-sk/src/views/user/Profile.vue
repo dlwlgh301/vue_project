@@ -1,4 +1,8 @@
 <template>
+    <!-- 
+// 1 팔로우 2 언팔 
+팔로우/reCheck=1?2
+    -->
     <div>
         <link rel="stylesheet" href="css/estilos.css" />
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700" rel="stylesheet" type="text/css" />
@@ -8,9 +12,16 @@
         <section class="profile">
             <!-- <li>
                     <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
-                </li> -->
-            <img v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
-            <!-- <img src="http://192.168.100.90:8080/image/케로로.jpg" alt class="portrait" /> -->
+            </li>-->
+            <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+
+            <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/'alt class="portrait" /> -->
+            <!-- <img
+                src="http://192.168.100.90:8080/image/케로로.jpg"
+                style="width:150px; height:150px"
+                alt
+                class="portrait"
+            /> -->
             <div class="data">
                 <ul>
                     <li>
@@ -30,7 +41,7 @@
 
             <!-- <div :class="[followCheck[0] ? { backgroundColor: '#2589cc;' } : { backgroundColor: 'green' }]" class="follow" @click="FollowListBtnCheck(0)">
                 {{ followCheck[0] | handleFollowFilter }}
-            </div> -->
+            </div>-->
             <div>
                 <div class="follow" @click="iniciar()" v-show="ischeck1">
                     <div class="icon-instagram"></div>
@@ -52,14 +63,13 @@
                         <li>
                             <ul style="margin-left:25px;">
                                 {{
-                                    i
+                                    i.followernickName
                                 }}
-
-                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
                                 </div>
-                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
                                     <div class="icon-ok"></div>
                                     팔로잉
                                 </div>
@@ -78,41 +88,20 @@
                         <li>
                             <ul style="margin-left:25px;">
                                 {{
-                                    i
+                                    i.folloingnickName
                                 }}
-
-                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                <div class="myfollowList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
                                 </div>
-                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                <div class="myfollowingList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == true">
                                     <div class="icon-ok"></div>
                                     팔로잉
                                 </div>
                             </ul>
                         </li>
                     </div>
-
-                    <!-- <div style="margin 10px;" class="content" v-for="index in 4" v-bind:key="index">
-                        <ul style="margin-left:25px;">
-                            1234
-
-                            <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
-                                <div class="icon-instagram"></div>
-                                팔로우
-                            </div>
-                            <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
-                                <div class="icon-ok"></div>
-                                팔로잉
-                            </div>
-                        </ul>
-                    </div> -->
                 </md-dialog>
-
-                <!-- <div class="followi" @click="FollowListBtnCheck(0)" v-show="followListCheck[0]">
-                    <div class="icon-ok"></div>
-                    팔로잉
-                </div> -->
             </div>
             <div class="main_profile">
                 <div class="right_col">
@@ -131,8 +120,8 @@
                             <md-icon>comment</md-icon>
                             {{ info.comment }}
                         </li>
-                        <li v-on:click="board"><md-icon>business_center</md-icon> 게시글 보기</li>
-                        <li v-on:click="updateuser"><md-icon>emoji_emotions</md-icon> 정보 수정</li>
+                        <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
+                        <li v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
                     </ul>
                 </div>
             </div>
@@ -178,10 +167,13 @@ export default {
             following: 1,
             ischeck2: false,
             info: [],
+            followingCheck: [],
             followCheck: [], // 팔로우/팔로잉 버튼
             // followingListCheck: [true, true], // 팔로잉 버튼
             followList: [],
             followingList: [],
+            followEmailList: [],
+            followingEmailList: [],
             followListSize: 0,
             followingListSize: 0,
             name: '',
@@ -194,7 +186,9 @@ export default {
             showDialog: false,
             followerDialog: false,
             isSubmit: false,
-            component: this
+            component: this,
+            followingEmail: '',
+            followerEmail: ''
         };
     },
     methods: {
@@ -206,13 +200,15 @@ export default {
             };
             UserApi.following(
                 data,
+                // index = 순서 flag = 1 팔로 2 팔로잉
                 res => {
                     console.log(res);
                     console.log('ㅇㅇㅇㅇ');
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
-                        this.followingList = res.data.object;
+                        this.followingList = res.data.object.list;
+                        this.followingCheck = res.data.object.followCheckList;
                         console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
 
                         console.log(res.data.status);
@@ -250,7 +246,7 @@ export default {
                     console.log(error);
                 }
             );
-
+            //index 순서 flag 1 :팔로우 2 : 언팔 num = 1:팔로잉 2: 팔로워
             this.followListSize = this.followList.length;
         },
         iniciar() {
@@ -262,9 +258,9 @@ export default {
                 this.ischeck1 = false;
             }
         },
-
         FollowListBtnCheck(idx) {
-            if (this.followCheck[idx] == false) {
+            if (this.followCheck[idx] == true) {
+                // 팔로잉
                 Swal.fire({
                     icon: 'error',
                     title: '팔로우를 취소하시겠습니까??',
@@ -275,6 +271,60 @@ export default {
                     } else {
                         //alert(YES.value);
                         this.$set(this.followCheck, idx, this.followCheck[idx]);
+                    }
+                });
+            } else {
+                this.followerEmail = this.followList[idx].follower;
+                this.followingEmail = this.followList[idx].following;
+                let { followerEmail, followingEmail } = this;
+
+                let data = {
+                    followerEmail,
+                    followingEmail
+                };
+
+                //  alert(this.followerEmail);
+                UserApi.addFollower(
+                    data,
+                    res => {
+                        console.log(res);
+                        if (res.data.data == 'fail') {
+                            console.log(res.data.status);
+                        } else {
+                            this.followList = res.data.object.list;
+                            this.followCheck = res.data.object.followCheckList;
+                            // alert(info.email);
+                            console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                            console.log(res.data.status);
+                        }
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+
+                this.$set(this.followCheck, idx, !this.followCheck[idx]);
+            }
+        },
+
+        FollowingListBtnCheck(idx) {
+            if (this.followCheck[idx] == true) {
+                // 팔로잉
+                Swal.fire({
+                    icon: 'error',
+                    title: '팔로우를 취소하시겠습니까??',
+                    showCancelButton: true
+                }).then(YES => {
+                    if (YES.value) {
+                        // let { info.email } = this;
+                        // let data = {
+                        //     info.email;
+                        // };
+                        //  UserApi.addFollower();
+                        this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
+                    } else {
+                        //alert(YES.value);
+                        this.$set(this.followingCheck, idx, this.followingCheck[idx]);
                     }
                 });
             } else {

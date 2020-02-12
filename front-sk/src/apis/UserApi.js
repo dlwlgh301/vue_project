@@ -33,7 +33,7 @@ const follower = (data, callback, errorCallback) => {
 };
 const addFollower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/addFollow?follower=` + data['follower'] + '&folloing=' + data['folloing'])
+        .post(`${host}/follow/addFollow?follower=` + data['myEmail'] + '&folloing=' + data['Email'])
         .then(res => {
             console.log('팔로워 추가 성공');
             callback(res);

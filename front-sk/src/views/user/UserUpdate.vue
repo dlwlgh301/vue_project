@@ -98,25 +98,13 @@
                 </div>
 
                 <div class="input-with-label">
-                    <input
-                        v-model="comment"
-                        v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
-                        id="comment"
-                        placeholder="한줄 소개를 입력하세요."
-                        type="text"
-                    />
+                    <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
                     <label for="nickname">한줄소개</label>
                     <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
                 </div>
 
                 <div class="input-with-label">
-                    <input
-                        v-model="name"
-                        v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }"
-                        id="name"
-                        placeholder="이름을 입력하세요."
-                        type="text"
-                    />
+                    <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
                     <label for="name">이름</label>
                     <div class="error-text" v-if="error.name">{{ error.name }}</div>
                 </div>
@@ -139,7 +127,7 @@ export default {
     data: () => {
         return {
             checkStatus: false,
-
+            files: '',
             age: '',
             gender: '',
             status: '',
@@ -266,15 +254,13 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
-                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
             }
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
-                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             if (this.name.length == 0) {
@@ -324,6 +310,8 @@ export default {
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
+
+            console.log('테스트 입니다 : ');
             console.log(test);
             var user = {
                 email: this.email,
@@ -350,12 +338,25 @@ export default {
             //         }
             //     );
             // }
+            alert(this.imgURL);
             UserApi.updateUser(
                 user,
                 res => {
-                    console.log(res);
+                    console.log('회원수정 RES : ' + res);
                     if (res.data.status == true) {
                         if (this.check) {
+                            if (this.files.length > 0) {
+                                UserApi.fileUpload(
+                                    test,
+                                    res => {
+                                        console.log(res);
+                                    },
+                                    error => {
+                                        console.log(error);
+                                    }
+                                );
+                            }
+                            console.log('회원정보 files : ' + this.files);
                             Swal.fire({
                                 icon: 'success',
                                 title: '수정이 완료 되었습니다!!'
@@ -561,6 +562,7 @@ export default {
             if (!files.length) return;
             this.createImage(files[0]);
             this.file = files[0];
+            console.log('onFileChange 함수 호출 입니다 (수정 페이지)');
             console.log(this.$refs.file.files[0]);
         },
         createImage(file) {
