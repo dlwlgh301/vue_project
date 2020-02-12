@@ -22,7 +22,7 @@
                     {{ error.email }}
                 </div>
             </div>
-            <button class="btn btn--back btn--login" v-on:click="find" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+            <button class="btn btn--back btn--login" v-on:click="sendEmailAuth" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                 이메일 인증하기
             </button>
         </div>
@@ -31,6 +31,7 @@
 
 <script>
 import * as EmailValidator from 'email-validator';
+import UserApi from '../../apis/UserApi';
 export default {
     created() {
         this.$store.commit('setPageTitle', '비밀번호 찾기');
@@ -52,14 +53,8 @@ export default {
             });
             this.isSubmit = isSubmit;
         },
-        find() {
-            if (this.isSubmit) {
-                let { email } = this;
-                // eslint-disable-next-line no-unused-vars
-                let data = {
-                    email
-                };
-                sendEmailAuth() {
+
+        sendEmailAuth() {
             UserApi.cert(
                 { email: this.email },
                 res => {
@@ -77,12 +72,9 @@ export default {
                     console.log(error);
                 }
             );
-        }
-
-                this.$router.push('/user/FindCert');
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-            }
+            this.$router.push('/user/FindCert');
+            //요청 후에는 버튼 비활성화
+            this.isSubmit = false;
         }
     },
     data: () => {

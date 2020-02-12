@@ -41,8 +41,8 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<Follow> folloingList(String email) throws Exception {
-        return followDao.folloingList(email);
+    public List<Follow> followingList(String email) throws Exception {
+        return followDao.followingList(email);
     }
 
     @Override

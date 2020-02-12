@@ -21,7 +21,7 @@ public interface FollowService {
 
     int followCheck(Follow follow) throws Exception;
 
-    List<Follow> folloingList(String email) throws Exception;
+    List<Follow> followingList(String email) throws Exception;
 
     List<Follow> followerList(String email) throws Exception;
 }

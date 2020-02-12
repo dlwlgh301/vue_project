@@ -84,10 +84,10 @@ public class FollowController {
         System.out.println(email);
 
         if (num.equals("1")) { // 팔로잉
-            list = followServiceImpl.folloingList(email);
+            list = followServiceImpl.followingList(email);
 
             for (int i = 0; i < list.size(); i++) {
-                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFolloing(), "")) > 0) {
+                if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollowing(), "")) > 0) {
                     followCheckList.add(true);
                 } else {
                     followCheckList.add(false);
