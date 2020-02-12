@@ -1,18 +1,9 @@
 <template>
     <div class="wrapC">
-        <div class="wrap" style="margin-top: 5rem">
+        <div class="wrap" style="margin-top: 1rem">
             <h1>글 쓰기</h1>
-            <h5 class="title">추천 키워드</h5>
             <div class="quest">이 제품이 어울리는 사람을 골라주세요</div>
             <div>
-                <v-row justify="space-around">
-                    <v-col cols="24">
-                        <v-chip-group column active-class="blue darken-1 white--text" v-model="gender" style="padding: 0">
-                            <v-chip value="남성">남성</v-chip>
-                            <v-chip value="여성">여성</v-chip>
-                        </v-chip-group>
-                    </v-col>
-                </v-row>
                 <v-row justify="space-around">
                     <v-col cols="24">
                         <v-chip-group column active-class="blue darken-1 white--text" v-model="age">
@@ -22,6 +13,14 @@
                             <v-chip vlaue="40대">40대</v-chip>
                             <v-chip vlaue="50대">50대</v-chip>
                             <v-chip vlaue="60대">60대 이상</v-chip>
+                        </v-chip-group>
+                    </v-col>
+                </v-row>
+                <v-row justify="space-around">
+                    <v-col cols="24">
+                        <v-chip-group column active-class="blue darken-1 white--text" v-model="gender" style="padding: 0">
+                            <v-chip value="남성">남성</v-chip>
+                            <v-chip value="여성">여성</v-chip>
                         </v-chip-group>
                     </v-col>
                 </v-row>
@@ -48,12 +47,9 @@
                 </div>
             </div>
             <InputComponent inputValue="name" :errorText="error.name" :enterInput="enterInput" placeholder="제픔명을 입력해주세요" label="제품명" />
-            <div class="wrap">
+            <div class="wrap" id="rating">
                 <v-row>
-                    <v-col
-                        ><h3>전체 별점</h3>
-                        <div>이 제품에 대한 전반적인 평가를 입력해주세요</div></v-col
-                    >
+                    <v-col> <div style="padding-top: 0.7rem">이 제품에 대한 전반적인 평가를 입력해주세요</div></v-col>
                     <v-col>
                         <div id="test1">
                             <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ rating }})</div>
@@ -72,6 +68,8 @@
                     <img width="100%" :src="dialogImageUrl" alt />
                 </el-dialog>
             </div>
+            <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">글쓰기</button>
+            <div style="height:4rem; visibility:hidden">ㅎㅇ</div>
         </div>
     </div>
 </template>
@@ -107,7 +105,8 @@ export default {
         handlePictureCardPreview(file) {
             this.dialogImageUrl = file.url;
             this.dialogVisible = true;
-        }
+        },
+        write() {}
     }
 };
 </script>
@@ -129,6 +128,9 @@ h1 {
 }
 #test3 {
     float: right;
+}
+#rating {
+    margin-bottom: 0.5rem;
 }
 .col {
     padding-bottom: 0;
