@@ -7,6 +7,7 @@ const UserApi = {
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
+    deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
     following: (data, callback, errorCallback) => following(data, callback, errorCallback),
     updateUser: (data, callback, errorCallback) => updateUser(data, callback, errorCallback),
     join: data => join(data),
@@ -14,6 +15,7 @@ const UserApi = {
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
     doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
     requestNotice: (data, callback) => requestNotice(data, callback),
+    requestFollow: (data, callback) => requestFollow(data, callback),
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
@@ -78,6 +80,18 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
+const deletNoticeTabFollowing = (data, callback, errorCallback) => {
+    axios
+        .post(`${noticePort}/request/cancel/` + data)
+        .then(res => {
+            console.log('팔로워 추가 성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로워 추가 실패');
+            errorCallback(error);
+        });
+};
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
@@ -125,7 +139,7 @@ const requestLogin = (data, callback, errorCallback) => {
 };
 const requestNotice = (data, callback) => {
     axios
-        .get(`${noticePort}/notice/show?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/notice/show?email=` + data.email)
         .then(res => {
             callback(res);
         })
@@ -133,7 +147,16 @@ const requestNotice = (data, callback) => {
             console.log('에러' + error);
         });
 };
-
+const requestFollow = (data, callback) => {
+    axios
+        .get(`${noticePort}/request/show?email=` + data.email)
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            console.log('에러' + error);
+        });
+};
 const requestNoticeNum = (data, callback) => {
     axios
         .get(`${noticePort}/notice/num`, {
