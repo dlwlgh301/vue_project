@@ -55,9 +55,8 @@ public class RequestController {
     @GetMapping("/show")
     @ApiOperation(value = "팔로워 요청 리스트")
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
-        String userEmail = email.substring(1, email.length() - 1).toLowerCase();
         final BasicResponse result = new BasicResponse();
-        List<Request> list = requServiceImpl.getRequest(userEmail);
+        List<Request> list = requServiceImpl.getRequest(email);
         if (list.size() > 0) {
             result.status = true;
             result.data = "success";

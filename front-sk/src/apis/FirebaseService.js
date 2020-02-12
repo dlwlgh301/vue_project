@@ -72,10 +72,8 @@ export default {
         messaging
             .getToken()
             .then(currentToken => {
-                //로그인 되어있으면 토큰 가져오기{
                 let email = sessionStorage.getItem('email');
                 if (email != null) {
-                    // if (currentToken) {
                     firestore
                         .collection('tokens')
                         .doc(email)
@@ -83,7 +81,7 @@ export default {
                             token: currentToken
                         })
                         .then(res => {
-                            console.log('login service start ' + data.receiver);
+                            console.log('login service start ');
                             console.log(res);
                             firestore
                                 .collection('messages')
@@ -100,7 +98,6 @@ export default {
                                 });
                             console.log('login service end');
                         });
-                    console.log(currentToken);
                 } else {
                     console.log('No Instance ID token available. Request permission to generate one.');
                 }
@@ -110,20 +107,15 @@ export default {
             });
     },
     logout(data) {
-        console.log(
-            'delete:' +
-                firestore
-                    .collection('tokens')
-                    .doc('test@gmail.com')
-                    .get()
-                    .data()
-        );
-        // messaging.deleteToken(
-        //     firestore
-        //         .collection('tokens')
-        //         .doc('test@gmail.com')
-        //         .get()
-        // );
-        console.log(data);
+        firestore
+            .collection('tokens')
+            .doc(data)
+            .delete()
+            .then(function() {
+                console.log('Document successfully deleted!');
+            })
+            .catch(function(error) {
+                console.error('Error removing document: ', error);
+            });
     }
 };

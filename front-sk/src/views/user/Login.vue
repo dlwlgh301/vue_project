@@ -1,7 +1,12 @@
 <template>
     <div class="user" id="login">
         <div class="wrapC">
-            <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150" />
+            <img
+                src="../../assets/images/paper-plane.png"
+                style="display:block; margin: 0px auto"
+                width="150"
+                height="150"
+            />
             <h1>
                 로그인을 하고 나면
                 <br />좋은일이 있을거에요.
@@ -37,12 +42,22 @@
                 <label for="password">비밀번호</label>
                 <div class="error-text" v-if="error.password">{{ error.password }}</div>
 
-                <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
+                <span
+                    @click="viewPassword"
+                    v-if="password"
+                    :class="{ active: type === 'text' }"
+                    class="eyes-icon"
+                >
                     <i class="fas fa-eye"></i>
                 </span>
             </div>
 
-            <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
+            <button
+                class="btn btn--back btn--login"
+                v-on:click="login"
+                :disabled="!isSubmit"
+                :class="{ disabled: !isSubmit }"
+            >로그인</button>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>
@@ -179,7 +194,6 @@ export default {
                             sessionStorage.setItem('email', this.email);
                             //요청이 끝나면 버튼 활성화
 
-                            console.log(email);
                             firebase.logPush({
                                 msg: email + '님이 로그인하였습니다.',
                                 receiver: email
