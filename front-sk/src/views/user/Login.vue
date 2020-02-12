@@ -151,6 +151,19 @@ export default {
             });
             this.isSubmit = isSubmit;
         },
+        getNotice() {
+            let data = sessionStorage.getItem('email');
+            UserApi.requestNoticeNum(
+                data,
+                res => {
+                    console.log(res.data);
+                    this.$store.state.noticeNum = res.data.object.num;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
         login() {
             if (this.isSubmit) {
                 let { email, password } = this;
@@ -174,6 +187,7 @@ export default {
                                 text: '아이디 혹은 비밀번호가 틀렸습니다'
                             });
                         } else {
+                            this.getNotice();
                             console.log(res.data.status);
                             this.keyword = res.data.keyword;
                             this.imgURL = res.data.imgURL;
