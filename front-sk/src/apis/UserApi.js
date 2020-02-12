@@ -8,6 +8,7 @@ const UserApi = {
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     following: (data, callback, errorCallback) => following(data, callback, errorCallback),
+    updateUser: (data, callback, errorCallback) => updateUser(data, callback, errorCallback),
     join: data => join(data),
     cert: (data, callback) => cert(data, callback),
     snsDuplicate: (data, callback) => snsDuplicate(data, callback),
@@ -21,7 +22,7 @@ const UserApi = {
 };
 const follower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/followList?num=2&email=` + data['email'])
+        .post(`${host}/follow/followList?num=2&email=` + data['email'])
         .then(res => {
             console.log('팔로우성공');
             callback(res);
@@ -80,7 +81,7 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
-        .post(`${host}/account/followList?num=1&email=` + data['email'])
+        .post(`${host}/follow/followList?num=1&email=` + data['email'])
         .then(res => {
             console.log('팔로잉성공');
             callback(res);
@@ -185,7 +186,7 @@ const deleteNotice = (nid, callback, errorCallback) => {
         });
 };
 
-const join = body => {
+const updateUser = (body, callback, errorCallback) => {
     var value = {
         password: body.password,
         email: body.email,
@@ -193,6 +194,32 @@ const join = body => {
         name: body.name,
         comment: body.comment,
         keyword: body.keyword
+    };
+    console.log('value is ');
+    console.log(value);
+    axios({
+        url: `${host}/account/updateUser`,
+        method: 'post',
+        data: JSON.stringify(value),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => {
+            callback(res);
+        })
+        .catch(error => {
+            errorCallback(error);
+        });
+};
+
+const join = body => {
+    var value = {
+        password: body.password,
+        email: body.email,
+        nickName: body.nickName,
+        name: body.name,
+        comment: body.comment,
+        keyword: body.keyword,
+        imgURL: body.imgURL
     };
     console.log('value is ');
     console.log(value);
