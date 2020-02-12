@@ -20,6 +20,8 @@ import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
 
+import Write from './views/WriteReview.vue';
+import SnsJoin from './views/user/snsJoin.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -121,6 +123,16 @@ const router = new Router({
             path: '/user/updatePass',
             name: 'UpdatePass',
             component: UpdatePass
+        },
+        {
+            path: '/main/write',
+            name: 'Write',
+            component: Write
+        },
+        {
+            path: '/user/snsJoin',
+            name: 'snsJoin',
+            component: SnsJoin
         }
     ]
 });

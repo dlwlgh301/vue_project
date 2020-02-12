@@ -1,7 +1,7 @@
 <template>
     <div class="user" id="login">
         <div class="wrapC">
-            <img src="../../assets/images/paper-plane.png" style="display:block; margin: 0px auto" width="150" height="150" />
+            <img src="../../assets/images/shopping-cart-gif-8.gif" style="display:block; margin: 0px auto" width="150" height="150" />
             <h1>
                 로그인을 하고 나면
                 <br />좋은일이 있을거에요.
@@ -175,8 +175,17 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
+                            this.keyword = res.data.keyword;
+                            this.imgURL = res.data.imgURL;
+                            this.nickName = res.data.nickName;
+                            sessionStorage.setItem('keyword', this.keyword);
+                            sessionStorage.setItem('imgURL', this.imgURL);
+                            sessionStorage.setItem('nickName', this.nickName);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
+                            sessionStorage.setItem('password', this.password);
+
+                            this.$router.push('/main');
                             //요청이 끝나면 버튼 활성화
 
                             console.log(email);
@@ -204,8 +213,11 @@ export default {
             email: '',
             password: '',
             message: '',
+            nickName: '',
+            imgURL: '',
             type: 'password',
             text: '',
+            keyword: '',
             passwordSchema: new PV(),
             error: {
                 email: false,

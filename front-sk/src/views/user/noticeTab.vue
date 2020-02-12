@@ -56,32 +56,15 @@
                         <v-subheader>{{ follow_header }}</v-subheader>
                         <template v-for="(follow_item, index) in follow_items">
                             <!-- <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider> -->
-                            <v-list-item :key="index" avatar v-show="!follow_item.accept">
+                            <v-list-item :key="index" avatar v-show="!follow_item.is_following">
                                 <v-list-item-avatar>
                                     <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-btn
-                                    class="btn-accept"
-                                    small
-                                    max-width="3rem"
-                                    style="position:relative"
-                                    @click="addFollower(index)"
-                                    v-show="!follow_item.is_follower"
-                                    >수락</v-btn
-                                >
-                                <v-btn
-                                    class="btn-accept"
-                                    small
-                                    max-width="3rem"
-                                    style="position:relative"
-                                    @click="addFollower(index)"
-                                    v-show="follow_item.is_follower"
-                                    >삭제</v-btn
-                                >
-                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index, follow_item.rid)">팔로우</v-btn>
+                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.rid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -95,6 +78,7 @@
 
 <script>
 import '../../assets/css/components.scss';
+import Swal from 'sweetalert2';
 import UserApi from '../../apis/UserApi';
 
 export default {
@@ -104,33 +88,23 @@ export default {
     },
     data() {
         return {
-            email: 'ihs3583@gmail.com',
             tab: null,
             tab1_name: '알림',
-            tab2_name: '팔로우 요청',
+            tab2_name: '팔로우',
             new_notice_header: '새 알림',
             notice_header: '이전 알림',
-            follow_header: '새 팔로우 요청',
+            follow_header: '팔로우 추천',
             notice_items: [],
             new_notice_items: [],
             is_new_notice: false,
-
-            follow_items: [
-                {
-                    email: 'dlwlgh301.naver.com',
-                    avatar:
-                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
-                    userId: 'easy호',
-                    is_follower: false
-                }
-            ]
+            follow_items: []
         };
     },
     methods: {
         loadNotice: function() {
             // let { notice_items, follow_items } = this;
             let data = {
-                email: this.email,
+                email: sessionStorage.getItem('email'),
                 num: null
             };
             let new_noticeItem = {};
@@ -148,8 +122,8 @@ export default {
                                 userId: new_data[i].senderNick,
                                 subtitle: new_data[i].msg
                             };
-                            console.log(new_noticeItem);
-                            console.log('this.new_notice_items', this.new_notice_items);
+                            // console.log(new_noticeItem);
+                            // console.log('this.new_notice_items', this.new_notice_items);
                             this.new_notice_items.push(new_noticeItem);
                         }
                     }
@@ -163,8 +137,29 @@ export default {
                                 subtitle: old_data[i].msg
                             };
                             this.notice_items.push(new_noticeItem);
-                            console.log(new_noticeItem);
-                            console.log(this.notice_items);
+                        }
+                    }
+                    // let follow_data = res.data.object.follow;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            UserApi.requestFollow(
+                data,
+                res => {
+                    console.log(res.data);
+                    let follow_data = res.data.object;
+                    let follow_item = {};
+                    if (follow_data != null) {
+                        for (let i = follow_data.length - 1; i >= 0; i--) {
+                            follow_item = {
+                                rid: follow_data[i].rid,
+                                avatar: require('../../assets/images/light-bulb.png'),
+                                userId: follow_data[i].requesterNick,
+                                is_following: false
+                            };
+                            this.follow_items.push(follow_item);
                         }
                     }
                 },
@@ -173,31 +168,55 @@ export default {
                 }
             );
         },
-        addFollower: function(idx) {
-            this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-            let new_follower = {
-                email: sessionStorage.getItem('email'),
-                followerEmail: 'dlwlgh301.naver.com'
-            };
-            let data = new_follower;
-            UserApi.addfollower(data);
+        followConfirm: function(idx, rid) {
+            Swal.fire({
+                title: `${this.follow_items[idx].userId}님을 팔로우 하시겠습니까?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#009ff4',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '확인',
+                cancelButtonText: '취소'
+            }).then(result => {
+                if (result.value) {
+                    this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
+                    this.addFollower(rid);
+                }
+            });
         },
-        // deleteFollow(idx) {
-        //     this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-        //     let new_follower = {
-        //         email: sessionStorage.getItem('email'),
-        //         followerEmail: 'dlwlgh301.naver.com'
-        //     };
-        //     let data = new_follower;
-        //     UserApi.deletefollower(data);
-        // },
-        readNotice() {
-            this.is_new_notice = false;
+        addFollower: function(rid) {
+            let data = rid;
+            UserApi.noticeTabFollowing(
+                data,
+                res => {
+                    console.log(res.status);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
+        deleteFollow(idx, rid) {
+            this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
+            let data = rid;
+            UserApi.noticeTabFollowing(
+                data,
+                res => {
+                    console.log(res.status);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
         },
         deleteNotice(idx, nid) {
             this.notice_items.splice(idx, 1);
             let data = nid;
             UserApi.deleteNotice(data);
+        },
+
+        readNotice() {
+            this.is_new_notice = false;
         }
     },
     mounted() {}

@@ -46,4 +46,8 @@
         update user set password=#{password}
         where email=#{email}
     </update>
+
+    <select id="getImgURL" parameterType="string" resultType="string">
+        select * from user where email = #{value}
+    </select>
 </mapper>

@@ -12,13 +12,13 @@
     </select>
     
     <insert id="addFollow" parameterType="com.web.curation.model.vo.Follow">
-        insert into follow(follower, followernickName, folloing, folloingnickName)
-        values(#{follower}, #{followernickName}, #{folloing}, #{folloingnickName})
+        insert into follow(follower, followernickName, following, folloingnickName)
+        values(#{follower}, #{followernickName}, #{following}, #{folloingnickName})
     </insert>
 
     <delete id="deleteFollow" parameterType="com.web.curation.model.vo.Follow">
         delete from follow 
-        where follower=#{follower} and folloing = #{folloing}
+        where follower=#{follower} and following = #{following}
     </delete>
 
     <select id="followCheck" resultType="int" parameterType="string">

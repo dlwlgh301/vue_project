@@ -23,7 +23,7 @@ public class Notice {
     private String receiverNick;
     private String msg;
 
-    @Column(name = "readchk", columnDefinition = "TINYINT", length = 1)
+    // @Column(name = "readchk", columnDefinition = "TINYINT", length = 1)
     private int readchk;
 
     public Notice(String sender, String senderNick, String receiver, String receiverNick, String msg) {

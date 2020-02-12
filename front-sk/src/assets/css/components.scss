@@ -103,7 +103,7 @@
     .textarea-wrap {
         @include wrap;
         position: relative;
-        border: 1px solid #000;
+        border: 1px solid $ssafy;
         padding: 15px 15px 10px;
         margin-bottom: 10px;
         box-sizing: border-box;
@@ -123,7 +123,7 @@
         textarea {
             @include wrap;
             margin-top: 10px;
-            height: 120px;
+            height: 150px;
             // outline: none;
         }
     }
@@ -242,6 +242,16 @@
         border-bottom: 1px solid $grey;
         margin-bottom: 10px;
         background: rgba(#ffffff, 1);
+        #btn-back {
+            @media (min-width: 1201px) {
+                display: none;
+            }
+        }
+        #btn-drawer {
+            @media (max-width: 1200px) {
+                display: none;
+            }
+        }
         .badge {
             .md-badge {
                 width: 13px;
@@ -350,16 +360,43 @@
             }
         }
     }
+    .keyword-del {
+        @include wrap;
+        position: relative;
+        background: #eee;
+        border-radius: 3px;
+        padding: 18px 20px;
+        box-sizing: border-box;
+        margin-bottom: 5px;
+        .title {
+            font-size: 1em;
+            font-weight: $f600;
+            line-height: 1em;
+            color: #787878;
+        }
+        button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 18px 20px 16px;
+            color: $red;
+        }
+    }
 
     .keyword-add {
         @include wrap;
         position: relative;
         input {
+            &:focus {
+                border: 2px solid $ssafy;
+            }
             @include wrap;
-            border: 1px solid #000;
+            height: 50px;
+            border: 1px solid $ssafy;
             border-radius: 3px;
             padding-right: 50px;
             padding-left: 20px;
+            margin-bottom: 0.7rem;
         }
         button {
             position: absolute;
