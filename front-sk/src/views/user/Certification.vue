@@ -11,8 +11,8 @@
                 <label for="inputkey">인증키</label>
                 <div class="error-text" v-if="error.inputkey">{{ error.inputkey }}</div>
             </div>
-            <button class="btn btn--back btn--login" v-on:click="cert" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">입력</button>
-            <button class="btn btn--back btn--login" style="margin-top:10px">메일이 도착하지 않았나요?</button>
+            <button class="btn btn--back btn--login" v-on:click="cert" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">입력</button
+            ><button class="btn btn--back btn--login" style="margin-top:10px">메일이 도착하지 않았나요?</button>
         </div>
     </div>
 </template>

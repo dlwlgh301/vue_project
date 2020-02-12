@@ -884,11 +884,11 @@ fieldset {
         }
         &.disabled {
             background: #eee;
-            color: #333;
+            color: $ssafy;
             font-weight: $f600;
             &:hover,
             &:focus {
-                border: 1px solid #000;
+                border: 1px solid $ssafy;
             }
         }
     }

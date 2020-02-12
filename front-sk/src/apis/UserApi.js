@@ -17,7 +17,8 @@ const UserApi = {
     requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
-    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback)
+    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
+    requestReview: (data, callback) => requestReview(data, callback)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -248,5 +249,10 @@ const fileUpload = (data, callback, errorCallback) => {
         .catch(() => {
             errorCallback;
         });
+};
+const requestReview = (data, callback) => {
+    axios.get(`${host}/main/review`, data).then(res => {
+        callback(res);
+    });
 };
 export default UserApi;
