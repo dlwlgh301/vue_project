@@ -3,8 +3,85 @@
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
-                <HeaderComponent class="NavBar" :navTitle="$store.state.pageTitle" :newNotice="notice" @updateNoticeNum="refreshNotice" />
-                <router-view class="page"></router-view>
+                <md-toolbar class="Navbar">
+                    <div class="md-toolbar-row">
+                        <div class="md-toolbar-section-start">
+                            <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
+                                <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
+                            </md-button>
+                            <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
+                                <md-icon>menu</md-icon>
+                            </md-button>
+                            <h3 class="md-title" style="flex: 1">{{ $store.state.pageTitle }}</h3>
+                        </div>
+                        <div class="md-toolbar-section-end">
+                            <router-link to="/user/noticeTab">
+                                <md-button class="md-icon-button" @click="refreshNotice">
+                                    <v-badge color="#009ff4" :content="noticeNum" :value="noticeNum" overlap>
+                                        <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                                    </v-badge>
+                                </md-button>
+                            </router-link>
+                        </div>
+                    </div>
+                </md-toolbar>
+                <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
+                    <v-list-item>
+                        <v-list-item-avatar>
+                            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                        </v-list-item-avatar>
+
+                        <v-list-item-content>
+                            <v-list-item-title>John Leider</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-divider></v-divider>
+
+                    <v-list dense>
+                        <router-link to="/">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon>home</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Home</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+                        <router-link to="/user/find">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon>search</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>search</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+                        <router-link to="/user/profile">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon>person</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>마이페이지</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+                        <v-list-item v-on:click="logout">
+                            <v-list-item-icon>
+                                <md-icon>exit_to_app</md-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title>로그아웃</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </v-list>
+                </v-navigation-drawer>
+                <md-content>
+                    <router-view class="page"></router-view>
+                </md-content>
                 <BottomNavComponent v-model="showNav" class="bottom-nav" />
             </div>
         </div>
@@ -12,7 +89,6 @@
 </template>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
-import HeaderComponent from './components/common/NavBar';
 import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
@@ -22,19 +98,24 @@ export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
+        // setInterval(function() {
         this.loadNoticeNum();
+        // }, 2000);
     },
     watch: {},
     components: {
-        HeaderComponent,
         BottomNavComponent
     },
     data: () => {
         return {
             route: '',
             showNav: false,
-            notice: 0,
-            email: ''
+            noticeNum: 0,
+            drawer: null,
+            items: [
+                { title: 'Home', icon: 'dashboard' },
+                { title: 'About', icon: 'question_answer' }
+            ]
         };
     },
     methods: {
@@ -44,15 +125,20 @@ export default {
                 data,
                 res => {
                     console.log(res.data);
-                    this.notice = res.data.object.num;
+                    this.noticeNum = res.data.object.num;
                 },
                 error => {
                     console.log(error);
                 }
             );
         },
-        refreshNotice: function(noticeNum) {
-            this.notice = noticeNum;
+        refreshNotice: function() {
+            this.noticeNum = 0;
+        },
+        logout() {
+            firebase.logout(sessionStorage.getItem('email'));
+            sessionStorage.clear();
+            this.$router.push('/');
         }
     },
     mounted() {
@@ -60,3 +146,13 @@ export default {
     }
 };
 </script>
+<style scoped>
+.md-fab,
+.md-icon-button {
+    border-radius: 0% !important;
+    z-index: 5;
+}
+.md-icon-button .md-ripple {
+    border-radius: 0% !important;
+}
+</style>

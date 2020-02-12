@@ -56,15 +56,15 @@
                         <v-subheader>{{ follow_header }}</v-subheader>
                         <template v-for="(follow_item, index) in follow_items">
                             <!-- <v-divider v-else-if="follow_item.divider" :inset="follow_item.inset" :key="index"></v-divider> -->
-                            <v-list-item :key="index" avatar v-show="!follow_item.is_follower">
+                            <v-list-item :key="index" avatar v-show="!follow_item.is_following">
                                 <v-list-item-avatar>
                                     <img :src="follow_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index)">팔로우</v-btn>
-                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.nid)">
+                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index, follow_item.rid)">팔로우</v-btn>
+                                <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.rid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
                             </v-list-item>
@@ -88,7 +88,6 @@ export default {
     },
     data() {
         return {
-            email: 'ihs3583@gmail.com',
             tab: null,
             tab1_name: '알림',
             tab2_name: '팔로우',
@@ -101,11 +100,12 @@ export default {
 
             follow_items: [
                 {
+                    rid: 7,
                     email: 'dlwlgh301.naver.com',
                     avatar:
                         'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
                     userId: 'easy호',
-                    is_follower: false
+                    is_following: false
                 }
             ]
         };
@@ -114,7 +114,7 @@ export default {
         loadNotice: function() {
             // let { notice_items, follow_items } = this;
             let data = {
-                email: this.email,
+                email: sessionStorage.getItem('email'),
                 num: null
             };
             let new_noticeItem = {};
@@ -132,8 +132,8 @@ export default {
                                 userId: new_data[i].senderNick,
                                 subtitle: new_data[i].msg
                             };
-                            console.log(new_noticeItem);
-                            console.log('this.new_notice_items', this.new_notice_items);
+                            // console.log(new_noticeItem);
+                            // console.log('this.new_notice_items', this.new_notice_items);
                             this.new_notice_items.push(new_noticeItem);
                         }
                     }
@@ -147,8 +147,29 @@ export default {
                                 subtitle: old_data[i].msg
                             };
                             this.notice_items.push(new_noticeItem);
-                            console.log(new_noticeItem);
-                            console.log(this.notice_items);
+                        }
+                    }
+                    // let follow_data = res.data.object.follow;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            UserApi.requestFollow(
+                data,
+                res => {
+                    console.log(res.data);
+                    let follow_data = res.data.object;
+                    let follow_item = {};
+                    if (follow_data != null) {
+                        for (let i = follow_data.length - 1; i >= 0; i--) {
+                            follow_item = {
+                                rid: follow_data[i].rid,
+                                avatar: require('../../assets/images/light-bulb.png'),
+                                userId: follow_data[i].requesterNick,
+                                is_following: false
+                            };
+                            this.follow_items.push(follow_item);
                         }
                     }
                 },
@@ -157,7 +178,7 @@ export default {
                 }
             );
         },
-        followConfirm: function(idx) {
+        followConfirm: function(idx, rid) {
             Swal.fire({
                 title: `${this.follow_items[idx].userId}님을 팔로우 하시겠습니까?`,
                 icon: 'question',
@@ -168,18 +189,13 @@ export default {
                 cancelButtonText: '취소'
             }).then(result => {
                 if (result.value) {
-                    this.addFollower(idx);
+                    this.addFollower(rid);
                     this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
                 }
             });
         },
-        addFollower: function(idx) {
-            // this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-            // let new_follower = {
-            //     follower: sessionStorage.getItem('email'),
-            //     following: 'dlwlgh301@naver.com'
-            // };
-            let data = idx;
+        addFollower: function(rid) {
+            let data = rid;
             UserApi.noticeTabFollowing(
                 data,
                 res => {
@@ -190,22 +206,27 @@ export default {
                 }
             );
         },
-        deleteFollow(idx) {
+        deleteFollow(idx, rid) {
             this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
-            let new_follower = {
-                email: sessionStorage.getItem('email'),
-                followerEmail: 'dlwlgh301.naver.com'
-            };
-            let data = new_follower;
-            UserApi.deletefollower(data);
-        },
-        readNotice() {
-            this.is_new_notice = false;
+            let data = rid;
+            UserApi.noticeTabFollowing(
+                data,
+                res => {
+                    console.log(res.status);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
         },
         deleteNotice(idx, nid) {
             this.notice_items.splice(idx, 1);
             let data = nid;
             UserApi.deleteNotice(data);
+        },
+
+        readNotice() {
+            this.is_new_notice = false;
         }
     },
     mounted() {}
