@@ -9,7 +9,7 @@
                 <v-card class="pa-2" max-width="374" :elevation="4">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
-                        <span id="pname"> name</span>
+                        <span id="pname">name</span>
                     </div>
                     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
                     <md-button class="md-icon-button">
@@ -65,7 +65,7 @@
                 <v-card class="pa-2" max-width="374" :elevation="4">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
-                        <span id="pname"> name</span>
+                        <span id="pname">name</span>
                     </div>
                     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
                     <md-button class="md-icon-button">
@@ -123,7 +123,7 @@
 <script>
 //import UserApi from '../apis/UserApi';
 import firebase from '../apis/FirebaseService';
-
+import Kakao from '../kakao';
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
@@ -160,9 +160,12 @@ export default {
     },
     methods: {
         logout() {
+            Kakao.Auth.logout();
+            Kakao.Auth.setAccessToken('', false);
             firebase.logout(sessionStorage.getItem('email'));
             localStorage.clear();
             sessionStorage.clear();
+            Kakao.Auth.cleanup();
             this.$router.push('/');
         }
     }
