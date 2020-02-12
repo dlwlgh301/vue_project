@@ -97,17 +97,7 @@ export default {
             notice_items: [],
             new_notice_items: [],
             is_new_notice: false,
-
-            follow_items: [
-                {
-                    rid: 7,
-                    email: 'dlwlgh301.naver.com',
-                    avatar:
-                        'https://i.guim.co.uk/img/media/88f6b98714035656cb18fb282507b60e82edb0d7/0_35_2560_1536/master/2560.jpg?width=300&quality=85&auto=format&fit=max&s=6dc12c01b7d052a59201b5e2b4697ff1',
-                    userId: 'easy호',
-                    is_following: false
-                }
-            ]
+            follow_items: []
         };
     },
     methods: {
@@ -189,8 +179,8 @@ export default {
                 cancelButtonText: '취소'
             }).then(result => {
                 if (result.value) {
+                    this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
                     this.addFollower(rid);
-                    this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
                 }
             });
         },
@@ -207,7 +197,7 @@ export default {
             );
         },
         deleteFollow(idx, rid) {
-            this.follow_items[idx].is_follower = !this.follow_items[idx].is_follower;
+            this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
             let data = rid;
             UserApi.noticeTabFollowing(
                 data,

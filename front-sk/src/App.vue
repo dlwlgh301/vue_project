@@ -17,7 +17,7 @@
                         <div class="md-toolbar-section-end">
                             <router-link to="/user/noticeTab">
                                 <md-button class="md-icon-button" @click="refreshNotice">
-                                    <v-badge color="#009ff4" :content="noticeNum" :value="noticeNum" overlap>
+                                    <v-badge color="#009ff4" :content="checknoticeNum" :value="checknoticeNum" overlap>
                                         <md-icon style="color: #009ff4 ;">notifications</md-icon>
                                     </v-badge>
                                 </md-button>
@@ -102,7 +102,11 @@ export default {
         this.loadNoticeNum();
         // }, 2000);
     },
-    watch: {},
+    computed: {
+        checknoticeNum() {
+            return this.noticeNum;
+        }
+    },
     components: {
         BottomNavComponent
     },
