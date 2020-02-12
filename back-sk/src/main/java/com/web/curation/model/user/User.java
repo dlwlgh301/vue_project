@@ -30,8 +30,6 @@ public class User {
     private String comment;
     private String keyword;
     private String imgURL;
-    public String folloing;
-    public String follower;
 
     public User(String password, String email, String nickName, String name, String comment, String keyword,
             String imgURL) {

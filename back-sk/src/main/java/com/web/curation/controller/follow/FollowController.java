@@ -121,15 +121,15 @@ public class FollowController {
 
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
-    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
 
         result.status = true;
@@ -139,15 +139,15 @@ public class FollowController {
 
     @PostMapping("/follow/deleteFollow")
     @ApiOperation(value = "팔로우 삭제하기")
-    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String folloing) throws Exception {
+    public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println(follower + ",   " + folloing);
+        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
-        String folloingnickName = userServiceImpl.getNickNameByEmail(folloing);
+        String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
-        Follow follow = new Follow(follower, followerNickName, folloing, folloingnickName);
+        Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
 
         result.status = true;
