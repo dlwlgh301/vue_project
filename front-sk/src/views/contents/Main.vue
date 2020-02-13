@@ -65,12 +65,13 @@ export default {
         return {
             title: '',
             content: '',
-            rating: '',
+            rating: 0,
             keyword1: '',
             photo: '',
             keyword2: '',
             like: '',
-            currentDate: new Date()
+            currentDate: new Date(),
+            loading: true
         };
     },
     methods: {

@@ -149,8 +149,9 @@ export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
+        if (sessionStorage.getItem('email') != null) this.getNotice();
         // setInterval(function() {
-        //this.loadNoticeNum();
+        // this.loadNoticeNum();
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
     },
@@ -169,6 +170,19 @@ export default {
         };
     },
     methods: {
+        getNotice() {
+            let data = sessionStorage.getItem('email');
+            UserApi.requestNoticeNum(
+                data,
+                res => {
+                    console.log(res.data);
+                    this.$store.state.noticeNum = res.data.object.num;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
         refreshNotice: function() {
             this.$store.state.noticeNum = 0;
             if (sessionStorage.getItem('email')) {
