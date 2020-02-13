@@ -1,5 +1,6 @@
 <template>
     <v-container style="width:100%;">
+        <div v-on:click="move()">wns4773@naver.com</div>
         <div></div>
         <md-button class="md-icon-button" v-on:click="logout">
             <md-icon>exit_to_app</md-icon>
@@ -159,6 +160,9 @@ export default {
         };
     },
     methods: {
+        move() {
+            this.$router.push('/user/OtherProfile/' + 'wns4773@naver.com');
+        },
         logout() {
             Kakao.Auth.logout();
             Kakao.Auth.setAccessToken('', false);
