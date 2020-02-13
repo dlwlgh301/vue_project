@@ -1,10 +1,19 @@
 <template>
     <div class="user" id="find">
         <div class="wrapC" style="padding-top: 100px;">
-            <h1>
-                {{ email }}
-                <br />로 인증코드를 보냈어요.
-            </h1>
+            <div v-if="!isCodeSame">
+                <h1>
+                    {{ email }}
+                    <br />로 인증코드를 보냈어요.
+                </h1>
+            </div>
+
+            <div v-if="isCodeSame">
+                <h1>
+                    변경할 비밀번호를<br />
+                    입력해주세요.
+                </h1>
+            </div>
 
             <div class="input-with-label" v-if="!isCodeSame">
                 <label for="emailAuth">인증 코드</label>

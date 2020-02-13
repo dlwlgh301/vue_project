@@ -61,7 +61,7 @@
                 </div>
                 <div class="wrap">
                     <p>비밀번호를 잊으셨나요?</p>
-                    <router-link v-bind:to="{ name: 'Find' }" class="btn--text">비밀번호 찾기</router-link>
+                    <router-link v-bind:to="{ name: 'FindPassword' }" class="btn--text">비밀번호 찾기</router-link>
                 </div>
                 <div class="wrap">
                     <p>아직 회원이 아니신가요?</p>

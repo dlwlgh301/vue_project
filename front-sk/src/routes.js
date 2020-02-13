@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Certification from './views/user/Certification.vue';
 import Login from './views/user/Login.vue';
 import Join from './views/user/Join.vue';
-import Find from './views/user/Find.vue';
+import FindPassword from './views/user/FindPassword.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
 import FindCert from './views/user/FindCert.vue';
@@ -42,9 +42,9 @@ const router = new Router({
             component: Join
         },
         {
-            path: '/user/find',
-            name: 'Find',
-            component: Find
+            path: '/user/FindPassword',
+            name: 'FindPassword',
+            component: FindPassword
         },
         {
             path: '/user/Board',
