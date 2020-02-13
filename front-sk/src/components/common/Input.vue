@@ -4,7 +4,10 @@
             v-model="text"
             :id="inputValue"
             :placeholder="placeholder"
-            :class="{ error: errorText.length > 0, complete: text.length > 0 && errorText.length === 0 }"
+            :class="{
+                error: errorText.length > 0,
+                complete: text.length > 0 && errorText.length === 0
+            }"
             @input="changeInput($event, inputValue)"
             :type="password ? type : 'text'"
         />

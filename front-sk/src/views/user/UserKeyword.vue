@@ -41,7 +41,9 @@
                 </md-field>
             </div>
 
-            <button class="btn btn--back btn--login" v-on:click="complete" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">가입해보기</button>
+            <button class="btn btn--back btn--login" v-on:click="complete" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                가입해보기
+            </button>
         </form>
     </div>
 </template>
