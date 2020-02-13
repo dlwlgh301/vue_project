@@ -6,7 +6,7 @@ import Join from './views/user/Join.vue';
 import FindPassword from './views/user/FindPassword.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
-import FindCert from './views/user/FindCert.vue';
+import MailCert from './views/user/MailCert.vue';
 import Profile from './views/user/Profile.vue';
 import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
@@ -82,9 +82,9 @@ const router = new Router({
             component: ChangeComplete
         },
         {
-            path: '/user/findcert',
-            name: 'FindCert',
-            component: FindCert
+            path: '/user/mailCert',
+            name: 'MailCert',
+            component: MailCert
         },
         {
             path: '/user/noticeTab',
