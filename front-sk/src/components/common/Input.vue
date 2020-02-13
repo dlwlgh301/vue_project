@@ -13,9 +13,7 @@
         />
         <label :for="inputValue">{{ label }}</label>
 
-        <div class="error-text" v-if="errorText.length > 0">
-            {{ errorText }}
-        </div>
+        <div class="error-text" v-if="errorText.length > 0">{{ errorText }}</div>
 
         <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
             <i class="fas fa-eye"></i>
