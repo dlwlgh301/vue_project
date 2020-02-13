@@ -17,7 +17,8 @@
                         <div class="md-toolbar-section-end">
                             <router-link to="/user/noticeTab">
                                 <md-button class="md-icon-button" @click="refreshNotice">
-                                    <v-badge color="#009ff4" :content="checknoticeNum" :value="checknoticeNum" overlap>
+                                    <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
+                                        <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
                                         <md-icon style="color: #009ff4 ;">notifications</md-icon>
                                     </v-badge>
                                 </md-button>
@@ -37,7 +38,6 @@
                     </v-list-item>
 
                     <v-divider></v-divider>
-
                     <v-list dense>
                         <router-link to="/">
                             <v-list-item>
@@ -104,11 +104,6 @@ export default {
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
     },
-    computed: {
-        checknoticeNum() {
-            return this.noticeNum;
-        }
-    },
     components: {
         BottomNavComponent
     },
@@ -116,7 +111,6 @@ export default {
         return {
             route: '',
             showNav: false,
-            noticeNum: 0,
             drawer: null,
             items: [
                 { title: 'Home', icon: 'dashboard' },
@@ -125,21 +119,21 @@ export default {
         };
     },
     methods: {
-        loadNoticeNum() {
-            let data = sessionStorage.getItem('email');
-            UserApi.requestNoticeNum(
-                data,
-                res => {
-                    console.log(res.data);
-                    this.noticeNum = res.data.object.num;
-                },
-                error => {
-                    console.log(error);
-                }
-            );
-        },
+        // loadNoticeNum() {
+        //     let data = sessionStorage.getItem('email');
+        //     UserApi.requestNoticeNum(
+        //         data,
+        //         res => {
+        //             console.log(res.data);
+        //             this.$store.state.noticeNum = res.data.object.num;
+        //         },
+        //         error => {
+        //             console.log(error);
+        //         }
+        //     );
+        // },
         refreshNotice: function() {
-            this.noticeNum = 0;
+            this.$store.state.noticeNum = 0;
         },
         logout() {
             firebase.logout(sessionStorage.getItem('email'));
