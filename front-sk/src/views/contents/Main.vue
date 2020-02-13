@@ -1,8 +1,5 @@
 <template>
     <v-container style="width:100%;">
-        <md-button class="md-icon-button" v-on:click="logout">
-            <md-icon>exit_to_app</md-icon>
-        </md-button>
         <v-row>
             <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">

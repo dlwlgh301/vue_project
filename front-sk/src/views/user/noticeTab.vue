@@ -75,13 +75,11 @@
         </div>
     </div>
 </template>
-
 <script>
 import '../../assets/css/components.scss';
 import Swal from 'sweetalert2';
 import UserApi from '../../apis/UserApi';
 import firebase from '../../apis/FirebaseService';
-
 export default {
     name: 'noticeTab',
     created() {
@@ -199,7 +197,6 @@ export default {
                         msg: info.msg,
                         img: info.img
                     });
-
                     console.log(res.status);
                 },
                 error => {
@@ -225,7 +222,6 @@ export default {
             let data = nid;
             UserApi.deleteNotice(data);
         },
-
         readNotice() {
             this.is_new_notice = false;
         }
