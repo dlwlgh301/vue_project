@@ -19,6 +19,7 @@ import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
+import OtherProfile from './views/user/OtherProfile.vue';
 
 import Write from './views/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
@@ -35,6 +36,11 @@ const router = new Router({
             path: '/user/Profile',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/user/OtherProfile',
+            name: 'OtherProfile',
+            component: OtherProfile
         },
         {
             path: '/user/join',
