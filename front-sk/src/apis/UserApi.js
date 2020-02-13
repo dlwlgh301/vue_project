@@ -99,7 +99,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -121,7 +121,7 @@ const profileLoad = (data, callback, errorCallback) => {
 };
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post(`${noticePort}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -237,10 +237,11 @@ const join = body => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
+
     console.log('value is ');
     console.log(value);
     axios({
-        url: `${host}/account/signup`,
+        url: `${noticePort}/account/signup`,
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }

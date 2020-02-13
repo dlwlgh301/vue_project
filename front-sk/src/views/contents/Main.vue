@@ -1,6 +1,5 @@
 <template>
     <v-container style="width:100%;">
-        <div v-on:click="otherprofile()">wns4773@naver.com</div>
         <div></div>
         <md-button class="md-icon-button" v-on:click="logout">
             <md-icon>exit_to_app</md-icon>
@@ -56,9 +55,13 @@
 
                             <div class="grey--text ml-4">3.5 (212)</div>
                         </v-row>
-                        <div class="my-4 subtitle-1 black--text">어딘가의 커피</div>
+                        <div class="my-4 subtitle-1 black--text">
+                            어딘가의 커피
+                        </div>
 
-                        <div>커피가 밥값보다 비쌈 근데 커피는 맛있음 근데 밥값보다 비쌈 근데 커피는 괜찮음..근데 그돈이면 국밥사먹음</div>
+                        <div>
+                            커피가 밥값보다 비쌈 근데 커피는 맛있음 근데 밥값보다 비쌈 근데 커피는 괜찮음..근데 그돈이면 국밥사먹음
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -112,9 +115,13 @@
 
                             <div class="grey--text ml-4">3.5 (212)</div>
                         </v-row>
-                        <div class="my-4 subtitle-1 black--text">어딘가의 커피</div>
+                        <div class="my-4 subtitle-1 black--text">
+                            어딘가의 커피
+                        </div>
 
-                        <div>커피가 밥값보다 비쌈 근데 커피는 맛있음 근데 밥값보다 비쌈 근데 커피는 괜찮음..근데 그돈이면 국밥사먹음</div>
+                        <div>
+                            커피가 밥값보다 비쌈 근데 커피는 맛있음 근데 밥값보다 비쌈 근데 커피는 괜찮음..근데 그돈이면 국밥사먹음
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -151,18 +158,16 @@ export default {
         return {
             title: '',
             content: '',
-            rating: '',
+            rating: 0,
             keyword1: '',
             photo: '',
             keyword2: '',
             like: '',
-            currentDate: new Date()
+            currentDate: new Date(),
+            loading: true
         };
     },
     methods: {
-        otherprofile() {
-            this.$router.push('../user/OtherProfile/wns4773@naver.com');
-        },
         logout() {
             Kakao.Auth.logout();
             Kakao.Auth.setAccessToken('', false);
