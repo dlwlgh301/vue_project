@@ -5,8 +5,11 @@
                 <md-bottom-bar-item to="/">
                     <md-icon style="color: #009ff4 ">home</md-icon>
                 </md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/updatePass">
+                <md-bottom-bar-item to="/contents/search">
                     <md-icon style="color: #009ff4 ">search</md-icon>
+                </md-bottom-bar-item>
+                <md-bottom-bar-item to="/main/write">
+                    <md-icon style="color: #009ff4 ">create</md-icon>
                 </md-bottom-bar-item>
                 <md-bottom-bar-item to="/user/find">
                     <md-icon style="color: #009ff4 ">group</md-icon>
@@ -42,5 +45,6 @@ export default {
 }
 .md-bottom-bar.md-type-fixed .md-bottom-bar-item {
     max-width: none;
+    min-width: 0 !important;
 }
 </style>

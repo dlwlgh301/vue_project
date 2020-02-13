@@ -6,7 +6,11 @@
                     <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
                         <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
-                    <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
+                    <md-button
+                        id="btn-drawer"
+                        class="md-icon-button"
+                        @click.stop="drawer = !drawer"
+                    >
                         <md-icon>menu</md-icon>
                     </md-button>
                     <h3 class="md-title" style="flex: 1">{{ navTitle }}</h3>
@@ -15,11 +19,16 @@
                 <div class="md-toolbar-section-end">
                     <!-- <md-button class="md-icon-button">
                         <md-icon>search</md-icon>
-                    </md-button> -->
+                    </md-button>-->
 
                     <router-link to="/user/noticeTab">
                         <md-button class="md-icon-button" @click="updateNoticeNum">
-                            <v-badge color="#009ff4" :content="newNotice" :value="newNotice" overlap>
+                            <v-badge
+                                color="#009ff4"
+                                :content="newNotice"
+                                :value="newNotice"
+                                overlap
+                            >
                                 <md-icon style="color: #009ff4 ;">notifications</md-icon>
                             </v-badge>
                         </md-button>
@@ -34,7 +43,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title>John Leider</v-list-item-title>
+                    <v-list-item-title>{{sessionStorage.getItem['email']}}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
