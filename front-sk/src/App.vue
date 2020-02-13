@@ -100,7 +100,7 @@ export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
         // setInterval(function() {
-        this.loadNoticeNum();
+        //this.loadNoticeNum();
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
     },
