@@ -113,7 +113,9 @@
             </div>
             <div class="main_profile">
                 <div class="right_col">
-                    <h2 style="margin-top:15px" class="name">{{ info.name }}</h2>
+                    <h2 style="margin-top:15px" class="name">
+                        {{ info.name }}
+                    </h2>
                     <!-- 닉네임 이메일 -->
                     <ul class="contact_information">
                         <li>
