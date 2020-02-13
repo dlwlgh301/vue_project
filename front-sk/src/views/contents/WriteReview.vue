@@ -1,8 +1,8 @@
 <template>
     <div class="wrapC">
-        <div class="wrap" style="margin-top: 1rem">
+        <div class="wrap" style="margin-top: 19%">
             <h1>글 쓰기</h1>
-            <div class="quest">이 제품이 어울리는 사람을 골라주세요</div>
+            <div class="quest" style="padding-top:5%">이 제품이 어울리는 사람을 골라주세요</div>
             <div>
                 <v-row justify="space-around">
                     <v-col cols="24">
@@ -46,7 +46,7 @@
                     </button>-->
                 </div>
             </div>
-            <InputComponent inputValue="name" :errorText="error.name" :enterInput="enterInput" placeholder="제픔명을 입력해주세요" label="제품명" />
+            <InputComponent inputValue="name" :errorText="error.name" placeholder="제픔명을 입력해주세요" label="제품명" v-model="name" />
             <div class="wrap" id="rating">
                 <v-row>
                     <v-col>
@@ -63,7 +63,7 @@
                 </v-row>
             </div>
 
-            <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300"></TextareaComponent>
+            <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300" v-model="content"></TextareaComponent>
             <div class="wrap">
                 <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
@@ -92,8 +92,10 @@ export default {
         return {
             addtag: [],
             name: '',
+            content: '',
             gender: '',
             age: '',
+            imgURL: [],
             status: '',
             keyword: '',
             rating: '0',
@@ -103,6 +105,23 @@ export default {
             dialogImageUrl: '',
             dialogVisible: false
         };
+    },
+    watch: {
+        age: function() {
+            this.checkForm();
+        },
+        gender: function() {
+            this.checkForm();
+        },
+        status: function() {
+            this.checkForm();
+        },
+        name: function() {
+            this.checkForm();
+        },
+        content: function() {
+            this.checkForm();
+        }
     },
     methods: {
         handleRemove(file, fileList) {
