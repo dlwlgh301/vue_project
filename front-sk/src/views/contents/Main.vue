@@ -67,8 +67,7 @@ export default {
             photo: '',
             keyword2: '',
             like: '',
-            currentDate: new Date(),
-            loading: true
+            currentDate: new Date()
         };
     },
     methods: {
