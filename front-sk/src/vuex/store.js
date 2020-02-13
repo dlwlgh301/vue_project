@@ -11,7 +11,8 @@ const state = {
     pageTitle: 'SHOP+',
     token: '',
     role: '',
-    showNav: true
+    showNav: true,
+    noticeNum: 0
 };
 
 export default new Vuex.Store({

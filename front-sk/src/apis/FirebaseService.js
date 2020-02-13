@@ -5,6 +5,7 @@ import 'firebase/messaging';
 
 import 'firebase/database';
 import 'firebase/storage';
+import store from '@/vuex/store';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBSWWgcZTJqHxxOrfHjYDocaMBHxclOHDs',
@@ -59,12 +60,14 @@ messaging.onTokenRefresh(() => {
 
 messaging.onMessage(payload => {
     console.log('Message received. ', payload);
-    var title = '포그라운드 알림';
-    var options = {
-        body: payload.data.msg
-    };
+    store.state.noticeNum += 1;
+    console.log('test:' + store.state.noticeNum);
+    // var title = '포그라운드 알림';
+    // var options = {
+    //     body: payload.data.msg
+    // };
 
-    new Notification(title, options);
+    // new Notification(title, options);
 });
 
 export default {
