@@ -67,7 +67,7 @@ public class FollowController {
     @Autowired
     NoticeService noticeServiceImpl;
 
-    @PostMapping("/follow/followList")
+    @GetMapping("/follow/followList")
     @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
     public Object followList(@RequestParam(required = true) final String num,
             @RequestParam(required = true) final String email) throws Exception {

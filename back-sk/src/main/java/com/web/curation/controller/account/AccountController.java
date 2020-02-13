@@ -147,7 +147,7 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/account/emailcert")
+    @GetMapping("/account/emailcert")
     @ApiOperation(value = "메일 인증번호 확인하기")
     public Object sendEmail(@RequestParam(required = true) final String email) {
 
@@ -170,7 +170,7 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/account/profile")
+    @GetMapping("/account/profile")
     @ApiOperation(value = "프로필 띄우기")
     public Object profile(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();

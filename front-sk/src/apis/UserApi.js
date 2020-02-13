@@ -22,7 +22,8 @@ const UserApi = {
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     requestReview: (data, callback) => requestReview(data, callback),
-    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback)
+    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
+    apitest: () => apitest()
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -294,5 +295,24 @@ const requestReview = (data, callback) => {
     axios.get(`${host}/main/review`, data).then(res => {
         callback(res);
     });
+};
+
+const apitest = () => {
+    fetch(`${host}/product/searchProduct`, {
+        method: 'GET',
+        mode: 'no-cors'
+    });
+    // axios.post(`${host}/product/searchProduct`, {
+    //     headers: {
+    //         'Access-Control-Allow-Origin': '*'
+    //     }
+    // })
+    // .then(() => {
+    //     alert('api 불러오기 성공~!');
+    //     callback;
+    // })
+    // .catch(() => {
+    //     errorCallback;
+    // });
 };
 export default UserApi;

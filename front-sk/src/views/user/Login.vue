@@ -67,6 +67,10 @@
                     <p>아직 회원이 아니신가요?</p>
                     <router-link v-bind:to="{ name: 'Join' }" class="btn--text">가입하기</router-link>
                 </div>
+
+                <div>
+                    <button id="apiTest" @click="test()">api Test</button>
+                </div>
             </div>
         </div>
     </div>
@@ -118,6 +122,9 @@ export default {
         }
     },
     methods: {
+        test() {
+            UserApi.apitest();
+        },
         viewPassword() {
             this.type = this.type === 'password' ? 'text' : 'password';
         },
