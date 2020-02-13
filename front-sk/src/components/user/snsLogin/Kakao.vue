@@ -35,12 +35,10 @@ export default {
             email: ''
         };
     },
-    mounted() {
-        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
-    },
+    created() {},
     methods: {
         kakaologin() {
-            Kakao.Auth.login({
+            Kakao.Auth.loginForm({
                 success: function(authObj) {
                     alert(JSON.stringify(authObj));
                     Kakao.API.request({
