@@ -1,9 +1,22 @@
 @charset "utf-8";
 @import './common';
 
+@media (max-width: 1023px) {
+    #btn-drawer {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .bottom-nav {
+        display: none;
+    }
+    #btn-back {
+        display: none;
+    }
+}
+
 .components-page {
-    // padding-top: 50px;
-    // padding-bottom: 100px;
     h1 {
         text-align: center;
         font-weight: $f600;
@@ -12,7 +25,6 @@
     h2 {
         @include wrap;
         font-weight: $f600;
-        margin-top: 50px;
         margin-bottom: 20px;
         color: $ssafy;
     }
@@ -194,9 +206,6 @@
         margin-bottom: 10px;
     }
 
-    .checkbox-component {
-    }
-
     .switch-component {
         width: 40px;
         height: 18px;
@@ -234,7 +243,7 @@
 
     // header
     .NavBar {
-        z-index: 10;
+        z-index: 200;
         position: fixed;
         top: 0em;
         width: calc(100%);
@@ -242,16 +251,6 @@
         border-bottom: 1px solid $grey;
         margin-bottom: 10px;
         background: rgba(#ffffff, 1);
-        #btn-back {
-            @media (min-width: 1201px) {
-                display: none;
-            }
-        }
-        #btn-drawer {
-            @media (max-width: 1200px) {
-                display: none;
-            }
-        }
         .badge {
             .md-badge {
                 width: 13px;
@@ -307,9 +306,6 @@
 
     // bottomNav
     .bottom-nav {
-        @media (min-width: 1201px) {
-            display: none;
-        }
         z-index: 10;
         position: fixed;
         bottom: 0em;
@@ -402,7 +398,7 @@
             position: absolute;
             right: 0;
             top: 0;
-            padding: 17px 20px;
+            padding: 15px 15px;
             color: $ssafy;
         }
     }
@@ -475,6 +471,42 @@
             font-size: $font-size__5;
             color: $red;
             padding: 1px 0;
+        }
+    }
+    .search-bar {
+        @include wrap;
+        position: relative;
+        input {
+            &:focus {
+                border: 2px solid $ssafy;
+            }
+            @include wrap;
+            height: 50px;
+            border: 1px solid $ssafy;
+            border-radius: 3px;
+            padding: 0 15px 0 60px;
+            margin-bottom: 0.7rem;
+        }
+        button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            padding: 15px 15px;
+            color: $ssafy;
+        }
+        label {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            color: rgb(25, 25, 25);
+            font-weight: $f600;
+            font-size: $font-size__5;
+            select {
+                width: 30px;
+                // border-radius: 4px;
+                border: 1px solid grey;
+                border-image: initial;
+            }
         }
     }
 }
