@@ -1,12 +1,11 @@
 <template>
     <v-container style="width:100%;">
-        <div></div>
         <md-button class="md-icon-button" v-on:click="logout">
             <md-icon>exit_to_app</md-icon>
         </md-button>
         <v-row>
-            <v-col cols="12" md="4">
-                <v-card class="pa-2" max-width="374" :elevation="4">
+            <v-col cols="12" md="4 ">
+                <v-card max-width="374" :elevation="4">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
                         <span id="pname">name</span>
@@ -35,7 +34,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12" md="4">
-                <v-card :loading="loading" class="pa-2" max-width="374" :elevation="4">
+                <v-card class="pa-2" max-width="374" :elevation="4">
                     <div style="padding: 14px;">
                         <span id="pimg">img</span>
                         <span id="pname">name</span>
@@ -91,7 +90,7 @@
                 </v-card>
             </v-col>
             <v-col cols="12" md="4">
-                <v-card :loading="loading" class="pa-2" max-width="374" :elevation="4">
+                <v-card class="pa-2" max-width="374" :elevation="4">
                     <div style="padding: 14px;">
                         <span id="pimg">img</span>
                         <span id="pname">name</span>

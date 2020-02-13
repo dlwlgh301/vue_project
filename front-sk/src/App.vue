@@ -93,7 +93,8 @@ import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
 import UserApi from './apis/UserApi';
-import Kakao from './kakao';
+import kakao from './kakao';
+
 export default {
     name: 'app',
     created() {

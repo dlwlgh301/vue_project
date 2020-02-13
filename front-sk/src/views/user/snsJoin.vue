@@ -94,7 +94,7 @@
 
                     <div class="input-with-label">
                         <input type="hidden" name="keyword" :value="keyword" />
-                        <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" readonly />
+                        <input v-model="email" id="email" type="text" readonly />
                         <label for="email">이메일</label>
                     </div>
 
@@ -182,7 +182,6 @@ img {
 
 <script>
 // import axios from 'axios';
-import * as EmailValidator from 'email-validator';
 import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
 import UserKeyword from './UserKeyword.vue';
@@ -212,7 +211,6 @@ export default {
             isLoading: false,
             file: '',
             error: {
-                email: false,
                 nickName: false,
                 name: false,
                 comment: false,
@@ -227,16 +225,9 @@ export default {
         };
     },
     created() {
+        this.email = sessionStorage.getItem('email');
+        console.log(this.email + 'snsJoin');
         this.$store.commit('setPageTitle', '회원가입');
-        this.passwordSchema
-            .is()
-            .min(8)
-            .is()
-            .max(100)
-            .has()
-            .digits()
-            .has()
-            .letters();
     },
     watch: {
         age: function() {
@@ -274,14 +265,6 @@ export default {
             }
         },
         checkForm() {
-            if (this.email.length == 0) {
-                this.error.submit = true;
-                this.error.email = '';
-            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
-            else {
-                this.error.email = false;
-            }
-
             if (this.name.length == 0) {
                 this.error.submit = true;
                 this.error.name = '';
@@ -332,7 +315,6 @@ export default {
             console.log(test);
             var user = {
                 email: this.email,
-                password: this.password,
                 name: this.name,
                 nickName: this.nickName,
                 keyword: this.keyword,
@@ -358,7 +340,7 @@ export default {
                 icon: 'success',
                 title: '회원가입이 완료 되었습니다!!'
             });
-
+            sessionStorage.clear();
             this.$router.push('/');
             // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {
             //     alert('good');
@@ -366,64 +348,6 @@ export default {
             // });
             // UserApi.join(test);
             // this.$router.push('/user/certComplete');
-        },
-        join() {
-            console.log('ddddddddddddddddddddddd ' + this.imgURL);
-
-            if (this.isSubmit) {
-                var { file, email, password, nickName, comment, name, imgURL } = this;
-
-                // eslint-disable-next-line no-unused-vars
-                var data = {
-                    file,
-                    email,
-                    password,
-                    nickName,
-                    comment,
-                    name,
-                    imgURL
-                };
-                console.log(this.email);
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-
-                //console.log('axios 하기전!!!');
-
-                /* var body = {
-                    password: this.password,
-                    email: this.email,
-                    nickName: this.nickName,
-                    name: this.name,
-                    comment: this.comment
-                }; */
-                sessionStorage.setItem('email', this.email);
-                sessionStorage.setItem('nickName', this.nickName);
-                sessionStorage.setItem('name', this.name);
-                sessionStorage.setItem('comment', this.comment);
-                sessionStorage.setItem('imgURL', this.imgURL);
-                sessionStorage.setItem('file', this.file);
-
-                UserApi.cert(
-                    data,
-                    res => {
-                        console.log('???????????????');
-                        //console.log(res);
-                        //console.log(res.data.object.key);
-                        this.key = res.data.object.key;
-                        console.log(this.key);
-                        sessionStorage.clear;
-                        sessionStorage.setItem('key', this.key);
-                        console.log('join 인증키 발급');
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-                this.$router.push('/user/keyword');
-                // UserApi.join(body);
-                console.log('join 라우터');
-                // console.log('axios 함!!!');
-            }
         },
         async test() {},
         back() {
