@@ -93,13 +93,14 @@ import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
 import UserApi from './apis/UserApi';
-
+import Kakao from './kakao';
 export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
         // setInterval(function() {
-        // this.loadNoticeNum();
+        this.loadNoticeNum();
+        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
     },
     components: {
