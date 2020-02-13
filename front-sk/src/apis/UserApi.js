@@ -24,7 +24,7 @@ const UserApi = {
 };
 const follower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/followList?num=2&email=` + data['email'])
+        .get(`${host}/follow/followList?num=2&email=` + data['email'])
         .then(res => {
             console.log('팔로우성공');
             callback(res);
@@ -87,7 +87,7 @@ const deletNoticeTabFollowing = (data, callback, errorCallback) => {
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
-        .post(`${host}/follow/followList?num=1&email=` + data['email'])
+        .get(`${host}/follow/followList?num=1&email=` + data['email'])
         .then(res => {
             console.log('팔로잉성공');
             callback(res);
@@ -109,7 +109,7 @@ const snsDuplicate = (data, callback) => {
 };
 const profileLoad = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/profile?email=` + data['email'])
+        .get(`${host}/account/profile?email=` + data['email'])
         .then(res => {
             console.log('들어오나');
             callback(res);
@@ -165,7 +165,7 @@ const requestNoticeNum = (data, callback) => {
 };
 const cert = (data, callback) => {
     axios
-        .post(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
+        .get(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -211,8 +211,8 @@ const updateUser = (body, callback, errorCallback) => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
-    console.log('value is ');
-    console.log(value);
+    console.log('value is 입니다');
+    console.log(value.password);
     axios({
         url: `${host}/account/updateUser`,
         method: 'post',
