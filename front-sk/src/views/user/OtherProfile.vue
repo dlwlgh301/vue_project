@@ -37,6 +37,17 @@
             <!-- <div :class="[followCheck[0] ? { backgroundColor: '#2589cc;' } : { backgroundColor: 'green' }]" class="follow" @click="FollowListBtnCheck(0)">
                 {{ followCheck[0] | handleFollowFilter }}
             </div>-->
+            <div>
+                <div class="follow" @click="iniciar()" v-show="ischeck1">
+                    <div class="icon-instagram"></div>
+                    팔로우
+                </div>
+                <div class="followi" @click="iniciar()" v-show="ischeck2">
+                    <div class="icon-ok"></div>
+                    팔로잉
+                </div>
+            </div>
+
             <div class="left_col">
                 <md-dialog class="md-scrollbar" :md-active.sync="showDialog">
                     <!-- <section class="wrapper"> -->
@@ -102,7 +113,7 @@
             </div>
             <div class="main_profile">
                 <div class="right_col">
-                    <h2 class="name">{{ info.name }}</h2>
+                    <h2 style="margin-top:15px" class="name">{{ info.name }}</h2>
                     <!-- 닉네임 이메일 -->
                     <ul class="contact_information">
                         <li>
@@ -118,7 +129,6 @@
                             {{ info.comment }}
                         </li>
                         <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
-                        <li style="cursor:pointer" v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
                     </ul>
                 </div>
             </div>
@@ -409,7 +419,9 @@ export default {
             this.followerDialog = false;
             this.age = '';
             this.gender = '';
-            (this.status = ''), (this.email = sessionStorage.getItem('email'));
+            this.status = '';
+            this.email = 'wns4773@naver.com';
+            // this.email = sessionStorage.getItem('email');
             let { email } = this;
             let data = {
                 email
