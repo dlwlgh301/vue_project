@@ -150,7 +150,8 @@ import '../../assets/css/profile.scss';
 import PV from 'password-validator';
 import UserApi from '../../apis/UserApi';
 import Swal from 'sweetalert2';
-//
+import firebase from '../../apis/FirebaseService';
+
 export default {
     created() {
         this.$store.commit('setPageTitle', '유저 정보');
@@ -270,11 +271,20 @@ export default {
                 UserApi.addFollower(
                     data,
                     res => {
-                        console.log(res);
+                        console.log('팔로우요청: ' + res);
                         this.restart();
                         this.isfollowing = true;
+                        let info = res.data.object;
+                        firebase.noticePush({
+                            sender: info.sender,
+                            senderNick: info.senderNick,
+                            receiver: info.receiver,
+                            msg: info.msg,
+                            img: info.img
+                        });
                     },
                     error => {
+                        console.log('팔로우요청 실패: ' + error);
                         console.log(error);
                     }
                 );

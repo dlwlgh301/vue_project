@@ -22,9 +22,11 @@ public class NoticeDaoImpl implements NoticeDao {
     public boolean insertNotice(String sender, String receiver, String msg) throws Exception {
         String senderN = sqlSession.selectOne("getNickNameByEmail", sender);
         String receiverN = sqlSession.selectOne("getNickNameByEmail", receiver);
+        String requesterImg = sqlSession.selectOne("getImgURL", receiver);
+        System.out.println(requesterImg);
         System.out.println(senderN);
         System.out.println(receiverN);
-        Notice notice = new Notice(sender, senderN, receiver, receiverN, msg);
+        Notice notice = new Notice(sender, senderN, receiver, receiverN, msg, requesterImg);
         int row = sqlSession.insert("insertNotice", notice);
         if (row > 0)
             return true;
