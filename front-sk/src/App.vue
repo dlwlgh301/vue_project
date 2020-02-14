@@ -138,6 +138,7 @@ export default {
     methods: {
         getNotice() {
             let data = sessionStorage.getItem('email');
+            console.log(data);
             UserApi.requestNoticeNum(
                 data,
                 res => {
