@@ -50,4 +50,8 @@
     <select id="getImgURL" parameterType="string" resultType="string">
         select imgURL from user where email = #{value}
     </select>
+
+    <select id="getKeyword" parameterType="string" resultType="string">
+        select keyword from user where email = #{value}
+    </select>
 </mapper>
