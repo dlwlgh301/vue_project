@@ -79,6 +79,8 @@ public class ProductController {
         String productName = "";
         String link = "";
         String image = "";
+        int price1 = 0;
+        int price2 = 0;
         int price = 0;
 
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
@@ -118,7 +120,7 @@ public class ProductController {
             for (int i = 2; i < arr.length; i++) {
                 String[] arr2 = arr[i].split(",");
 
-                for (int j = 0; j < arr2.length; j++) {
+                for (int j = 0; j <= 4; j++) {
                     System.out.println(arr2[j]);
 
                     String[] arr3 = arr2[j].replace("}", "").replace("당일출고", "").replace("</b>", "").replace("<b>", "")
@@ -130,11 +132,23 @@ public class ProductController {
                         System.out.println("link :::: " + arr3[3]);
                     } else if (j == 2) {
                         System.out.println("image :::: " + arr3[3]);
+                    } else if (j == 3) {
+                        price1 = Integer.parseInt(arr3[3]);
+                    } else if (j == 4) {
+                        price2 = Integer.parseInt(arr3[3]);
                     }
-                    System.out.println(arr3[3]);
+
                     System.out.println();
 
                 }
+
+                if (price1 == 0) {
+                    price = price2;
+                } else {
+                    price = price1;
+                }
+
+                System.out.println("price :::: " + price);
                 System.out.println();
                 System.out.println();
             }
