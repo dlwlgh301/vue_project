@@ -21,53 +21,6 @@
                         </v-badge>
                     </md-button>
                 </v-app-bar>
-                <!-- <md-toolbar class="Navbar">
-                    <div class="md-toolbar-row">
-                        <div class="md-toolbar-section-start">
-                            <md-button
-                                id="btn-back"
-                                class="md-icon-button"
-                                @click="$router.go(-1)"
-                            >
-                                <md-icon style="color: #ssafy"
-                                    >keyboard_arrow_left</md-icon
-                                >
-                            </md-button>
-
-                            <md-button
-                                id="btn-drawer"
-                                class="md-icon-button"
-                                @click.stop="drawer = !drawer"
-                            >
-                                <md-icon>menu</md-icon>
-                            </md-button>
-                            <h3 class="md-title" style="flex: 1">
-                                {{ $store.state.pageTitle }}
-                            </h3>
-                        </div>
-                        <div class="md-toolbar-section-end">
-                            <md-button
-                                class="md-icon-button"
-                                @click="refreshNotice"
-                            >
-                                <v-badge
-                                    color="#009ff4"
-                                    v-model="$store.state.noticeNum"
-                                    overlap
-                                >
-                                    <span
-                                        slot="badge"
-                                        v-if="$store.state.noticeNum"
-                                        v-text="Number($store.state.noticeNum)"
-                                    ></span>
-                                    <md-icon style="color: #009ff4 ;"
-                                        >notifications</md-icon
-                                    >
-                                </v-badge>
-                            </md-button>
-                        </div>
-                    </div>
-                </md-toolbar> -->
                 <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
@@ -101,13 +54,23 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
-                        <router-link to="/main/write">
+                        <router-link to="/contents/write">
                             <v-list-item>
                                 <v-list-item-icon>
                                     <v-icon>create</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>리뷰 쓰기</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+                        <router-link to="/contents/bookmark">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon>shopping_cart</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>찜한 상품</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
