@@ -67,11 +67,15 @@
                 </div>
                 <div class="wrap">
                     <p>비밀번호를 잊으셨나요?</p>
-                    <router-link v-bind:to="{ name: 'Find' }" class="btn--text">비밀번호 찾기</router-link>
+                    <router-link v-bind:to="{ name: 'FindPassword' }" class="btn--text">비밀번호 찾기</router-link>
                 </div>
                 <div class="wrap">
                     <p>아직 회원이 아니신가요?</p>
                     <router-link v-bind:to="{ name: 'Join' }" class="btn--text">가입하기</router-link>
+                </div>
+
+                <div>
+                    <button id="apiTest" @click="test()">api Test</button>
                 </div>
             </div>
         </div>
@@ -101,7 +105,7 @@ export default {
     },
     created() {
         if (sessionStorage.getItem('email') != null) {
-            this.$router.push('/main');
+            this.$router.push('/contents/main');
         }
         this.component = this;
         this.$store.commit('setPageTitle', '로그인');
@@ -124,6 +128,9 @@ export default {
         }
     },
     methods: {
+        test() {
+            UserApi.apitest();
+        },
         viewPassword() {
             this.type = this.type === 'password' ? 'text' : 'password';
         },
@@ -205,11 +212,14 @@ export default {
                             sessionStorage.setItem('password', this.password);
                             this.getNotice();
 
+                            // this.$router.push('/main');
+                            //요청이 끝나면 버튼 활성화
+
                             firebase.loginPush({
                                 msg: email + '님이 로그인하였습니다.',
                                 receiver: email
                             });
-                            this.$router.push('/main');
+                            this.$router.push('/contents/main');
                         }
                     },
                     error => {

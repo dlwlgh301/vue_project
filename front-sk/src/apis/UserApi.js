@@ -1,10 +1,12 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
+    isFollowing: (data, callback, errorCallback) => isFollowing(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
@@ -20,7 +22,21 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback)
+    requestReview: (data, callback) => requestReview(data, callback),
+    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
+    apitest: () => apitest()
+};
+const isFollowing = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/follow/followCheck?follower=` + data['myemail'] + '&following=' + data['email'])
+        .then(res => {
+            console.log('팔로체크성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로체크 실패');
+            errorCallback(error);
+        });
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -121,7 +137,7 @@ const profileLoad = (data, callback, errorCallback) => {
 };
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post(`${noticePort}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -241,7 +257,7 @@ const join = body => {
     console.log('value is ');
     console.log(value);
     axios({
-        url: `${noticePort}/account/signup`,
+        url: `${host}/account/signup`,
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
@@ -251,6 +267,22 @@ const join = body => {
         })
         .catch(error => {
             alert('error' + error);
+        });
+};
+
+const updatePass = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/updatePass`, data)
+        .then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: '비밀번호 수정이 완료되었습니다.'
+            });
+            console.log('비밀번호 수정 완료');
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 
@@ -277,5 +309,24 @@ const requestReview = (data, callback) => {
     axios.get(`${host}/main/review`, data).then(res => {
         callback(res);
     });
+};
+
+const apitest = () => {
+    fetch(`${host}/product/searchProduct`, {
+        method: 'GET',
+        mode: 'no-cors'
+    });
+    // axios.post(`${host}/product/searchProduct`, {
+    //     headers: {
+    //         'Access-Control-Allow-Origin': '*'
+    //     }
+    // })
+    // .then(() => {
+    //     alert('api 불러오기 성공~!');
+    //     callback;
+    // })
+    // .catch(() => {
+    //     errorCallback;
+    // });
 };
 export default UserApi;

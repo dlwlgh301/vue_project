@@ -773,16 +773,16 @@ p {
     }
 }
 
-.profile-image {
-    @include background-img;
-    height: 40px;
-    width: 40px;
-    border-radius: $c100;
-    &.small {
-        width: 30px;
-        height: 30px;
-    }
-}
+// .profile-image {
+//     @include background-img;
+//     height: 40px;
+//     width: 40px;
+//     border-radius: $c100;
+//     &.small {
+//         width: 30px;
+//         height: 30px;
+//     }
+// }
 
 .grey-back {
     background: #eee;

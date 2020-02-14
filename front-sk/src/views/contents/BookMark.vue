@@ -1,21 +1,8 @@
 <template>
-    <div class="wrapC" style="margin-top: 5rem;">
-        <div class="search-bar" style="display: block;">
-            <input v-model="keyword" type="text" placeholder="검색어를 입력해주세요." @keyup.enter="search" />
-            <button @click="search">
-                <md-icon>search</md-icon>
-            </button>
-            <label for="search-bar">
-                <select v-model="selected_option">
-                    <option v-for="option in options" v-bind:key="option.text">{{ option.text }}</option>
-                </select>
-                <!-- <v-select :items="options" single-line></v-select> -->
-            </label>
-        </div>
-
-        <v-list two-line style="padding-top: 8vh;">
+    <div class="wrapC">
+        <v-list two-line style="display: block;">
             <template v-for="(item, index) in items">
-                <v-list-item :key="item.title" avatar ripple>
+                <v-list-item :key="item.title" avatar>
                     <v-avatar size="6rem" :tile="tile">
                         <v-img :src="item.image"></v-img>
                     </v-avatar>
@@ -25,6 +12,7 @@
                         <v-list-item-subtitle>{{ item.subtitle }}</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action @click="toggle(index)">
+                        <!-- <v-list-item-action-text>{{ item.action }}</v-list-item-action-text> -->
                         <v-icon v-if="selected.indexOf(index) < 0" color="grey lighten-1">star_border</v-icon>
                         <v-icon v-else color="yellow darken-2">star</v-icon>
                     </v-list-item-action>
@@ -38,32 +26,10 @@
 <script>
 export default {
     created() {
-        this.$store.commit('setPageTitle', '검색');
-    },
-    watch: {
-        keyword: function(data) {
-            this.keyword = data;
-        }
-    },
-    methods: {
-        search() {
-            console.log('checkSearch');
-        },
-        toggle(index) {
-            const i = this.selected.indexOf(index);
-
-            if (i > -1) {
-                this.selected.splice(i, 1);
-            } else {
-                this.selected.push(index);
-            }
-        }
+        this.$store.commit('setPageTitle', '찜한 상품');
     },
     data() {
         return {
-            keyword: null,
-            selected_option: '상품',
-            options: [{ text: '상품' }, { text: '유저' }],
             selected: [2],
             tile: true,
             items: [
@@ -98,12 +64,19 @@ export default {
                 }
             ]
         };
+    },
+    methods: {
+        toggle(index) {
+            const i = this.selected.indexOf(index);
+
+            if (i > -1) {
+                this.selected.splice(i, 1);
+            } else {
+                this.selected.push(index);
+            }
+        }
     }
 };
 </script>
 
-<style lang="scss" scoped>
-.v-list-item {
-    padding: 0;
-}
-</style>
+<style></style>

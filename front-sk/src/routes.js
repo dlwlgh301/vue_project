@@ -3,10 +3,10 @@ import Router from 'vue-router';
 import Certification from './views/user/Certification.vue';
 import Login from './views/user/Login.vue';
 import Join from './views/user/Join.vue';
-import Find from './views/user/Find.vue';
+import FindPassword from './views/user/FindPassword.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
-import FindCert from './views/user/FindCert.vue';
+import MailCert from './views/user/MailCert.vue';
 import Profile from './views/user/Profile.vue';
 import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
@@ -23,6 +23,7 @@ import OtherProfile from './views/user/OtherProfile.vue';
 import Write from './views/contents/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
+import Bookmark from './views/contents/BookMark.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -48,9 +49,9 @@ const router = new Router({
             component: Join
         },
         {
-            path: '/user/find',
-            name: 'Find',
-            component: Find
+            path: '/user/FindPassword',
+            name: 'FindPassword',
+            component: FindPassword
         },
         {
             path: '/user/Board',
@@ -88,9 +89,9 @@ const router = new Router({
             component: ChangeComplete
         },
         {
-            path: '/user/findcert',
-            name: 'FindCert',
-            component: FindCert
+            path: '/user/mailCert',
+            name: 'MailCert',
+            component: MailCert
         },
         {
             path: '/user/noticeTab',
@@ -103,20 +104,12 @@ const router = new Router({
             component: Test
         },
         {
-            path: '*',
-            redirect: '/404'
-        },
-        {
-            path: '/404',
-            component: NotFound
-        },
-        {
             path: '/user/userUpdate',
             name: 'UserUpdate',
             component: UserUpdate
         },
         {
-            path: '/main',
+            path: '/contents/main',
             name: 'Main',
             component: Main
         },
@@ -131,7 +124,7 @@ const router = new Router({
             component: UpdatePass
         },
         {
-            path: '/main/write',
+            path: '/contents/write',
             name: 'Write',
             component: Write
         },
@@ -141,9 +134,22 @@ const router = new Router({
             component: SnsJoin
         },
         {
+            path: '*',
+            redirect: '/404'
+        },
+        {
+            path: '/404',
+            component: NotFound
+        },
+        {
             path: '/contents/search',
             name: 'Search',
             component: Search
+        },
+        {
+            path: '/contents/bookmark',
+            name: 'Bookmark',
+            component: Bookmark
         }
     ]
 });
