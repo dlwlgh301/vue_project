@@ -105,7 +105,7 @@ export default {
     },
     created() {
         if (sessionStorage.getItem('email') != null) {
-            this.$router.push('/main');
+            this.$router.push('/contents/main');
         }
         this.component = this;
         this.$store.commit('setPageTitle', '로그인');
