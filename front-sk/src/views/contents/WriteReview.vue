@@ -95,7 +95,7 @@
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove"
-                    :on-success="handleSuccess"
+                    :on-change="handleChange"
                     :auto-upload="false"
                     :file-list="fileList"
                     :limit="5"
@@ -112,6 +112,7 @@
     </div>
 </template>
 <script>
+import UserApi from '../../apis/UserApi';
 //import UserApi from '../../apis/UserApi';
 export default {
     data: () => {
@@ -120,6 +121,7 @@ export default {
             label: '게시글',
             maxLength: 300,
             fileList: [],
+            file: '',
             addtag: [],
             value: '',
             title: '',
@@ -165,10 +167,11 @@ export default {
         }
     },
     methods: {
-        handleSuccess(response, file, fileList) {
-            console.log(response + 'response');
-            console.log(file + 'file');
-            console.log(fileList);
+        handleChange(file, fileList) {
+            console.log('file 출력');
+            console.log(file.raw);
+            this.file = file.raw;
+            this.fileList = fileList;
         },
         handleRemove(file, fileList) {
             console.log(file, fileList);
@@ -181,15 +184,26 @@ export default {
         write() {
             this.keyword = this.age + ',' + this.gender + ',' + this.status + ',' + this.addtag;
             this.email = sessionStorage.getItem('email');
-            console.log(this.fileList);
+            /*    console.log(this.fileList);
             console.log(this.keyword);
+            let test = new FormData();
+            test.append('File', this.fileList[0]); 
+            console.log(test);*/
+            UserApi.fileUpload(
+                this.file,
+                res => {
+                    console.log(res);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
             var review = {
                 email: this.email,
                 keyword: this.keyword,
                 title: this.title,
                 rating: this.rating,
-                content: this.content,
-                imgURL: this.fileList
+                content: this.content
             };
             console.log(JSON.stringify(review));
             //UserApi.insertReview(review);

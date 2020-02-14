@@ -640,7 +640,7 @@ export default {
         },
 
         fileSelect() {
-            let test = new FormData(document.getElementById('myform'));
+            let test = new FormData(document.getElementById('imageInputform'));
             console.log(test);
 
             if (this.files.length > 0) {
@@ -657,6 +657,8 @@ export default {
         },
 
         onFileChange(e) {
+            console.log(e);
+
             this.files = e.target.files || e.dataTransfer.files;
             if (!this.files.length) return;
             this.createImage(this.files[0]);

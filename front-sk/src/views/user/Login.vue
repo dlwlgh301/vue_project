@@ -203,7 +203,6 @@ export default {
                             sessionStorage.setItem('nickName', this.nickName);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
-                            sessionStorage.setItem('password', this.password);
 
                             firebase.loginPush({
                                 msg: email + '님이 로그인하였습니다.',
