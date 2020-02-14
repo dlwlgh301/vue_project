@@ -271,7 +271,7 @@ export default {
                 UserApi.addFollower(
                     data,
                     res => {
-                        console.log(res);
+                        console.log('팔로우요청: ' + res);
                         this.restart();
                         this.isfollowing = true;
                         let info = res.data.object;
@@ -284,6 +284,7 @@ export default {
                         });
                     },
                     error => {
+                        console.log('팔로우요청 실패: ' + error);
                         console.log(error);
                     }
                 );
