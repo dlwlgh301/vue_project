@@ -224,8 +224,7 @@ const updateUser = (body, callback, errorCallback) => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
-    console.log('value is 입니다');
-    console.log(value.password);
+
     axios({
         url: `${host}/account/updateUser`,
         method: 'post',
@@ -252,8 +251,6 @@ const join = body => {
         imgURL: body.imgURL
     };
 
-    console.log('value is ');
-    console.log(value);
     axios({
         url: `${host}/account/signup`,
         method: 'post',

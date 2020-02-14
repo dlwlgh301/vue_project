@@ -201,7 +201,6 @@ export default {
                             sessionStorage.setItem('keyword', this.keyword);
                             sessionStorage.setItem('imgURL', this.imgURL);
                             sessionStorage.setItem('nickName', this.nickName);
-                            //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
                             sessionStorage.setItem('password', this.password);
 
@@ -209,11 +208,7 @@ export default {
                                 msg: email + '님이 로그인하였습니다.',
                                 receiver: email
                             });
-<<<<<<< HEAD
-                            this.$router.push('contents/main');
-=======
                             this.$router.push('/contents/main');
->>>>>>> 93c121d391c868b8b985acafcc3ea1afff73ff60
                         }
                     },
                     error => {

@@ -199,21 +199,15 @@ export default {
                 data,
                 // index = 순서 flag = 1 팔로 2 팔로잉
                 res => {
-                    console.log(res);
-                    console.log('ㅇㅇㅇㅇ');
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object.list;
-                        console.log(this.followingList);
-                        this.followingCheck = res.data.object.followCheckList;
-                        console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
 
-                        console.log(res.data.status);
+                        this.followingCheck = res.data.object.followCheckList;
                     }
                 },
                 error => {
-                    console.log('Noop');
                     console.log(error);
                 }
             );
@@ -229,14 +223,13 @@ export default {
             UserApi.follower(
                 data,
                 res => {
-                    console.log(res);
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
                         this.followList = res.data.object.list;
                         this.followCheck = res.data.object.followCheckList;
                         // alert(info.email);
-                        console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+
                         console.log(res.data.status);
                     }
                 },
