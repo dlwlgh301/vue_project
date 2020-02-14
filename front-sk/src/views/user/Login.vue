@@ -101,7 +101,7 @@ export default {
     },
     created() {
         if (sessionStorage.getItem('email') != null) {
-            this.$router.push('/main');
+            this.$router.push('/contents/main');
         }
         this.component = this;
         this.$store.commit('setPageTitle', '로그인');
@@ -209,7 +209,7 @@ export default {
                                 msg: email + '님이 로그인하였습니다.',
                                 receiver: email
                             });
-                            this.$router.push('/main');
+                            this.$router.push('/contents/main');
                         }
                     },
                     error => {
