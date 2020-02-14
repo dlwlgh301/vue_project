@@ -39,24 +39,6 @@ import Kakao from '../../kakao';
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
-        // var keyword = sessionStorage.getItem('keyword');
-        // UserApi.requestReview(
-        //     keyword,
-        //     res => {
-        //         console.log(res);
-        //         this.title = res.data.title;
-        //         this.content = res.data.content;
-        //         this.rating = res.data.rating;
-        //         this.photo = res.data.photo;
-        //         this.like = res.data.like;
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
-        /*  if (sessionStorage.getItem('email') == null) {
-            this.$router.push('/');
-        } */
     },
     data: () => {
         return {

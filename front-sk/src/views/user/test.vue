@@ -131,6 +131,8 @@ img {
 .profile2-user-name {
     display: inline-block;
     font-size: 2.1rem;
+    /* font-size: 5vw;
+    font-size: 5wh; */
     font-weight: 300;
 }
 

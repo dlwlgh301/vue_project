@@ -1,10 +1,7 @@
 import axios from 'axios';
-<<<<<<< HEAD
-=======
 import Swal from 'sweetalert2';
->>>>>>> c03217880740031b18a0dd9ada6f4e6ec128e657
 const host = 'http://192.168.100.90:8080';
-const noticePort = 'http://192.168.100.58:8080';
+const noticePort = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
