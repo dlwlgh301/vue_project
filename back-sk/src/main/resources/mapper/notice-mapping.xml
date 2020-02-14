@@ -7,8 +7,8 @@
     </select>
 
     <insert id="insertNotice" parameterType="com.web.curation.model.vo.Notice">
-        insert into notice(sender, senderNick, receiver, receiverNick, msg) 
-        values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg})
+        insert into notice(sender, senderNick, receiver, receiverNick, msg, senderImg) 
+        values(#{sender}, #{senderNick}, #{receiver}, #{receiverNick}, #{msg}, #{senderImg})
     </insert>
 
     <select id="getNoticeNum" parameterType="string" resultType="int">

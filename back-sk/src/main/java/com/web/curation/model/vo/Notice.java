@@ -22,15 +22,18 @@ public class Notice {
     private String receiver;
     private String receiverNick;
     private String msg;
+    private String senderImg;
 
     // @Column(name = "readchk", columnDefinition = "TINYINT", length = 1)
     private int readchk;
 
-    public Notice(String sender, String senderNick, String receiver, String receiverNick, String msg) {
+    public Notice(String sender, String senderNick, String receiver, String receiverNick, String msg,
+            String senderImg) {
         this.sender = sender;
         this.senderNick = senderNick;
         this.receiver = receiver;
         this.receiverNick = receiverNick;
         this.msg = msg;
+        this.senderImg = senderImg;
     }
 }

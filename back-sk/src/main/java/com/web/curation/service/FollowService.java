@@ -3,7 +3,6 @@ package com.web.curation.service;
 
 import java.util.List;
 
-import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
 
 public interface FollowService {

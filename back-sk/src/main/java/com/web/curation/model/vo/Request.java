@@ -18,12 +18,15 @@ public class Request {
     private String requesterNick;
     private String requestee;
     private String requesteeNick;
+    private String requesterImg;
 
-    public Request(String requester, String requesterNick, String requestee, String requesteeNick) {
+    public Request(String requester, String requesterNick, String requestee, String requesteeNick,
+            String requesterImg) {
         this.requester = requester;
         this.requesterNick = requesterNick;
         this.requestee = requestee;
         this.requesteeNick = requesteeNick;
+        this.requesterImg = requesterImg;
     }
 
     public Request(String requester, String requestee) {

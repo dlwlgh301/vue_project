@@ -63,7 +63,14 @@
                                 <v-list-item-content>
                                     <v-list-item-title v-html="follow_item.userId"></v-list-item-title>
                                 </v-list-item-content>
-                                <v-btn class="btn-accept" small max-width="3rem" style="position:relative" @click="followConfirm(index, follow_item.rid)">팔로우</v-btn>
+                                <v-btn
+                                    class="btn-accept"
+                                    small
+                                    max-width="3rem"
+                                    style="position:relative"
+                                    @click="followConfirm(index, follow_item.rid)"
+                                    >팔로우</v-btn
+                                >
                                 <v-btn text icon color="#fff" @click="deleteFollow(index, follow_item.rid)">
                                     <v-icon class="btn-delete" size="0.8rem">mdi-trash-can-outline</v-icon>
                                 </v-btn>
@@ -117,7 +124,7 @@ export default {
                         for (let i = new_data.length - 1; i >= 0; i--) {
                             new_noticeItem = {
                                 nid: new_data[i].nid,
-                                avatar: require('../../assets/images/light-bulb.png'),
+                                avatar: 'http://192.168.100.90:8080/image/' + new_data[i].imgURL,
                                 userId: new_data[i].senderNick,
                                 subtitle: new_data[i].msg
                             };
