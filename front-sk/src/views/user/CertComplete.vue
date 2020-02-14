@@ -5,7 +5,9 @@
             <div class="title">
                 <h1>가입 성공!</h1>
             </div>
-            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">로그인 화면으로 돌아가기</button>
+            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+                로그인 화면으로 돌아가기
+            </button>
         </div>
     </div>
 </template>

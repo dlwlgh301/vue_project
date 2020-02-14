@@ -6,6 +6,7 @@ const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
+    isFollowing: (data, callback, errorCallback) => isFollowing(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
@@ -24,6 +25,18 @@ const UserApi = {
     requestReview: (data, callback) => requestReview(data, callback),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
     apitest: () => apitest()
+};
+const isFollowing = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/follow/followCheck?follower=` + data['myemail'] + '&following=' + data['email'])
+        .then(res => {
+            console.log('팔로체크성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로체크 실패');
+            errorCallback(error);
+        });
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -90,7 +103,7 @@ const deletNoticeTabFollowing = (data, callback, errorCallback) => {
 const following = (data, callback, errorCallback) => {
     console.log(data);
     axios
-        .post(`${host}/follow/followList?num=1&email=` + data['email'])
+        .get(`${host}/follow/followList?num=1&email=` + data['email'])
         .then(res => {
             console.log('팔로잉성공');
             callback(res);
@@ -102,7 +115,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
+        .get(`${noticePort}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -112,7 +125,7 @@ const snsDuplicate = (data, callback) => {
 };
 const profileLoad = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/profile?email=` + data['email'])
+        .get(`${host}/account/profile?email=` + data['email'])
         .then(res => {
             console.log('들어오나');
             callback(res);
@@ -124,7 +137,7 @@ const profileLoad = (data, callback, errorCallback) => {
 };
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post(`${noticePort}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -168,7 +181,7 @@ const requestNoticeNum = (data, callback) => {
 };
 const cert = (data, callback) => {
     axios
-        .post(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
+        .get(`${host}/account/emailcert?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -214,8 +227,8 @@ const updateUser = (body, callback, errorCallback) => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
-    console.log('value is ');
-    console.log(value);
+    console.log('value is 입니다');
+    console.log(value.password);
     axios({
         url: `${host}/account/updateUser`,
         method: 'post',
@@ -240,10 +253,11 @@ const join = body => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
+
     console.log('value is ');
     console.log(value);
     axios({
-        url: `${host}/account/signup`,
+        url: `${noticePort}/account/signup`,
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }

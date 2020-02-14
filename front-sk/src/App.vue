@@ -2,29 +2,72 @@
     <v-app>
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
+
             <div class="components-page">
-                <md-toolbar class="Navbar">
+                <v-app-bar fixed color="#FFF" class="Navbar">
+                    <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
+                        <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
+                    </md-button>
+
+                    <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
+                        <md-icon>menu</md-icon>
+                    </md-button>
+                    <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <md-button class="md-icon-button" @click="refreshNotice">
+                        <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
+                            <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
+                            <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                        </v-badge>
+                    </md-button>
+                </v-app-bar>
+                <!-- <md-toolbar class="Navbar">
                     <div class="md-toolbar-row">
                         <div class="md-toolbar-section-start">
-                            <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
-                                <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
+                            <md-button
+                                id="btn-back"
+                                class="md-icon-button"
+                                @click="$router.go(-1)"
+                            >
+                                <md-icon style="color: #ssafy"
+                                    >keyboard_arrow_left</md-icon
+                                >
                             </md-button>
-                            <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
+
+                            <md-button
+                                id="btn-drawer"
+                                class="md-icon-button"
+                                @click.stop="drawer = !drawer"
+                            >
                                 <md-icon>menu</md-icon>
                             </md-button>
-                            <h3 class="md-title" style="flex: 1">{{ $store.state.pageTitle }}</h3>
+                            <h3 class="md-title" style="flex: 1">
+                                {{ $store.state.pageTitle }}
+                            </h3>
                         </div>
                         <div class="md-toolbar-section-end">
-                            <router-link to="/user/noticeTab">
-                                <md-button class="md-icon-button" @click="refreshNotice">
-                                    <v-badge color="#009ff4" :content="checknoticeNum" :value="checknoticeNum" overlap>
-                                        <md-icon style="color: #009ff4 ;">notifications</md-icon>
-                                    </v-badge>
-                                </md-button>
-                            </router-link>
+                            <md-button
+                                class="md-icon-button"
+                                @click="refreshNotice"
+                            >
+                                <v-badge
+                                    color="#009ff4"
+                                    v-model="$store.state.noticeNum"
+                                    overlap
+                                >
+                                    <span
+                                        slot="badge"
+                                        v-if="$store.state.noticeNum"
+                                        v-text="Number($store.state.noticeNum)"
+                                    ></span>
+                                    <md-icon style="color: #009ff4 ;"
+                                        >notifications</md-icon
+                                    >
+                                </v-badge>
+                            </md-button>
                         </div>
                     </div>
-                </md-toolbar>
+                </md-toolbar> -->
                 <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
@@ -32,12 +75,11 @@
                         </v-list-item-avatar>
 
                         <v-list-item-content>
-                            <v-list-item-title>John Leider</v-list-item-title>
+                            <v-list-item-title>nickName</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
                     <v-divider></v-divider>
-
                     <v-list dense>
                         <router-link to="/">
                             <v-list-item>
@@ -49,13 +91,23 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
-                        <router-link to="/user/find">
+                        <router-link to="/contents/search">
                             <v-list-item>
                                 <v-list-item-icon>
                                     <v-icon>search</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>search</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+                        <router-link to="/main/write">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon>create</v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>리뷰 쓰기</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
@@ -69,7 +121,7 @@
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
-                        <v-list-item v-on:click="logout">
+                        <v-list-item @click="logout">
                             <v-list-item-icon>
                                 <md-icon>exit_to_app</md-icon>
                             </v-list-item-icon>
@@ -79,10 +131,8 @@
                         </v-list-item>
                     </v-list>
                 </v-navigation-drawer>
-                <md-content>
-                    <router-view class="page"></router-view>
-                </md-content>
-                <BottomNavComponent v-model="showNav" class="bottom-nav" />
+                <router-view class="page"></router-view>
+                <BottomNavComponent class="bottom-nav" />
             </div>
         </div>
     </v-app>
@@ -93,20 +143,17 @@ import BottomNavComponent from './components/common/BottomNav';
 import 'vuetify/dist/vuetify.min.css';
 import './assets/css/components.scss';
 import UserApi from './apis/UserApi';
+import firebase from './apis/FirebaseService';
 import Kakao from './kakao';
 export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
+        if (sessionStorage.getItem('email') != null) this.getNotice();
         // setInterval(function() {
-        this.loadNoticeNum();
+        // this.loadNoticeNum();
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
-    },
-    computed: {
-        checknoticeNum() {
-            return this.noticeNum;
-        }
     },
     components: {
         BottomNavComponent
@@ -115,7 +162,6 @@ export default {
         return {
             route: '',
             showNav: false,
-            noticeNum: 0,
             drawer: null,
             items: [
                 { title: 'Home', icon: 'dashboard' },
@@ -124,13 +170,13 @@ export default {
         };
     },
     methods: {
-        loadNoticeNum() {
+        getNotice() {
             let data = sessionStorage.getItem('email');
             UserApi.requestNoticeNum(
                 data,
                 res => {
                     console.log(res.data);
-                    this.noticeNum = res.data.object.num;
+                    this.$store.state.noticeNum = res.data.object.num;
                 },
                 error => {
                     console.log(error);
@@ -138,16 +184,28 @@ export default {
             );
         },
         refreshNotice: function() {
-            this.noticeNum = 0;
+            this.$store.state.noticeNum = 0;
+            if (sessionStorage.getItem('email')) {
+                this.$router.push('/user/noticeTab');
+            }
         },
         logout() {
+            Kakao.Auth.logout();
+            Kakao.Auth.setAccessToken('', false);
             firebase.logout(sessionStorage.getItem('email'));
+            localStorage.clear();
             sessionStorage.clear();
+            Kakao.Auth.cleanup();
             this.$router.push('/');
         }
     },
     mounted() {
         this.route = this.$router;
+    },
+    computed: {
+        checkNoticeNum() {
+            return this.noticeNum;
+        }
     }
 };
 </script>
@@ -155,7 +213,6 @@ export default {
 .md-fab,
 .md-icon-button {
     border-radius: 0% !important;
-    z-index: 5;
 }
 .md-icon-button .md-ripple {
     border-radius: 0% !important;

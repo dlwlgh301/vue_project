@@ -10,13 +10,8 @@
         <link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" />
         <h1 class="title">{{ info.name }}`s Profile</h1>
         <section class="profile">
-            <!-- <li>
-                    <a v-bind:href="'https://www.instagram.com/explore/tags/' + this.age + '/'">#{{ this.age }}</a>
-            </li>-->
             <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
 
-            <!-- <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/'alt class="portrait" /> -->
-            <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
             <div class="data">
                 <ul>
                     <li>
@@ -37,6 +32,17 @@
             <!-- <div :class="[followCheck[0] ? { backgroundColor: '#2589cc;' } : { backgroundColor: 'green' }]" class="follow" @click="FollowListBtnCheck(0)">
                 {{ followCheck[0] | handleFollowFilter }}
             </div>-->
+            <div>
+                <div class="follow" @click="iniciar()" v-show="!isfollowing">
+                    <div class="icon-instagram"></div>
+                    팔로우
+                </div>
+                <div class="followi" @click="iniciar()" v-show="isfollowing">
+                    <div class="icon-ok"></div>
+                    팔로잉
+                </div>
+            </div>
+
             <div class="left_col">
                 <md-dialog class="md-scrollbar" :md-active.sync="showDialog">
                     <!-- <section class="wrapper"> -->
@@ -53,15 +59,15 @@
                     <br />
                     <div style="margin 10px;" class="content" v-for="(item, index) in followList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;">
-                                <span @click="goOtherpage(item.follower)">
-                                    {{ item.followernickName }}
-                                </span>
-                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                            <ul style="margin-left:25px;">
+                                {{
+                                    item.followernickName
+                                }}
+                                <div class="myfollowList" v-show="followCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
                                 </div>
-                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                <div class="myfollowingList" v-show="followCheck[index] == true">
                                     <div class="icon-ok"></div>
                                     팔로잉
                                 </div>
@@ -83,15 +89,15 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
+                            <ul style="margin-left:25px;">
                                 {{
                                     item.followingnickName
                                 }}
-                                <div class="myfollowList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == false">
+                                <div class="myfollowList" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
                                 </div>
-                                <div class="myfollowingList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == true">
+                                <div class="myfollowingList" v-show="followingCheck[index] == true">
                                     <div class="icon-ok"></div>
                                     팔로잉
                                 </div>
@@ -102,7 +108,9 @@
             </div>
             <div class="main_profile">
                 <div class="right_col">
-                    <h2 class="name">{{ info.name }}</h2>
+                    <h2 style="margin-top:15px" class="name">
+                        {{ info.name }}
+                    </h2>
                     <!-- 닉네임 이메일 -->
                     <ul class="contact_information">
                         <li>
@@ -118,7 +126,6 @@
                             {{ info.comment }}
                         </li>
                         <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
-                        <li style="cursor:pointer" v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
                     </ul>
                 </div>
             </div>
@@ -155,6 +162,8 @@ export default {
     },
     data: () => {
         return {
+            isfollowing: false,
+            myemail: '',
             isButtonDisabled: false,
             ischeck1: true,
             age: '',
@@ -205,7 +214,6 @@ export default {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object.list;
-                        console.log(this.followingList);
                         this.followingCheck = res.data.object.followCheckList;
                         console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
 
@@ -248,12 +256,57 @@ export default {
             this.followListSize = this.followList.length;
         },
         iniciar() {
-            if (this.ischeck2) {
-                this.ischeck1 = true;
-                this.ischeck2 = false;
+            if (!this.isfollowing) {
+                this.followingEmail = sessionStorage.getItem('email');
+                this.followerEmail = this.info.email;
+                let { followingEmail, followerEmail } = this;
+                // alert(myemail + ' ' + email);
+                let data = {
+                    followingEmail,
+                    followerEmail
+                };
+                // alert(followingEmail + ' ' + followerEmail);
+                //  alert(this.followerEmail);
+                UserApi.addFollower(
+                    data,
+                    res => {
+                        console.log(res);
+                        this.restart();
+                        this.isfollowing = true;
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
             } else {
-                this.ischeck2 = true;
-                this.ischeck1 = false;
+                Swal.fire({
+                    icon: 'error',
+                    title: '팔로우를 취소하시겠습니까??',
+                    showCancelButton: true
+                }).then(YES => {
+                    if (YES.value) {
+                        this.followerEmail = sessionStorage.getItem('email');
+                        this.followingEmail = this.info.email;
+                        let { followerEmail, followingEmail } = this;
+                        // alert(myemail + ' ' + email);
+                        let data = {
+                            followerEmail,
+                            followingEmail
+                        };
+                        UserApi.deleteFollower(
+                            data,
+                            res => {
+                                console.log(res);
+                                this.restart();
+                                this.isfollowing = false;
+                            },
+                            error => {
+                                console.log(error);
+                            }
+                        );
+                    }
+                });
+
                 // doFollow();
             }
         },
@@ -343,15 +396,6 @@ export default {
                             data,
                             res => {
                                 console.log(res);
-                                // if (res.data.data == 'fail') {
-                                //     console.log(res.data.status);
-                                // } else {
-                                //     this.followList = res.data.object.list;
-                                //     this.followCheck = res.data.object.followCheckList;
-                                //     // alert(info.email);
-                                //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
-                                //     console.log(res.data.status);
-                                // }
                             },
                             error => {
                                 console.log(error);
@@ -378,15 +422,6 @@ export default {
                     data,
                     res => {
                         console.log(res);
-                        // if (res.data.data == 'fail') {
-                        //     console.log(res.data.status);
-                        // } else {
-                        //     this.followList = res.data.object.list;
-                        //     this.followCheck = res.data.object.followCheckList;
-                        //     // alert(info.email);
-                        //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
-                        //     console.log(res.data.status);
-                        // }
                     },
                     error => {
                         console.log(error);
@@ -396,15 +431,16 @@ export default {
                 this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
         },
-        goOtherpage(e) {
-            this.$router.push('/user/OtherProfile/' + e);
-        },
         retrieveQuestion() {
             this.showDialog = false;
             this.followerDialog = false;
             this.age = '';
             this.gender = '';
-            (this.status = ''), (this.email = sessionStorage.getItem('email'));
+            this.status = '';
+            this.email = this.$route.params.email;
+
+            // this.email = 'wns4773@naver.com';
+            this.myemail = sessionStorage.getItem('email');
             let { email } = this;
             let data = {
                 email
@@ -452,7 +488,6 @@ export default {
             this.showFollowing(); //팔로잉
         },
         curPage() {
-            alert('asd');
             this.$router.push('/user/Profile');
         },
         board() {
@@ -465,26 +500,42 @@ export default {
             this.retrieveQuestion();
         },
         doFollow() {
+            this.email = this.$route.params.email;
+            this.myemail = sessionStorage.getItem('email');
+
+            let { myemail, email } = this;
+
             let data = {
-                follower: sessionStorage.getItem('email'),
-                following: 'pacedov3@gmail.com'
+                myemail,
+                email
             };
-            UserApi.addFollower(
+            console.log(this.myemail + ' ' + this.email);
+            UserApi.isFollowing(
                 data,
                 res => {
-                    console.log('follow성공');
-                    console.log(res);
+                    this.isfollowing = res.data.object;
+                    console.log(res.data.object);
+                    console.log('this.following???');
+                    console.log('asdasd' + this.isfollowing);
+                    // if (res.data.data == 'fail') {
+                    //     console.log(res.data.status);
+                    // } else {
+                    //     this.followList = res.data.object.list;
+                    //     this.followCheck = res.data.object.followCheckList;
+                    //     // alert(info.email);
+                    //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
+                    //     console.log(res.data.status);
+                    // }
                 },
                 error => {
-                    console.log('follow에러');
                     console.log(error);
                 }
             );
         }
     },
     mounted() {
-        //  this.email = this.$store.state.email;
-
+        // this.email = this.$route.params.email;
+        this.doFollow();
         this.retrieveQuestion(); // 회원 정보
         this.showFollower(); // 팔로우
         this.showFollowing(); //팔로잉

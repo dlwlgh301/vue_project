@@ -5,6 +5,7 @@ import 'firebase/messaging';
 
 import 'firebase/database';
 import 'firebase/storage';
+import store from '@/vuex/store';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBSWWgcZTJqHxxOrfHjYDocaMBHxclOHDs',
@@ -21,7 +22,9 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 const firestore = firebase.firestore();
 
-messaging.usePublicVapidKey('BB04cLzKPwYo8rsGOHdhVUY2MqvZvGBUsTYpRgd7dvpV8To7bXLPBfwmi5l-gr1Y6vvt5LbMMoV4oFBZg-e-Tlk');
+messaging.usePublicVapidKey(
+    'BB04cLzKPwYo8rsGOHdhVUY2MqvZvGBUsTYpRgd7dvpV8To7bXLPBfwmi5l-gr1Y6vvt5LbMMoV4oFBZg-e-Tlk'
+);
 
 Notification.requestPermission().then(permission => {
     console.log(permission);
@@ -59,12 +62,16 @@ messaging.onTokenRefresh(() => {
 
 messaging.onMessage(payload => {
     console.log('Message received. ', payload);
-    var title = '포그라운드 알림';
-    var options = {
-        body: payload.data.msg
-    };
 
-    new Notification(title, options);
+    store.state.noticeNum += 1;
+    console.log('test:' + store.state.noticeNum);
+    alert('포그라운드 왜안되냐고오오오오옹오오ㅃㄸ!!@#오!!!!');
+    // var title = '포그라운드 알림';
+    // var options = {
+    //     body: payload.data.msg
+    // };
+
+    // new Notification(title, options);
 });
 
 export default {
@@ -99,7 +106,9 @@ export default {
                             console.log('login service end');
                         });
                 } else {
-                    console.log('No Instance ID token available. Request permission to generate one.');
+                    console.log(
+                        'No Instance ID token available. Request permission to generate one.'
+                    );
                 }
             })
             .catch(err => {

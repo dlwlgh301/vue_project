@@ -17,7 +17,9 @@
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="password">비밀번호</label>
-                <div class="error-text" v-if="error.password">{{ error.password }}</div>
+                <div class="error-text" v-if="error.password">
+                    {{ error.password }}
+                </div>
             </div>
             <div class="input-with-label">
                 <input
@@ -31,9 +33,13 @@
                     placeholder="비밀번호를 다시한번 입력하세요."
                 />
                 <label for="password-confirm">비밀번호 확인</label>
-                <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+                <div class="error-text" v-if="error.passwordConfirm">
+                    {{ error.passwordConfirm }}
+                </div>
             </div>
-            <button class="btn btn--back btn--login" v-on:click="change" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">비밀번호 변경</button>
+            <button class="btn btn--back btn--login" v-on:click="change" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                비밀번호 변경
+            </button>
         </div>
     </div>
 </template>
@@ -81,7 +87,8 @@ export default {
     },
     methods: {
         checkForm() {
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.password = false;
 
             if (this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';

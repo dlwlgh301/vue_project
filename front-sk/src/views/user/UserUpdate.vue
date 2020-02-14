@@ -1,13 +1,44 @@
-<!--
-    가입하기는 기본적인 폼만 제공됩니다
-    기능명세에 따라 개발을 진행하세요.
-    Sub PJT I에서는 UX, 디자인 등을 포함하여 백엔드를 제외하여 개발합니다.
- -->
 <template>
     <!---->
     <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
-        <div class="wrapC" v-if="!next">
-            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div class="wrapC" style="padding-top: 100px;" v-if="!passwordNext">
+            <h1>
+                가입할때 입력하셨던
+                <br />비밀번호를 입력해 주세요.
+            </h1>
+            <div class="input-with-label">
+                <input
+                    v-model="checkpassword"
+                    id="checkpassword"
+                    :type="passwordType"
+                    v-bind:class="{
+                        error: error.checkpassword,
+                        complete: !error.checkpassword && checkpassword.length !== 0
+                    }"
+                    placeholder="비밀번호를 입력하세요."
+                />
+                <label for="checkpassword">비밀번호</label>
+                <div class="error-text" v-if="error.checkpassword">
+                    {{ error.checkpassword }}
+                </div>
+            </div>
+            <!-- <button class="btn btn--back btn--login" v-on:click="checkPw()" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                다음페이지
+            </button> -->
+            <button class="btn btn--back btn--login" v-on:click="checkPw()">
+                다음페이지
+            </button>
+        </div>
+        <div class="wrapC" v-if="passwordNext && !next">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <h1>
                 키워드를
                 <br />선택해주세요.
@@ -53,14 +84,12 @@
             <button class="btn btn--back" type="button" v-on:click="next = true">
                 다음화면으로
             </button>
-
-            <!-- <button class="btn btn--back btn--login" type="submit" @click="insertMember" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                    가입해보기
-                </button> -->
         </div>
 
         <div class="wrapC" style="padding-top: 100px;" v-if="next">
-            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">유저정보변경</h1>
+            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
+                유저정보변경
+            </h1>
 
             <div class="join">
                 <div id="imageMain">
@@ -93,20 +122,80 @@
                 </div>
 
                 <div class="input-with-label">
-                    <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                    <input
+                        v-model="comment"
+                        v-bind:class="{
+                            error: error.comment,
+                            complete: !error.comment && comment.length !== 0
+                        }"
+                        id="comment"
+                        placeholder="한줄 소개를 입력하세요."
+                        type="text"
+                    />
                     <label for="nickname">한줄소개</label>
-                    <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
+                    <div class="error-text" v-if="error.comment">
+                        {{ error.comment }}
+                    </div>
                 </div>
 
                 <div class="input-with-label">
-                    <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                    <input
+                        v-model="name"
+                        v-bind:class="{
+                            error: error.name,
+                            complete: !error.name && name.length !== 0
+                        }"
+                        id="name"
+                        placeholder="이름을 입력하세요."
+                        type="text"
+                    />
                     <label for="name">이름</label>
-                    <div class="error-text" v-if="error.name">{{ error.name }}</div>
+                    <div class="error-text" v-if="error.name">
+                        {{ error.name }}
+                    </div>
+                </div>
+
+                <div class="input-with-label">
+                    <input
+                        v-model="changepassword"
+                        v-bind:class="{
+                            error: error.changepassword,
+                            complete: !error.changepassword && changepassword.length !== 0
+                        }"
+                        id="changepassword"
+                        :type="passwordType"
+                        placeholder="비밀번호를 입력하세요."
+                    />
+                    <label for="changepassword">비밀번호</label>
+                    <div class="error-text" v-if="error.changepassword">
+                        {{ error.changepassword }}
+                    </div>
+                </div>
+
+                <div class="input-with-label">
+                    <input
+                        v-model="passwordConfirm"
+                        :type="passwordConfirmType"
+                        id="password-confirm"
+                        v-bind:class="{
+                            error: error.passwordConfirm,
+                            complete: !error.passwordConfirm && passwordConfirm.length !== 0
+                        }"
+                        placeholder="비밀번호를 다시한번 입력하세요."
+                    />
+                    <label for="password-confirm">비밀번호 확인</label>
+                    <div class="error-text" v-if="error.passwordConfirm">
+                        {{ error.passwordConfirm }}
+                    </div>
                 </div>
             </div>
 
-            <button class="btn btn--back" v-on:click="check = true" type="submit">정보수정</button>
-            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
+            <button class="btn btn--back" v-on:click="check = true" type="submit">
+                정보수정
+            </button>
+            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+                이전화면으로 돌아가기
+            </button>
         </div>
     </form>
 </template>
@@ -121,6 +210,8 @@ import Swal from 'sweetalert2';
 export default {
     data: () => {
         return {
+            changepassword: '',
+            checkpassword: '',
             checkStatus: false,
             files: '',
             age: '',
@@ -142,7 +233,7 @@ export default {
             file: '',
             error: {
                 email: false,
-                password: false,
+                changepassword: false,
                 nickName: false,
                 name: false,
                 comment: false,
@@ -150,6 +241,7 @@ export default {
                 isTerm: false,
                 submit: false
             },
+            passwordNext: false,
             next: false,
             isSubmit: false,
             passwordType: 'password',
@@ -182,9 +274,12 @@ export default {
                     this.info = res.data.object;
 
                     // alert(info.email);
-                    console.log('QWEQWEQWE' + this.info.nickName);
                     this.nickName = this.info.nickName;
                     this.password = this.info.password;
+                    this.name = this.info.name;
+                    this.comment = this.info.comment;
+
+                    //  alert(this.password);
                     var idx = 0;
                     for (var i = 0; i < this.info.keyword.length; i++) {
                         if (this.info.keyword[i] == ',') {
@@ -222,14 +317,21 @@ export default {
             .letters();
     },
     watch: {
-        password: function() {
+        checkpassword: function() {
             this.checkForm();
+        },
+        changepassword: function() {
+            if (this.next) {
+                this.checkForm();
+            }
         },
         email: function() {
             this.checkForm();
         },
         passwordConfirm: function() {
-            this.checkForm();
+            if (this.next) {
+                this.checkForm();
+            }
         },
         nickName: function() {
             this.checkForm();
@@ -246,17 +348,47 @@ export default {
     },
     methods: {
         checkForm() {
-            if (this.password.length == 0) {
+            if (this.checkpassword.length == 0) {
                 this.error.submit = true;
-                this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+                this.error.checkpassword = '';
+            } else if (this.checkpassword.length > 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
-                this.error.password = false;
+                this.error.checkpassword = false;
                 this.error.submit = false;
             }
 
-            if (this.password.length >= 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
-            else this.error.password = false;
+            if (this.checkpassword.length >= 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else this.error.checkpassword = false;
+
+            if (this.changepassword.length == 0) {
+                this.error.submit = true;
+                this.error.changepassword = '';
+            } else if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else {
+                this.error.changepassword = false;
+                this.error.submit = false;
+            }
+
+            if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else this.error.changepassword = false;
+
+            if (this.passwordConfirm.length == 0) {
+                this.error.submit = true;
+                this.error.passwordConfirm = '';
+            } else if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else {
+                this.error.passwordConfirm = false;
+                this.error.submit = false;
+            }
+
+            if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            else this.error.passwordConfirm = false;
 
             if (this.name.length == 0) {
                 this.error.submit = true;
@@ -308,6 +440,13 @@ export default {
 
             console.log('테스트 입니다 : ');
             console.log(test);
+
+            if (this.changepassword.length > 0) this.password = this.changepassword;
+            console.log('바뀐 비밀번호');
+            console.log(this.changepassword);
+            console.log('바뀌기전 비밀번호');
+            console.log(this.password);
+
             var user = {
                 email: this.email,
                 password: this.password,
@@ -332,11 +471,14 @@ export default {
                         console.log(error);
                     }
                 );
+            } else {
+                user.imgURL = this.info.imgURL;
             }
             UserApi.updateUser(
                 user,
                 res => {
-                    console.log('회원수정 RES : ' + res);
+                    console.log('회원수정 RES : ');
+                    console.log(res);
                     if (res.data.status == true) {
                         if (this.check) {
                             console.log('회원정보 files : ');
@@ -363,95 +505,22 @@ export default {
                 }
             );
         },
-        join() {
-            console.log('ddddddddddddddddddddddd ' + this.imgURL);
-
-            if (this.isSubmit) {
-                const formData = new FormData();
-                formData.append('imgURL', this.imgURL);
-                formData.append('email', this.email);
-                formData.append('password', this.password);
-                formData.append('nickName', this.nickName);
-                formData.append('name', this.name);
-                formData.append('comment', this.comment);
-                formData.append('keyword', this.keyword);
-
-                for (let k of formData.entries()) {
-                    console.log('kKKKKKKKKK ' + k);
-                }
-
-                this.$http
-                    .post('http://192.168.100.90:8080/account/test', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                    .then(res => {
-                        console.log(res);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-
-                var { email, password, nickName, comment, name, imgURL } = this;
-
-                // eslint-disable-next-line no-unused-vars
-                var data = {
-                    email,
-                    password,
-                    nickName,
-                    comment,
-                    name,
-                    imgURL
-                };
-                console.log(this.email);
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-
-                //console.log('axios 하기전!!!');
-
-                /* var body = {
-                    password: this.password,
-                    email: this.email,
-                    nickName: this.nickName,
-                    name: this.name,
-                    comment: this.comment
-                }; */
-                sessionStorage.setItem('email', this.email);
-                sessionStorage.setItem('password', this.password);
-                sessionStorage.setItem('nickName', this.nickName);
-                sessionStorage.setItem('name', this.name);
-                sessionStorage.setItem('comment', this.comment);
-                sessionStorage.setItem('imgURL', this.imgURL);
-
-                UserApi.cert(
-                    data,
-                    res => {
-                        console.log('???????????????');
-                        //console.log(res);
-                        //console.log(res.data.object.key);
-                        this.key = res.data.object.key;
-                        console.log(this.key);
-                        sessionStorage.clear;
-                        sessionStorage.setItem('key', this.key);
-                        console.log('join 인증키 발급');
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-                this.$router.push('/user/keyword');
-                // UserApi.join(body);
-                console.log('join 라우터');
-                // console.log('axios 함!!!');
-            }
-        },
         async test() {},
         back() {
             this.$router.push('/');
         },
         showmodal() {
             this.showModal = false;
+        },
+        checkPw() {
+            if (this.password == this.checkpassword) {
+                this.passwordNext = !this.passwordNext;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '비밀번호가 맞지않습니다'
+                });
+            }
         },
         doubleCheck(num) {
             var body = {
@@ -594,14 +663,7 @@ export default {
 .modal-default-button {
     float: right;
 }
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
+
 .modal-enter {
     opacity: 0;
 }

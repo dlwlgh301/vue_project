@@ -19,7 +19,9 @@
                     type="text"
                 />
                 <label for="email">이메일</label>
-                <div class="error-text" v-if="error.email">{{ error.email }}</div>
+                <div class="error-text" v-if="error.email">
+                    {{ error.email }}
+                </div>
             </div>
 
             <div class="input-with-label">
@@ -35,14 +37,18 @@
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="password">비밀번호</label>
-                <div class="error-text" v-if="error.password">{{ error.password }}</div>
+                <div class="error-text" v-if="error.password">
+                    {{ error.password }}
+                </div>
 
                 <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
                     <i class="fas fa-eye"></i>
                 </span>
             </div>
 
-            <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
+            <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                로그인
+            </button>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>
@@ -158,6 +164,19 @@ export default {
             });
             this.isSubmit = isSubmit;
         },
+        getNotice() {
+            let data = sessionStorage.getItem('email');
+            UserApi.requestNoticeNum(
+                data,
+                res => {
+                    console.log(res.data);
+                    this.$store.state.noticeNum = res.data.object.num;
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+        },
         login() {
             if (this.isSubmit) {
                 let { email, password } = this;
@@ -181,6 +200,7 @@ export default {
                                 text: '아이디 혹은 비밀번호가 틀렸습니다'
                             });
                         } else {
+                            this.getNotice();
                             console.log(res.data.status);
                             this.keyword = res.data.keyword;
                             this.imgURL = res.data.imgURL;

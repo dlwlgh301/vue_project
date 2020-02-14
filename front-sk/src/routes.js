@@ -14,14 +14,15 @@ import ChangeComplete from './views/user/ChangeComplete.vue';
 import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
-import Main from './views/Main.vue';
+import Main from './views/contents/Main.vue';
 import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
-
-import Write from './views/WriteReview.vue';
+import OtherProfile from './views/user/OtherProfile.vue';
+import Write from './views/contents/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
+import Search from './views/contents/Search.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -35,6 +36,11 @@ const router = new Router({
             path: '/user/Profile',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/user/OtherProfile/:email',
+            name: 'OtherProfile',
+            component: OtherProfile
         },
         {
             path: '/user/join',
@@ -133,6 +139,11 @@ const router = new Router({
         {
             path: '/404',
             component: NotFound
+        },
+        {
+            path: '/contents/search',
+            name: 'Search',
+            component: Search
         }
     ]
 });

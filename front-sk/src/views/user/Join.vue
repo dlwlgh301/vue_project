@@ -60,7 +60,9 @@
             </div>
 
             <div class="wrapB" style="padding-top: 100px;" v-if="next">
-                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
+                    가입하기
+                </h1>
                 <div class="join">
                     <div id="imageMain">
                         <div v-if="!image">
@@ -82,26 +84,44 @@
                     <br />
                     <div class="input-with-label">
                         <input type="hidden" name="keyword" :value="keyword" />
-                        <input v-model="email" v-bind:class="{ error: error.email, complete: !error.email && email.length !== 0 }" id="email" placeholder="이메일을 입력하세요." type="text" />
+                        <input
+                            v-model="email"
+                            v-bind:class="{
+                                error: error.email,
+                                complete: !error.email && email.length !== 0
+                            }"
+                            id="email"
+                            placeholder="이메일을 입력하세요."
+                            type="text"
+                        />
                         <label for="email">이메일</label>
-                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
+                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">
+                            이메일 인증
+                        </button>
                     </div>
                     <div class="input-with-label" v-if="isSendEmail">
                         <label for="emailAuth">인증 코드</label>
-                        <div class="error-text" v-if="error.email">{{ error.email }}</div>
+                        <div class="error-text" v-if="error.email">
+                            {{ error.email }}
+                        </div>
                         <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
                     </div>
 
                     <div class="input-with-label">
                         <input
                             v-model="password"
-                            v-bind:class="{ error: error.password, complete: !error.password && password.length !== 0 }"
+                            v-bind:class="{
+                                error: error.password,
+                                complete: !error.password && password.length !== 0
+                            }"
                             id="password"
                             :type="passwordType"
                             placeholder="비밀번호를 입력하세요."
                         />
                         <label for="password">비밀번호</label>
-                        <div class="error-text" v-if="error.password">{{ error.password }}</div>
+                        <div class="error-text" v-if="error.password">
+                            {{ error.password }}
+                        </div>
                     </div>
 
                     <div class="input-with-label">
@@ -109,45 +129,81 @@
                             v-model="passwordConfirm"
                             :type="passwordConfirmType"
                             id="password-confirm"
-                            v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
+                            v-bind:class="{
+                                error: error.passwordConfirm,
+                                complete: !error.passwordConfirm && passwordConfirm.length !== 0
+                            }"
                             placeholder="비밀번호를 다시한번 입력하세요."
                         />
                         <label for="password-confirm">비밀번호 확인</label>
-                        <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+                        <div class="error-text" v-if="error.passwordConfirm">
+                            {{ error.passwordConfirm }}
+                        </div>
                     </div>
 
                     <div class="input-with-label">
-                        <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                        <input
+                            v-model="name"
+                            v-bind:class="{
+                                error: error.name,
+                                complete: !error.name && name.length !== 0
+                            }"
+                            id="name"
+                            placeholder="이름을 입력하세요."
+                            type="text"
+                        />
                         <label for="name">이름</label>
-                        <div class="error-text" v-if="error.name">{{ error.name }}</div>
+                        <div class="error-text" v-if="error.name">
+                            {{ error.name }}
+                        </div>
                     </div>
                     <div class="input-with-label">
                         <input
                             v-model="nickName"
-                            v-bind:class="{ error: error.nickName, complete: !error.nickName && nickName.length !== 0 }"
+                            v-bind:class="{
+                                error: error.nickName,
+                                complete: !error.nickName && nickName.length !== 0
+                            }"
                             id="nickname"
                             placeholder="닉네임을 입력하세요."
                             type="text"
                         />
                         <label for="nickname">닉네임</label>
-                        <button type="button" @click="doubleCheck()">중복확인</button>
-                        <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
+                        <button type="button" @click="doubleCheck()">
+                            중복확인
+                        </button>
+                        <div class="error-text" v-if="error.nickName">
+                            {{ error.nickName }}
+                        </div>
                     </div>
                     <div class="input-with-label">
                         <input
                             v-model="comment"
-                            v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }"
+                            v-bind:class="{
+                                error: error.comment,
+                                complete: !error.comment && comment.length !== 0
+                            }"
                             id="comment"
                             placeholder="한줄 소개를 입력하세요."
                             type="text"
                         />
                         <label for="nickname">한줄소개</label>
-                        <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
+                        <div class="error-text" v-if="error.comment">
+                            {{ error.comment }}
+                        </div>
                     </div>
                 </div>
 
                 <label>
-                    <input v-model="isTerm" type="checkbox" id="term" v-bind:class="{ error: error.isTerm, complete: !error.isTerm }" />
+                    <input
+                        v-model="isTerm"
+                        type="checkbox"
+                        id="term"
+                        v-bind:class="{
+                            error: error.isTerm,
+                            complete: !error.isTerm
+                        }"
+                    />
                     <span>약관을 동의합니다.</span>
                 </label>
                 <div v-if="showModal">
@@ -163,7 +219,9 @@
                                         <slot name="footer">
                                             약관입니다.
                                             <br /><br />
-                                            <button @click="showmodal">확인</button>
+                                            <button @click="showmodal">
+                                                확인
+                                            </button>
                                         </slot>
                                     </div>
                                 </div>
@@ -178,7 +236,9 @@
                     다음화면으로
                 </button> -->
 
-                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
+                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">
+                    이전화면으로
+                </button>
                 <br />
                 <button class="btn btn--back" style="margin-top:10px" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입하기
@@ -328,7 +388,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -337,7 +398,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;

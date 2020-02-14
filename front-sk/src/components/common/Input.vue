@@ -4,15 +4,16 @@
             v-model="text"
             :id="inputValue"
             :placeholder="placeholder"
-            :class="{ error: errorText.length > 0, complete: text.length > 0 && errorText.length === 0 }"
+            :class="{
+                error: errorText.length > 0,
+                complete: text.length > 0 && errorText.length === 0
+            }"
             @input="changeInput($event, inputValue)"
             :type="password ? type : 'text'"
         />
         <label :for="inputValue">{{ label }}</label>
 
-        <div class="error-text" v-if="errorText.length > 0">
-            {{ errorText }}
-        </div>
+        <div class="error-text" v-if="errorText.length > 0">{{ errorText }}</div>
 
         <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
             <i class="fas fa-eye"></i>

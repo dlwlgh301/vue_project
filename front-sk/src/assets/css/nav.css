@@ -7,169 +7,169 @@
 /*12px*/
 /*12px*/
 @-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%,
-  100% {
-    background-position: 140px;
-  }
+    0% {
+        background-position: -100px;
+    }
+    40%,
+    100% {
+        background-position: 140px;
+    }
 }
 @keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%,
-  100% {
-    background-position: 140px;
-  }
+    0% {
+        background-position: -100px;
+    }
+    40%,
+    100% {
+        background-position: 140px;
+    }
 }
 
 @-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%,
-  100% {
-    background-position: 208px;
-  }
+    0% {
+        background-position: -32px;
+    }
+    40%,
+    100% {
+        background-position: 208px;
+    }
 }
 
 @keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%,
-  100% {
-    background-position: 208px;
-  }
+    0% {
+        background-position: -32px;
+    }
+    40%,
+    100% {
+        background-position: 208px;
+    }
 }
 
 .app .header-default {
-  padding: 10px;
-  width: calc(100% - 20px);
-  position: fixed;
-  border-bottom: 1px solid #cccccc;
-  margin-bottom: 10px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    position: fixed;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 10px;
 }
 
 .app .header-default .title {
-  margin-top: 6px;
-  float: left;
-  width: calc(100% - 100px);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  word-wrap: normal;
+    margin-top: 6px;
+    float: left;
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    word-wrap: normal;
 }
 
 .app .header-default .menu {
-  width: 30px;
-  height: 30px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("../../assets/images/profile_default.png");
-  border-radius: 100%;
-  float: left;
-  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../../assets/images/profile_default.png');
+    border-radius: 100%;
+    float: left;
+    margin-right: 10px;
 }
 
 .app .header-default .back {
-  float: left;
-  margin-right: 10px;
-  padding: 6px 6px 0;
+    float: left;
+    margin-right: 10px;
+    padding: 6px 6px 0;
 }
 
 .app .header-default .back .fa-chevron-left {
-  width: auto;
-  font-size: 17px;
+    width: auto;
+    font-size: 17px;
 }
 
 .app .header-default .right-text {
-  float: right;
-  color: #009ff4;
-  font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
-  padding-top: 6px;
+    float: right;
+    color: #009ff4;
+    font-weight: 600;
+    -webkit-transform: rotate(0.1deg);
+    transform: rotate(0.1deg);
+    padding-top: 6px;
 }
 
 .app .header-default .right-text.disabled {
-  color: #444;
+    color: #444;
 }
 
 .app .header-default .btn-search {
-  float: right;
-  color: #333;
-  margin-top: 5px;
+    float: right;
+    color: #333;
+    margin-top: 5px;
 }
 
 .app .header-default .btn-search .fa-search {
-  font-size: 1.37385em;
+    font-size: 1.37385em;
 }
 
 .app .bottom-nav {
-  padding: 10px;
-  width: calc(100% - 20px);
-  float: left;
-  border-top: 1px solid #cccccc;
-  margin-top: 10px;
+    padding: 10px;
+    width: calc(100% - 20px);
+    float: left;
+    border-top: 1px solid #cccccc;
+    margin-top: 10px;
 }
 
 .app .bottom-nav .title {
-  margin-top: 6px;
-  float: left;
-  width: calc(100% - 100px);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  word-wrap: normal;
+    margin-top: 6px;
+    float: left;
+    width: calc(100% - 100px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    word-wrap: normal;
 }
 
 .app .bottom-nav .menu {
-  width: 30px;
-  height: 30px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url("../../assets/images/profile_default.png");
-  border-radius: 100%;
-  float: left;
-  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('../../assets/images/profile_default.png');
+    border-radius: 100%;
+    float: left;
+    margin-right: 10px;
 }
 
 .app .bottom-nav .back {
-  float: left;
-  margin-right: 10px;
-  padding: 6px 6px 0;
+    float: left;
+    margin-right: 10px;
+    padding: 6px 6px 0;
 }
 
 .app .bottom-nav .back .fa-chevron-left {
-  width: auto;
-  font-size: 17px;
+    width: auto;
+    font-size: 17px;
 }
 
 .app .bottom-nav .right-text {
-  float: right;
-  color: #009ff4;
-  font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
-  padding-top: 6px;
+    float: right;
+    color: #009ff4;
+    font-weight: 600;
+    -webkit-transform: rotate(0.1deg);
+    transform: rotate(0.1deg);
+    padding-top: 6px;
 }
 
 .app .bottom-nav .right-text.disabled {
-  color: #444;
+    color: #444;
 }
 
 .app .bottom-nav .btn-search {
-  float: right;
-  color: #333;
-  margin-top: 5px;
+    float: right;
+    color: #333;
+    margin-top: 5px;
 }
 
 .app .bottom-nav .btn-search .fa-search {
-  font-size: 1.37385em;
+    font-size: 1.37385em;
 }
 /*# sourceMappingURL=nav.css.map */
