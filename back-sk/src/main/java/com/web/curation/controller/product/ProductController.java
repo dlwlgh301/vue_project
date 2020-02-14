@@ -128,8 +128,10 @@ public class ProductController {
                         System.out.println("title :::: " + arr3[3]);
                     } else if (j == 1) {
                         System.out.println("link :::: " + arr3[3]);
-                    } else if (j == 2)
-                        System.out.println(arr3[3]);
+                    } else if (j == 2) {
+                        System.out.println("image :::: " + arr3[3]);
+                    }
+                    System.out.println(arr3[3]);
                     System.out.println();
 
                 }
