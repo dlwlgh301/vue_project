@@ -89,7 +89,17 @@
                 </div>
             </template>
             <div class="wrap">
-                <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false">
+                <el-upload
+                    action=""
+                    :show-file-list="true"
+                    list-type="picture-card"
+                    :on-preview="handlePictureCardPreview"
+                    :on-remove="handleRemove"
+                    :on-success="handleSuccess"
+                    :auto-upload="false"
+                    :file-list="fileList"
+                    :limit="5"
+                >
                     <i class="el-icon-plus"></i>
                 </el-upload>
                 <el-dialog :visible.sync="dialogVisible">
@@ -109,6 +119,7 @@ export default {
             placeholder: '후기를 입력해주세요',
             label: '게시글',
             maxLength: 300,
+            fileList: [],
             addtag: [],
             value: '',
             title: '',
@@ -154,6 +165,11 @@ export default {
         }
     },
     methods: {
+        handleSuccess(response, file, fileList) {
+            console.log(response + 'response');
+            console.log(file + 'file');
+            console.log(fileList);
+        },
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
@@ -165,13 +181,15 @@ export default {
         write() {
             this.keyword = this.age + ',' + this.gender + ',' + this.status + ',' + this.addtag;
             this.email = sessionStorage.getItem('email');
+            console.log(this.fileList);
+            console.log(this.keyword);
             var review = {
                 email: this.email,
                 keyword: this.keyword,
                 title: this.title,
                 rating: this.rating,
                 content: this.content,
-                imgURL: this.imgURL
+                imgURL: this.fileList
             };
             console.log(JSON.stringify(review));
             //UserApi.insertReview(review);
