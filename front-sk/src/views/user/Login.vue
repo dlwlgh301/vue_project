@@ -19,7 +19,9 @@
                     type="text"
                 />
                 <label for="email">이메일</label>
-                <div class="error-text" v-if="error.email">{{ error.email }}</div>
+                <div class="error-text" v-if="error.email">
+                    {{ error.email }}
+                </div>
             </div>
 
             <div class="input-with-label">
@@ -35,14 +37,18 @@
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="password">비밀번호</label>
-                <div class="error-text" v-if="error.password">{{ error.password }}</div>
+                <div class="error-text" v-if="error.password">
+                    {{ error.password }}
+                </div>
 
                 <span @click="viewPassword" v-if="password" :class="{ active: type === 'text' }" class="eyes-icon">
                     <i class="fas fa-eye"></i>
                 </span>
             </div>
 
-            <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">로그인</button>
+            <button class="btn btn--back btn--login" v-on:click="login" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                로그인
+            </button>
             <div class="sns-login">
                 <div class="text">
                     <p>SNS 간편 로그인</p>

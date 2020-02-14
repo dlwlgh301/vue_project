@@ -38,7 +38,7 @@ const router = new Router({
             component: Profile
         },
         {
-            path: '/user/OtherProfile',
+            path: '/user/OtherProfile/:email',
             name: 'OtherProfile',
             component: OtherProfile
         },

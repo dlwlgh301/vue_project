@@ -1,18 +1,34 @@
 <template>
     <div class="wrapB" style="padding-top: 100px;">
-        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">인증하기</h1>
+        <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
+            인증하기
+        </h1>
         <div class="cert">
             <div class="input-with-label">
                 <input v-model="email" id="email" placeholder="이메일을 입력하세요." type="text" readonly />
                 <label for="email">이메일</label>
             </div>
             <div class="input-with-label">
-                <input v-model="inputkey" v-bind:class="{ error: error.inputkey, complete: !error.inputkey && inputkey.length !== 0 }" id="inputkey" placeholder="인증키를 입력하세요." type="text" />
+                <input
+                    v-model="inputkey"
+                    v-bind:class="{
+                        error: error.inputkey,
+                        complete: !error.inputkey && inputkey.length !== 0
+                    }"
+                    id="inputkey"
+                    placeholder="인증키를 입력하세요."
+                    type="text"
+                />
                 <label for="inputkey">인증키</label>
-                <div class="error-text" v-if="error.inputkey">{{ error.inputkey }}</div>
+                <div class="error-text" v-if="error.inputkey">
+                    {{ error.inputkey }}
+                </div>
             </div>
-            <button class="btn btn--back btn--login" v-on:click="cert" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">입력</button
-            ><button class="btn btn--back btn--login" style="margin-top:10px">메일이 도착하지 않았나요?</button>
+            <button class="btn btn--back btn--login" v-on:click="cert" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                입력</button
+            ><button class="btn btn--back btn--login" style="margin-top:10px">
+                메일이 도착하지 않았나요?
+            </button>
         </div>
     </div>
 </template>

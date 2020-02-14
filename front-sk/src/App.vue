@@ -1,48 +1,23 @@
 <template>
     <v-app>
         <div id="app" class="phone-viewport">
-            <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-                rel="stylesheet"
-            />
+            <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
 
             <div class="components-page">
                 <v-app-bar fixed color="#FFF" class="Navbar">
-                    <md-button
-                        id="btn-back"
-                        class="md-icon-button"
-                        @click="$router.go(-1)"
-                    >
-                        <md-icon style="color: #ssafy"
-                            >keyboard_arrow_left</md-icon
-                        >
+                    <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
+                        <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
 
-                    <md-button
-                        id="btn-drawer"
-                        class="md-icon-button"
-                        @click.stop="drawer = !drawer"
-                    >
+                    <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
                         <md-icon>menu</md-icon>
                     </md-button>
-                    <v-toolbar-title>{{
-                        $store.state.pageTitle
-                    }}</v-toolbar-title>
+                    <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <md-button class="md-icon-button" @click="refreshNotice">
-                        <v-badge
-                            color="#009ff4"
-                            v-model="$store.state.noticeNum"
-                            overlap
-                        >
-                            <span
-                                slot="badge"
-                                v-if="$store.state.noticeNum"
-                                v-text="Number($store.state.noticeNum)"
-                            ></span>
-                            <md-icon style="color: #009ff4 ;"
-                                >notifications</md-icon
-                            >
+                        <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
+                            <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
+                            <md-icon style="color: #009ff4 ;">notifications</md-icon>
                         </v-badge>
                     </md-button>
                 </v-app-bar>
@@ -93,17 +68,10 @@
                         </div>
                     </div>
                 </md-toolbar> -->
-                <v-navigation-drawer
-                    v-model="drawer"
-                    absolute
-                    temporary
-                    style="height:100%"
-                >
+                <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img
-                                src="https://randomuser.me/api/portraits/men/78.jpg"
-                            ></v-img>
+                            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
                         </v-list-item-avatar>
 
                         <v-list-item-content>
@@ -129,9 +97,7 @@
                                     <v-icon>search</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title
-                                        >search</v-list-item-title
-                                    >
+                                    <v-list-item-title>search</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
@@ -141,9 +107,7 @@
                                     <v-icon>create</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title
-                                        >리뷰 쓰기</v-list-item-title
-                                    >
+                                    <v-list-item-title>리뷰 쓰기</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
@@ -153,9 +117,7 @@
                                     <v-icon>person</v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title
-                                        >마이페이지</v-list-item-title
-                                    >
+                                    <v-list-item-title>마이페이지</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>

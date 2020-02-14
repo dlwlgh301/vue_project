@@ -27,7 +27,8 @@
 import Kakao from '../../../kakao';
 import UserApi from '../../../apis/UserApi';
 import router from '../../../routes';
-import store from '../../../vuex/store';
+import firebase from '../../../apis/FirebaseService';
+
 export default {
     data: () => {
         return {
@@ -60,14 +61,18 @@ export default {
                                         //이미 가입되어있던 사람
                                         sessionStorage.setItem('email', this.email);
                                         console.log('가입');
+                                        firebase.loginPush({
+                                            msg: email + '님이 로그인하였습니다.',
+                                            receiver: email
+                                        });
                                         router.push('/main');
                                         //store.commit('loginToken', res.data.token);
 
                                         //router.push('/main');
                                     } else {
                                         console.log('미가입');
+                                        sessionStorage.setItem('email', email);
                                         router.push('/user/snsJoin');
-                                        store.state.email = this.email;
                                         //router.push('/user/join');
                                     }
                                 },
