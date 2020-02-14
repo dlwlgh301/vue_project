@@ -162,7 +162,6 @@ public class FollowController {
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
-        String imgURL = userServiceImpl.getImgURL(follower);
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
