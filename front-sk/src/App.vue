@@ -21,7 +21,7 @@
                         </v-badge>
                     </md-button>
                 </v-app-bar>
-                <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
+                <v-navigation-drawer v-model="drawer" fixed temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
                             <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
