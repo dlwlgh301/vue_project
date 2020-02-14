@@ -7,7 +7,7 @@
     <div>
         <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
             <div class="wrapC" v-if="!next">
-                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br /><br />
                 <h1>
                     키워드를
                     <br />선택해주세요.
@@ -388,7 +388,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -397,7 +398,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;

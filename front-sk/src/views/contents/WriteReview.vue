@@ -199,7 +199,8 @@ export default {
             let test = new FormData();
             test.append('File', this.fileList[0]); 
             console.log(test);*/
-            UserApi.fileUpload(
+            console.log(this.file);
+            UserApi.uploadtest(
                 this.file,
                 res => {
                     console.log(res);

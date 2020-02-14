@@ -209,6 +209,7 @@ export default {
                             sessionStorage.setItem('nickName', this.nickName);
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
+
                             this.getNotice();
 
                             // this.$router.push('/main');

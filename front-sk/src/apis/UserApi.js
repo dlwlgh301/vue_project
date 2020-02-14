@@ -24,7 +24,8 @@ const UserApi = {
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     insertReview: data => insertReview(data),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
-    apitest: () => apitest()
+    apitest: () => apitest(),
+    uploadtest: data => uploadtest(data)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -295,6 +296,7 @@ const fileUpload = (data, callback, errorCallback) => {
     //     success: callback,
     //     error: errorCallback
     // });
+    axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     axios
         .post(`${host}/account/fileUpload`, data)
         .then(() => {
@@ -322,7 +324,13 @@ const insertReview = data => {
         headers: { 'Content-Type': 'application/json' }
     });
 };
-
+const uploadtest = data => {
+    fetch(`${host}/account/fileUpload`, {
+        method: 'POST',
+        mode: 'no-cors',
+        data: data
+    });
+};
 const apitest = () => {
     fetch(`${host}/product/searchProduct`, {
         method: 'GET',
