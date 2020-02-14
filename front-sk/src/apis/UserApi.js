@@ -5,6 +5,7 @@ const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
+    isFollowing: (data, callback, errorCallback) => isFollowing(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
@@ -21,6 +22,18 @@ const UserApi = {
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     insertReview: data => insertReview(data)
+};
+const isFollowing = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/follow/followCheck?follower=` + data['myemail'] + '&following=' + data['email'])
+        .then(res => {
+            console.log('팔로체크성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로체크 실패');
+            errorCallback(error);
+        });
 };
 const follower = (data, callback, errorCallback) => {
     axios

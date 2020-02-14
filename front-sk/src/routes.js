@@ -23,6 +23,7 @@ import OtherProfile from './views/user/OtherProfile.vue';
 import Write from './views/contents/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
+import Bookmark from './views/contents/BookMark.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -38,7 +39,7 @@ const router = new Router({
             component: Profile
         },
         {
-            path: '/user/OtherProfile',
+            path: '/user/OtherProfile/:email',
             name: 'OtherProfile',
             component: OtherProfile
         },
@@ -116,7 +117,7 @@ const router = new Router({
             component: UserUpdate
         },
         {
-            path: '/main',
+            path: '/contents/main',
             name: 'Main',
             component: Main
         },
@@ -131,7 +132,7 @@ const router = new Router({
             component: UpdatePass
         },
         {
-            path: '/main/write',
+            path: '/contents/write',
             name: 'Write',
             component: Write
         },
@@ -144,6 +145,11 @@ const router = new Router({
             path: '/contents/search',
             name: 'Search',
             component: Search
+        },
+        {
+            path: '/contents/bookmark',
+            name: 'Bookmark',
+            component: Bookmark
         }
     ]
 });
