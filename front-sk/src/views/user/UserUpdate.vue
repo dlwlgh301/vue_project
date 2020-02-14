@@ -11,11 +11,16 @@
                     v-model="checkpassword"
                     id="checkpassword"
                     :type="passwordType"
-                    v-bind:class="{ error: error.checkpassword, complete: !error.checkpassword && checkpassword.length !== 0 }"
+                    v-bind:class="{
+                        error: error.checkpassword,
+                        complete: !error.checkpassword && checkpassword.length !== 0
+                    }"
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="checkpassword">비밀번호</label>
-                <div class="error-text" v-if="error.checkpassword">{{ error.checkpassword }}</div>
+                <div class="error-text" v-if="error.checkpassword">
+                    {{ error.checkpassword }}
+                </div>
             </div>
             <!-- <button class="btn btn--back btn--login" v-on:click="checkPw()" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                 다음페이지
@@ -76,11 +81,15 @@
                 </md-field>
             </div>
 
-            <button class="btn btn--back" type="button" v-on:click="next = true">다음화면으로</button>
+            <button class="btn btn--back" type="button" v-on:click="next = true">
+                다음화면으로
+            </button>
         </div>
 
         <div class="wrapC" style="padding-top: 100px;" v-if="next">
-            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">유저정보변경</h1>
+            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
+                유저정보변경
+            </h1>
 
             <div class="join">
                 <div id="imageMain">
@@ -113,27 +122,54 @@
                 </div>
 
                 <div class="input-with-label">
-                    <input v-model="comment" v-bind:class="{ error: error.comment, complete: !error.comment && comment.length !== 0 }" id="comment" placeholder="한줄 소개를 입력하세요." type="text" />
+                    <input
+                        v-model="comment"
+                        v-bind:class="{
+                            error: error.comment,
+                            complete: !error.comment && comment.length !== 0
+                        }"
+                        id="comment"
+                        placeholder="한줄 소개를 입력하세요."
+                        type="text"
+                    />
                     <label for="nickname">한줄소개</label>
-                    <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
+                    <div class="error-text" v-if="error.comment">
+                        {{ error.comment }}
+                    </div>
                 </div>
 
                 <div class="input-with-label">
-                    <input v-model="name" v-bind:class="{ error: error.name, complete: !error.name && name.length !== 0 }" id="name" placeholder="이름을 입력하세요." type="text" />
+                    <input
+                        v-model="name"
+                        v-bind:class="{
+                            error: error.name,
+                            complete: !error.name && name.length !== 0
+                        }"
+                        id="name"
+                        placeholder="이름을 입력하세요."
+                        type="text"
+                    />
                     <label for="name">이름</label>
-                    <div class="error-text" v-if="error.name">{{ error.name }}</div>
+                    <div class="error-text" v-if="error.name">
+                        {{ error.name }}
+                    </div>
                 </div>
 
                 <div class="input-with-label">
                     <input
                         v-model="changepassword"
-                        v-bind:class="{ error: error.changepassword, complete: !error.changepassword && changepassword.length !== 0 }"
+                        v-bind:class="{
+                            error: error.changepassword,
+                            complete: !error.changepassword && changepassword.length !== 0
+                        }"
                         id="changepassword"
                         :type="passwordType"
                         placeholder="비밀번호를 입력하세요."
                     />
                     <label for="changepassword">비밀번호</label>
-                    <div class="error-text" v-if="error.changepassword">{{ error.changepassword }}</div>
+                    <div class="error-text" v-if="error.changepassword">
+                        {{ error.changepassword }}
+                    </div>
                 </div>
 
                 <div class="input-with-label">
@@ -141,16 +177,25 @@
                         v-model="passwordConfirm"
                         :type="passwordConfirmType"
                         id="password-confirm"
-                        v-bind:class="{ error: error.passwordConfirm, complete: !error.passwordConfirm && passwordConfirm.length !== 0 }"
+                        v-bind:class="{
+                            error: error.passwordConfirm,
+                            complete: !error.passwordConfirm && passwordConfirm.length !== 0
+                        }"
                         placeholder="비밀번호를 다시한번 입력하세요."
                     />
                     <label for="password-confirm">비밀번호 확인</label>
-                    <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
+                    <div class="error-text" v-if="error.passwordConfirm">
+                        {{ error.passwordConfirm }}
+                    </div>
                 </div>
             </div>
 
-            <button class="btn btn--back" v-on:click="check = true" type="submit">정보수정</button>
-            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
+            <button class="btn btn--back" v-on:click="check = true" type="submit">
+                정보수정
+            </button>
+            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
+                이전화면으로 돌아가기
+            </button>
         </div>
     </form>
 </template>
@@ -306,37 +351,43 @@ export default {
             if (this.checkpassword.length == 0) {
                 this.error.submit = true;
                 this.error.checkpassword = '';
-            } else if (this.checkpassword.length > 0 && !this.passwordSchema.validate(this.checkpassword)) this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.checkpassword.length > 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.checkpassword = false;
                 this.error.submit = false;
             }
 
-            if (this.checkpassword.length >= 0 && !this.passwordSchema.validate(this.checkpassword)) this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.checkpassword.length >= 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.checkpassword = false;
 
             if (this.changepassword.length == 0) {
                 this.error.submit = true;
                 this.error.changepassword = '';
-            } else if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword)) this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.changepassword = false;
                 this.error.submit = false;
             }
 
-            if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword)) this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.changepassword = false;
 
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm)) this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
             }
 
-            if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm)) this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.passwordConfirm = false;
 
             if (this.name.length == 0) {
