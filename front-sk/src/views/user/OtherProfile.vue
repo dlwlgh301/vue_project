@@ -422,7 +422,7 @@ export default {
             this.age = '';
             this.gender = '';
             this.status = '';
-            this.email = 'wns4773@naver.com';
+            this.email = this.$route.params.email;
             // this.email = sessionStorage.getItem('email');
             let { email } = this;
             let data = {

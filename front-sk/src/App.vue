@@ -67,7 +67,7 @@
                             </md-button>
                         </div>
                     </div>
-                </md-toolbar> -->
+                </md-toolbar>-->
                 <v-navigation-drawer v-model="drawer" absolute temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
@@ -172,6 +172,7 @@ export default {
     methods: {
         getNotice() {
             let data = sessionStorage.getItem('email');
+            console.log(data);
             UserApi.requestNoticeNum(
                 data,
                 res => {

@@ -193,7 +193,6 @@ export default {
                                 text: '아이디 혹은 비밀번호가 틀렸습니다'
                             });
                         } else {
-                            this.getNotice();
                             console.log(res.data.status);
                             this.keyword = res.data.keyword;
                             this.imgURL = res.data.imgURL;
@@ -204,6 +203,7 @@ export default {
                             //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
                             sessionStorage.setItem('password', this.password);
+                            this.getNotice();
 
                             firebase.loginPush({
                                 msg: email + '님이 로그인하였습니다.',

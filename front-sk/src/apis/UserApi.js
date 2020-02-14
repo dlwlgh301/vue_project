@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -99,7 +99,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .get(`${noticePort}/account/snslogin?email=` + JSON.stringify(data['email']))
+        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })

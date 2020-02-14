@@ -9,10 +9,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-    console.log(
-        '[firebase-messaging-sw.js] Received background message ',
-        payload
-    );
+    console.log('[firebase-messaging-sw.js] Received background message ', payload);
     // Customize notification here
     console.log(payload);
     console.log('백그라운드');
@@ -22,12 +19,9 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
     const notificationTitle = '백그라운드 알림';
     const notificationOptions = {
-        body: payload.data.msg
-        // icon: '/firebase-logo.png'
+        body: payload.data.msg,
+        icon: 'http://192.168.100.90:8080/image/' + payload.data.imgURL
     };
 
-    return self.registration.showNotification(
-        notificationTitle,
-        notificationOptions
-    );
+    return self.registration.showNotification(notificationTitle, notificationOptions);
 });
