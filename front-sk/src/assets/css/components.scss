@@ -1,13 +1,13 @@
 @charset "utf-8";
 @import './common';
 
-@media (max-width: 1023px) {
+@media (max-width: 1366px) {
     #btn-drawer {
         display: none;
     }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1367px) {
     .bottom-nav {
         display: none;
     }
@@ -17,6 +17,7 @@
 }
 
 .components-page {
+    margin-top: 5rem;
     h1 {
         text-align: center;
         font-weight: $f600;

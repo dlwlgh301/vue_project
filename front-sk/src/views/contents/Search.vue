@@ -1,29 +1,22 @@
 <template>
     <div class="wrapC" style="margin-top: 5rem;">
-<<<<<<< HEAD
-        <div class="search-bar" style="">
-=======
-        <div class="search-bar">
->>>>>>> fb9e15cf4f86090c3e708be15007fa470d683f33
+        <div class="search-bar" style="display: block;">
             <input v-model="keyword" type="text" placeholder="검색어를 입력해주세요." @keyup.enter="search" />
             <button @click="search">
                 <md-icon>search</md-icon>
             </button>
             <label for="search-bar">
-<<<<<<< HEAD
                 <select v-model="selected_option">
-=======
-                <select v-model="selected">
->>>>>>> fb9e15cf4f86090c3e708be15007fa470d683f33
                     <option v-for="option in options" v-bind:key="option.text">{{ option.text }}</option>
                 </select>
                 <!-- <v-select :items="options" single-line></v-select> -->
             </label>
         </div>
-        <v-list two-line>
+
+        <v-list two-line style="padding-top: 8vh;">
             <template v-for="(item, index) in items">
-                <v-list-item :key="item.title" avatar ripple @click="toggle(index)">
-                    <v-avatar size="20%" tile="tile">
+                <v-list-item :key="item.title" avatar ripple>
+                    <v-avatar size="6rem" :tile="tile">
                         <v-img :src="item.image"></v-img>
                     </v-avatar>
                     <v-list-item-content>
@@ -31,8 +24,7 @@
                         <v-list-item-subtitle class="text--primary">{{ item.headline }}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{ item.subtitle }}</v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-list-item-action>
-                        <v-list-item-action-text>{{ item.action }}</v-list-item-action-text>
+                    <v-list-item-action @click="toggle(index)">
                         <v-icon v-if="selected.indexOf(index) < 0" color="grey lighten-1">star_border</v-icon>
                         <v-icon v-else color="yellow darken-2">star</v-icon>
                     </v-list-item-action>
@@ -67,7 +59,7 @@ export default {
             }
         }
     },
-    data: () => {
+    data() {
         return {
             keyword: null,
             selected_option: '상품',
