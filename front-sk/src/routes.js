@@ -15,7 +15,6 @@ import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/contents/Main.vue';
-import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
@@ -53,11 +52,6 @@ const router = new Router({
             path: '/user/find',
             name: 'Find',
             component: Find
-        },
-        {
-            path: '/user/Board',
-            name: 'Board',
-            component: Board
         },
         {
             path: '/components',

@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -134,7 +134,7 @@ const profileLoad = (data, callback, errorCallback) => {
 };
 const requestLogin = (data, callback, errorCallback) => {
     axios
-        .post(`${noticePort}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
+        .post(`${host}/account/login?email=` + JSON.stringify(data['email']) + '&password=' + JSON.stringify(data['password']))
         .then(res => {
             callback(res);
         })
@@ -244,6 +244,7 @@ const join = body => {
     var value = {
         password: body.password,
         email: body.email,
+
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
@@ -254,7 +255,7 @@ const join = body => {
     console.log('value is ');
     console.log(value);
     axios({
-        url: `${noticePort}/account/signup`,
+        url: `${host}/account/signup`,
         method: 'post',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
