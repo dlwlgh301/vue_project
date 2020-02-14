@@ -1,6 +1,6 @@
 <template>
     <div class="wrapC">
-        <div class="wrap" style="margin-top: 1rem">
+        <div class="wrap" style="margin-top: 20%">
             <h1>글 쓰기</h1>
             <div class="quest">이 제품이 어울리는 사람을 골라주세요</div>
             <div>
@@ -57,15 +57,7 @@
                     <v-col>
                         <div id="test1">
                             <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ rating }})</div>
-                            <v-rating
-                                id="test3"
-                                v-model="rating"
-                                background-color="yellow lighten-3"
-                                color="yellow accent-4"
-                                dense
-                                half-increments
-                                large
-                            ></v-rating>
+                            <v-rating id="test3" v-model="rating" background-color="yellow lighten-3" color="yellow accent-4" dense half-increments large></v-rating>
                         </div>
                     </v-col>
                 </v-row>
@@ -73,12 +65,7 @@
 
             <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300"></TextareaComponent>
             <div class="wrap">
-                <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    list-type="picture-card"
-                    :on-preview="handlePictureCardPreview"
-                    :on-remove="handleRemove"
-                >
+                <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
                 </el-upload>
                 <el-dialog :visible.sync="dialogVisible">
