@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.deser.UnresolvedForwardReference;
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
@@ -161,6 +162,7 @@ public class FollowController {
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
+        String imgURL = userServiceImpl.getImgURL(follower);
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
