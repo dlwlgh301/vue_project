@@ -38,7 +38,7 @@
     </select>
 
      <update id="updateUser" parameterType="com.web.curation.model.user.User">
-        update user set name=#{name}, comment=#{comment}, keyword=#{keyword}, imgURL=#{imgURL}
+        update user set password=#{password}, name=#{name}, comment=#{comment}, keyword=#{keyword}, imgURL=#{imgURL}
         where email=#{email}
     </update>
 
@@ -49,5 +49,9 @@
 
     <select id="getImgURL" parameterType="string" resultType="string">
         select imgURL from user where email = #{value}
+    </select>
+
+    <select id="getKeyword" parameterType="string" resultType="string">
+        select keyword from user where email = #{value}
     </select>
 </mapper>

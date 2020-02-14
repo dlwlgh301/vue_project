@@ -13,12 +13,6 @@
                     <br />선택해주세요.
                 </h1>
                 <br />
-                <!-- <input type="hidden" name="email" :value="email" />
-                <input type="hidden" name="password" :value="password" />
-                <input type="hidden" name="name" :value="name" />
-                <input type="hidden" name="nickName" :value="nickName" />
-                <input type="hidden" name="keyword" :value="keyword" />
-                <input type="hidden" name="comment" :value="comment" /> -->
 
                 <div class="md-layout-item">
                     <md-field>

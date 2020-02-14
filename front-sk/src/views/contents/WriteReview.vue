@@ -73,7 +73,15 @@
                     <v-col>
                         <div id="test1">
                             <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ rating }})</div>
-                            <v-rating id="test3" v-model="rating" background-color="yellow lighten-3" color="yellow accent-4" dense half-increments large></v-rating>
+                            <v-rating
+                                id="test3"
+                                v-model="rating"
+                                background-color="yellow lighten-3"
+                                color="yellow accent-4"
+                                dense
+                                half-increments
+                                large
+                            ></v-rating>
                         </div>
                     </v-col>
                 </v-row>
@@ -106,7 +114,9 @@
                     <img width="100%" :src="imgURL" alt />
                 </el-dialog>
             </div>
-            <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">글쓰기</button>
+            <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                글쓰기
+            </button>
             <div style="height:4rem; visibility:hidden">ㅎㅇ</div>
         </div>
     </div>

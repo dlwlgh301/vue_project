@@ -63,4 +63,10 @@ public class UserServiceImpl implements UserService {
     public String getImgURL(String email) throws Exception {
         return userDaoImpl.getImgURL(email);
     }
+
+    @Override
+    public String getKeyword(String email) throws Exception {
+        return userDaoImpl.getKeyword(email);
+    }
+
 }
