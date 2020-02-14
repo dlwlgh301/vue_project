@@ -19,7 +19,9 @@ import javax.validation.Valid;
 
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
+import com.web.curation.model.vo.Product;
 import com.web.curation.service.notice.NoticeService;
+import com.web.curation.service.product.ProductService;
 import com.web.curation.service.UserService;
 
 import org.json.JSONObject;
@@ -68,9 +70,11 @@ public class ProductController {
     NoticeService alarmServiceImpl;
 
     @Autowired
+    ProductService productServiceImpl;
+
+    @Autowired
     private JavaMailSender javaMailSender;
 
-    // + "&display=100"
     @GetMapping("/product/searchProduct")
     @ApiOperation(value = "api 받아오기")
     public Object searchProduct(@RequestParam(required = false) final String num, HttpServletResponse res)
@@ -86,8 +90,8 @@ public class ProductController {
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
         String clientSecret = "zPy366mvC9";// 애플리케이션 클라이언트 시크릿값";
         try {
-            String text = URLEncoder.encode("심플한", "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text; // json 결과
+            String text = URLEncoder.encode("생일선물", "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text + "&display=50"; // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
             // // xml 결과
             URL url = new URL(apiURL);
@@ -119,19 +123,23 @@ public class ProductController {
 
             for (int i = 2; i < arr.length; i++) {
                 String[] arr2 = arr[i].split(",");
+                System.out.println("몇번째 : " + i);
 
                 for (int j = 0; j <= 4; j++) {
-                    System.out.println(arr2[j]);
+                    // System.out.println(arr2[j]);
 
                     String[] arr3 = arr2[j].replace("}", "").replace("당일출고", "").replace("</b>", "").replace("<b>", "")
                             .split("\"");
 
                     if (j == 0) {
-                        System.out.println("title :::: " + arr3[3]);
+                        productName = arr3[3];
+                        System.out.println("title :::: " + productName);
                     } else if (j == 1) {
-                        System.out.println("link :::: " + arr3[3]);
+                        // link = arr3[0] + arr 3[1] + arr3[2];
+                        System.out.println("link :::: " + link);
                     } else if (j == 2) {
-                        System.out.println("image :::: " + arr3[3]);
+                        image = arr3[3];
+                        System.out.println("image :::: " + image);
                     } else if (j == 3) {
                         price1 = Integer.parseInt(arr3[3]);
                     } else if (j == 4) {
@@ -148,9 +156,12 @@ public class ProductController {
                     price = price1;
                 }
 
-                System.out.println("price :::: " + price);
-                System.out.println();
-                System.out.println();
+                Product product = new Product(productName, link, image, price);
+                // System.out.println("price :::: " + price);
+                // productServiceImpl.insertProduct(product);
+                // System.out.println();
+                // System.out.println();
+                System.out.println(product);
             }
 
             // System.out.println(response.toString());

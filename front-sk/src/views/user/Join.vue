@@ -636,7 +636,7 @@ export default {
         },
 
         fileSelect() {
-            let test = new FormData(document.getElementById('myform'));
+            let test = new FormData(document.getElementById('imageInputform'));
             console.log(test);
 
             if (this.files.length > 0) {
