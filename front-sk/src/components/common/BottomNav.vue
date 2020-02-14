@@ -11,7 +11,7 @@
                 <md-bottom-bar-item to="/main/write">
                     <md-icon style="color: #009ff4 ">create</md-icon>
                 </md-bottom-bar-item>
-                <md-bottom-bar-item to="/user/find">
+                <md-bottom-bar-item to="/user/bookmark">
                     <md-icon style="color: #009ff4 ">group</md-icon>
                     <!-- <i class="fas fa-user-friends" style="color: #009ff4 "></i> -->
                 </md-bottom-bar-item>
