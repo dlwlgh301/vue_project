@@ -117,7 +117,7 @@
                             <md-icon>comment</md-icon>
                             {{ info.comment }}
                         </li>
-                        <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
+                        <li style="cursor:pointer" v-on:click="board"><md-icon>business_center</md-icon>좋아요 글보기</li>
                         <li style="cursor:pointer" v-on:click="updateuser"><md-icon>emoji_emotions</md-icon>정보 수정</li>
                     </ul>
                 </div>
@@ -456,7 +456,7 @@ export default {
             this.$router.push('/user/Profile');
         },
         board() {
-            this.$router.push('/user/Board');
+            this.$router.push('/contents/Like');
         },
         updateuser() {
             this.$router.push('/user/UserUpdate');

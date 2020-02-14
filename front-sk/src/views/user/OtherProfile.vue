@@ -125,7 +125,7 @@
                             <md-icon>comment</md-icon>
                             {{ info.comment }}
                         </li>
-                        <li v-on:click="board"><md-icon>business_center</md-icon>게시글 보기</li>
+                        <li v-on:click="board"><md-icon>business_center</md-icon>좋아요 보기</li>
                     </ul>
                 </div>
             </div>
