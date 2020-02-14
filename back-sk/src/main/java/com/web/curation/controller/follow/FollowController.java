@@ -67,7 +67,7 @@ public class FollowController {
     @Autowired
     NoticeService noticeServiceImpl;
 
-    @PostMapping("/follow/followList")
+    @GetMapping("/follow/followList")
     @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
     public Object followList(@RequestParam(required = true) final String num,
             @RequestParam(required = true) final String email) throws Exception {
@@ -120,6 +120,38 @@ public class FollowController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/follow/followCheck")
+    @ApiOperation(value = "내가 다른사람과 팔로우 되어있는지 확인하기")
+    public Object followCheck(@RequestParam(required = true) final String follower,
+            @RequestParam(required = true) final String following) throws Exception {
+
+        final BasicResponse result = new BasicResponse();
+        Boolean followCheckFlag;
+
+        JSONObject data = new JSONObject();
+
+        System.out.println("followCheck ");
+        System.out.println("followCheck ");
+        System.out.println("followCheck ");
+        System.out.println(follower);
+        System.out.println(following);
+
+        if (followServiceImpl.followCheck(new Follow(follower, "", following, "")) > 0) {
+            followCheckFlag = true;
+        }
+
+        else {
+            followCheckFlag = false;
+        }
+
+        result.status = true;
+        result.object = followCheckFlag;
+
+        System.out.println("listSize : " + followCheckFlag);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
     public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
@@ -164,7 +196,7 @@ public class FollowController {
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
-        followServiceImpl.addFollow(follow);
+        followServiceImpl.deleteFollow(follow);
 
         result.status = true;
 

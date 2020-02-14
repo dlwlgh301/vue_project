@@ -1,4 +1,8 @@
 import axios from 'axios';
+<<<<<<< HEAD
+=======
+import Swal from 'sweetalert2';
+>>>>>>> c03217880740031b18a0dd9ada6f4e6ec128e657
 const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
@@ -21,7 +25,9 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback)
+    requestReview: (data, callback) => requestReview(data, callback),
+    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
+    apitest: () => apitest()
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -112,7 +118,7 @@ const following = (data, callback, errorCallback) => {
 };
 const snsDuplicate = (data, callback) => {
     axios
-        .get(`${noticePort}/account/snslogin?email=` + JSON.stringify(data['email']))
+        .get(`${host}/account/snslogin?email=` + JSON.stringify(data['email']))
         .then(res => {
             callback(res);
         })
@@ -265,6 +271,22 @@ const join = body => {
         });
 };
 
+const updatePass = (data, callback, errorCallback) => {
+    axios
+        .post(`${host}/account/updatePass`, data)
+        .then(() => {
+            Swal.fire({
+                icon: 'success',
+                title: '비밀번호 수정이 완료되었습니다.'
+            });
+            console.log('비밀번호 수정 완료');
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
+        });
+};
+
 const fileUpload = (data, callback, errorCallback) => {
     // axios({
     //     url: `${host}/account/fileUpload`,
@@ -288,5 +310,24 @@ const requestReview = (data, callback) => {
     axios.get(`${host}/main/review`, data).then(res => {
         callback(res);
     });
+};
+
+const apitest = () => {
+    fetch(`${host}/product/searchProduct`, {
+        method: 'GET',
+        mode: 'no-cors'
+    });
+    // axios.post(`${host}/product/searchProduct`, {
+    //     headers: {
+    //         'Access-Control-Allow-Origin': '*'
+    //     }
+    // })
+    // .then(() => {
+    //     alert('api 불러오기 성공~!');
+    //     callback;
+    // })
+    // .catch(() => {
+    //     errorCallback;
+    // });
 };
 export default UserApi;

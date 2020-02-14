@@ -3,10 +3,10 @@ import Router from 'vue-router';
 import Certification from './views/user/Certification.vue';
 import Login from './views/user/Login.vue';
 import Join from './views/user/Join.vue';
-import Find from './views/user/Find.vue';
+import FindPassword from './views/user/FindPassword.vue';
 import LoginComplete from './views/user/LoginComplete.vue';
 import Components from './views/Components.vue';
-import FindCert from './views/user/FindCert.vue';
+import MailCert from './views/user/MailCert.vue';
 import Profile from './views/user/Profile.vue';
 import NotFound from './views/user/NotFound.vue';
 import Change from './views/user/Change.vue';
@@ -49,9 +49,9 @@ const router = new Router({
             component: Join
         },
         {
-            path: '/user/find',
-            name: 'Find',
-            component: Find
+            path: '/user/FindPassword',
+            name: 'FindPassword',
+            component: FindPassword
         },
         {
             path: '/components',
@@ -84,9 +84,9 @@ const router = new Router({
             component: ChangeComplete
         },
         {
-            path: '/user/findcert',
-            name: 'FindCert',
-            component: FindCert
+            path: '/user/mailCert',
+            name: 'MailCert',
+            component: MailCert
         },
         {
             path: '/user/noticeTab',
@@ -97,14 +97,6 @@ const router = new Router({
             path: '/user/test',
             name: 'test',
             component: Test
-        },
-        {
-            path: '*',
-            redirect: '/404'
-        },
-        {
-            path: '/404',
-            component: NotFound
         },
         {
             path: '/user/userUpdate',
@@ -135,6 +127,14 @@ const router = new Router({
             path: '/user/snsJoin',
             name: 'snsJoin',
             component: SnsJoin
+        },
+        {
+            path: '*',
+            redirect: '/404'
+        },
+        {
+            path: '/404',
+            component: NotFound
         },
         {
             path: '/contents/search',
