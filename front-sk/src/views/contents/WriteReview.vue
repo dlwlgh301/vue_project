@@ -2,17 +2,20 @@
     <div class="wrapC">
         <div class="wrap" style="margin-top: 19%">
             <h1>글 쓰기</h1>
-            <div class="quest" style="padding-top:5%">이 제품이 어울리는 사람을 골라주세요</div>
+            <div class="quest" style="padding-top:5%">
+                이 제품이 어울리는 사람을 골라주세요
+                <p style="text-color:red">필수!</p>
+            </div>
             <div>
                 <v-row justify="space-around">
                     <v-col cols="24">
                         <v-chip-group column active-class="blue darken-1 white--text" v-model="age">
-                            <v-chip vlaue="10대">10대</v-chip>
-                            <v-chip vlaue="20대">20대</v-chip>
-                            <v-chip vlaue="30대">30대</v-chip>
-                            <v-chip vlaue="40대">40대</v-chip>
-                            <v-chip vlaue="50대">50대</v-chip>
-                            <v-chip vlaue="60대">60대 이상</v-chip>
+                            <v-chip value="10대">10대</v-chip>
+                            <v-chip value="20대">20대</v-chip>
+                            <v-chip value="30대">30대</v-chip>
+                            <v-chip value="40대">40대</v-chip>
+                            <v-chip value="50대">50대</v-chip>
+                            <v-chip value="60대">60대 이상</v-chip>
                         </v-chip-group>
                     </v-col>
                 </v-row>
@@ -46,14 +49,27 @@
                     </button>-->
                 </div>
             </div>
-            <InputComponent inputValue="name" :errorText="error.name" placeholder="제픔명을 입력해주세요" label="제품명" v-model="name" />
+            <div class="input-with-label">
+                <input
+                    v-model="title"
+                    v-bind:class="{
+                        error: error.title,
+                        complete: !error.title && title.length !== 0
+                    }"
+                    id="title"
+                    placeholder="제목을 입력해 주세요."
+                    type="text"
+                />
+                <label for="title">제목</label>
+                <div class="error-text" v-if="error.title">
+                    {{ error.title }}
+                </div>
+            </div>
             <div class="wrap" id="rating">
                 <v-row>
                     <v-col>
-                        <div style="padding-top: 0.7rem">
-                            이 제품에 대한 전반적인 평가를 입력해주세요
-                        </div></v-col
-                    >
+                        <div style="padding-top: 0.7rem">이 제품에 대한 전반적인 평가를 입력해주세요</div>
+                    </v-col>
                     <v-col>
                         <div id="test1">
                             <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ rating }})</div>
@@ -63,46 +79,56 @@
                 </v-row>
             </div>
 
-            <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300" v-model="content"></TextareaComponent>
+            <template>
+                <div class="textarea-wrap">
+                    <h4>
+                        {{ label }}
+                    </h4>
+                    <span>{{ content.length }}/{{ this.maxLength }}</span>
+                    <textarea v-model="content" :placeholder="placeholder" />
+                </div>
+            </template>
             <div class="wrap">
-                <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :auto-upload="false">
                     <i class="el-icon-plus"></i>
                 </el-upload>
                 <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt />
+                    <img width="100%" :src="imgURL" alt />
                 </el-dialog>
             </div>
-            <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                글쓰기
-            </button>
+            <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">글쓰기</button>
             <div style="height:4rem; visibility:hidden">ㅎㅇ</div>
         </div>
     </div>
 </template>
 <script>
-import InputComponent from '../../components/common/Input';
-import TextareaComponent from '../../components/common/Textarea';
-
+//import UserApi from '../../apis/UserApi';
 export default {
-    components: {
-        InputComponent,
-        TextareaComponent
-    },
     data: () => {
         return {
+            placeholder: '후기를 입력해주세요',
+            label: '게시글',
+            maxLength: 300,
             addtag: [],
-            name: '',
+            value: '',
+            title: '',
             content: '',
             gender: '',
             age: '',
-            imgURL: [],
+            imgURL: '',
             status: '',
             keyword: '',
-            rating: '0',
+            rating: 0,
+            isSubmit: false,
+            email: '',
             error: {
-                name: false
+                age: false,
+                gender: false,
+                status: false,
+                title: false,
+                content: false,
+                submit: false
             },
-            dialogImageUrl: '',
             dialogVisible: false
         };
     },
@@ -116,10 +142,14 @@ export default {
         status: function() {
             this.checkForm();
         },
-        name: function() {
+        title: function() {
             this.checkForm();
         },
-        content: function() {
+        content: function(value) {
+            let length = this.maxLength;
+            value = value.length > length ? value.substr(0, length) : value;
+
+            this.content = value;
             this.checkForm();
         }
     },
@@ -128,10 +158,58 @@ export default {
             console.log(file, fileList);
         },
         handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
+            this.imgURL = file.url;
+            console.log(this.imgURL);
             this.dialogVisible = true;
         },
-        write() {}
+        write() {
+            this.keyword = this.age + ',' + this.gender + ',' + this.status + ',' + this.addtag;
+            this.email = sessionStorage.getItem('email');
+            var review = {
+                email: this.email,
+                keyword: this.keyword,
+                title: this.title,
+                rating: this.rating,
+                content: this.content,
+                imgURL: this.imgURL
+            };
+            console.log(JSON.stringify(review));
+            //UserApi.insertReview(review);
+        },
+        checkForm() {
+            if (this.age == '') {
+                this.error.age = '나이를 선택해주세요';
+            } else this.error.age = false;
+
+            if (this.gender == '') {
+                this.error.gender = '성별을 선택해주세요';
+            } else this.error.gender = false;
+
+            if (this.status == '') {
+                this.error.status = '현재 상태를 선택해주세요';
+            } else this.error.status = false;
+            if (this.title.length == 0) {
+                this.error.submit = true;
+                this.error.title = '';
+            } else if (this.title.length === 0) this.error.title = '제목을 입력해주세요';
+            else {
+                this.error.title = false;
+                this.error.submit = false;
+            }
+            if (this.content.length == 0) {
+                this.error.submit = true;
+                this.error.content = '';
+            } else if (this.content.length === 0) this.error.content = '제목을 입력해주세요';
+            else {
+                this.error.content = false;
+                this.error.submit = false;
+            }
+            let isSubmit = true;
+            Object.values(this.error).map(v => {
+                if (v) isSubmit = false;
+            });
+            this.isSubmit = isSubmit;
+        }
     }
 };
 </script>

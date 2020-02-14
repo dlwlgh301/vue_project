@@ -20,7 +20,7 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback)
+    insertReview: data => insertReview(data)
 };
 const follower = (data, callback, errorCallback) => {
     axios
@@ -273,9 +273,21 @@ const fileUpload = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const requestReview = (data, callback) => {
-    axios.get(`${host}/main/review`, data).then(res => {
-        callback(res);
+const insertReview = data => {
+    var value = {
+        email: data.email,
+        keyword: data.keyword,
+        title: data.title,
+        content: data.content,
+        rating: data.rating,
+        imgURL: data.imgURL
+    };
+    console.log(JSON.stringify(value));
+    axios({
+        url: `${host}/review`,
+        method: 'post',
+        data: JSON.stringify(value),
+        headers: { 'Content-Type': 'application/json' }
     });
 };
 export default UserApi;
