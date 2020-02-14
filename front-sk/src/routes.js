@@ -97,14 +97,6 @@ const router = new Router({
             component: Test
         },
         {
-            path: '*',
-            redirect: '/404'
-        },
-        {
-            path: '/404',
-            component: NotFound
-        },
-        {
             path: '/user/userUpdate',
             name: 'UserUpdate',
             component: UserUpdate
@@ -133,6 +125,14 @@ const router = new Router({
             path: '/user/snsJoin',
             name: 'snsJoin',
             component: SnsJoin
+        },
+        {
+            path: '*',
+            redirect: '/404'
+        },
+        {
+            path: '/404',
+            component: NotFound
         }
     ]
 });

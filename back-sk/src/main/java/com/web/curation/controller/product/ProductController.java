@@ -76,10 +76,15 @@ public class ProductController {
     public Object searchProduct(@RequestParam(required = false) final String num, HttpServletResponse res)
             throws Exception {
         final BasicResponse result = new BasicResponse();
+        String productName = "";
+        String link = "";
+        String image = "";
+        int price = 0;
+
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
         String clientSecret = "zPy366mvC9";// 애플리케이션 클라이언트 시크릿값";
         try {
-            String text = URLEncoder.encode("여자친구 선물", "UTF-8");
+            String text = URLEncoder.encode("심플한", "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text; // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
             // // xml 결과
@@ -116,9 +121,15 @@ public class ProductController {
                 for (int j = 0; j < arr2.length; j++) {
                     System.out.println(arr2[j]);
 
-                    String[] arr3 = arr2[j].replace("}", "").replace("당일출고", "").replace("</b>", "").split("\"");
+                    String[] arr3 = arr2[j].replace("}", "").replace("당일출고", "").replace("</b>", "").replace("<b>", "")
+                            .split("\"");
 
-                    System.out.println(arr3[3]);
+                    if (j == 0) {
+                        System.out.println("title :::: " + arr3[3]);
+                    } else if (j == 1) {
+                        System.out.println("link :::: " + arr3[3]);
+                    } else if (j == 2)
+                        System.out.println(arr3[3]);
                     System.out.println();
 
                 }

@@ -27,7 +27,7 @@ const UserApi = {
 };
 const follower = (data, callback, errorCallback) => {
     axios
-        .post(`${host}/follow/followList?num=2&email=` + data['email'])
+        .get(`${host}/follow/followList?num=2&email=` + data['email'])
         .then(res => {
             console.log('팔로우성공');
             callback(res);

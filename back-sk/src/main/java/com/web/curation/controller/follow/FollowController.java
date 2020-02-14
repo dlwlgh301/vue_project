@@ -120,6 +120,38 @@ public class FollowController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/follow/followCheck")
+    @ApiOperation(value = "내가 다른사람과 팔로우 되어있는지 확인하기")
+    public Object followCheck(@RequestParam(required = true) final String follower,
+            @RequestParam(required = true) final String following) throws Exception {
+
+        final BasicResponse result = new BasicResponse();
+        Boolean followCheckFlag;
+
+        JSONObject data = new JSONObject();
+
+        System.out.println("followCheck ");
+        System.out.println("followCheck ");
+        System.out.println("followCheck ");
+        System.out.println(follower);
+        System.out.println(following);
+
+        if (followServiceImpl.followCheck(new Follow(follower, "", following, "")) > 0) {
+            followCheckFlag = true;
+        }
+
+        else {
+            followCheckFlag = false;
+        }
+
+        result.status = true;
+        result.object = followCheckFlag;
+
+        System.out.println("listSize : " + followCheckFlag);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @PostMapping("/follow/addFollow")
     @ApiOperation(value = "팔로우 추가하기")
     public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
