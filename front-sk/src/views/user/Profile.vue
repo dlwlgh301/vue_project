@@ -53,10 +53,10 @@
                     <br />
                     <div style="margin 10px;" class="content" v-for="(item, index) in followList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px;">
-                                {{
-                                    item.followernickName
-                                }}
+                            <ul style="margin-left:25px; cursor: pointer;">
+                                <span @click="goOtherpage(item.follower)">
+                                    {{ item.followernickName }}
+                                </span>
                                 <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
@@ -83,7 +83,7 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px;">
+                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
                                 {{
                                     item.followingnickName
                                 }}
@@ -205,6 +205,7 @@ export default {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object.list;
+                        console.log(this.followingList);
                         this.followingCheck = res.data.object.followCheckList;
                         console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
 
@@ -277,15 +278,6 @@ export default {
                             data,
                             res => {
                                 console.log(res);
-                                // if (res.data.data == 'fail') {
-                                //     console.log(res.data.status);
-                                // } else {
-                                //     this.followList = res.data.object.list;
-                                //     this.followCheck = res.data.object.followCheckList;
-                                //     // alert(info.email);
-                                //     // console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
-                                //     console.log(res.data.status);
-                                // }
                             },
                             error => {
                                 console.log(error);
@@ -403,6 +395,9 @@ export default {
 
                 this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
+        },
+        goOtherpage(e) {
+            this.$router.push('/user/OtherProfile/' + e);
         },
         retrieveQuestion() {
             this.showDialog = false;
