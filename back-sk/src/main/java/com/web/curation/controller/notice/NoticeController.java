@@ -67,6 +67,7 @@ public class NoticeController {
     public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
         int num = noticeServiceImpl.getNoticeNum(email);
         System.out.println("num:" + email);
+        System.out.println(num);
         JSONObject dummyUser = new JSONObject();
         dummyUser.put("num", num);
         final BasicResponse result = new BasicResponse();
