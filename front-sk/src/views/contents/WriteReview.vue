@@ -138,7 +138,7 @@ export default {
             content: '',
             gender: '',
             age: '',
-            imgURL: '',
+            imgURL: [],
             status: '',
             keyword: '',
             rating: 0,
@@ -200,21 +200,26 @@ export default {
             test.append('File', this.fileList[0]); 
             console.log(test);*/
             console.log(this.file);
-            UserApi.uploadtest(
-                this.file,
-                res => {
-                    console.log(res);
-                },
-                error => {
-                    console.log(error);
-                }
-            );
+            for (var i = 0; i < this.fileList.length; i++) {
+                this.imgURL += this.fileList[i].raw.name + ',';
+                UserApi.uploadtest(
+                    this.fileList[i].raw,
+                    res => {
+                        console.log(res);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+            console.log(this.imgURL);
             var review = {
                 email: this.email,
                 keyword: this.keyword,
                 title: this.title,
                 rating: this.rating,
-                content: this.content
+                content: this.content,
+                imgURL: this.imgURL
             };
             console.log(JSON.stringify(review));
             //UserApi.insertReview(review);
