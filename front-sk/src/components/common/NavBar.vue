@@ -13,9 +13,11 @@
                 </div>
 
                 <div class="md-toolbar-section-end">
-                    <!-- <md-button class="md-icon-button">
-                        <md-icon>search</md-icon>
-                    </md-button>-->
+                    <md-field>
+                        <md-icon>event</md-icon>
+                        <label>Date</label>
+                        <md-input v-model="date"></md-input>
+                    </md-field>
 
                     <router-link to="/user/noticeTab">
                         <md-button class="md-icon-button" @click="updateNoticeNum">

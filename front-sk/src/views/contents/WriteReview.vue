@@ -125,6 +125,9 @@
 import UserApi from '../../apis/UserApi';
 //import UserApi from '../../apis/UserApi';
 export default {
+    created() {
+        this.$store.commit('setPageTitle', '글쓰기');
+    },
     data: () => {
         return {
             placeholder: '후기를 입력해주세요',

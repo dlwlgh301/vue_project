@@ -1,5 +1,6 @@
 <template>
     <v-container style="width:100%;">
+        <TopNavBar></TopNavBar>
         <v-row>
             <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
@@ -8,8 +9,9 @@
                         <span id="pname">name</span>
                     </div>
                     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
-                    <md-button class="md-icon-button">
-                        <md-icon>favorite_border</md-icon>
+                    <md-button class="md-icon-button" @click="toggle()">
+                        <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
+                        <md-icon v-else>favorite_border</md-icon>
                     </md-button>
                     <md-button class="md-icon-button">
                         <md-icon>chat_bubble_outline</md-icon>
@@ -30,13 +32,20 @@
                 </v-card>
             </v-col>
         </v-row>
+        <BottomNavBar></BottomNavBar>
     </v-container>
 </template>
 <script>
 //import UserApi from '../apis/UserApi';
 import firebase from '../../apis/FirebaseService';
 import Kakao from '../../kakao';
+import TopNavBar from '../../components/common/TopNav';
+import BottomNavBar from '../../components/common/BottomNav';
 export default {
+    component: {
+        TopNavBar,
+        BottomNavBar
+    },
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
         // var keyword = sessionStorage.getItem('keyword');
@@ -67,7 +76,7 @@ export default {
             photo: '',
             keyword2: '',
             like: '',
-            currentDate: new Date()
+            favorite: false
         };
     },
     methods: {
@@ -80,6 +89,13 @@ export default {
             sessionStorage.clear();
             Kakao.Auth.cleanup();
             this.$router.push('/');
+        },
+        toggle() {
+            if (this.favorite) {
+                this.favorite = false;
+            } else {
+                this.favorite = true;
+            }
         }
     }
 };
