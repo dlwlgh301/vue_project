@@ -1,55 +1,70 @@
 <template>
-    <v-container style="width:100%">
-        <v-row no-gutters>
-            <v-col :col="6" lg="6" md="6" sm="12" xs="12">
-                <v-card :elevation="4" max-width="387" max-height="500" style="margin: 0 auto;">
-                    <v-img height="300" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
-                    <md-button class="md-icon-button" @click="toggle()">
-                        <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
-                        <md-icon v-else>favorite_border</md-icon>
-                    </md-button>
-                    <md-button class="md-icon-button">
-                        <md-icon>chat_bubble_outline</md-icon>
-                    </md-button>
+    <div class="md-layout md-alignment-center" style="height:60%">
+        <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
+        <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
+            <md-card style="height:500px; z-index:0">
+                <md-card-header>
+                    <md-avatar>
+                        <md-icon>account_circle</md-icon>
+                    </md-avatar>
 
-                    <v-card-title style="line-height: 0.5rem" v-model="title"></v-card-title>
+                    <div class="md-title" v-bind="nickName">Title goes here</div>
+                    <div class="md-subhead">Subtitle here</div>
+                </md-card-header>
 
-                    <v-card-text>
-                        <v-row align="center" class="mx-0">
-                            <v-rating :value="3.5" color="amber" dense half-increments readonly size="14"></v-rating>
+                <md-card-media>
+                    <img src="https://cdn.vuetifyjs.com/images/cards/cooking.png" alt="People" />
+                </md-card-media>
 
-                            <div class="grey--text ml-4" v-bind="rating"></div>
-                        </v-row>
+                <md-card-content>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea nostrum.
+                </md-card-content>
 
-                        <!--<div class="my-4 subtitle-1 black--text">카페</div>-->
-                        <div v-bind="content">이거 좋아요</div>
-                    </v-card-text>
-                </v-card>
-            </v-col>
-            <v-col :col="6" lg="6" md="6" sm="12" xs="12">
-                <v-card class="mx-auto" max-width="387" tile>
-                    <v-list-item two-line>
-                        <v-list-item-content>
-                            <v-list-item-title>Two-line item asasd</v-list-item-title>
-                            <v-list-item-subtitle>Secondary text</v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-container>
+                <md-card-actions>
+                    <md-button>Action</md-button>
+                    <md-button>Action</md-button>
+                </md-card-actions>
+            </md-card>
+        </div>
+        <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
+            <md-card style="height:500px; z-index:0">
+                <md-list class="md-double-line">
+                    <md-subheader>댓글</md-subheader>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon
+                        ><!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                </md-list>
+            </md-card>
+        </div>
+        <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
+    </div>
 </template>
 <script>
+import UserApi from '../../apis/UserApi';
 export default {
-    created() {},
+    created() {
+        UserApi.getReviewDetail(this.reviewNo);
+    },
     data: () => {
         return {
+            reviewNo: '',
+            nickName: '',
             title: '',
             content: '',
-            rating: 0,
+            score: 0,
             keyword1: '',
-            photo: '',
             keyword2: '',
+            images: [],
+            photo: '',
             like: '',
             favorite: false
         };

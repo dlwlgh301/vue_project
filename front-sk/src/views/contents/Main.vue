@@ -1,8 +1,7 @@
 <template>
     <v-container style="width:100%;">
-        <TopNavBar></TopNavBar>
         <v-row>
-            <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12">
+            <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
@@ -32,20 +31,14 @@
                 </v-card>
             </v-col>
         </v-row>
-        <BottomNavBar></BottomNavBar>
     </v-container>
 </template>
 <script>
 //import UserApi from '../apis/UserApi';
 import firebase from '../../apis/FirebaseService';
 import Kakao from '../../kakao';
-import TopNavBar from '../../components/common/TopNav';
-import BottomNavBar from '../../components/common/BottomNav';
+
 export default {
-    component: {
-        TopNavBar,
-        BottomNavBar
-    },
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
         // var keyword = sessionStorage.getItem('keyword');
