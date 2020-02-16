@@ -43,6 +43,10 @@
 
                     <md-divider></md-divider>
                 </md-list>
+                <md-divider></md-divider>
+                <md-field style="padding-left:1rem">
+                    <md-input v-model="comment" placeholder="댓글을 입력하세요"></md-input>
+                </md-field>
             </md-card>
         </div>
         <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
@@ -52,12 +56,16 @@
 import UserApi from '../../apis/UserApi';
 export default {
     created() {
+        this.email = sessionStorage.getItem('email');
+        this.nickName = sessionStorage.getItem('nickName');
         UserApi.getReviewDetail(this.reviewNo);
     },
     data: () => {
         return {
-            reviewNo: '',
+            comment: '',
+            email: '',
             nickName: '',
+            reviewNo: '',
             title: '',
             content: '',
             score: 0,

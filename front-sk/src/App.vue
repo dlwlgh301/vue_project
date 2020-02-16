@@ -4,7 +4,7 @@
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
 
             <div class="components-page">
-                <v-app-bar fixed color="#FFF" class="Navbar" v-show="showNav">
+                <v-app-bar fixed color="#FFF" class="Navbar">
                     <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
                         <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
@@ -127,11 +127,6 @@ export default {
         // this.loadNoticeNum();
         Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
         // }, 2000);
-    },
-    mounted() {
-        if (this.$store.state.pageTitle) {
-            this.showNav = false;
-        } else this.showNav = true;
     },
     components: {
         BottomNavComponent
