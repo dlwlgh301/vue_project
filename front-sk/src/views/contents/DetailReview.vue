@@ -16,9 +16,7 @@
                     <img src="https://cdn.vuetifyjs.com/images/cards/cooking.png" alt="People" />
                 </md-card-media>
 
-                <md-card-content>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea nostrum.
-                </md-card-content>
+                <md-card-content>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea nostrum.</md-card-content>
 
                 <md-card-actions>
                     <md-button>Action</md-button>
@@ -32,8 +30,8 @@
                     <md-subheader>댓글</md-subheader>
                     <md-divider></md-divider>
                     <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon
-                        ><!-- 이미지 -->
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
 
                         <div class="md-list-item-text">
                             <span>Name</span>
@@ -43,6 +41,14 @@
 
                     <md-divider></md-divider>
                 </md-list>
+                <md-divider></md-divider>
+                <md-button class="md-icon-button" @click="toggle()">
+                    <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
+                    <md-icon v-else>favorite_border</md-icon>
+                </md-button>
+                <md-button class="md-icon-button">
+                    <md-icon>chat_bubble_outline</md-icon>
+                </md-button>
                 <md-divider></md-divider>
                 <md-field style="padding-left:1rem">
                     <md-input v-model="comment" placeholder="댓글을 입력하세요"></md-input>
@@ -76,6 +82,15 @@ export default {
             like: '',
             favorite: false
         };
+    },
+    methods: {
+        toggle() {
+            if (this.favorite) {
+                this.favorite = false;
+            } else {
+                this.favorite = true;
+            }
+        }
     }
 };
 </script>

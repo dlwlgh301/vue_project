@@ -34,34 +34,38 @@
     </v-container>
 </template>
 <script>
-//import UserApi from '../apis/UserApi';
+import UserApi from '../../apis/UserApi';
 import firebase from '../../apis/FirebaseService';
 import Kakao from '../../kakao';
-
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
-        // var keyword = sessionStorage.getItem('keyword');
-        // UserApi.requestReview(
-        //     keyword,
-        //     res => {
-        //         console.log(res);
-        //         this.title = res.data.title;
-        //         this.content = res.data.content;
-        //         this.rating = res.data.rating;
-        //         this.photo = res.data.photo;
-        //         this.like = res.data.like;
-        //     },
-        //     error => {
-        //         console.log(error);
-        //     }
-        // );
+        //var keyword = sessionStorage.getItem('keyword');
+        var email = sessionStorage.getItem('email');
+        console.log(email + '여기는 이메일 출력');
+        UserApi.requestReview(
+            email,
+            res => {
+                this.data = res.data.object.review;
+                for (var i = 0; i < res.data.object.length; i++) {
+                    this.data = res.data.object[i].review;
+                }
+                console.log(this.data);
+                console.log('입력완료');
+            },
+            error => {
+                console.log(error);
+            }
+        );
+
+        //console.log(this.data);
         /*  if (sessionStorage.getItem('email') == null) {
             this.$router.push('/');
         } */
     },
     data: () => {
         return {
+            data: [],
             title: '',
             content: '',
             rating: 0,

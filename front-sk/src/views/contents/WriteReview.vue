@@ -61,9 +61,7 @@
                     type="text"
                 />
                 <label for="title">제목</label>
-                <div class="error-text" v-if="error.title">
-                    {{ error.title }}
-                </div>
+                <div class="error-text" v-if="error.title">{{ error.title }}</div>
             </div>
             <div class="wrap" id="score">
                 <v-row>
@@ -88,15 +86,13 @@
             </div>
 
             <div class="textarea-wrap">
-                <h4>
-                    {{ label }}
-                </h4>
+                <h4>{{ label }}</h4>
                 <span>{{ content.length }}/{{ this.maxLength }}</span>
                 <textarea v-model="content" :placeholder="placeholder" />
             </div>
             <div class="wrap">
                 <el-upload
-                    action=""
+                    action
                     :show-file-list="true"
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
@@ -141,11 +137,12 @@ export default {
             age: '',
             images: [],
             status: '',
+            productName: '키보드',
             keywordMain: '',
             keyowrdSub: '',
             score: 0,
             isSubmit: false,
-            email: '',
+            email: 'dlwlgh301@naver.com',
             error: {
                 age: false,
                 gender: false,
@@ -186,7 +183,9 @@ export default {
             this.fileList = fileList;
         },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            console.log(file);
+            this.fileList = fileList;
+            console.log(fileList);
         },
         handlePictureCardPreview(file) {
             this.images = file.url;
@@ -194,6 +193,7 @@ export default {
             this.dialogVisible = true;
         },
         write() {
+            // this.keywordSub = 'default,';
             this.keywordMain = this.age + ',' + this.gender + ',' + this.status;
             this.keywordSub = this.addtag;
             this.email = sessionStorage.getItem('email');
@@ -218,16 +218,21 @@ export default {
 
             var images = this.images;
             console.log(images);
+            var productName = '카메라';
+            var email = 'dlwlgh301@gmail.com';
             var review = {
-                email: this.email,
+                email: email,
+                productName: productName,
                 keywordMain: this.keywordMain,
                 keywordSub: this.keywordSub,
                 title: this.title,
                 score: this.score,
                 content: this.content
             };
-            console.log(JSON.stringify(review));
-            //UserApi.insertReview(review);
+            console.log('vue 부분');
+            // console.log(JSON.stringify(review), images);
+            UserApi.insertReview(review, images);
+            this.images = '';
         },
         checkForm() {
             if (this.age == '') {

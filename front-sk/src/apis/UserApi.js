@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://172.30.1.54:8080';
-const noticePort = 'http://172.30.1.54:8080';
+const host = 'http://192.168.100.90:8080';
+const noticePort = 'http://192.168.100.90:8080';
+const filehost = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -22,10 +23,11 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    insertReview: data => insertReview(data),
+    insertReview: (data, image) => insertReview(data, image),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
     apitest: () => apitest(),
-    uploadtest: data => uploadtest(data)
+    uploadtest: data => uploadtest(data),
+    requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -298,7 +300,7 @@ const fileUpload = (data, callback, errorCallback) => {
     // });
     axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     axios
-        .post(`${host}/account/fileUpload`, data)
+        .post(`${filehost}/account/fileUpload`, data)
         .then(() => {
             console.log('사진 수정 성공!!!!');
             callback;
@@ -307,25 +309,42 @@ const fileUpload = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const insertReview = data => {
+const insertReview = (data, image) => {
     var value = {
         email: data.email,
-        keyword: data.keyword,
+        productName: data.productName,
+        keywordMain: data.keywordMain,
+        keywordSub: data.keywordSub,
+        score: data.score,
         title: data.title,
         content: data.content,
-        rating: data.rating,
-        imgURL: data.imgURL
+        imgs: image
     };
-    console.log(JSON.stringify(value));
-    axios({
-        url: `${host}/review`,
-        method: 'post',
-        data: JSON.stringify(value),
-        headers: { 'Content-Type': 'application/json' }
+    // var images = image;
+    console.log('userAPI쪽');
+    // console.log(JSON.stringify(value));
+    console.log(value);
+    // console.log(images);
+    fetch(`${host}/review`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
     });
+    // axios.request({
+    //     url: `${host}/review`,
+    //     method: 'post',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     data: JSON.stringify(value)
+    // });
+    // axios.post(`${host}/review`, {
+    //     data: JSON.stringify(value)
+    // });
 };
 const uploadtest = data => {
-    fetch(`${host}/account/fileUpload`, {
+    fetch(`${filehost}/account/fileUpload`, {
         method: 'POST',
         mode: 'no-cors',
         data: data
@@ -348,5 +367,23 @@ const apitest = () => {
     // .catch(() => {
     //     errorCallback;
     // });
+};
+const requestReview = (data, callback, errorCallback) => {
+    console.log('request');
+    console.log(data);
+    axios
+        .get(`${filehost}/review/show/main`, {
+            params: {
+                email: data
+            }
+        })
+        .then(res => {
+            console.log(res);
+            callback(res);
+        })
+        .catch(error => {
+            console.log(error);
+            errorCallback(error);
+        });
 };
 export default UserApi;
