@@ -219,7 +219,7 @@
                                         <slot name="footer">
                                             약관입니다.
                                             <br /><br />
-                                            <button @click="showmodal">
+                                            <button @click="showmodal()">
                                                 확인
                                             </button>
                                         </slot>
@@ -230,12 +230,7 @@
                     </transition>
                 </div>
 
-                <button @click="showModal = true">약관보기</button>
-
-                <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                    다음화면으로
-                </button> -->
-
+                <button type="button" @click="showModal = true">약관보기</button>
                 <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">
                     이전화면으로
                 </button>
@@ -303,7 +298,8 @@ export default {
                 comment: false,
                 passwordConfirm: false,
                 isTerm: false,
-                submit: false
+                emailCheck: false,
+                nickNameCheck: false
             },
             isSubmit: false,
             isSubmit2: false,
@@ -344,6 +340,8 @@ export default {
 
                 if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
                 else this.error.emailAuth = false;
+
+                this.submit = this.checkSubmit();
             }
         },
         password: function() {
@@ -369,6 +367,31 @@ export default {
         }
     },
     methods: {
+        checkSubmit() {
+            if (
+                this.email.length != 0 &&
+                !this.error.email &&
+                !this.error.emailCheck &&
+                this.emailAuth.length != 0 &&
+                !this.error.emailAuth &&
+                this.password.length != 0 &&
+                !this.error.password &&
+                this.passwordConfirm.length != 0 &&
+                !this.error.passwordConfirm &&
+                this.name.length != 0 &&
+                !this.error.name &&
+                this.nickName.length != 0 &&
+                !this.error.nickName &&
+                !this.error.nickNameCheck &&
+                this.comment.length != 0 &&
+                !this.error.comment &&
+                !this.error.isTerm
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         checkForm2() {
             if (this.age.length != 0 && this.gender.length != 0 && this.status.length != 0) {
                 this.isSubmit2 = true;
@@ -378,7 +401,6 @@ export default {
         },
         checkForm() {
             if (this.email.length == 0) {
-                this.error.submit = true;
                 this.error.email = '';
             } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
             else {
@@ -386,36 +408,29 @@ export default {
             }
 
             if (this.password.length == 0) {
-                this.error.submit = true;
                 this.error.password = '';
             } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
-                this.error.submit = false;
             }
 
             if (this.passwordConfirm.length == 0) {
-                this.error.submit = true;
                 this.error.passwordConfirm = '';
             } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
                 this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
-                this.error.submit = false;
             }
 
             if (this.name.length == 0) {
-                this.error.submit = true;
                 this.error.name = '';
             } else if (this.name.length === 0) this.error.name = '이름을 입력해주세요';
             else {
                 this.error.name = false;
-                this.error.submit = false;
             }
 
             if (this.nickName.length == 0) {
-                this.error.submit = true;
                 this.error.nickName = '';
             } else if (this.nickName.length === 0) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
             else {
@@ -423,32 +438,25 @@ export default {
             }
 
             if (this.comment.length == 0) {
-                this.error.submit = true;
                 this.error.comment = '';
             } else if (this.comment.length === 0) this.error.comment = '한줄소개를 입력해주세요';
             else {
                 this.error.comment = false;
-                this.error.submit = false;
             }
 
             if (this.isTerm.length == 0) {
-                this.error.submit = true;
                 this.error.isTerm = '';
             } else if (this.isTerm == false) this.error.isTerm = true;
             else {
                 this.error.isTerm = false;
-                this.error.submit = false;
             }
 
-            let isSubmit = true;
-            Object.values(this.error).map(v => {
-                if (v) isSubmit = false;
-            });
-            this.isSubmit = isSubmit;
+            this.isSubmit = this.checkSubmit();
 
             console.log('submit:' + this.error.submit);
         },
         insertMember() {
+            alert('insertMember');
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
@@ -492,65 +500,66 @@ export default {
             // UserApi.join(test);
             // this.$router.push('/user/certComplete');
         },
-        join() {
-            console.log('ddddddddddddddddddddddd ' + this.imgURL);
+        // join() {
+        //     alert('join');
+        //     console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
-            if (this.isSubmit) {
-                var { file, email, password, nickName, comment, name, imgURL } = this;
+        //     if (this.isSubmit) {
+        //         var { file, email, password, nickName, comment, name, imgURL } = this;
 
-                // eslint-disable-next-line no-unused-vars
-                var data = {
-                    file,
-                    email,
-                    password,
-                    nickName,
-                    comment,
-                    name,
-                    imgURL
-                };
-                console.log(this.email);
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
+        //         // eslint-disable-next-line no-unused-vars
+        //         var data = {
+        //             file,
+        //             email,
+        //             password,
+        //             nickName,
+        //             comment,
+        //             name,
+        //             imgURL
+        //         };
+        //         console.log(this.email);
+        //         //요청 후에는 버튼 비활성화
+        //         this.isSubmit = false;
 
-                //console.log('axios 하기전!!!');
+        //         //console.log('axios 하기전!!!');
 
-                /* var body = {
-                    password: this.password,
-                    email: this.email,
-                    nickName: this.nickName,
-                    name: this.name,
-                    comment: this.comment
-                }; */
-                sessionStorage.setItem('email', this.email);
-                sessionStorage.setItem('password', this.password);
-                sessionStorage.setItem('nickName', this.nickName);
-                sessionStorage.setItem('name', this.name);
-                sessionStorage.setItem('comment', this.comment);
-                sessionStorage.setItem('imgURL', this.imgURL);
-                sessionStorage.setItem('file', this.file);
+        //         /* var body = {
+        //             password: this.password,
+        //             email: this.email,
+        //             nickName: this.nickName,
+        //             name: this.name,
+        //             comment: this.comment
+        //         }; */
+        //         sessionStorage.setItem('email', this.email);
+        //         sessionStorage.setItem('password', this.password);
+        //         sessionStorage.setItem('nickName', this.nickName);
+        //         sessionStorage.setItem('name', this.name);
+        //         sessionStorage.setItem('comment', this.comment);
+        //         sessionStorage.setItem('imgURL', this.imgURL);
+        //         sessionStorage.setItem('file', this.file);
 
-                UserApi.cert(
-                    data,
-                    res => {
-                        console.log('???????????????');
-                        //console.log(res);
-                        //console.log(res.data.object.key);
-                        this.key = res.data.object.key;
-                        console.log(this.key);
-                        sessionStorage.clear;
-                        sessionStorage.setItem('key', this.key);
-                        console.log('join 인증키 발급');
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-                this.$router.push('/user/keyword');
-                // UserApi.join(body);
-                console.log('join 라우터');
-                // console.log('axios 함!!!');
-            }
-        },
+        //         UserApi.cert(
+        //             data,
+        //             res => {
+        //                 console.log('???????????????');
+        //                 //console.log(res);
+        //                 //console.log(res.data.object.key);
+        //                 this.key = res.data.object.key;
+        //                 console.log(this.key);
+        //                 sessionStorage.clear;
+        //                 sessionStorage.setItem('key', this.key);
+        //                 console.log('join 인증키 발급');
+        //             },
+        //             error => {
+        //                 console.log(error);
+        //             }
+        //         );
+        //         this.$router.push('/user/keyword');
+        //         // UserApi.join(body);
+        //         console.log('join 라우터');
+        //         // console.log('axios 함!!!');
+        //     }
+        // },
         sendEmailAuth() {
             UserApi.cert(
                 { email: this.email },
@@ -583,7 +592,7 @@ export default {
                     icon: 'error',
                     title: '이메일을 입력해 주세요.'
                 });
-                this.error.submit = true;
+                this.error.emailCheck = true;
                 return;
             }
             UserApi.doubleCheck(
@@ -596,14 +605,15 @@ export default {
                             icon: 'success', //"info,success,warning,error" 중 택1
                             title: '사용가능한 이메일입니다'
                         });
-                        this.error.submit = false;
+                        this.error.emailCheck = false;
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: res.data.data
                         });
-                        this.error.submit = true;
+                        this.error.emailCheck = true;
                     }
+                    this.submit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);
@@ -620,14 +630,15 @@ export default {
                             icon: 'success', //"info,success,warning,error" 중 택1
                             title: '사용가능한 닉네임'
                         });
-                        this.error.submit = false;
+                        this.error.nickNameCheck = false;
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: res.data.data
                         });
-                        this.error.submit = true;
+                        this.error.nickNameCheck = true;
                     }
+                    this.submit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);

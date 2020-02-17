@@ -1,5 +1,5 @@
 //디비 셋팅 주석 
-package com.web.curation.service;
+package com.web.curation.service.review;
 
 import java.util.List;
 
@@ -10,4 +10,12 @@ public interface ReviewService {
     boolean insertReview(Review review) throws Exception;
 
     List<Review> getMainReview(Review review) throws Exception;
+
+    List<Review> getUserReview(String email) throws Exception;
+
+    List<Review> getProductReview(String productName) throws Exception;
+
+    Review getReviewByRId(int rid) throws Exception;
+
+    boolean deleteReview(int rid) throws Exception;
 }

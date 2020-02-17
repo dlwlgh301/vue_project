@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.web.curation.dao.review.ReviewDao">
-    <insert id="insertReview" parameterType="com.web.curation.model.vo.Review">
-        insert into review(email, productNumber, content, score, imgURL, keywordMain, keywordSub, likeNumber, nickName) 
-        values(#{email}, #{productNumber}, #{content}, #{score}, #{imgURL}, #{keywordMain}, #{keywordSub}, #{likeNumber}, #{nickName})
+    <insert id="insertReview" parameterType="com.web.curation.model.vo.Review" useGeneratedKeys="true"
+    keyProperty="rid">
+        insert into review(email, productName, content, score, title, keywordMain, keywordSub, likeNumber, nickName, imgURL) 
+        values(#{email}, #{productName}, #{content}, #{score}, #{title}, #{keywordMain}, #{keywordSub}, #{likeNumber}, #{nickName}, #{imgURL})
     </insert>
-    <select id="getMainReview" parameterType="com.web.curation.model.vo.Review">
-        select * from (select * from review where email=#{email}) r where r.keywordMain=#{keywordMain};
+    <select id="getMainReview" parameterType="com.web.curation.model.vo.Review" resultType="com.web.curation.model.vo.Review">
+        select * from (select * from review where email=#{email}) r where r.keywordMain=#{keywordMain}
+    </select>
+    <select id="getUserReview" parameterType="string" resultType="com.web.curation.model.vo.Review">
+        select * from review where email = #{value}
+    </select>
+    <select id="getProductReview" parameterType="string" resultType="com.web.curation.model.vo.Review">
+        select * from review where productName = #{value}
+    </select>
+    <select id="getReviewByRId" parameterType="int" resultType="com.web.curation.model.vo.Review">
+        select * from review where rid = #{value}
     </select>
 </mapper>
