@@ -1,5 +1,7 @@
 package com.web.curation.service;
 
+import java.util.List;
+
 import com.web.curation.dao.user.UserDao;
 import com.web.curation.model.user.User;
 
@@ -65,6 +67,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getKeyword(String email) throws Exception {
         return userDaoImpl.getKeyword(email);
+    }
+
+    @Override
+    public List<User> searchMember(String nickName) throws Exception {
+        return userDaoImpl.searchMember(nickName);
     }
 
 }

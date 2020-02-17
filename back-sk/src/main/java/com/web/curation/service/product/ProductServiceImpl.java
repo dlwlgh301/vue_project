@@ -1,5 +1,7 @@
 package com.web.curation.service.product;
 
+import java.util.List;
+
 import com.web.curation.dao.product.ProductDao;
 import com.web.curation.model.vo.Product;
 

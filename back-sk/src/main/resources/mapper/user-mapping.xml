@@ -54,4 +54,9 @@
     <select id="getKeyword" parameterType="string" resultType="string">
         select keyword from user where email = #{value}
     </select>
+
+    <select id="searchMember" parameterType="string" resultType="com.web.curation.model.user.User">
+        select * from user
+        where nickName like CONCAT('%', #{nickName}, '%')
+    </select>
 </mapper>

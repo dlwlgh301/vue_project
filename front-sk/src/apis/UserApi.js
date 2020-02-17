@@ -312,7 +312,7 @@ const requestReview = (data, callback) => {
 };
 
 const apitest = () => {
-    fetch(`${host}/product/searchProduct`, {
+    fetch(`${host}/product/getAPI`, {
         method: 'GET',
         mode: 'no-cors'
     });

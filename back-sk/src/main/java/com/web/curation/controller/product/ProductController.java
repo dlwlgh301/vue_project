@@ -49,6 +49,7 @@ import io.swagger.annotations.ApiResponses;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -75,10 +76,10 @@ public class ProductController {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @GetMapping("/product/searchProduct")
+    // + "&display=100"
+    @GetMapping("/product/getAPI")
     @ApiOperation(value = "api 받아오기")
-    public Object searchProduct(@RequestParam(required = false) final String num, HttpServletResponse res)
-            throws Exception {
+    public Object getAPI(@RequestParam(required = false) final String num, HttpServletResponse res) throws Exception {
         final BasicResponse result = new BasicResponse();
         String productName = "";
         String link = "";
@@ -90,8 +91,8 @@ public class ProductController {
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
         String clientSecret = "zPy366mvC9";// 애플리케이션 클라이언트 시크릿값";
         try {
-            String text = URLEncoder.encode("생일선물", "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text + "&display=50"; // json 결과
+            String text = URLEncoder.encode("심플한", "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text + "&display=100"; // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
             // // xml 결과
             URL url = new URL(apiURL);
@@ -103,6 +104,7 @@ public class ProductController {
             BufferedReader br;
             if (responseCode == 200) { // 정상 호출
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                // br = new BufferedReader(new ObjectInputStream(con.getInputStream()));
             } else { // 에러 발생
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
@@ -112,60 +114,83 @@ public class ProductController {
                 response.append(inputLine);
             }
             br.close();
-            String[] arr = response.toString().split("\\{");
+            String[] temp = response.toString().split("items\":");
+            System.out.println(temp.length);
+            temp[1] = temp[1].replace("[", "").replace("]", "");
+            System.out.println(temp.length);
+            // System.out.println(temp[1]);
+            temp = temp[1].split("\\{");
+            System.out.println(temp.length);
 
-            System.out.println("----------------------------");
-            System.out.println("----------------------------");
-            System.out.println("----------------------------");
-            System.out.println("----------------------------");
-            System.out.println("----------------------------");
-            System.out.println(arr.length);
+            for (int i = 1; i < temp.length; i++) {
 
-            for (int i = 2; i < arr.length; i++) {
-                String[] arr2 = arr[i].split(",");
-                System.out.println("몇번째 : " + i);
+                temp[i] = temp[i].replace("\\}", "");
 
-                for (int j = 0; j <= 4; j++) {
-                    // System.out.println(arr2[j]);
+                String[] arr;
+                arr = temp[i].split(",\"mallName");
 
-                    String[] arr3 = arr2[j].replace("}", "").replace("당일출고", "").replace("</b>", "").replace("<b>", "")
-                            .split("\"");
+                arr = arr[0].split(",\"hprice\": ");
+                arr[1] = arr[1].replace("\"", "");
+                price2 = Integer.parseInt(arr[1]);
 
-                    if (j == 0) {
-                        productName = arr3[3];
-                        System.out.println("title :::: " + productName);
-                    } else if (j == 1) {
-                        // link = arr3[0] + arr 3[1] + arr3[2];
-                        System.out.println("link :::: " + link);
-                    } else if (j == 2) {
-                        image = arr3[3];
-                        System.out.println("image :::: " + image);
-                    } else if (j == 3) {
-                        price1 = Integer.parseInt(arr3[3]);
-                    } else if (j == 4) {
-                        price2 = Integer.parseInt(arr3[3]);
-                    }
+                arr = arr[0].split(",\"lprice\": ");
+                arr[1] = arr[1].replace("\"", "");
+                price1 = Integer.parseInt(arr[1]);
 
-                    System.out.println();
+                arr = arr[0].split(",\"image\": ");
+                arr[1] = arr[1].replace("\"", "");
+                image = arr[1];
 
-                }
+                arr = arr[0].split(",\"link\": ");
+                arr[1] = arr[1].replace("\"", "");
+                link = arr[1];
 
-                if (price1 == 0) {
+                arr = arr[0].split("title\": ");
+                arr[1] = arr[1].replace("\"", "").replace("<b>", "").replace("</b>", "");
+                productName = arr[1];
+
+                if (price2 != 0 && price1 > price2) {
                     price = price2;
                 } else {
                     price = price1;
                 }
 
-                Product product = new Product(productName, link, image, price);
-                // System.out.println("price :::: " + price);
-                // productServiceImpl.insertProduct(product);
-                // System.out.println();
-                // System.out.println();
-                System.out.println(product);
+                System.out.println("i  == " + i);
+
+                System.out.println("productName:::" + productName);
+                System.out.println("link:::" + link);
+                System.out.println("image:::" + image);
+                System.out.println("price:::" + price);
+                System.out.println();
+                System.out.println();
+                System.out.println();
             }
 
+            // else if (j == 3) {
+            // price1 = Integer.parseInt(arr3[3]);
+            // System.out.println("price1 :::: " + price1);
+            // } else if (j == 4) {
+            // price2 = Integer.parseInt(arr3[3]);
+            // System.out.println("price2 :::: " + price2);
+            // }
+            // System.out.println();
+
+            // }
+
+            // if (price2 != 0 && price1 > price2) {
+            // price = price2;
+            // } else {
+            // price = price1;
+            // }
+            // System.out.println("price ::: " + price);
+            // System.out.println();
+            // }
+
             // System.out.println(response.toString());
-        } catch (Exception e) {
+
+        } catch (
+
+        Exception e) {
             System.out.println(e);
         }
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -173,5 +198,28 @@ public class ProductController {
         result.status = true;
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    // @GetMapping("/product/getProductListByKeyword")
+    // @ApiOperation(value = "검색한 키워드에 맞는 상품 가져오기")
+    // public Object getProductListByKeyword(@RequestParam(required = false) String
+    // keyword) throws Exception {
+    // final BasicResponse result = new BasicResponse();
+
+    // System.out.println("getProductListByKeyword~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
+    // System.out.println("받아온 keyword : " + keyword);
+
+    // List<Product> list = new ArrayList<>();
+
+    // list = productServiceImpl.getProductListByKeyword(keyword);
+
+    // result.status = true;
+    // result.object = list;
+
+    // return new ResponseEntity<>(result, HttpStatus.OK);
+
+    // // Dao : List<Product> getProductListByKeyword(String keyword) throws
+    // Exception;
+    // // mapper : select * from product where keyword = #{keyword}
+    // }
 
 }

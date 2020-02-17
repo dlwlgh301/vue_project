@@ -84,4 +84,9 @@ public class UserDaoImpl implements UserDao {
     public String getKeyword(String email) throws Exception {
         return sqlSession.selectOne("getKeyword", email);
     }
+
+    @Override
+    public List<User> searchMember(String nickName) throws Exception {
+        return sqlSession.selectList("searchMember", nickName);
+    }
 }

@@ -31,4 +31,6 @@ public interface UserDao {
     String getImgURL(String email) throws Exception;
 
     String getKeyword(String email) throws Exception;
+
+    List<User> searchMember(String nickName) throws Exception;
 }

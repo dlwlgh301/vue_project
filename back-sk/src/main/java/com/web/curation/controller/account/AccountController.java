@@ -266,4 +266,21 @@ public class AccountController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @GetMapping("/account/searchMember")
+    @ApiOperation(value = "닉네임으로 유저 찾기")
+    public Object searchMember(@RequestParam(required = true) final String nickName) throws Exception {
+        final BasicResponse result = new BasicResponse();
+        System.out.println(nickName);
+        List<User> list = userServiceImpl.searchMember(nickName);
+
+        System.out.println("size::::" + list.size());
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getNickName());
+        }
+        result.status = true;
+        result.object = list;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
