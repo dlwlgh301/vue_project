@@ -130,7 +130,6 @@ export default {
         return {
             hide: true,
             route: '',
-            showNav: false,
             drawer: null,
             user: '',
             items: [

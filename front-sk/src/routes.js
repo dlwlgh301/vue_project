@@ -142,6 +142,7 @@ const router = new Router({
         },
         {
             path: '/404',
+            name: 'NotFound',
             component: NotFound
         },
         {
@@ -162,8 +163,7 @@ router.beforeEach((to, from, next) => {
     console.log('from: ', from);
     console.log('next: ', next);
     console.groupEnd();
-
-    if (to.name === 'Login') {
+    if (to.name === 'Login' || to.name === 'Join' || to.name === 'FindPassword' || to.name === 'NotFound') {
         console.log('before ', store.state.showNav);
         store.commit('toggleNav', false);
         console.log('after ', store.state.showNav);
