@@ -2,17 +2,24 @@
     <v-app>
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
-
             <div class="components-page">
-                <v-app-bar fixed color="#FFF" class="Navbar">
+                <v-app-bar v-show="$store.state.showNav" fixed color="#FFF" class="Navbar">
                     <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
                         <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
-
                     <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
                         <md-icon>menu</md-icon>
                     </md-button>
-                    <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
+                    <div class="md-small-hide">
+                        <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
+                    </div>
+                    <v-spacer></v-spacer>
+                    <!-- 현준이형 여기 사이 만들면 될듯  -->
+                    <md-field style="width:17rem;">
+                        <md-input v-model="user"></md-input>
+                        <md-icon>search</md-icon>
+                    </md-field>
+                    <!-- 현준이형 여기 부터 만들면 될듯  -->
                     <v-spacer></v-spacer>
                     <md-button class="md-icon-button" @click="refreshNotice">
                         <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
@@ -26,12 +33,10 @@
                         <v-list-item-avatar>
                             <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
                         </v-list-item-avatar>
-
                         <v-list-item-content>
                             <v-list-item-title>nickName</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-
                     <v-divider></v-divider>
                     <v-list dense>
                         <router-link to="/">
@@ -95,7 +100,7 @@
                     </v-list>
                 </v-navigation-drawer>
                 <router-view class="page"></router-view>
-                <BottomNavComponent class="bottom-nav" />
+                <BottomNavComponent v-show="$store.state.showNav" class="bottom-nav" />
             </div>
         </div>
     </v-app>
@@ -123,9 +128,11 @@ export default {
     },
     data: () => {
         return {
+            hide: true,
             route: '',
             showNav: false,
             drawer: null,
+            user: '',
             items: [
                 { title: 'Home', icon: 'dashboard' },
                 { title: 'About', icon: 'question_answer' }

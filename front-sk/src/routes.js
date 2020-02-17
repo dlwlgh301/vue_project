@@ -24,6 +24,9 @@ import Write from './views/contents/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
 import Bookmark from './views/contents/BookMark.vue';
+
+import store from './vuex/store';
+
 Vue.use(Router);
 
 const router = new Router({
@@ -152,6 +155,23 @@ const router = new Router({
             component: Bookmark
         }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    console.group('to: ', to);
+    console.log('from: ', from);
+    console.log('next: ', next);
+    console.groupEnd();
+
+    if (to.name === 'Login') {
+        console.log('before ', store.state.showNav);
+        store.commit('toggleNav', false);
+        console.log('after ', store.state.showNav);
+    } else {
+        store.commit('toggleNav', true);
+    }
+
+    next();
 });
 
 export default router;
