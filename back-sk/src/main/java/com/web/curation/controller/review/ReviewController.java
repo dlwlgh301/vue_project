@@ -1,46 +1,29 @@
 package com.web.curation.controller.review;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.StringTokenizer;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import com.google.gson.JsonArray;
 import com.web.curation.model.BasicResponse;
-import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Comment;
 import com.web.curation.model.vo.Follow;
 import com.web.curation.model.vo.Img;
 import com.web.curation.model.vo.Review;
-import com.web.curation.service.notice.NoticeService;
+import com.web.curation.model.vo.apiData;
+import com.web.curation.service.FollowService;
+import com.web.curation.service.UserService;
 import com.web.curation.service.review.CommentService;
 import com.web.curation.service.review.ImgService;
 import com.web.curation.service.review.ReviewService;
-import com.web.curation.service.FollowService;
-import com.web.curation.service.UserService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,12 +31,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -128,14 +107,13 @@ public class ReviewController {
         final Review review = new Review();
         review.setEmail(email);
         review.setKeywordMain(userServiceImpl.getKeyword(email));
+        System.out.println(email);
+        System.out.println(userServiceImpl.getKeyword(email));
         final List<Review> list = reviewServiceImpl.getMainReview(review);
-        final JSONArray arr = new JSONArray();
-        int index = 0;
+        final List<apiData> arr = new ArrayList<>();
+
         for (final Review r : list) {
-            final JSONObject data = new JSONObject();
-            data.put("review", r);
-            data.put("img", imgServiceImpl.getImgs(r.getRid()));
-            arr.put(index++, data);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
         }
 
         if (list.size() > 0) {
@@ -146,6 +124,7 @@ public class ReviewController {
             result.status = false;
             result.data = "none";
         }
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -169,16 +148,12 @@ public class ReviewController {
             }
         });
 
-        final JSONArray arr = new JSONArray();
-        int index = 0;
+        final List<apiData> arr = new ArrayList<>();
         for (Review r : list) {
-            final JSONObject data = new JSONObject();
-            data.put("review", r);
-            data.put("img", imgServiceImpl.getImgs(r.getRid()));
-            arr.put(index++, data);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
         }
 
-        if (index > 0) {
+        if (list.size() > 0) {
             result.status = true;
             result.data = "success";
             result.object = arr;
@@ -196,13 +171,9 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         final List<Review> list = reviewServiceImpl.getProductReview(productName);
-        final JSONArray arr = new JSONArray();
-        int index = 0;
+        final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
-            final JSONObject data = new JSONObject();
-            data.put("review", r);
-            data.put("img", imgServiceImpl.getImgs(r.getRid()));
-            arr.put(index++, data);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
         }
 
         if (list.size() > 0) {
@@ -292,13 +263,10 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         final List<Review> list = reviewServiceImpl.getUserReview(email);
-        final JSONArray arr = new JSONArray();
-        int index = 0;
+
+        final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
-            final JSONObject data = new JSONObject();
-            data.put("review", r);
-            data.put("img", imgServiceImpl.getImgs(r.getRid()));
-            arr.put(index++, data);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
         }
 
         if (list.size() > 0) {
@@ -312,5 +280,4 @@ public class ReviewController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
 }

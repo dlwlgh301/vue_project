@@ -7,7 +7,8 @@
         values(#{email}, #{productName}, #{content}, #{score}, #{title}, #{keywordMain}, #{keywordSub}, #{likeNumber}, #{nickName}, #{imgURL})
     </insert>
     <select id="getMainReview" parameterType="com.web.curation.model.vo.Review" resultType="com.web.curation.model.vo.Review">
-        select * from (select * from review where email=#{email}) r where r.keywordMain=#{keywordMain}
+        select * from review where keywordMain=#{keywordMain}
+        <!-- select * from (select * from review where email=#{email}) r where r.keywordMain=#{keywordMain} -->
     </select>
     <select id="getUserReview" parameterType="string" resultType="com.web.curation.model.vo.Review">
         select * from review where email = #{value}
