@@ -7,7 +7,15 @@
     <div>
         <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
             <div class="wrapC" v-if="!next">
-                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <h1>
                     키워드를
                     <br />선택해주세요.
@@ -56,20 +64,18 @@
 
                 <!-- <button class="btn btn--back btn--login" type="submit" @click="insertMember" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입해보기
-                </button> -->
+                </button>-->
             </div>
 
             <div class="wrapB" style="padding-top: 100px;" v-if="next">
-                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
-                    가입하기
-                </h1>
+                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
                 <div class="join">
                     <div id="imageMain">
                         <div v-if="!image">
                             <img src="../../assets/images/프로필아이콘.png" />
                         </div>
                         <div v-else>
-                            <img :src="image" style="width:150px; height:150px" />
+                            <img :src="image" style="width:1 50px; height:150px" />
                             <button @click="removeImage">삭제하기</button>
                         </div>
                     </div>
@@ -95,15 +101,11 @@
                             type="text"
                         />
                         <label for="email">이메일</label>
-                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">
-                            이메일 인증
-                        </button>
+                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
                     </div>
                     <div class="input-with-label" v-if="isSendEmail">
                         <label for="emailAuth">인증 코드</label>
-                        <div class="error-text" v-if="error.email">
-                            {{ error.email }}
-                        </div>
+                        <div class="error-text" v-if="error.email">{{ error.email }}</div>
                         <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
                     </div>
 
@@ -119,9 +121,7 @@
                             placeholder="비밀번호를 입력하세요."
                         />
                         <label for="password">비밀번호</label>
-                        <div class="error-text" v-if="error.password">
-                            {{ error.password }}
-                        </div>
+                        <div class="error-text" v-if="error.password">{{ error.password }}</div>
                     </div>
 
                     <div class="input-with-label">
@@ -136,9 +136,7 @@
                             placeholder="비밀번호를 다시한번 입력하세요."
                         />
                         <label for="password-confirm">비밀번호 확인</label>
-                        <div class="error-text" v-if="error.passwordConfirm">
-                            {{ error.passwordConfirm }}
-                        </div>
+                        <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
                     </div>
 
                     <div class="input-with-label">
@@ -153,9 +151,7 @@
                             type="text"
                         />
                         <label for="name">이름</label>
-                        <div class="error-text" v-if="error.name">
-                            {{ error.name }}
-                        </div>
+                        <div class="error-text" v-if="error.name">{{ error.name }}</div>
                     </div>
                     <div class="input-with-label">
                         <input
@@ -169,12 +165,8 @@
                             type="text"
                         />
                         <label for="nickname">닉네임</label>
-                        <button type="button" @click="doubleCheck()">
-                            중복확인
-                        </button>
-                        <div class="error-text" v-if="error.nickName">
-                            {{ error.nickName }}
-                        </div>
+                        <button type="button" @click="doubleCheck()">중복확인</button>
+                        <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
                     </div>
                     <div class="input-with-label">
                         <input
@@ -188,9 +180,7 @@
                             type="text"
                         />
                         <label for="nickname">한줄소개</label>
-                        <div class="error-text" v-if="error.comment">
-                            {{ error.comment }}
-                        </div>
+                        <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
                     </div>
                 </div>
 
@@ -218,10 +208,9 @@
                                     <div class="modal-footer">
                                         <slot name="footer">
                                             약관입니다.
-                                            <br /><br />
-                                            <button @click="showmodal">
-                                                확인
-                                            </button>
+                                            <br />
+                                            <br />
+                                            <button @click="showmodal()">확인</button>
                                         </slot>
                                     </div>
                                 </div>
@@ -230,15 +219,8 @@
                     </transition>
                 </div>
 
-                <button @click="showModal = true">약관보기</button>
-
-                <!-- <button class="btn btn--back" type="button" v-on:click="next = true" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
-                    다음화면으로
-                </button> -->
-
-                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">
-                    이전화면으로
-                </button>
+                <button type="button" @click="showModal = true">약관보기</button>
+                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
                 <br />
                 <button class="btn btn--back" style="margin-top:10px" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입하기
@@ -303,7 +285,8 @@ export default {
                 comment: false,
                 passwordConfirm: false,
                 isTerm: false,
-                submit: false
+                emailCheck: false,
+                nickNameCheck: false
             },
             isSubmit: false,
             isSubmit2: false,
@@ -344,18 +327,27 @@ export default {
 
                 if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
                 else this.error.emailAuth = false;
+
+                this.isSubmit = this.checkSubmit();
+                console.log('isSubmit:' + this.isSubmit);
             }
         },
         password: function() {
             this.checkForm();
         },
         email: function() {
+            this.error.emailAuth = true;
+            sessionStorage.setItem('key', '이거는  아무도 못 마추겠지?');
+            this.key = '이거는  아무도 못 마추겠지?';
+            this.isSendEmail = false;
+            this.emailAuth = '';
             this.checkForm();
         },
         passwordConfirm: function() {
             this.checkForm();
         },
         nickName: function() {
+            this.error.nickNameCheck = true;
             this.checkForm();
         },
         name: function() {
@@ -369,6 +361,31 @@ export default {
         }
     },
     methods: {
+        checkSubmit() {
+            if (
+                this.email.length != 0 &&
+                !this.error.email &&
+                !this.error.emailCheck &&
+                this.emailAuth.length != 0 &&
+                !this.error.emailAuth &&
+                this.password.length != 0 &&
+                !this.error.password &&
+                this.passwordConfirm.length != 0 &&
+                !this.error.passwordConfirm &&
+                this.name.length != 0 &&
+                !this.error.name &&
+                this.nickName.length != 0 &&
+                !this.error.nickName &&
+                !this.error.nickNameCheck &&
+                this.comment.length != 0 &&
+                !this.error.comment &&
+                !this.error.isTerm
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         checkForm2() {
             if (this.age.length != 0 && this.gender.length != 0 && this.status.length != 0) {
                 this.isSubmit2 = true;
@@ -378,77 +395,63 @@ export default {
         },
         checkForm() {
             if (this.email.length == 0) {
-                this.error.submit = true;
                 this.error.email = '';
-            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
-            else {
+            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) {
+                this.error.email = '이메일 형식이 아닙니다.';
+            } else {
                 this.error.email = false;
             }
 
             if (this.password.length == 0) {
-                this.error.submit = true;
                 this.error.password = '';
             } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
-                this.error.submit = false;
             }
 
             if (this.passwordConfirm.length == 0) {
-                this.error.submit = true;
                 this.error.passwordConfirm = '';
             } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
                 this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
-                this.error.submit = false;
             }
 
             if (this.name.length == 0) {
-                this.error.submit = true;
                 this.error.name = '';
-            } else if (this.name.length === 0) this.error.name = '이름을 입력해주세요';
-            else {
+            } else {
                 this.error.name = false;
-                this.error.submit = false;
             }
 
             if (this.nickName.length == 0) {
-                this.error.submit = true;
                 this.error.nickName = '';
-            } else if (this.nickName.length === 0) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
-            else {
+            } else if (this.nickName.length < 2) {
+                this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
+            } else {
                 this.error.nickName = false;
             }
 
             if (this.comment.length == 0) {
-                this.error.submit = true;
                 this.error.comment = '';
             } else if (this.comment.length === 0) this.error.comment = '한줄소개를 입력해주세요';
             else {
                 this.error.comment = false;
-                this.error.submit = false;
             }
 
             if (this.isTerm.length == 0) {
-                this.error.submit = true;
                 this.error.isTerm = '';
             } else if (this.isTerm == false) this.error.isTerm = true;
             else {
                 this.error.isTerm = false;
-                this.error.submit = false;
             }
 
-            let isSubmit = true;
-            Object.values(this.error).map(v => {
-                if (v) isSubmit = false;
-            });
-            this.isSubmit = isSubmit;
+            this.isSubmit = this.checkSubmit();
 
-            console.log('submit:' + this.error.submit);
+            console.log('checkFomr():' + this.isSubmit);
         },
         insertMember() {
+            alert('insertMember');
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
@@ -485,77 +488,12 @@ export default {
             });
 
             this.$router.push('/');
-            // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {
-            //     alert('good');
-
-            // });
-            // UserApi.join(test);
-            // this.$router.push('/user/certComplete');
         },
-        join() {
-            console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
-            if (this.isSubmit) {
-                var { file, email, password, nickName, comment, name, imgURL } = this;
-
-                // eslint-disable-next-line no-unused-vars
-                var data = {
-                    file,
-                    email,
-                    password,
-                    nickName,
-                    comment,
-                    name,
-                    imgURL
-                };
-                console.log(this.email);
-                //요청 후에는 버튼 비활성화
-                this.isSubmit = false;
-
-                //console.log('axios 하기전!!!');
-
-                /* var body = {
-                    password: this.password,
-                    email: this.email,
-                    nickName: this.nickName,
-                    name: this.name,
-                    comment: this.comment
-                }; */
-                sessionStorage.setItem('email', this.email);
-                sessionStorage.setItem('password', this.password);
-                sessionStorage.setItem('nickName', this.nickName);
-                sessionStorage.setItem('name', this.name);
-                sessionStorage.setItem('comment', this.comment);
-                sessionStorage.setItem('imgURL', this.imgURL);
-                sessionStorage.setItem('file', this.file);
-
-                UserApi.cert(
-                    data,
-                    res => {
-                        console.log('???????????????');
-                        //console.log(res);
-                        //console.log(res.data.object.key);
-                        this.key = res.data.object.key;
-                        console.log(this.key);
-                        sessionStorage.clear;
-                        sessionStorage.setItem('key', this.key);
-                        console.log('join 인증키 발급');
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-                this.$router.push('/user/keyword');
-                // UserApi.join(body);
-                console.log('join 라우터');
-                // console.log('axios 함!!!');
-            }
-        },
         sendEmailAuth() {
             UserApi.cert(
                 { email: this.email },
                 res => {
-                    this.isSendEmail = true;
                     console.log('???????????????');
                     //console.log(res);
                     //console.log(res.data.object.key);
@@ -583,7 +521,7 @@ export default {
                     icon: 'error',
                     title: '이메일을 입력해 주세요.'
                 });
-                this.error.submit = true;
+                this.error.emailCheck = true;
                 return;
             }
             UserApi.doubleCheck(
@@ -591,19 +529,21 @@ export default {
                 res => {
                     console.log(res);
                     if (res.data.status == true) {
+                        this.isSendEmail = true;
                         this.sendEmailAuth();
                         Swal.fire({
                             icon: 'success', //"info,success,warning,error" 중 택1
                             title: '사용가능한 이메일입니다'
                         });
-                        this.error.submit = false;
+                        this.error.emailCheck = false;
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: res.data.data
                         });
-                        this.error.submit = true;
+                        this.error.emailCheck = true;
                     }
+                    this.isSubmit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);
@@ -620,14 +560,15 @@ export default {
                             icon: 'success', //"info,success,warning,error" 중 택1
                             title: '사용가능한 닉네임'
                         });
-                        this.error.submit = false;
+                        this.error.nickNameCheck = false;
                     } else {
                         Swal.fire({
                             icon: 'error',
                             title: res.data.data
                         });
-                        this.error.submit = true;
+                        this.error.nickNameCheck = true;
                     }
+                    this.isSubmit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);
