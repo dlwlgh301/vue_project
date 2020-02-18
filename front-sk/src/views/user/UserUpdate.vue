@@ -351,37 +351,43 @@ export default {
             if (this.checkpassword.length == 0) {
                 this.error.submit = true;
                 this.error.checkpassword = '';
-            } else if (this.checkpassword.length > 0 && !this.passwordSchema.validate(this.checkpassword)) this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.checkpassword.length > 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.checkpassword = false;
                 this.error.submit = false;
             }
 
-            if (this.checkpassword.length >= 0 && !this.passwordSchema.validate(this.checkpassword)) this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.checkpassword.length >= 0 && !this.passwordSchema.validate(this.checkpassword))
+                this.error.checkpassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.checkpassword = false;
 
             if (this.changepassword.length == 0) {
                 this.error.submit = true;
                 this.error.changepassword = '';
-            } else if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword)) this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.changepassword = false;
                 this.error.submit = false;
             }
 
-            if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword)) this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.changepassword.length > 0 && !this.passwordSchema.validate(this.changepassword))
+                this.error.changepassword = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.changepassword = false;
 
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm)) this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
             }
 
-            if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm)) this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            if (this.passwordConfirm.length > 0 && !this.passwordSchema.validate(this.passwordConfirm))
+                this.error.passwordConfirm = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else this.error.passwordConfirm = false;
 
             if (this.name.length == 0) {

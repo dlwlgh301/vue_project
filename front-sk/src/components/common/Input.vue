@@ -23,7 +23,7 @@
 
 <script>
 export default {
-    name: 'input',
+    name: 'Input',
     props: ['inputValue', 'errorText', 'password', 'placeholder', 'label', 'enterInput'],
     methods: {
         viewPassword() {

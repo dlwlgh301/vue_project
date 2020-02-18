@@ -1,18 +1,21 @@
 <template>
     <div class="wrapC">
-        <div class="wrap" style="margin-top: 20%">
+        <div class="wrap" style="margin-top: 19%">
             <h1>글 쓰기</h1>
-            <div class="quest">이 제품이 어울리는 사람을 골라주세요</div>
+            <div class="quest" style="padding-top:5%">
+                이 제품이 어울리는 사람을 골라주세요
+                <p style="text-color:red">필수!</p>
+            </div>
             <div>
                 <v-row justify="space-around">
                     <v-col cols="24">
                         <v-chip-group column active-class="blue darken-1 white--text" v-model="age">
-                            <v-chip vlaue="10대">10대</v-chip>
-                            <v-chip vlaue="20대">20대</v-chip>
-                            <v-chip vlaue="30대">30대</v-chip>
-                            <v-chip vlaue="40대">40대</v-chip>
-                            <v-chip vlaue="50대">50대</v-chip>
-                            <v-chip vlaue="60대">60대 이상</v-chip>
+                            <v-chip value="10대">10대</v-chip>
+                            <v-chip value="20대">20대</v-chip>
+                            <v-chip value="30대">30대</v-chip>
+                            <v-chip value="40대">40대</v-chip>
+                            <v-chip value="50대">50대</v-chip>
+                            <v-chip value="60대">60대 이상</v-chip>
                         </v-chip-group>
                     </v-col>
                 </v-row>
@@ -46,20 +49,31 @@
                     </button>-->
                 </div>
             </div>
-            <InputComponent inputValue="name" :errorText="error.name" :enterInput="enterInput" placeholder="제픔명을 입력해주세요" label="제품명" />
-            <div class="wrap" id="rating">
+            <div class="input-with-label">
+                <input
+                    v-model="title"
+                    v-bind:class="{
+                        error: error.title,
+                        complete: !error.title && title.length !== 0
+                    }"
+                    id="title"
+                    placeholder="제목을 입력해 주세요."
+                    type="text"
+                />
+                <label for="title">제목</label>
+                <div class="error-text" v-if="error.title">{{ error.title }}</div>
+            </div>
+            <div class="wrap" id="score">
                 <v-row>
                     <v-col>
-                        <div style="padding-top: 0.7rem">
-                            이 제품에 대한 전반적인 평가를 입력해주세요
-                        </div></v-col
-                    >
+                        <div style="padding-top: 0.7rem">이 제품에 대한 전반적인 평가를 입력해주세요</div>
+                    </v-col>
                     <v-col>
                         <div id="test1">
-                            <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ rating }})</div>
+                            <div id="test2" class="grey--text text--lighten-1 caption mr-2">({{ score }})</div>
                             <v-rating
                                 id="test3"
-                                v-model="rating"
+                                v-model="score"
                                 background-color="yellow lighten-3"
                                 color="yellow accent-4"
                                 dense
@@ -71,18 +85,27 @@
                 </v-row>
             </div>
 
-            <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300"></TextareaComponent>
+            <div class="textarea-wrap">
+                <h4>{{ label }}</h4>
+                <span>{{ content.length }}/{{ this.maxLength }}</span>
+                <textarea v-model="content" :placeholder="placeholder" />
+            </div>
             <div class="wrap">
                 <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action
+                    :show-file-list="true"
                     list-type="picture-card"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove"
+                    :on-change="handleChange"
+                    :auto-upload="false"
+                    :file-list="fileList"
+                    :limit="5"
                 >
                     <i class="el-icon-plus"></i>
                 </el-upload>
                 <el-dialog :visible.sync="dialogVisible">
-                    <img width="100%" :src="dialogImageUrl" alt />
+                    <img width="100%" :src="images" alt />
                 </el-dialog>
             </div>
             <button style="margin-top: 1rem;" class="btn btn--back" v-on:click="write" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
@@ -93,39 +116,155 @@
     </div>
 </template>
 <script>
-import InputComponent from '../../components/common/Input';
-import TextareaComponent from '../../components/common/Textarea';
-
+import UserApi from '../../apis/UserApi';
+//import UserApi from '../../apis/UserApi';
 export default {
-    components: {
-        InputComponent,
-        TextareaComponent
+    created() {
+        this.$store.commit('setPageTitle', '글쓰기');
     },
     data: () => {
         return {
+            placeholder: '후기를 입력해주세요',
+            label: '게시글',
+            maxLength: 300,
+            fileList: [],
             addtag: [],
-            name: '',
+            file: '',
+            value: '',
+            title: '',
+            content: '',
             gender: '',
             age: '',
+            images: [],
             status: '',
-            keyword: '',
-            rating: '0',
+            productName: '키보드',
+            keywordMain: '',
+            keyowrdSub: '',
+            score: 0,
+            isSubmit: false,
+            email: 'dlwlgh301@naver.com',
             error: {
-                name: false
+                age: false,
+                gender: false,
+                status: false,
+                title: false,
+                content: false,
+                submit: false
             },
-            dialogImageUrl: '',
             dialogVisible: false
         };
     },
+    watch: {
+        age: function() {
+            this.checkForm();
+        },
+        gender: function() {
+            this.checkForm();
+        },
+        status: function() {
+            this.checkForm();
+        },
+        title: function() {
+            this.checkForm();
+        },
+        content: function(value) {
+            let length = this.maxLength;
+            value = value.length > length ? value.substr(0, length) : value;
+
+            this.content = value;
+            this.checkForm();
+        }
+    },
     methods: {
+        handleChange(file, fileList) {
+            this.file = file.raw;
+            this.fileList = fileList;
+        },
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            console.log(file);
+            this.fileList = fileList;
+            console.log(fileList);
         },
         handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
+            this.images = file.url;
+            console.log(this.images);
             this.dialogVisible = true;
         },
-        write() {}
+        write() {
+            // this.keywordSub = 'default,';
+            this.keywordMain = this.age + ',' + this.gender + ',' + this.status;
+            this.keywordSub = this.addtag;
+            this.email = sessionStorage.getItem('email');
+            /*    console.log(this.fileList);
+            console.log(this.keyword);
+            let test = new FormData();
+            test.append('File', this.fileList[0]); 
+            console.log(test);*/
+            for (var i = 0; i < this.fileList.length; i++) {
+                this.images += this.fileList[i].raw.name + ',';
+                UserApi.uploadtest(
+                    this.fileList[i].raw,
+                    res => {
+                        console.log(res);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+            }
+
+            var images = this.images;
+            console.log(images + 'vue 부분');
+            var productName = '카메라';
+            var email = 'dlwlgh301@gmail.com';
+            var review = {
+                email: email,
+                productName: productName,
+                keywordMain: this.keywordMain,
+                keywordSub: this.keywordSub,
+                title: this.title,
+                score: this.score,
+                content: this.content
+            };
+            console.log(review);
+            // console.log(JSON.stringify(review), images);
+            UserApi.insertReview(review, images);
+            this.images = '';
+        },
+        checkForm() {
+            if (this.age == '') {
+                this.error.age = '나이를 선택해주세요';
+            } else this.error.age = false;
+
+            if (this.gender == '') {
+                this.error.gender = '성별을 선택해주세요';
+            } else this.error.gender = false;
+
+            if (this.status == '') {
+                this.error.status = '현재 상태를 선택해주세요';
+            } else this.error.status = false;
+            if (this.title.length == 0) {
+                this.error.submit = true;
+                this.error.title = '';
+            } else if (this.title.length === 0) this.error.title = '제목을 입력해주세요';
+            else {
+                this.error.title = false;
+                this.error.submit = false;
+            }
+            if (this.content.length == 0) {
+                this.error.submit = true;
+                this.error.content = '';
+            } else if (this.content.length === 0) this.error.content = '제목을 입력해주세요';
+            else {
+                this.error.content = false;
+                this.error.submit = false;
+            }
+            let isSubmit = true;
+            Object.values(this.error).map(v => {
+                if (v) isSubmit = false;
+            });
+            this.isSubmit = isSubmit;
+        }
     }
 };
 </script>
@@ -148,7 +287,7 @@ h1 {
 #test3 {
     float: right;
 }
-#rating {
+#score {
     margin-bottom: 0.5rem;
 }
 .col {

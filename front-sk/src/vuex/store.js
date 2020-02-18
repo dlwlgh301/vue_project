@@ -11,6 +11,7 @@ const state = {
     pageTitle: 'SHOP+',
     token: '',
     role: '',
+    hide: true,
     showNav: true,
     noticeNum: 0
 };
