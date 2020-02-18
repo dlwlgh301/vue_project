@@ -30,4 +30,9 @@ public class BookmarkDaoImpl implements BookmarkDao {
         return sqlSession.selectList("getBookmarkListByEmail", email);
     }
 
+    @Override
+    public int likeCheck(Bookmark bookmark) throws Exception {
+        return sqlSession.selectOne("likeCheck", bookmark);
+    }
+
 }

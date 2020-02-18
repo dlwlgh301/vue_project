@@ -30,4 +30,9 @@ public class BookmarkServiceImpl implements BookmarkService {
         return bookmarkDao.getBookmarkListByEmail(email);
     }
 
+    @Override
+    public int likeCheck(Bookmark bookmark) throws Exception {
+        return bookmarkDao.likeCheck(bookmark);
+    }
+
 }

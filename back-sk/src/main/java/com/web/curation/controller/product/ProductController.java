@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.web.curation.dao.bookmark.BookmarkDao;
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
+import com.web.curation.model.vo.Bookmark;
 import com.web.curation.model.vo.Product;
 import com.web.curation.service.notice.NoticeService;
 import com.web.curation.service.product.ProductService;
@@ -71,7 +73,7 @@ public class ProductController {
     NoticeService alarmServiceImpl;
 
     @Autowired
-    ProductService productServiceImpl;
+    BookmarkDao bookmarkDao;
 
     @Autowired
     private JavaMailSender javaMailSender;
@@ -79,19 +81,28 @@ public class ProductController {
     // + "&display=100"
     @GetMapping("/product/getAPI")
     @ApiOperation(value = "api 받아오기")
-    public Object getAPI(@RequestParam(required = false) final String num, HttpServletResponse res) throws Exception {
+    public Object getAPI(@RequestParam(required = true) final String keyword,
+            @RequestParam(required = true) final String email, HttpServletResponse res) throws Exception {
         final BasicResponse result = new BasicResponse();
+
+        System.out.println("받아온 키워드 :::" + keyword);
+        System.out.println("받아온 키워드 :::" + keyword);
+        System.out.println("받아온 키워드 :::" + keyword);
+
         String productName = "";
         String link = "";
         String image = "";
         int price1 = 0;
         int price2 = 0;
         int price = 0;
+        List<Product> list = new ArrayList<>();
+        List<Boolean> likeCheckList = new ArrayList<>();
+        JSONObject data = new JSONObject();
 
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
         String clientSecret = "zPy366mvC9";// 애플리케이션 클라이언트 시크릿값";
         try {
-            String text = URLEncoder.encode("심플한", "UTF-8");
+            String text = URLEncoder.encode(keyword, "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text + "&display=100"; // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
             // // xml 결과
@@ -164,29 +175,19 @@ public class ProductController {
                 System.out.println();
                 System.out.println();
                 System.out.println();
+
+                list.add(new Product(productName, link, image, price));
             }
 
-            // else if (j == 3) {
-            // price1 = Integer.parseInt(arr3[3]);
-            // System.out.println("price1 :::: " + price1);
-            // } else if (j == 4) {
-            // price2 = Integer.parseInt(arr3[3]);
-            // System.out.println("price2 :::: " + price2);
-            // }
-            // System.out.println();
-
-            // }
-
-            // if (price2 != 0 && price1 > price2) {
-            // price = price2;
-            // } else {
-            // price = price1;
-            // }
-            // System.out.println("price ::: " + price);
-            // System.out.println();
-            // }
-
             // System.out.println(response.toString());
+
+            for (int i = 0; i < list.size(); i++) {
+                if (bookmarkDao.likeCheck(new Bookmark(email, list.get(i).getProductName())) > 0) {
+                    likeCheckList.add(true);
+                } else {
+                    likeCheckList.add(false);
+                }
+            }
 
         } catch (
 
@@ -195,7 +196,13 @@ public class ProductController {
         }
         res.setHeader("Access-Control-Allow-Origin", "*");
 
+        data.put("list", list);
+        data.put("likeCheckList", likeCheckList);
+
+        result.object = data.toMap();
+
         result.status = true;
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

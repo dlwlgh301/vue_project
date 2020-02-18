@@ -16,4 +16,9 @@
         where email=#{email} and productName = #{productName}
     </delete>
 
+    <select id="likeCheck" resultType="int" parameterType="com.web.curation.model.vo.Bookmark">
+        select count(*) from bookmark
+        where email=#{email} and productName = #{productName}
+    </select>
+
 </mapper>
