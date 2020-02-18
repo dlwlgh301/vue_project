@@ -42,10 +42,11 @@
             </v-row>
         </div>
 
+        <div>
+            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+        </div>
+
         <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <md-table-toolbar>
-                <h1 class="md-title">Users</h1>
-            </md-table-toolbar>
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!-- <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
                 <!-- <td><img v-bind:src="item.image" /></td> -->
@@ -64,47 +65,6 @@
                 </md-table-cell>
             </md-table-row>
         </md-table>
-
-        <!-- <md-table v-model="likeList" md-sort="name" md-sort-order="asc" md-card md-fixed-header style="width:20%">
-            <md-table-row slot="md-table-row">
-                <md-table-cell md-label="Like" width="10%">
-                    <md-button class="md-icon-button md-list-action">
-                        <md-icon class="md-primary" v-show="likeList">star</md-icon>
-                        <md-icon class="md-primary" v-show="!likeList">star_border</md-icon>
-                    </md-button></md-table-cell
-                >
-            </md-table-row>
-        </md-table> -->
-
-        <!-- <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <md-table-toolbar>
-                <h1 class="md-title">Users</h1>
-            </md-table-toolbar>
-            <md-table style="margin-top : 50px">
-                <md-table-row>
-                    <md-table-head md-label="Image" width="100px">Image</md-table-head>
-                    <md-table-head md-label="ProductName" md-sort-by="productName" width="50%">ProductName</md-table-head>
-                    <md-table-head md-label="Price" md-sort-by="price" width="20%">Price</md-table-head>
-                    <md-table-head md-label="Like" md-sort-by="Like" width="10%">Like</md-table-head>
-                </md-table-row>
-
-                <md-table-row slot="md-table-row" v-for="(item, index) in product" v-bind:key="index">
-                    {{ item.image }}   
-                    <md-table-cell md-label="Image" width="100px"><img v-bind:src="item.image" alt class="People"/></md-table-cell>
-                    <md-table-cell md-label="ProductName" md-sort-by="productName" width="50%"
-                        >{{ item.productName }} <br />
-                        <a v-bind:href="item.link">{{ item.link }}</a>
-                    </md-table-cell>
-                    <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
-                    <md-table-cell md-label="Like" md-sort-by="Like" width="10%">
-                        <md-button class="md-icon-button md-list-action">
-                            <md-icon class="md-primary" v-show="likeList[index] == true">star</md-icon>
-                            <md-icon class="md-primary" v-show="likeList[index] == false">star_border</md-icon>
-                        </md-button>
-                    </md-table-cell>
-                </md-table-row>
-            </md-table>
-        </md-table> -->
     </div>
 </template>
 <script>

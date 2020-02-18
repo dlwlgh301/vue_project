@@ -23,6 +23,8 @@ public class RequestDaoImpl implements RequestDao {
         String requesterN = sqlSession.selectOne("getNickNameByEmail", requester);
         String requesteeN = sqlSession.selectOne("getNickNameByEmail", requestee);
         String requesterImg = sqlSession.selectOne("getImgURL", requester);
+        if (requesterImg == null)
+            requesterImg = "default.png";
         Request request = new Request(requester, requesterN, requestee, requesteeN, requesterImg);
         int row = sqlSession.insert("insertRequest", request);
         if (row > 0)
