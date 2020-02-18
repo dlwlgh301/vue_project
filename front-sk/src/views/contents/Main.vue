@@ -3,16 +3,19 @@
         <v-row>
             <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
-                    <div style="padding: 1rem;">
-                        <span id="pimg">img</span>
-                        <span id="pname">{{ n.review.nickName }}</span>
-                    </div>
-                    <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
+                    <v-list-item>
+                        <v-list-item-avatar color="grey"></v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title class="headline">{{ n.review.nickName }}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-img height="250" :src="getImgUrl(n.img[0])" style="margin-bottom:0.5rem"></v-img>
                     <md-button class="md-icon-button" @click="toggle(index)">
                         <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
                         <md-icon v-else>favorite_border</md-icon>
                     </md-button>
-                    <md-button class="md-icon-button">
+                    <md-button class="md-icon-button" @click="detail(n.review.rid)">
                         <md-icon>chat_bubble_outline</md-icon>
                     </md-button>
 
@@ -90,6 +93,12 @@ export default {
             } else {
                 this.favorite = true;
             }
+        },
+        detail() {
+            this.$router.push('/contents/detail');
+        },
+        getImgUrl(pic) {
+            return `http://192.168.100.90:8080/image/${pic}`;
         }
     }
 };

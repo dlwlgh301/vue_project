@@ -200,8 +200,6 @@ export default {
             let test = new FormData();
             test.append('File', this.fileList[0]); 
             console.log(test);*/
-            console.log(this.fileList[0].raw);
-            console.log(this.fileList.length);
             for (var i = 0; i < this.fileList.length; i++) {
                 this.images += this.fileList[i].raw.name + ',';
                 UserApi.uploadtest(
@@ -230,7 +228,7 @@ export default {
             };
             console.log(review);
             // console.log(JSON.stringify(review), images);
-            //UserApi.insertReview(review, images);
+            UserApi.insertReview(review, images);
             this.images = '';
         },
         checkForm() {
