@@ -24,6 +24,8 @@ const UserApi = {
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     requestReview: (data, callback) => requestReview(data, callback),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
+    searchMember: (data, callback, errorCallback) => searchMember(data, callback, errorCallback),
+    deleteUser: (data, callback, errorCallback) => deleteUser(data, callback, errorCallback),
     apitest: () => apitest(),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
 };
@@ -36,6 +38,31 @@ const isFollowing = (data, callback, errorCallback) => {
         })
         .catch(error => {
             console.log('팔로체크 실패');
+            errorCallback(error);
+        });
+};
+const deleteUser = (data, callback, errorCallback) => {
+    alert(data);
+    axios
+        .post(`${host}/account/deleteUser?email=` + data)
+        .then(res => {
+            console.log('삭제성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('삭제실패');
+            errorCallback(error);
+        });
+};
+const searchMember = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/account/searchMember?nickName=` + data)
+        .then(res => {
+            console.log('멤버서치성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('멤버서치실패');
             errorCallback(error);
         });
 };
@@ -228,8 +255,7 @@ const updateUser = (body, callback, errorCallback) => {
         keyword: body.keyword,
         imgURL: body.imgURL
     };
-    console.log('value is 입니다');
-    console.log(value.password);
+
     axios({
         url: `${host}/account/updateUser`,
         method: 'post',
@@ -248,6 +274,7 @@ const join = body => {
     var value = {
         password: body.password,
         email: body.email,
+
         nickName: body.nickName,
         name: body.name,
         comment: body.comment,
@@ -255,8 +282,6 @@ const join = body => {
         imgURL: body.imgURL
     };
 
-    console.log('value is ');
-    console.log(value);
     axios({
         url: `${host}/account/signup`,
         method: 'post',
