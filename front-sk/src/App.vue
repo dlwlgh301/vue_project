@@ -18,17 +18,9 @@
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
-                    <div style="width:19rem;">
+                    <div style="width:19rem; ">
                         <form>
-                            <input
-                                type="text"
-                                v-on:input="user = $event.target.value"
-                                style="z-index: 2;"
-                                name="focus"
-                                required
-                                class="search-box"
-                                placeholder="User 검색"
-                            />
+                            <input type="text" name="focus" required class="search-box" placeholder="Enter search term" />
                             <button class="close-icon" type="reset"></button>
                         </form>
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
@@ -146,13 +138,6 @@
 </template>
 
 <style>
-.search-box,
-.close-icon,
-.search-wrapper {
-    position: relative;
-    padding: 10px;
-}
-
 .search-box,
 .close-icon,
 .search-wrapper {
