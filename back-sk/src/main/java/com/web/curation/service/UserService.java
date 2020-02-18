@@ -1,6 +1,8 @@
 //디비 셋팅 주석 
 package com.web.curation.service;
 
+import java.util.List;
+
 import com.web.curation.model.user.User;
 
 public interface UserService {
@@ -25,4 +27,8 @@ public interface UserService {
     String getImgURL(String email) throws Exception;
 
     String getKeyword(String email) throws Exception;
+
+    List<User> searchMember(String nickName) throws Exception;
+
+    int deleteUser(String email) throws Exception;
 }

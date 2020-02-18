@@ -23,7 +23,7 @@ public class NoticeDaoImpl implements NoticeDao {
         String senderN = sqlSession.selectOne("getNickNameByEmail", sender);
         String receiverN = sqlSession.selectOne("getNickNameByEmail", receiver);
         String requesterImg = sqlSession.selectOne("getImgURL", receiver);
-        System.out.println(requesterImg);
+        System.out.println("img뭡니까:" + requesterImg);
         System.out.println(senderN);
         System.out.println(receiverN);
         Notice notice = new Notice(sender, senderN, receiver, receiverN, msg, requesterImg);
