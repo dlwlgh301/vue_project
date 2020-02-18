@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import Swal from 'sweetalert2';
-const host = 'http://172.30.1.54:8080';
+const host = 'http://192.168.100.90:8080';
 // const noticePort = 'http://172.30.1.54:8080';
 const UserApi = {
     getAPI: (data, callback, errorCallback) => getAPI(data, callback, errorCallback),
@@ -11,7 +11,7 @@ const UserApi = {
 
 const getAPI = (data, callback, errorCallback) => {
     axios
-        .get(`${host}/product/getAPI?keyword=` + data['keyword'])
+        .get(`${host}/product/getAPI?keyword=` + data['keyword'] + '&email=' + data['email'])
         .then(res => {
             console.log('상품 가져오기 성공');
             callback(res);
@@ -21,7 +21,6 @@ const getAPI = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-
 const getProductListByEmail = (data, callback, errorCallback) => {
     axios
         .get(`${host}/product/getProductListByEmail?email=` + data['email'])
@@ -34,7 +33,6 @@ const getProductListByEmail = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-
 const addBookmark = (data, callback, errorCallback) => {
     axios
         .post(`${host}/product/addProduct?email=` + data['email'] + '&productName=' + data['productName'])
@@ -47,7 +45,6 @@ const addBookmark = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-
 const deleteBookmark = (data, callback, errorCallback) => {
     axios
         .post(`${host}/product/deleteProduct` + data)

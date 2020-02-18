@@ -4,8 +4,8 @@
             <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <div style="padding: 1rem;">
-                        <span id="pimg">img</span>
-                        <span id="pname">name</span>
+                        <span style="cursor:pointer" id="pimg" @click="move(nickname[n - 1])">{{ nickname[n - 1] }}</span>
+                        <span style="cursor:pointer" id="pimg"> !닉네임으로 바꿀예정!</span>
                     </div>
                     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
                     <md-button class="md-icon-button">
@@ -42,6 +42,14 @@ export default {
     },
     data: () => {
         return {
+            nickname: [
+                'wns4773@naver.com',
+                'dhrwnmc@naver.com',
+                'wns4773@gmail.com',
+                'pacedov3@gmail.com',
+                'pacedov3@gmail.com',
+                'pacedov3@gmail.com'
+            ],
             title: '',
             content: '',
             rating: 0,
@@ -54,6 +62,10 @@ export default {
         };
     },
     methods: {
+        move(nick) {
+            if (nick == sessionStorage.getItem('email')) this.$router.push('/user/Profile');
+            else this.$router.push('/user/OtherProfile/' + nick);
+        },
         logout() {
             Kakao.Auth.logout();
             Kakao.Auth.setAccessToken('', false);
