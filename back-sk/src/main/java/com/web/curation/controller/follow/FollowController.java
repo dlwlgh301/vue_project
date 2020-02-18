@@ -180,9 +180,7 @@ public class FollowController {
             dummyUser.put("senderNick", followerNickName);
             dummyUser.put("receiver", following);
             dummyUser.put("msg", followerNickName + " 님이 팔로우 요청을 하였습니다.");
-            String img = userServiceImpl.getImgURL(follower);
-            img = (img == null) ? "default.png" : img;
-            dummyUser.put("img", img);
+            dummyUser.put("img", userServiceImpl.getImgURL(follower));
             result.status = true;
             result.data = "success";
             result.object = dummyUser.toMap();

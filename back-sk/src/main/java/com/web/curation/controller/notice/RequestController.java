@@ -57,9 +57,6 @@ public class RequestController {
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
         List<Request> list = requServiceImpl.getRequest(email);
-        System.out.println("follow 요청 리스트: " + email);
-        System.out.println(list);
-        System.out.println("---------------");
         if (list.size() > 0) {
             result.status = true;
             result.data = "success";
@@ -93,10 +90,7 @@ public class RequestController {
             dummyUser.put("senderNick", followingNick);
             dummyUser.put("receiver", requester);
             dummyUser.put("msg", followingNick + " 님이 팔로우 요청을 수락하였습니다.");
-            String img = userServiceImpl.getImgURL(requestee);
-            System.out.println(img);
-            img = (img == null) ? "default" : img;
-            dummyUser.put("img", img);
+            dummyUser.put("img", userServiceImpl.getImgURL(requestee));
             result.status = true;
             result.data = "success";
             result.object = dummyUser.toMap();
