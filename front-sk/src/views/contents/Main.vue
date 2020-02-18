@@ -1,14 +1,14 @@
 <template>
     <v-container style="width:100%;">
         <v-row>
-            <v-col v-for="n in 6" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
+            <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <div style="padding: 1rem;">
                         <span id="pimg">img</span>
-                        <span id="pname">name</span>
+                        <span id="pname">{{ n.review.nickName }}</span>
                     </div>
                     <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png" style="margin-bottom:0.5rem"></v-img>
-                    <md-button class="md-icon-button" @click="toggle()">
+                    <md-button class="md-icon-button" @click="toggle(index)">
                         <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
                         <md-icon v-else>favorite_border</md-icon>
                     </md-button>
@@ -16,17 +16,17 @@
                         <md-icon>chat_bubble_outline</md-icon>
                     </md-button>
 
-                    <v-card-title style="line-height: 0.5rem" v-model="title"></v-card-title>
+                    <v-card-title style="line-height: 0.5rem">{{ n.review.title }}</v-card-title>
 
                     <v-card-text>
                         <v-row align="center" class="mx-0">
-                            <v-rating :value="3.5" color="amber" dense half-increments readonly size="14"></v-rating>
+                            <v-rating :value="n.review.score" color="amber" dense half-increments readonly size="14"></v-rating>
 
                             <div class="grey--text ml-4" v-bind="rating"></div>
                         </v-row>
 
                         <!--<div class="my-4 subtitle-1 black--text">카페</div>-->
-                        <div v-bind="content"></div>
+                        <div>{{ n.review.content }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -46,10 +46,7 @@ export default {
         UserApi.requestReview(
             email,
             res => {
-                this.data = res.data.object.review;
-                for (var i = 0; i < res.data.object.length; i++) {
-                    this.data = res.data.object[i].review;
-                }
+                this.data = res.data.object;
                 console.log(this.data);
                 console.log('입력완료');
             },

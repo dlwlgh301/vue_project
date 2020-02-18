@@ -59,7 +59,7 @@
                 </button> -->
             </div>
 
-            <div class="wrapB" style="padding-top: 100px;" v-if="next">
+            <div class="wrapC" style="padding-top: 100px;" v-if="next">
                 <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
                     가입하기
                 </h1>

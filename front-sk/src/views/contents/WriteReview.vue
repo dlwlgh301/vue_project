@@ -177,8 +177,6 @@ export default {
     },
     methods: {
         handleChange(file, fileList) {
-            console.log('file 출력');
-            console.log(file.raw);
             this.file = file.raw;
             this.fileList = fileList;
         },
@@ -202,7 +200,8 @@ export default {
             let test = new FormData();
             test.append('File', this.fileList[0]); 
             console.log(test);*/
-            console.log(this.file);
+            console.log(this.fileList[0].raw);
+            console.log(this.fileList.length);
             for (var i = 0; i < this.fileList.length; i++) {
                 this.images += this.fileList[i].raw.name + ',';
                 UserApi.uploadtest(
@@ -217,7 +216,7 @@ export default {
             }
 
             var images = this.images;
-            console.log(images);
+            console.log(images + 'vue 부분');
             var productName = '카메라';
             var email = 'dlwlgh301@gmail.com';
             var review = {
@@ -229,9 +228,9 @@ export default {
                 score: this.score,
                 content: this.content
             };
-            console.log('vue 부분');
+            console.log(review);
             // console.log(JSON.stringify(review), images);
-            UserApi.insertReview(review, images);
+            //UserApi.insertReview(review, images);
             this.images = '';
         },
         checkForm() {

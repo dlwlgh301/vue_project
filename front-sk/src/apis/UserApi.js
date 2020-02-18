@@ -1,8 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
 const noticePort = 'http://192.168.100.90:8080';
-const filehost = 'http://192.168.100.58:8080';
+const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -298,7 +298,6 @@ const fileUpload = (data, callback, errorCallback) => {
     //     success: callback,
     //     error: errorCallback
     // });
-    axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
     axios
         .post(`${filehost}/account/fileUpload`, data)
         .then(() => {
@@ -343,12 +342,22 @@ const insertReview = (data, image) => {
     //     data: JSON.stringify(value)
     // });
 };
-const uploadtest = data => {
+const uploadtest = (data, callback, errorCallback) => {
+    const formData = new FormData();
+    formData.append('file', data);
+    console.log(formData);
     fetch(`${filehost}/account/fileUpload`, {
         method: 'POST',
         mode: 'no-cors',
-        data: data
-    });
+        body: formData
+    })
+        .then(() => {
+            console.log('업로드!');
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
+        });
 };
 const apitest = () => {
     fetch(`${host}/product/searchProduct`, {
@@ -372,7 +381,7 @@ const requestReview = (data, callback, errorCallback) => {
     console.log('request');
     console.log(data);
     axios
-        .get(`${filehost}/review/show/main`, {
+        .get(`${host}/review/show/main`, {
             params: {
                 email: data
             }
