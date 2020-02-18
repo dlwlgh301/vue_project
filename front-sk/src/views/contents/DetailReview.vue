@@ -13,24 +13,32 @@
                 </md-card-header>
 
                 <md-card-media>
-                    <img src="https://cdn.vuetifyjs.com/images/cards/cooking.png" alt="People" />
+                    <v-carousel
+                        :continuous="false"
+                        :cycle="false"
+                        :show-arrows="ture"
+                        hide-delimiter-background
+                        delimiter-icon="mdi-minus"
+                        height="300"
+                    >
+                        <v-carousel-item v-for="i in imgs" :key="i" :src="getImgUrl(i)">
+                            <v-img height="250"></v-img>
+                        </v-carousel-item>
+                    </v-carousel>
                 </md-card-media>
-                <md-card-content style="padding-bottom:0; padding-top: 0.3rem">
+                <md-card-content style="padding-bottom:0; padding-top: 0.7rem">
                     <p id="nick">
                         {{ review.nickName }} &nbsp; <span id="title">{{ review.title }}</span>
                     </p>
                 </md-card-content>
-                <md-card-content>
+                <md-card-content style="padding-top:0.3rem">
                     <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
                     <div class="grey--text ml-4" v-bind="rating"></div>
                 </md-card-content>
                 <md-card-content style="padding-top:0">{{ review.content }}</md-card-content>
-                <md-card-content style="padding-left:0">
-                    <v-chip class="ma-2" color="cyan" label text-color="white" small>
-                        <v-icon left>mdi-label</v-icon>
-                        New Tweets
-                    </v-chip>
-                </md-card-content>
+                <div style="margin-left:0.5rem;">
+                    <el-tag v-for="i in mtags" :key="i" style="margin-left:0.5rem">{{ i }} </el-tag>
+                </div>
             </md-card>
         </div>
         <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
@@ -133,6 +141,9 @@
                 <md-divider></md-divider>
                 <md-field style="padding-left:1rem">
                     <md-input v-model="comment" placeholder="댓글을 입력하세요"></md-input>
+                    <md-button class="md-icon-button" @click="sendComment()">
+                        <md-icon>send</md-icon>
+                    </md-button>
                 </md-field>
             </md-card>
         </div>
@@ -157,17 +168,28 @@ export default {
                 this.data = res.data.object;
                 this.review = res.data.object.review;
                 this.imgs = res.data.object.img;
-                console.log(this.review);
+
+                var value = res.data.object.review.keywordMain;
+                var valueList = value.split(',');
+                console.log(valueList);
+                this.mtags = valueList;
+
+                this.stags = res.data.object.review.keywordSub;
+                console.log(this.mtags);
+                console.log(this.stags);
                 console.log(this.imgs);
             },
             error => {
                 console.log(error);
             }
         );
+        UserApi.getComment(this.rid);
     },
     data: () => {
         return {
             data: [],
+            mtags: [],
+            stags: [],
             rid: '',
             review: '',
             imgs: '',
@@ -193,6 +215,17 @@ export default {
             } else {
                 this.favorite = true;
             }
+        },
+        sendComment() {
+            var data = {
+                reviewNum: this.rid,
+                email: this.email,
+                content: this.comment
+            };
+            UserApi.sendComment(data);
+        },
+        getImgUrl(pic) {
+            return `http://192.168.100.90:8080/image/${pic}`;
         }
     }
 };
