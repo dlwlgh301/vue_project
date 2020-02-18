@@ -30,7 +30,9 @@ const UserApi = {
     apitest: () => apitest(),
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
-    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
+    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
+    getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
+    insertComment: data => insertComment(data)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -430,5 +432,27 @@ const getReviewByproduct = (data, callback, errorCallback) => {
         .catch(() => {
             errorCallback;
         });
+};
+const getReviewDetail = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/detail`, {
+            params: {
+                email: data.email,
+                rid: data.rid
+            }
+        })
+        .then(res => {
+            console.log(res);
+            callback(res);
+        })
+        .catch(error => {
+            console.log(error);
+            errorCallback(error);
+        });
+};
+const insertComment = data => {
+    axios.post(`${host}/review/comment`, data).then(res => {
+        console.log(res);
+    });
 };
 export default UserApi;

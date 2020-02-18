@@ -17,7 +17,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
 
     @Override
     public int addBookmark(Bookmark bookmark) throws Exception {
-        return sqlSession.insert("addProduct", bookmark);
+        System.out.println("dao : addBookmark");
+        return sqlSession.insert("addBookmark", bookmark);
     }
 
     @Override
