@@ -3,7 +3,7 @@
         <div id="app" class="phone-viewport">
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
-                <v-app-bar fixed color="#FFF" class="Navbar">
+                <v-app-bar v-show="$store.state.showNav" fixed color="#FFF" class="Navbar">
                     <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
                         <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
@@ -11,7 +11,10 @@
                         <md-icon>menu</md-icon>
                     </md-button>
                     <div class="md-small-hide">
-                        <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
+                        <v-toolbar-title>
+                            <!-- <img src="../../assets/#+.png" alt="" /> -->
+                            {{ $store.state.pageTitle }}</v-toolbar-title
+                        >
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
@@ -124,7 +127,7 @@
                     </v-list>
                 </v-navigation-drawer>
                 <router-view class="page"></router-view>
-                <BottomNavComponent class="bottom-nav" />
+                <BottomNavComponent v-show="$store.state.showNav" class="bottom-nav" />
             </div>
         </div>
     </v-app>
@@ -156,7 +159,6 @@ export default {
             member: [],
             hide: true,
             route: '',
-            showNav: false,
             drawer: null,
             user: '',
             items: [

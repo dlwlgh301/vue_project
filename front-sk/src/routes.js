@@ -23,9 +23,10 @@ import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
 import Bookmark from './views/contents/BookMark.vue';
 import Detail from './views/contents/DetailReview';
-
 import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
+import store from './vuex/store';
+
 Vue.use(Router);
 
 const router = new Router({
@@ -136,6 +137,7 @@ const router = new Router({
         },
         {
             path: '/404',
+            name: 'NotFound',
             component: NotFound
         },
         {
@@ -159,6 +161,22 @@ const router = new Router({
             component: Like
         }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+    console.group('to: ', to);
+    console.log('from: ', from);
+    console.log('next: ', next);
+    console.groupEnd();
+    if (to.name === 'Login' || to.name === 'Join' || to.name === 'FindPassword' || to.name === 'NotFound') {
+        console.log('before ', store.state.showNav);
+        store.commit('toggleNav', false);
+        console.log('after ', store.state.showNav);
+    } else {
+        store.commit('toggleNav', true);
+    }
+
+    next();
 });
 
 export default router;
