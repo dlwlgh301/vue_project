@@ -112,8 +112,15 @@ public class ReviewController {
         System.out.println(email);
         System.out.println(userServiceImpl.getKeyword(email));
         final List<Review> list = reviewServiceImpl.getMainReview(userServiceImpl.getKeyword(email));
-        final List<apiData> arr = new ArrayList<>();
 
+        Collections.sort(list, new Comparator<Review>() {
+            @Override
+            public int compare(Review o1, Review o2) {
+                return o2.getRid() - o1.getRid();
+            }
+        });
+
+        final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
             Interest interest = new Interest(r.getRid(), email);
             arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
