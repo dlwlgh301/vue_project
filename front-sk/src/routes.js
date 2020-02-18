@@ -156,7 +156,8 @@ const router = new Router({
         {
             path: '/contents/detail',
             name: 'Detail',
-            component: Detail
+            component: Detail,
+            props: true
         }
     ]
 });

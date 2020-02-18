@@ -94,7 +94,8 @@ export default {
                 this.favorite = true;
             }
         },
-        detail() {
+        detail(rid) {
+            sessionStorage.setItem('rid', rid);
             this.$router.push('/contents/detail');
         },
         getImgUrl(pic) {

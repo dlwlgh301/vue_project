@@ -128,7 +128,7 @@ export default {
         if (sessionStorage.getItem('email') != null) this.getNotice();
         // setInterval(function() {
         // this.loadNoticeNum();
-        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
+
         // }, 2000);
     },
     components: {

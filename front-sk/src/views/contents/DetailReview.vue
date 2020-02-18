@@ -2,7 +2,7 @@
     <div class="md-layout md-alignment-center" style="height:60%">
         <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
         <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
-            <md-card style="height:500px; z-index:0">
+            <md-card style="height:500px; z-index:0 " c>
                 <md-card-header>
                     <md-avatar>
                         <md-icon>account_circle</md-icon>
@@ -26,8 +26,80 @@
         </div>
         <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
             <md-card style="height:500px; z-index:0">
-                <md-list class="md-double-line">
-                    <md-subheader>댓글</md-subheader>
+                <md-subheader>댓글</md-subheader>
+                <md-list class="md-double-line md-scrollbar" style="height:350px; overflow: auto;">
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        <md-icon class="md-primary">phone</md-icon>
+                        <!-- 이미지 -->
+
+                        <div class="md-list-item-text">
+                            <span>Name</span>
+                            <span>Comment</span>
+                        </div>
+                    </md-list-item>
+
+                    <md-divider></md-divider>
                     <md-divider></md-divider>
                     <md-list-item>
                         <md-icon class="md-primary">phone</md-icon>
@@ -62,12 +134,16 @@
 import UserApi from '../../apis/UserApi';
 export default {
     created() {
+        this.rid = sessionStorage.getItem('rid');
+        sessionStorage.clear();
+        console.log(this.rid);
         this.email = sessionStorage.getItem('email');
         this.nickName = sessionStorage.getItem('nickName');
-        UserApi.getReviewDetail(this.reviewNo);
+        UserApi.getReviewDetail(this.rid, this.email);
     },
     data: () => {
         return {
+            rid: '',
             comment: '',
             email: '',
             nickName: '',
