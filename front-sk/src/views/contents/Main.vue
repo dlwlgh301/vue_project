@@ -4,7 +4,9 @@
             <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
-                        <v-list-item-avatar color="grey"></v-list-item-avatar>
+                        <md-avatar>
+                            <img :src="getImgUrl(n.review.imgURL)" />
+                        </md-avatar>
                         <v-list-item-content>
                             <v-list-item-title class="headline">{{ n.review.nickName }}</v-list-item-title>
                         </v-list-item-content>
@@ -50,6 +52,7 @@ export default {
             email,
             res => {
                 this.data = res.data.object;
+                this.favorite = res.data.interest;
                 console.log(this.data);
                 console.log('입력완료');
             },
