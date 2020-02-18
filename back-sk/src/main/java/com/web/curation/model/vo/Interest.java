@@ -1,8 +1,10 @@
+
 package com.web.curation.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,20 +12,21 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class Interest {
     @Id
-    private int cid;
+    private int lid;
     private int reviewNum;
-    private String content;
     private String email;
     private String nickName;
-    private String imgURL;
 
-    public Comment(int reviewNum, String content, String email, String nickName, String imgURL) {
+    public Interest(int reviewNum, String email, String nickName) {
         this.reviewNum = reviewNum;
-        this.content = content;
         this.email = email;
         this.nickName = nickName;
-        this.imgURL = imgURL;
+    }
+
+    public Interest(int reviewNum, String email) {
+        this.reviewNum = reviewNum;
+        this.email = email;
     }
 }
