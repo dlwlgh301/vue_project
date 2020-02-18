@@ -19,8 +19,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> getMainReview(Review review) throws Exception {
-        return reviewDao.getMainReview(review);
+    public List<Review> getMainReview(String keyword) throws Exception {
+        return reviewDao.getMainReview(keyword);
     }
 
     @Override

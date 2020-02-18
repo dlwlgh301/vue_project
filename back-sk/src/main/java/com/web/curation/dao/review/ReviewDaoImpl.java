@@ -23,8 +23,8 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public List<Review> getMainReview(Review review) throws Exception {
-        return sqlSession.selectList("getMainReview", review);
+    public List<Review> getMainReview(String keyword) throws Exception {
+        return sqlSession.selectList("getMainReview", keyword);
     }
 
     @Override

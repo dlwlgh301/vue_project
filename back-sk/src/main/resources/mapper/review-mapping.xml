@@ -6,9 +6,9 @@
         insert into review(email, productName, content, score, title, keywordMain, keywordSub, likeNumber, nickName, imgURL) 
         values(#{email}, #{productName}, #{content}, #{score}, #{title}, #{keywordMain}, #{keywordSub}, #{likeNumber}, #{nickName}, #{imgURL})
     </insert>
-    <select id="getMainReview" parameterType="com.web.curation.model.vo.Review" resultType="com.web.curation.model.vo.Review">
-        select * from review where keywordMain=#{keywordMain}
+    <select id="getMainReview" parameterType="string" resultType="com.web.curation.model.vo.Review">
         <!-- select * from (select * from review where email=#{email}) r where r.keywordMain=#{keywordMain} -->
+        select * from review where keywordMain = #{value}
     </select>
     <select id="getUserReview" parameterType="string" resultType="com.web.curation.model.vo.Review">
         select * from review where email = #{value}
@@ -19,4 +19,7 @@
     <select id="getReviewByRId" parameterType="int" resultType="com.web.curation.model.vo.Review">
         select * from review where rid = #{value}
     </select>
+    <update id="updateLike" parameterType="com.web.curation.model.vo.Review">
+        update review set likeNumber = #{likeNumber} where rid = #{rid}
+    </update>
 </mapper>

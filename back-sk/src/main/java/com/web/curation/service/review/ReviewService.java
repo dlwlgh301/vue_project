@@ -9,7 +9,7 @@ public interface ReviewService {
     // 상품명에 해당하는 상품번호 찾아오기
     boolean insertReview(Review review) throws Exception;
 
-    List<Review> getMainReview(Review review) throws Exception;
+    List<Review> getMainReview(String keyword) throws Exception;
 
     List<Review> getUserReview(String email) throws Exception;
 

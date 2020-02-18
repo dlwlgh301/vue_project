@@ -13,4 +13,5 @@ import java.util.List;
 public class apiData {
     Review review;
     List<String> img;
+    boolean interest;
 }

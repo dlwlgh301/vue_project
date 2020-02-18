@@ -11,12 +11,14 @@ import com.web.curation.model.BasicResponse;
 import com.web.curation.model.vo.Comment;
 import com.web.curation.model.vo.Follow;
 import com.web.curation.model.vo.Img;
+import com.web.curation.model.vo.Interest;
 import com.web.curation.model.vo.Review;
 import com.web.curation.model.vo.apiData;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
 import com.web.curation.service.review.CommentService;
 import com.web.curation.service.review.ImgService;
+import com.web.curation.service.review.InterestService;
 import com.web.curation.service.review.ReviewService;
 
 import org.json.JSONArray;
@@ -61,6 +63,9 @@ public class ReviewController {
     @Autowired
     CommentService commentServiceImpl;
 
+    @Autowired
+    InterestService interestServiceImpl;
+
     // @RequestMapping(method = RequestMethod.POST, value = "/review")
     @PostMapping("/review")
     @ApiOperation(value = "게시글 작성")
@@ -104,16 +109,14 @@ public class ReviewController {
     @ApiOperation(value = "관심 키워드 리뷰(MainReview) 리스트")
     public Object getMainReview(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
-        final Review review = new Review();
-        review.setEmail(email);
-        review.setKeywordMain(userServiceImpl.getKeyword(email));
         System.out.println(email);
         System.out.println(userServiceImpl.getKeyword(email));
-        final List<Review> list = reviewServiceImpl.getMainReview(review);
+        final List<Review> list = reviewServiceImpl.getMainReview(userServiceImpl.getKeyword(email));
         final List<apiData> arr = new ArrayList<>();
 
         for (final Review r : list) {
-            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
+            Interest interest = new Interest(r.getRid(), email);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
         }
 
         if (list.size() > 0) {
@@ -150,7 +153,8 @@ public class ReviewController {
 
         final List<apiData> arr = new ArrayList<>();
         for (Review r : list) {
-            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
+            Interest interest = new Interest(r.getRid(), email);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
         }
 
         if (list.size() > 0) {
@@ -167,13 +171,15 @@ public class ReviewController {
 
     @GetMapping("/review/show/product")
     @ApiOperation(value = "동일 제품 관련 리뷰 리스트")
-    public Object getProductReview(@RequestParam(required = true) final String productName) throws Exception {
+    public Object getProductReview(@RequestParam(required = true) final String productName,
+            @RequestParam final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         final List<Review> list = reviewServiceImpl.getProductReview(productName);
         final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
-            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
+            Interest interest = new Interest(r.getRid(), email);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
         }
 
         if (list.size() > 0) {
@@ -266,7 +272,8 @@ public class ReviewController {
 
         final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
-            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid())));
+            Interest interest = new Interest(r.getRid(), email);
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
         }
 
         if (list.size() > 0) {
@@ -280,4 +287,83 @@ public class ReviewController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("/review/like")
+    @ApiOperation(value = "좋아요")
+    public Object insertInterest(@RequestParam(required = true) final int reviewNum,
+            @RequestParam(required = true) final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
+        if (interestServiceImpl.insertInterest(interest)) {
+            result.status = true;
+            result.data = "success";
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/review/like/cancel")
+    @ApiOperation(value = "좋아요 취소")
+    public Object deleteInterest(@RequestParam(required = true) final int reviewNum,
+            @RequestParam(required = true) final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
+        if (interestServiceImpl.deleteInterest(interest)) {
+            result.status = true;
+            result.data = "success";
+        } else {
+            result.status = false;
+            result.data = "fail";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/review/like/{lid}")
+    @ApiOperation(value = "해당 리뷰에 좋아요 한 사람들")
+    public Object getInterests(@PathVariable("rid") int rid) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        List<Interest> list = interestServiceImpl.getInterests(rid);
+        if (list.size() > 0) {
+            result.status = true;
+            result.data = "success";
+            result.object = list;
+        } else {
+            result.status = false;
+            result.data = "none";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/review/mylike")
+    @ApiOperation(value = "내가 좋아요 한 리뷰")
+    public Object getMyInterest(@RequestParam(required = true) final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+
+        List<Interest> list = interestServiceImpl.getMyInterest(email);
+        List<apiData> arr = new ArrayList<>();
+        for (Interest info : list) {
+            Review r = reviewServiceImpl.getReviewByRId(info.getReviewNum());
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(info)));
+        }
+
+        if (list.size() > 0) {
+            result.status = true;
+            result.data = "success";
+            result.object = arr;
+        } else {
+            result.status = false;
+            result.data = "none";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

@@ -7,7 +7,15 @@
     <div>
         <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
             <div class="wrapC" v-if="!next">
-                <br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <h1>
                     키워드를
                     <br />선택해주세요.
@@ -56,13 +64,11 @@
 
                 <!-- <button class="btn btn--back btn--login" type="submit" @click="insertMember" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입해보기
-                </button> -->
+                </button>-->
             </div>
 
             <div class="wrapB" style="padding-top: 100px;" v-if="next">
-                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
-                    가입하기
-                </h1>
+                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
                 <div class="join">
                     <div id="imageMain">
                         <div v-if="!image">
@@ -95,15 +101,11 @@
                             type="text"
                         />
                         <label for="email">이메일</label>
-                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">
-                            이메일 인증
-                        </button>
+                        <button type="button" id="doubleCheck" @click="isEmailOverlap()">이메일 인증</button>
                     </div>
                     <div class="input-with-label" v-if="isSendEmail">
                         <label for="emailAuth">인증 코드</label>
-                        <div class="error-text" v-if="error.email">
-                            {{ error.email }}
-                        </div>
+                        <div class="error-text" v-if="error.email">{{ error.email }}</div>
                         <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
                     </div>
 
@@ -119,9 +121,7 @@
                             placeholder="비밀번호를 입력하세요."
                         />
                         <label for="password">비밀번호</label>
-                        <div class="error-text" v-if="error.password">
-                            {{ error.password }}
-                        </div>
+                        <div class="error-text" v-if="error.password">{{ error.password }}</div>
                     </div>
 
                     <div class="input-with-label">
@@ -136,9 +136,7 @@
                             placeholder="비밀번호를 다시한번 입력하세요."
                         />
                         <label for="password-confirm">비밀번호 확인</label>
-                        <div class="error-text" v-if="error.passwordConfirm">
-                            {{ error.passwordConfirm }}
-                        </div>
+                        <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
                     </div>
 
                     <div class="input-with-label">
@@ -153,9 +151,7 @@
                             type="text"
                         />
                         <label for="name">이름</label>
-                        <div class="error-text" v-if="error.name">
-                            {{ error.name }}
-                        </div>
+                        <div class="error-text" v-if="error.name">{{ error.name }}</div>
                     </div>
                     <div class="input-with-label">
                         <input
@@ -169,12 +165,8 @@
                             type="text"
                         />
                         <label for="nickname">닉네임</label>
-                        <button type="button" @click="doubleCheck()">
-                            중복확인
-                        </button>
-                        <div class="error-text" v-if="error.nickName">
-                            {{ error.nickName }}
-                        </div>
+                        <button type="button" @click="doubleCheck()">중복확인</button>
+                        <div class="error-text" v-if="error.nickName">{{ error.nickName }}</div>
                     </div>
                     <div class="input-with-label">
                         <input
@@ -188,9 +180,7 @@
                             type="text"
                         />
                         <label for="nickname">한줄소개</label>
-                        <div class="error-text" v-if="error.comment">
-                            {{ error.comment }}
-                        </div>
+                        <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
                     </div>
                 </div>
 
@@ -218,10 +208,9 @@
                                     <div class="modal-footer">
                                         <slot name="footer">
                                             약관입니다.
-                                            <br /><br />
-                                            <button @click="showmodal()">
-                                                확인
-                                            </button>
+                                            <br />
+                                            <br />
+                                            <button @click="showmodal()">확인</button>
                                         </slot>
                                     </div>
                                 </div>
@@ -231,9 +220,7 @@
                 </div>
 
                 <button type="button" @click="showModal = true">약관보기</button>
-                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">
-                    이전화면으로
-                </button>
+                <button class="btn btn--back" type="button" v-on:click="back" style="margin-top:10px">이전화면으로</button>
                 <br />
                 <button class="btn btn--back" style="margin-top:10px" type="submit" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                     가입하기
@@ -341,7 +328,8 @@ export default {
                 if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
                 else this.error.emailAuth = false;
 
-                this.submit = this.checkSubmit();
+                this.isSubmit = this.checkSubmit();
+                console.log('isSubmit:' + this.isSubmit);
             }
         },
         password: function() {
@@ -402,8 +390,9 @@ export default {
         checkForm() {
             if (this.email.length == 0) {
                 this.error.email = '';
-            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) this.error.email = '이메일 형식이 아닙니다.';
-            else {
+            } else if (this.email.length > 0 && !EmailValidator.validate(this.email)) {
+                this.error.email = '이메일 형식이 아닙니다.';
+            } else {
                 this.error.email = false;
             }
 
@@ -425,15 +414,15 @@ export default {
 
             if (this.name.length == 0) {
                 this.error.name = '';
-            } else if (this.name.length === 0) this.error.name = '이름을 입력해주세요';
-            else {
+            } else {
                 this.error.name = false;
             }
 
             if (this.nickName.length == 0) {
                 this.error.nickName = '';
-            } else if (this.nickName.length === 0) this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
-            else {
+            } else if (this.nickName.length < 2) {
+                this.error.nickName = '2글자 이상으로 닉네임을 입력해주세요';
+            } else {
                 this.error.nickName = false;
             }
 
@@ -453,7 +442,7 @@ export default {
 
             this.isSubmit = this.checkSubmit();
 
-            console.log('submit:' + this.error.submit);
+            console.log('checkFomr():' + this.isSubmit);
         },
         insertMember() {
             alert('insertMember');
@@ -613,7 +602,7 @@ export default {
                         });
                         this.error.emailCheck = true;
                     }
-                    this.submit = this.checkSubmit();
+                    this.isSubmit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);
@@ -638,7 +627,7 @@ export default {
                         });
                         this.error.nickNameCheck = true;
                     }
-                    this.submit = this.checkSubmit();
+                    this.isSubmit = this.checkSubmit();
                 },
                 error => {
                     console.log(error);
