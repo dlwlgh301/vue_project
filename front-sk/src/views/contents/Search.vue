@@ -42,10 +42,6 @@
             </v-row>
         </div>
 
-        <div>
-            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-        </div>
-
         <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
             <div style="text-align:center;" v-if="users.length == 0 && isTime">
                 <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
@@ -56,7 +52,7 @@
                 <md-table-cell md-label="Image" md-sort-by="image"><img v-bind:src="item.image"/></md-table-cell>
                 <md-table-cell md-label="ProductName" md-sort-by="productName" width="50%"
                     >{{ item.productName }} <br />
-                    <a v-bind:href="item.link">{{ item.link }}</a></md-table-cell
+                    <a target="_blank" v-bind:href="item.link">{{ item.link }}</a></md-table-cell
                 >
                 <!-- <md-table-cell md-label="Link" md-sort-by="link">{{ item.link }}</md-table-cell> -->
                 <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
@@ -174,6 +170,7 @@ export default {
                     console.log(error);
                 }
             );
+            this.searchProduct();
         },
         deleteProduct(name) {
             var data = {
