@@ -6,16 +6,17 @@ import 'firebase/messaging';
 import 'firebase/database';
 import 'firebase/storage';
 import store from '@/vuex/store';
+import info from '@/../FCMConfig.json';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyBSWWgcZTJqHxxOrfHjYDocaMBHxclOHDs',
-    authDomain: 'shopplus-6702d.firebaseapp.com',
-    databaseURL: 'https://shopplus-6702d.firebaseio.com',
-    projectId: 'shopplus',
-    storageBucket: 'shopplus.appspot.com',
-    messagingSenderId: '96955005044',
-    appId: '1:96955005044:web:14631777e4e4d4df0e3921',
-    measurementId: 'G-NQVTD3CZMG'
+    apiKey: info.apiKey,
+    authDomain: info.authDomain,
+    databaseURL: info.databaseURL,
+    projectId: info.projectId,
+    storageBucket: info.storageBucket,
+    messagingSenderId: info.messagingSenderId,
+    appId: info.appId,
+    measurementId: info.messagingSenderId
 };
 firebase.initializeApp(firebaseConfig);
 

@@ -25,6 +25,8 @@ import com.web.curation.model.vo.Follow;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
 import com.web.curation.service.notice.NoticeService;
+import com.web.curation.service.notice.RequestService;
+import com.web.curation.service.notice.RequestServiceImpl;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +69,9 @@ public class FollowController {
 
     @Autowired
     NoticeService noticeServiceImpl;
+
+    @Autowired
+    RequestService requestServiceImpl;
 
     @GetMapping("/follow/followList")
     @ApiOperation(value = "팔로잉, 팔로워 리스트 구하기")
@@ -165,19 +170,18 @@ public class FollowController {
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
-        boolean check = noticeServiceImpl.insertNotice(follower, following, followerNickName + " 님이 팔로우 요청을 하였습니다.");
-        System.out.println(check + "dddd");
-        System.out.println(check + "dddd");
-        System.out.println(check + "dddd");
-        System.out.println(check + "dddd");
-        if (check) {
+        boolean requestChk = requestServiceImpl.insertRequest(follower, following);
+        boolean noticeChk = noticeServiceImpl.insertNotice(follower, following,
+                followerNickName + " 님이 팔로우 요청을 하였습니다.");
+
+        if (requestChk && noticeChk) {
             JSONObject dummyUser = new JSONObject();
             dummyUser.put("sender", follower);
             dummyUser.put("senderNick", followerNickName);
             dummyUser.put("receiver", following);
             dummyUser.put("msg", followerNickName + " 님이 팔로우 요청을 하였습니다.");
             String img = userServiceImpl.getImgURL(follower);
-            img = (img == null) ? "default" : img;
+            img = (img == null) ? "default.png" : img;
             dummyUser.put("img", img);
             result.status = true;
             result.data = "success";
