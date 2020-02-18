@@ -102,14 +102,14 @@ public class BookmarkController {
 
     @PostMapping("/bookmark/addProduct")
     @ApiOperation(value = "찜목록 추가하기")
-    public Object addProduct(@RequestBody(required = false) String email, String productName) throws Exception {
+    public Object addProduct(@RequestBody(required = false) Bookmark bm) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         System.out.println("addProduct~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
-        System.out.println("받아온 email : " + email);
-        System.out.println("받아온 productName : " + productName);
+        System.out.println("받아온 email : " + bm.getEmail());
+        System.out.println("받아온 productName : " + bm.getProductName());
 
-        Bookmark bookmark = new Bookmark(email, productName);
+        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName());
 
         bookmarkServiceImpl.addBookmark(bookmark);
 
@@ -124,14 +124,14 @@ public class BookmarkController {
 
     @PostMapping("/bookmark/deleteProduct")
     @ApiOperation(value = "찜목록 삭제하기")
-    public Object deleteProduct(@RequestBody(required = false) String email, String productName) throws Exception {
+    public Object deleteProduct(@RequestBody(required = false) Bookmark bm) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         System.out.println("deleteProduct~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
-        System.out.println("받아온 email : " + email);
-        System.out.println("받아온 productName : " + productName);
+        System.out.println("받아온 email : " + bm.getEmail());
+        System.out.println("받아온 productName : " + bm.getProductName());
 
-        Bookmark bookmark = new Bookmark(email, productName);
+        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName());
 
         bookmarkServiceImpl.deleteBookmark(bookmark);
 

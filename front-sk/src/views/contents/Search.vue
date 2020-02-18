@@ -42,6 +42,10 @@
             </v-row>
         </div>
 
+        <div>
+            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+        </div>
+
         <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
             <div style="text-align:center;" v-if="users.length == 0 && isTime">
                 <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
