@@ -27,4 +27,8 @@ public interface UserService {
     String getImgURL(String email) throws Exception;
 
     String getKeyword(String email) throws Exception;
+
+    List<User> searchMember(String nickName) throws Exception;
+
+    int deleteUser(String email) throws Exception;
 }

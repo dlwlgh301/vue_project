@@ -69,4 +69,14 @@ public class UserServiceImpl implements UserService {
         return userDaoImpl.getKeyword(email);
     }
 
+    @Override
+    public List<User> searchMember(String nickName) throws Exception {
+        return userDaoImpl.searchMember(nickName);
+    }
+
+    @Override
+    public int deleteUser(String email) throws Exception {
+        return userDaoImpl.deleteUser(email);
+    }
+
 }

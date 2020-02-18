@@ -27,7 +27,8 @@ const UserApi = {
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
     apitest: () => apitest(),
     uploadtest: data => uploadtest(data),
-    requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback)
+    requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
+    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -360,7 +361,7 @@ const uploadtest = (data, callback, errorCallback) => {
         });
 };
 const apitest = () => {
-    fetch(`${host}/product/searchProduct`, {
+    fetch(`${host}/product/getAPI`, {
         method: 'GET',
         mode: 'no-cors'
     });
@@ -393,6 +394,17 @@ const requestReview = (data, callback, errorCallback) => {
         .catch(error => {
             console.log(error);
             errorCallback(error);
+        });
+};
+const getReviewByproduct = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/product`, data)
+        .then(res => {
+            console.log('리뷰가져오기 성공!!!');
+            callback(res);
+        })
+        .catch(() => {
+            errorCallback;
         });
 };
 export default UserApi;

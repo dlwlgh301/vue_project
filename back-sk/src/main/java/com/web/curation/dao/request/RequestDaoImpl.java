@@ -22,7 +22,8 @@ public class RequestDaoImpl implements RequestDao {
     public boolean insertRequest(String requester, String requestee) throws Exception {
         String requesterN = sqlSession.selectOne("getNickNameByEmail", requester);
         String requesteeN = sqlSession.selectOne("getNickNameByEmail", requestee);
-        Request request = new Request(requester, requesterN, requestee, requesteeN);
+        String requesterImg = sqlSession.selectOne("getImgURL", requester);
+        Request request = new Request(requester, requesterN, requestee, requesteeN, requesterImg);
         int row = sqlSession.insert("insertRequest", request);
         if (row > 0)
             return true;

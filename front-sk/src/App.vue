@@ -23,6 +23,9 @@
                     </md-field>
                     <!-- 현준이형 여기 부터 만들면 될듯  -->
                     <v-spacer></v-spacer>
+                    <md-button @click="logout">
+                        <md-icon>exit_to_app</md-icon>
+                    </md-button>
                     <md-button class="md-icon-button" @click="refreshNotice">
                         <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
                             <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>

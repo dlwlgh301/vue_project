@@ -8,8 +8,8 @@
     </select>
 
     <insert id="insertRequest" parameterType="com.web.curation.model.vo.Request">
-        insert into request(requester, requesterNick, requestee, requesteeNick) 
-        values(#{requester}, #{requesterNick}, #{requestee}, #{requesteeNick})
+        insert into request(requester, requesterNick, requestee, requesteeNick, requesterImg) 
+        values(#{requester}, #{requesterNick}, #{requestee}, #{requesteeNick}, #{requesterImg})
     </insert>
 
     <delete id="deleteRequest" parameterType="int">
