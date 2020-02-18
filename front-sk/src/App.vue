@@ -18,9 +18,13 @@
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
-                    <md-field style="width:17rem;">
-                        <md-input v-model="user" style="z-index: 2;"></md-input>
-                        <md-icon>search</md-icon>
+                    <div style="width:19rem; ">
+                        <form>
+                            <input type="text" name="focus" required class="search-box" placeholder="Enter search term" />
+                            <button class="close-icon" type="reset"></button>
+                        </form>
+                        <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
+                        <!-- <md-icon>search</md-icon> -->
 
                         <center style="position : fixed; z-index: 1;">
                             <md-list class="md-triple-line" style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;">
@@ -40,7 +44,7 @@
                                 </div>
                             </md-list>
                         </center>
-                    </md-field>
+                    </div>
 
                     <!-- 현준이형 여기 부터 만들면 될듯  -->
                     <v-spacer></v-spacer>
@@ -132,6 +136,63 @@
         </div>
     </v-app>
 </template>
+
+<style>
+.search-box,
+.close-icon,
+.search-wrapper {
+    position: relative;
+    padding: 10px;
+}
+.search-wrapper {
+    width: 500px;
+    margin: auto;
+    margin-top: 50px;
+}
+.search-box {
+    width: 80%;
+    border: 1px solid #ccc;
+    outline: 0;
+    border-radius: 15px;
+}
+.search-box:focus {
+    box-shadow: 0 0 15px 5px #b0e0ee;
+    border: 2px solid #bebede;
+}
+.close-icon {
+    border: 1px solid transparent;
+    background-color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    cursor: pointer;
+}
+.close-icon:after {
+    content: 'X';
+    display: block;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    background-color: #fa9595;
+    z-index: 1;
+    right: 35px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 2px;
+    border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-weight: normal;
+    font-size: 12px;
+    box-shadow: 0 0 2px #e50f0f;
+    cursor: pointer;
+}
+.search-box:not(:valid) ~ .close-icon {
+    display: none;
+}
+</style>
+
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 import BottomNavComponent from './components/common/BottomNav';
@@ -168,6 +229,9 @@ export default {
         };
     },
     methods: {
+        getKeyword() {
+            console.log(this.user);
+        },
         goOtherpage(e) {
             this.member = [];
             if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
