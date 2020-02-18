@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.curation.dao.review.ImgDao">
+    <insert id="insertImg" parameterType="com.web.curation.model.vo.Img">
+        insert into img(rNum, imgURL) values(#{rNum}, #{imgURL})
+    </insert>
+    <!-- <select id="getImgURL" parameterType="int" resultType="com.web.curation.model.vo.Img">
+        select * from img where rNum = #{value}
+    </select> -->
+    <select id="getImgs" parameterType="int" resultType="string">
+        select imgURL from img where rNum = #{value}
+    </select>
+</mapper>
