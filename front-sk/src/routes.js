@@ -23,6 +23,8 @@ import Write from './views/contents/WriteReview.vue';
 import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
 import Bookmark from './views/contents/BookMark.vue';
+import Detail from './views/contents/DetailReview';
+
 import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
 Vue.use(Router);
@@ -151,6 +153,11 @@ const router = new Router({
             path: '/contents/bookmark',
             name: 'Bookmark',
             component: Bookmark
+        },
+        {
+            path: '/contents/detail',
+            name: 'Detail',
+            component: Detail
         },
         {
             path: '/contents/like',

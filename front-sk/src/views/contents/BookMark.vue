@@ -47,7 +47,13 @@ export default {
                     title: 'me, Scrott, Jennifer',
                     subtitle: "Wish I could come, but I'm out of town this weekend."
                 },
-                { image: require('../../assets/images/3.jpg'), action: '6 hr', headline: 'Oui oui', title: 'Sandra Adams', subtitle: 'Do you have Paris recommendations? Have you ever been?' },
+                {
+                    image: require('../../assets/images/3.jpg'),
+                    action: '6 hr',
+                    headline: 'Oui oui',
+                    title: 'Sandra Adams',
+                    subtitle: 'Do you have Paris recommendations? Have you ever been?'
+                },
                 {
                     image: require('../../assets/images/4.jpg'),
                     action: '12 hr',

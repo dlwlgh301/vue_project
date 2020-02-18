@@ -36,7 +36,9 @@ export default {
             email: ''
         };
     },
-    created() {},
+    created() {
+        Kakao.init('9e5ec3049cac6ee43ea543e66e76d34b');
+    },
     methods: {
         kakaologin() {
             Kakao.Auth.loginForm({

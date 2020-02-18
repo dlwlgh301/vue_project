@@ -196,13 +196,15 @@ public class ReviewController {
 
     @GetMapping("/review/show/detail")
     @ApiOperation(value = "해당 리뷰 상세 내용")
-    public Object getReview(@RequestParam(required = true) final int reviewNum) throws Exception {
+    public Object getReview(@RequestParam(required = true) final int rid, @RequestParam final String email)
+            throws Exception {
         final BasicResponse result = new BasicResponse();
 
         JSONObject data = new JSONObject();
-        data.put("review", reviewServiceImpl.getReviewByRId(reviewNum));
-        data.put("img", imgServiceImpl.getImgs(reviewNum));
-        data.put("comment", commentServiceImpl.getComment(reviewNum));
+        data.put("review", reviewServiceImpl.getReviewByRId(rid));
+        data.put("img", imgServiceImpl.getImgs(rid));
+        data.put("comment", commentServiceImpl.getComment(rid));
+        data.put("interest", interestServiceImpl.isInterest(new Interest(rid, email)));
 
         result.status = true;
         result.data = "success";
