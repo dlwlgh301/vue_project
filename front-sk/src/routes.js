@@ -15,7 +15,6 @@ import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/contents/Main.vue';
-import Board from './views/user/Board.vue';
 import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
@@ -26,6 +25,8 @@ import Search from './views/contents/Search.vue';
 import Bookmark from './views/contents/BookMark.vue';
 import Detail from './views/contents/DetailReview';
 
+import Like from './views/contents/Like.vue';
+import DeleteUser from './views/user/DeleteUser.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -41,6 +42,11 @@ const router = new Router({
             component: Profile
         },
         {
+            path: '/user/DeleteUser',
+            name: 'DeleteUser',
+            component: DeleteUser
+        },
+        {
             path: '/user/OtherProfile/:email',
             name: 'OtherProfile',
             component: OtherProfile
@@ -54,11 +60,6 @@ const router = new Router({
             path: '/user/FindPassword',
             name: 'FindPassword',
             component: FindPassword
-        },
-        {
-            path: '/user/Board',
-            name: 'Board',
-            component: Board
         },
         {
             path: '/components',
@@ -156,8 +157,12 @@ const router = new Router({
         {
             path: '/contents/detail',
             name: 'Detail',
-            component: Detail,
-            props: true
+            component: Detail
+        },
+        {
+            path: '/contents/like',
+            name: 'Like',
+            component: Like
         }
     ]
 });

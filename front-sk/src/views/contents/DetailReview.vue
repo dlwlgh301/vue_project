@@ -133,10 +133,9 @@
 <script>
 import UserApi from '../../apis/UserApi';
 export default {
-    created() {
+    mounted() {
         this.rid = sessionStorage.getItem('rid');
-        sessionStorage.clear();
-        console.log(this.rid);
+        console.log('rid출력' + this.rid);
         this.email = sessionStorage.getItem('email');
         this.nickName = sessionStorage.getItem('nickName');
         UserApi.getReviewDetail(this.rid, this.email);

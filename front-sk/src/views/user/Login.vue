@@ -207,7 +207,6 @@ export default {
                             sessionStorage.setItem('keyword', this.keyword);
                             sessionStorage.setItem('imgURL', this.imgURL);
                             sessionStorage.setItem('nickName', this.nickName);
-                            //this.$store.commit('loginToken', res.data.token);
                             sessionStorage.setItem('email', this.email);
 
                             this.getNotice();

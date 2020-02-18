@@ -96,6 +96,7 @@ export default {
         },
         detail(rid) {
             sessionStorage.setItem('rid', rid);
+            console.log(rid);
             this.$router.push('/contents/detail');
         },
         getImgUrl(pic) {
