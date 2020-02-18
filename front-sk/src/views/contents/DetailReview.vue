@@ -33,7 +33,7 @@
                 </md-card-content>
                 <md-card-content style="padding-top:0.3rem">
                     <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
-                    <div class="grey--text ml-4" v-bind="rating"></div>
+                    <div class="grey--text ml-4" v-bind="review.score"></div>
                 </md-card-content>
                 <md-card-content style="padding-top:0">{{ review.content }}</md-card-content>
                 <div style="margin-left:0.5rem;">
@@ -45,78 +45,6 @@
             <md-card style="height:550px; z-index:0">
                 <md-subheader>댓글</md-subheader>
                 <md-list class="md-double-line md-scrollbar" style="height:400px; overflow: auto;">
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
-
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
                     <md-divider></md-divider>
                     <md-list-item>
                         <md-icon class="md-primary">phone</md-icon>

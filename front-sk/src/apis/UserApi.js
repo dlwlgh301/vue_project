@@ -31,7 +31,8 @@ const UserApi = {
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
-    getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback)
+    getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
+    insertComment: (data, callback) => insertComment(data, callback)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -448,5 +449,11 @@ const getReviewDetail = (data, callback, errorCallback) => {
             console.log(error);
             errorCallback(error);
         });
+};
+const insertComment = (data, callback) => {
+    axios.post(`${host}/review/` + data).then(res => {
+        console.log('댓글 입력 성공');
+        callback(res);
+    });
 };
 export default UserApi;
