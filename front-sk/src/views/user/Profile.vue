@@ -35,7 +35,8 @@
 
                     <div class="profile2-bio">
                         <p style="padding-right:50px">
-                            <span class="profile2-real-name">{{ info.nickName }}</span> <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
+                            <span class="profile2-real-name">{{ info.nickName }}</span>
+                            <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
                         </p>
                     </div>
                 </div>

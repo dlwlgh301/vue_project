@@ -208,7 +208,7 @@ export default {
                             sessionStorage.setItem('imgURL', this.imgURL);
                             sessionStorage.setItem('nickName', this.nickName);
                             sessionStorage.setItem('email', this.email);
-                            sessionStorage.setItem('password', this.password);
+
                             this.getNotice();
 
                             // this.$router.push('/main');
