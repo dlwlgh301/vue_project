@@ -50,4 +50,18 @@ public class ReviewDaoImpl implements ReviewDao {
         else
             return false;
     }
+
+    @Override
+    public boolean updateLike(Review review) throws Exception {
+        int row = sqlSession.update("updateLike", review);
+        if (row > 0)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public int getLikeNumber(int rid) throws Exception {
+        return sqlSession.selectOne("getLikeNumber", rid);
+    }
 }

@@ -42,4 +42,14 @@ public class ReviewServiceImpl implements ReviewService {
     public boolean deleteReview(int rid) throws Exception {
         return reviewDao.deleteReview(rid);
     }
+
+    @Override
+    public boolean updateLike(Review review) throws Exception {
+        return reviewDao.updateLike(review);
+    }
+
+    @Override
+    public int getLikeNumber(int rid) throws Exception {
+        return reviewDao.getLikeNumber(rid);
+    }
 }

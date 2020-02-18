@@ -19,7 +19,13 @@
     <select id="getReviewByRId" parameterType="int" resultType="com.web.curation.model.vo.Review">
         select * from review where rid = #{value}
     </select>
+    <delete id="deleteReview" parameterType="int">
+        delete from review where rid = #{value}
+    </delete>
     <update id="updateLike" parameterType="com.web.curation.model.vo.Review">
         update review set likeNumber = #{likeNumber} where rid = #{rid}
     </update>
+    <select id="getLikeNumber" parameterType="int" resultType="int">
+        select likeNumber from review where rid = #{value}
+    </select>
 </mapper>
