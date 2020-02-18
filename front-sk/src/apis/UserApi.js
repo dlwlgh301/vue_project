@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 const host = 'http://192.168.100.90:8080';
-const noticePort = 'http://192.168.100.58:8080';
+const noticePort = 'http://192.168.100.90:8080';
+const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -22,11 +23,13 @@ const UserApi = {
     profileLoad: (data, callback, error) => profileLoad(data, callback, error),
     fileUpload: (data, callback, error) => fileUpload(data, callback, error),
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback),
+    insertReview: (data, image) => insertReview(data, image),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
     searchMember: (data, callback, errorCallback) => searchMember(data, callback, errorCallback),
     deleteUser: (data, callback, errorCallback) => deleteUser(data, callback, errorCallback),
     apitest: () => apitest(),
+    uploadtest: data => uploadtest(data),
+    requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
 };
 const isFollowing = (data, callback, errorCallback) => {
@@ -321,7 +324,7 @@ const fileUpload = (data, callback, errorCallback) => {
     //     error: errorCallback
     // });
     axios
-        .post(`${host}/account/fileUpload`, data)
+        .post(`${filehost}/account/fileUpload`, data)
         .then(() => {
             console.log('사진 수정 성공!!!!');
             callback;
@@ -330,12 +333,57 @@ const fileUpload = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const requestReview = (data, callback) => {
-    axios.get(`${host}/main/review`, data).then(res => {
-        callback(res);
+const insertReview = (data, image) => {
+    var value = {
+        email: data.email,
+        productName: data.productName,
+        keywordMain: data.keywordMain,
+        keywordSub: data.keywordSub,
+        score: data.score,
+        title: data.title,
+        content: data.content,
+        imgs: image
+    };
+    // var images = image;
+    console.log('userAPI쪽');
+    // console.log(JSON.stringify(value));
+    console.log(value);
+    // console.log(images);
+    fetch(`${host}/review`, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(value)
     });
+    // axios.request({
+    //     url: `${host}/review`,
+    //     method: 'post',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     data: JSON.stringify(value)
+    // });
+    // axios.post(`${host}/review`, {
+    //     data: JSON.stringify(value)
+    // });
 };
-
+const uploadtest = (data, callback, errorCallback) => {
+    const formData = new FormData();
+    formData.append('file', data);
+    console.log(formData);
+    fetch(`${filehost}/account/fileUpload`, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+    })
+        .then(() => {
+            console.log('업로드!');
+            callback;
+        })
+        .catch(() => {
+            errorCallback;
+        });
+};
 const apitest = () => {
     fetch(`${host}/product/getAPI`, {
         method: 'GET',
@@ -354,7 +402,24 @@ const apitest = () => {
     //     errorCallback;
     // });
 };
-
+const requestReview = (data, callback, errorCallback) => {
+    console.log('request');
+    console.log(data);
+    axios
+        .get(`${host}/review/show/main`, {
+            params: {
+                email: data
+            }
+        })
+        .then(res => {
+            console.log(res);
+            callback(res);
+        })
+        .catch(error => {
+            console.log(error);
+            errorCallback(error);
+        });
+};
 const getReviewByproduct = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/show/product`, data)

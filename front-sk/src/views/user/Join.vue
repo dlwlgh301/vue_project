@@ -10,12 +10,6 @@
                 <br />
                 <br />
                 <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
                 <h1>
                     키워드를
                     <br />선택해주세요.
@@ -67,8 +61,10 @@
                 </button>-->
             </div>
 
-            <div class="wrapB" style="padding-top: 100px;" v-if="next">
-                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">가입하기</h1>
+            <div class="wrapC" style="padding-top: 100px;" v-if="next">
+                <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
+                    가입하기
+                </h1>
                 <div class="join">
                     <div id="imageMain">
                         <div v-if="!image">
@@ -577,7 +573,7 @@ export default {
         },
 
         fileSelect() {
-            let test = new FormData(document.getElementById('myform'));
+            let test = new FormData(document.getElementById('imageInputform'));
             console.log(test);
 
             if (this.files.length > 0) {
@@ -594,6 +590,8 @@ export default {
         },
 
         onFileChange(e) {
+            console.log(e);
+
             this.files = e.target.files || e.dataTransfer.files;
             if (!this.files.length) return;
             this.createImage(this.files[0]);

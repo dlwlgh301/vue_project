@@ -6,23 +6,10 @@
             <h2>form</h2>
             <div class="wrap">
                 <!-- input type=text -->
-                <InputComponent
-                    inputValue="email"
-                    :errorText="error.email"
-                    :enterInput="enterInput"
-                    placeholder="이메일을 입력해주세요."
-                    label="이메일"
-                />
+                <InputComponent inputValue="email" :errorText="error.email" :enterInput="enterInput" placeholder="이메일을 입력해주세요." label="이메일" />
 
                 <!-- input type=password -->
-                <InputComponent
-                    inputValue="password"
-                    :errorText="error.password"
-                    :enterInput="enterInput"
-                    placeholder="비밀번호를 입력해주세요."
-                    label="비밀번호"
-                    password="true"
-                />
+                <InputComponent inputValue="password" :errorText="error.password" :enterInput="enterInput" placeholder="비밀번호를 입력해주세요." label="비밀번호" password="true" />
 
                 <!-- textarea -->
                 <TextareaComponent inputValue="contents" placeholder="의견을 적어주세요." label="게시하기" maxLength="300"></TextareaComponent>

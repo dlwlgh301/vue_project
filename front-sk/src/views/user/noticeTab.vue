@@ -22,7 +22,7 @@
                             <!-- <v-divider v-else-if="notice_item.divider" :inset="notice_item.inset" :key="index"></v-divider> -->
                             <v-list-item :key="index" avatar>
                                 <v-list-item-avatar>
-                                    <img :src="new_notice_items.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
+                                    <img :src="new_notice_item.avatar" style="width: 2rem; height: 2rem; border-radius:50%" />
                                 </v-list-item-avatar>
                                 <v-list-item-content>
                                     <v-list-item-title v-html="new_notice_item.userId"></v-list-item-title>
@@ -51,6 +51,7 @@
                         </template>
                     </v-list>
                 </v-tab-item>
+
                 <v-tab-item :key="tab2_name">
                     <v-list>
                         <v-subheader>{{ follow_header }}</v-subheader>
@@ -118,10 +119,13 @@ export default {
             UserApi.requestNotice(
                 data,
                 res => {
+                    console.log('~~~~~~~~~~~~~~~~~~');
                     console.log(res.data);
                     let new_data = res.data.object.newNotice;
                     if (new_data != null) {
                         for (let i = new_data.length - 1; i >= 0; i--) {
+                            console.log(new_data[i]);
+
                             new_noticeItem = {
                                 nid: new_data[i].nid,
                                 avatar: 'http://192.168.100.90:8080/image/' + new_data[i].senderImg,
