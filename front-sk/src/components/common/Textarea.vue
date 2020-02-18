@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: 'textarea',
+    name: 'Textarea',
     props: ['placeholder', 'label', 'maxLength'],
     data: () => {
         return {

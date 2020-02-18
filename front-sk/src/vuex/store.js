@@ -11,7 +11,12 @@ const state = {
     pageTitle: 'SHOP+',
     token: '',
     role: '',
+<<<<<<< HEAD
     showNav: false,
+=======
+    hide: true,
+    showNav: true,
+>>>>>>> d3d825e795b342b58910e524773d83096af40e21
     noticeNum: 0
 };
 
