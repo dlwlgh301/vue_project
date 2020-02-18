@@ -16,6 +16,7 @@ import com.web.curation.model.vo.Review;
 import com.web.curation.model.vo.apiData;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
+import com.web.curation.service.notice.NoticeService;
 import com.web.curation.service.review.CommentService;
 import com.web.curation.service.review.ImgService;
 import com.web.curation.service.review.InterestService;
@@ -65,6 +66,9 @@ public class ReviewController {
 
     @Autowired
     InterestService interestServiceImpl;
+
+    @Autowired
+    NoticeService noticeServiceImpl;
 
     // @RequestMapping(method = RequestMethod.POST, value = "/review")
     @PostMapping("/review")
@@ -226,10 +230,21 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         String email = comment.getEmail();
+        String senderN = userServiceImpl.getNickNameByEmail(email);
         Comment info = new Comment(comment.getReviewNum(), comment.getContent(), email,
                 userServiceImpl.getNickNameByEmail(email), userServiceImpl.getImgURL(email));
 
+        Review review = reviewServiceImpl.getReviewByRId(comment.getReviewNum());
+        String receiver = review.getEmail();
+
+        JSONObject data = new JSONObject();
         if (commentServiceImpl.insertComment(info)) {
+            data.put("sender", email);
+            data.put("senderNick", senderN);
+            data.put("receiver", receiver);
+            data.put("msg", senderN + " 님이 회원님의 게시글에 댓글을 달았습니다.");
+            data.put("img", userServiceImpl.getImgURL(email));
+            data.put("reviewNum", info.getReviewNum());
             result.status = true;
             result.data = "success";
         } else {
@@ -313,8 +328,19 @@ public class ReviewController {
 
         JSONObject data = new JSONObject();
         data.put("likeNumber", likeNum);
+        Review info = reviewServiceImpl.getReviewByRId(reviewNum);
+        String receiver = info.getEmail();
+        String senderN = userServiceImpl.getNickNameByEmail(email);
 
+        noticeServiceImpl.insertNotice(email, receiver, senderN + " 님이 회원님의 게시글을 좋아합니다.");
         if (interestServiceImpl.insertInterest(interest)) {
+            data.put("sender", email);
+            data.put("senderNick", senderN);
+            data.put("receiver", receiver);
+            data.put("msg", senderN + " 님이 회원님의 게시글을 좋아합니다.");
+            data.put("img", userServiceImpl.getImgURL(email));
+            data.put("reviewNum", reviewNum);
+
             result.status = true;
             result.data = "success";
             result.object = data.toMap();
