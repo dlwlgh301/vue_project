@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
 const noticePort = 'http://192.168.100.90:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
@@ -32,7 +32,7 @@ const UserApi = {
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
     getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
-    insertComment: (data, callback) => insertComment(data, callback)
+    insertComment: data => insertComment(data)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -450,10 +450,9 @@ const getReviewDetail = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-const insertComment = (data, callback) => {
-    axios.post(`${host}/review/` + data).then(res => {
-        console.log('댓글 입력 성공');
-        callback(res);
+const insertComment = data => {
+    axios.post(`${host}/review/comment`, data).then(res => {
+        console.log(res);
     });
 };
 export default UserApi;

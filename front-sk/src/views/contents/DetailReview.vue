@@ -2,7 +2,7 @@
     <div class="md-layout md-alignment-center" style="height:60%">
         <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
         <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
-            <md-card style="height:550px; z-index:0 " c>
+            <md-card style="height:550px; z-index:0 ">
                 <md-card-header>
                     <md-avatar>
                         <md-icon>account_circle</md-icon>
@@ -16,7 +16,7 @@
                     <v-carousel
                         :continuous="false"
                         :cycle="false"
-                        :show-arrows="ture"
+                        :show-arrows="true"
                         hide-delimiter-background
                         delimiter-icon="mdi-minus"
                         height="300"
@@ -33,7 +33,6 @@
                 </md-card-content>
                 <md-card-content style="padding-top:0.3rem">
                     <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
-                    <div class="grey--text ml-4" v-bind="review.score"></div>
                 </md-card-content>
                 <md-card-content style="padding-top:0">{{ review.content }}</md-card-content>
                 <div style="margin-left:0.5rem;">
@@ -45,18 +44,21 @@
             <md-card style="height:550px; z-index:0">
                 <md-subheader>댓글</md-subheader>
                 <md-list class="md-double-line md-scrollbar" style="height:400px; overflow: auto;">
-                    <md-divider></md-divider>
-                    <md-list-item>
-                        <md-icon class="md-primary">phone</md-icon>
-                        <!-- 이미지 -->
+                    <div v-for="comment in viewcomment" :key="comment">
+                        <md-divider></md-divider>
+                        <md-list-item>
+                            <md-avatar>
+                                <img :src="getImgUrl(comment.imgURL)" />
+                            </md-avatar>
+                            <!-- 이미지 -->
 
-                        <div class="md-list-item-text">
-                            <span>Name</span>
-                            <span>Comment</span>
-                        </div>
-                    </md-list-item>
-
-                    <md-divider></md-divider>
+                            <div class="md-list-item-text">
+                                <span>{{ comment.nickName }}</span>
+                                <span>{{ comment.content }}</span>
+                            </div>
+                        </md-list-item>
+                        <md-divider></md-divider>
+                    </div>
                 </md-list>
                 <md-divider></md-divider>
                 <md-button class="md-icon-button" @click="toggle()">
@@ -96,22 +98,20 @@ export default {
                 this.data = res.data.object;
                 this.review = res.data.object.review;
                 this.imgs = res.data.object.img;
-
+                this.viewcomment = res.data.object.comment;
                 var value = res.data.object.review.keywordMain;
                 var valueList = value.split(',');
                 console.log(valueList);
                 this.mtags = valueList;
 
                 this.stags = res.data.object.review.keywordSub;
-                console.log(this.mtags);
-                console.log(this.stags);
+                console.log(this.viewcomment);
                 console.log(this.imgs);
             },
             error => {
                 console.log(error);
             }
         );
-        UserApi.getComment(this.rid);
     },
     data: () => {
         return {
@@ -121,6 +121,7 @@ export default {
             rid: '',
             review: '',
             imgs: '',
+            viewcomment: '',
             comment: '',
             email: '',
             nickName: '',
@@ -130,7 +131,6 @@ export default {
             score: 0,
             keyword1: '',
             keyword2: '',
-            images: [],
             photo: '',
             like: '',
             favorite: false
@@ -150,7 +150,33 @@ export default {
                 email: this.email,
                 content: this.comment
             };
-            UserApi.sendComment(data);
+            console.log(data);
+            UserApi.insertComment(data);
+            this.comment = '';
+            var redata = {
+                email: this.email,
+                rid: this.rid
+            };
+            UserApi.getReviewDetail(
+                redata,
+                res => {
+                    this.data = res.data.object;
+                    this.review = res.data.object.review;
+                    this.imgs = res.data.object.img;
+                    this.viewcomment = res.data.object.comment;
+                    var value = res.data.object.review.keywordMain;
+                    var valueList = value.split(',');
+                    console.log(valueList);
+                    this.mtags = valueList;
+
+                    this.stags = res.data.object.review.keywordSub;
+                    console.log(this.viewcomment);
+                    console.log(this.imgs);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
         },
         getImgUrl(pic) {
             return `http://192.168.100.90:8080/image/${pic}`;
