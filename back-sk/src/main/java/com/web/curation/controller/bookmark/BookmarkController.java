@@ -75,9 +75,6 @@ public class BookmarkController {
     @Autowired
     BookmarkService bookmarkServiceImpl;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-
     @GetMapping("/bookmark/getBookmarkList")
     @ApiOperation(value = "찜목록 가져오기")
     public Object getProductListByEmail(@RequestParam(required = false) String email) throws Exception {

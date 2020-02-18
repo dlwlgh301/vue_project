@@ -41,7 +41,6 @@ public class NoticeController {
     @ApiOperation(value = "알림 리스트")
     @Transactional
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
-        System.out.println("show:" + email);
         final BasicResponse result = new BasicResponse();
         JSONObject data = new JSONObject();
         List<Notice> list = noticeServiceImpl.getNewNotice(email);
@@ -66,8 +65,6 @@ public class NoticeController {
     @ApiOperation(value = "새로운 알림 갯수")
     public Object getNoticeNum(@RequestParam(required = true) final String email) throws Exception {
         int num = noticeServiceImpl.getNoticeNum(email);
-        System.out.println("num:" + email);
-        System.out.println(num);
         JSONObject dummyUser = new JSONObject();
         dummyUser.put("num", num);
         final BasicResponse result = new BasicResponse();

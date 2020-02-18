@@ -57,9 +57,6 @@ public class RequestController {
     public Object getNotice(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
         List<Request> list = requServiceImpl.getRequest(email);
-        System.out.println("follow 요청 리스트: " + email);
-        System.out.println(list);
-        System.out.println("---------------");
         if (list.size() > 0) {
             result.status = true;
             result.data = "success";

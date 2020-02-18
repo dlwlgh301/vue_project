@@ -83,13 +83,6 @@ public class FollowController {
         List<Boolean> followCheckList = new ArrayList<>();
 
         JSONObject data = new JSONObject();
-
-        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
-        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
-        System.out.println("팔로잉 리스트~~~!! 가져오기!!!");
-        System.out.println(num);
-        System.out.println(email);
-
         if (num.equals("1")) { // 팔로잉
             list = followServiceImpl.followingList(email);
 
@@ -104,7 +97,6 @@ public class FollowController {
 
         else if (num.equals("2")) { // 팔로워
             list = followServiceImpl.followerList(email);
-            System.out.println("성공~!");
 
             for (int i = 0; i < list.size(); i++) {
                 if (followServiceImpl.followCheck(new Follow(email, "", list.get(i).getFollower(), "")) > 0) {
@@ -121,8 +113,6 @@ public class FollowController {
 
         result.object = data.toMap();
 
-        System.out.println("listSize : " + list.size());
-
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -134,26 +124,14 @@ public class FollowController {
         final BasicResponse result = new BasicResponse();
         Boolean followCheckFlag;
 
-        JSONObject data = new JSONObject();
-
-        System.out.println("followCheck ");
-        System.out.println("followCheck ");
-        System.out.println("followCheck ");
-        System.out.println(follower);
-        System.out.println(following);
-
         if (followServiceImpl.followCheck(new Follow(follower, "", following, "")) > 0) {
             followCheckFlag = true;
-        }
-
-        else {
+        } else {
             followCheckFlag = false;
         }
 
         result.status = true;
         result.object = followCheckFlag;
-
-        System.out.println("listSize : " + followCheckFlag);
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -162,8 +140,6 @@ public class FollowController {
     @ApiOperation(value = "팔로우 추가하기")
     public Object addFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
-
-        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
@@ -198,8 +174,6 @@ public class FollowController {
     @ApiOperation(value = "팔로우 삭제하기")
     public Object deleteFollow(@Valid @RequestParam String follower, @RequestParam String following) throws Exception {
         final BasicResponse result = new BasicResponse();
-
-        System.out.println(follower + ",   " + following);
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
