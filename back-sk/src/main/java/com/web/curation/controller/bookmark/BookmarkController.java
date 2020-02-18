@@ -35,6 +35,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,18 +81,29 @@ public class BookmarkController {
 
     @GetMapping("/bookmark/getBookmarkList")
     @ApiOperation(value = "찜목록 가져오기")
-    public Object getProductListByEmail(@RequestParam(required = false) String email) throws Exception {
+    public Object getBookmarkListByEmail(@RequestParam(required = false) String email) throws Exception {
         final BasicResponse result = new BasicResponse();
+        JSONObject data = new JSONObject();
 
         System.out.println("getProductListByEmail~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
         System.out.println("받아온 email : " + email);
 
         List<Product> list = new ArrayList<>();
+        List<Boolean> likeCheckList = new ArrayList<>();
+        list = bookmarkServiceImpl.getBookmarkListByEmail(email);
 
-        // list = productServiceImpl.getProductListByEmail(email);
+        for (int i = 0; i < list.size(); i++) {
+            if (bookmarkServiceImpl.likeCheck(new Bookmark(email, list.get(i).getProductName())) > 0) {
+                likeCheckList.add(true);
+            } else {
+                likeCheckList.add(false);
+            }
+        }
 
-        result.status = true;
-        result.object = list;
+        data.put("list", list);
+        data.put("likeCheckList", likeCheckList);
+
+        result.object = data.toMap();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
 
@@ -122,7 +134,7 @@ public class BookmarkController {
         // productName=#{productName})
     }
 
-    @PostMapping("/bookmark/deleteProduct")
+    @DeleteMapping("/bookmark/deleteProduct")
     @ApiOperation(value = "찜목록 삭제하기")
     public Object deleteProduct(@RequestBody(required = false) Bookmark bm) throws Exception {
         final BasicResponse result = new BasicResponse();

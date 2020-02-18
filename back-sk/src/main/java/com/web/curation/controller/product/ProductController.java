@@ -135,7 +135,7 @@ public class ProductController {
 
             for (int i = 1; i < temp.length; i++) {
 
-                temp[i] = temp[i].replace("\\}", "");
+                temp[i] = temp[i].replace("\\}", "").replace("💋", "");
 
                 String[] arr;
                 arr = temp[i].split(",\"mallName");

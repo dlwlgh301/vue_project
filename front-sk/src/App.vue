@@ -19,50 +19,60 @@
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
                     <div style="width:19rem; ">
-                        <form>
-                            <input type="text" name="focus" required class="search-box" placeholder="Enter search term" />
-                            <button class="close-icon" type="reset"></button>
-                        </form>
+                        <div class="search-wrapper">
+                            <form>
+                                <button class="close-icon" type="reset"></button>
+
+                                <input
+                                    type="text"
+                                    v-on:input="user = $event.target.value"
+                                    style="z-index: 2;"
+                                    name="focus"
+                                    required
+                                    class="search-box"
+                                    placeholder="User 검색"
+                                />
+                            </form>
+                        </div>
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
                         <!-- <md-icon>search</md-icon> -->
-
-                        <center style="position : fixed; z-index: 1;">
+                        <center v-model="user" style="position : fixed; z-index: 1;">
                             <md-list class="md-triple-line" style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;">
                                 <div v-for="(item, index) in member" v-bind:key="index">
-                                    <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1e7ad3; ">
+                                    <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
                                         <md-avatar>
                                             <img v-bind:src="'http://192.168.100.90:8080/image/' + item.imgURL" alt class="People" />
                                         </md-avatar>
-
                                         <div style="cursor: pointer;" class="md-list-item-text" @click="goOtherpage(item.email)">
                                             <span>{{ item.nickName }}</span>
                                             <span>{{ item.comment }}</span>
                                         </div>
                                     </md-list-item>
-
                                     <md-divider class="md-inset"></md-divider>
                                 </div>
                             </md-list>
                         </center>
                     </div>
-
                     <!-- 현준이형 여기 부터 만들면 될듯  -->
                     <v-spacer></v-spacer>
                     <md-button @click="logout">
                         <md-icon>exit_to_app</md-icon>
                     </md-button>
                     <md-button class="md-icon-button" @click="refreshNotice">
-                        <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
+                        <v-badge color="#009FF4" v-model="$store.state.noticeNum" overlap>
                             <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
-                            <md-icon style="color: #009ff4 ;">notifications</md-icon>
+                            <md-icon style="color: #009FF4 ;">notifications</md-icon>
                         </v-badge>
                     </md-button>
                 </v-app-bar>
-
                 <v-navigation-drawer v-model="drawer" fixed temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                            <v-img
+                                src="https://randomuser.me/api/portraits/men/78.jpg(5 kB)
+https://randomuser.me/api/portraits/men/78.jpg
+"
+                            ></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title>nickName</v-list-item-title>
@@ -147,7 +157,7 @@
 .search-wrapper {
     width: 500px;
     margin: auto;
-    margin-top: 50px;
+    /* margin-top: 50px; */
 }
 .search-box {
     width: 80%;
@@ -192,7 +202,6 @@
     display: none;
 }
 </style>
-
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
 import BottomNavComponent from './components/common/BottomNav';
@@ -209,7 +218,6 @@ export default {
         if (sessionStorage.getItem('email') != null) this.getNotice();
         // setInterval(function() {
         // this.loadNoticeNum();
-
         // }, 2000);
     },
     components: {
@@ -233,9 +241,15 @@ export default {
             console.log(this.user);
         },
         goOtherpage(e) {
+            this.user = '';
             this.member = [];
-            if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
-            else this.$router.push('/user/OtherProfile/' + e);
+            if (e == sessionStorage.getItem('email')) {
+                this.member = [];
+                this.$router.push('/user/profile');
+            } else {
+                this.member = [];
+                this.$router.push('/user/OtherProfile/' + e);
+            }
         },
         getNotice() {
             let data = sessionStorage.getItem('email');
@@ -286,7 +300,6 @@ export default {
                             console.log(res.data.status);
                         } else {
                             this.member = res.data.object;
-
                             console.log(res);
                             // alert(info.email);
                             console.log(res.data.status);
@@ -310,7 +323,6 @@ export default {
 .md-icon-button .md-ripple {
     border-radius: 0% !important;
 }
-
 .md-list {
     width: 320px;
     max-width: 100%;
