@@ -24,6 +24,8 @@ const UserApi = {
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     requestReview: (data, callback) => requestReview(data, callback),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
+    searchMember: (data, callback, errorCallback) => searchMember(data, callback, errorCallback),
+    deleteUser: (data, callback, errorCallback) => deleteUser(data, callback, errorCallback),
     apitest: () => apitest()
 };
 const isFollowing = (data, callback, errorCallback) => {
@@ -35,6 +37,31 @@ const isFollowing = (data, callback, errorCallback) => {
         })
         .catch(error => {
             console.log('팔로체크 실패');
+            errorCallback(error);
+        });
+};
+const deleteUser = (data, callback, errorCallback) => {
+    alert(data);
+    axios
+        .post(`${host}/account/deleteUser?email=` + data)
+        .then(res => {
+            console.log('삭제성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('삭제실패');
+            errorCallback(error);
+        });
+};
+const searchMember = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/account/searchMember?nickName=` + data)
+        .then(res => {
+            console.log('멤버서치성공');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('멤버서치실패');
             errorCallback(error);
         });
 };

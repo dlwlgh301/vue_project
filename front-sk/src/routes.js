@@ -24,6 +24,7 @@ import SnsJoin from './views/user/snsJoin.vue';
 import Search from './views/contents/Search.vue';
 import Bookmark from './views/contents/BookMark.vue';
 import Like from './views/contents/Like.vue';
+import DeleteUser from './views/user/DeleteUser.vue';
 Vue.use(Router);
 
 const router = new Router({
@@ -37,6 +38,11 @@ const router = new Router({
             path: '/user/Profile',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/user/DeleteUser',
+            name: 'DeleteUser',
+            component: DeleteUser
         },
         {
             path: '/user/OtherProfile/:email',
