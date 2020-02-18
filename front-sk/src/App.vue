@@ -1,24 +1,20 @@
 <template>
     <v-app>
         <div id="app" class="phone-viewport">
-            <link
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
-                rel="stylesheet"
-            />
+            <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" rel="stylesheet" />
             <div class="components-page">
                 <v-app-bar v-show="$store.state.showNav" fixed color="#FFF" class="Navbar">
                     <md-button id="btn-back" class="md-icon-button" @click="$router.go(-1)">
                         <md-icon style="color: #ssafy">keyboard_arrow_left</md-icon>
                     </md-button>
-                    <md-button
-                        id="btn-drawer"
-                        class="md-icon-button"
-                        @click.stop="drawer = !drawer"
-                    >
+                    <md-button id="btn-drawer" class="md-icon-button" @click.stop="drawer = !drawer">
                         <md-icon>menu</md-icon>
                     </md-button>
                     <div class="md-small-hide">
-                        <v-toolbar-title>{{ $store.state.pageTitle }}</v-toolbar-title>
+                        <v-toolbar-title>
+                            <!-- <img src="../../assets/#+.png" alt="" /> -->
+                            {{ $store.state.pageTitle }}</v-toolbar-title
+                        >
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
@@ -27,27 +23,14 @@
                         <md-icon>search</md-icon>
 
                         <center style="position : fixed; z-index: 1;">
-                            <md-list
-                                class="md-triple-line"
-                                style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;"
-                            >
+                            <md-list class="md-triple-line" style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;">
                                 <div v-for="(item, index) in member" v-bind:key="index">
-                                    <md-list-item
-                                        style=" margin-top: 0.5px; border: 0.01em inset  #1e7ad3; "
-                                    >
+                                    <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1e7ad3; ">
                                         <md-avatar>
-                                            <img
-                                                v-bind:src="'http://192.168.100.90:8080/image/' + item.imgURL"
-                                                alt
-                                                class="People"
-                                            />
+                                            <img v-bind:src="'http://192.168.100.90:8080/image/' + item.imgURL" alt class="People" />
                                         </md-avatar>
 
-                                        <div
-                                            style="cursor: pointer;"
-                                            class="md-list-item-text"
-                                            @click="goOtherpage(item.email)"
-                                        >
+                                        <div style="cursor: pointer;" class="md-list-item-text" @click="goOtherpage(item.email)">
                                             <span>{{ item.nickName }}</span>
                                             <span>{{ item.comment }}</span>
                                         </div>
@@ -66,11 +49,7 @@
                     </md-button>
                     <md-button class="md-icon-button" @click="refreshNotice">
                         <v-badge color="#009ff4" v-model="$store.state.noticeNum" overlap>
-                            <span
-                                slot="badge"
-                                v-if="$store.state.noticeNum"
-                                v-text="Number($store.state.noticeNum)"
-                            ></span>
+                            <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
                             <md-icon style="color: #009ff4 ;">notifications</md-icon>
                         </v-badge>
                     </md-button>
