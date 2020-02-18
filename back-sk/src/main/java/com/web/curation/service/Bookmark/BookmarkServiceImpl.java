@@ -17,6 +17,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public int addBookmark(Bookmark bookmark) throws Exception {
+        System.out.println("service : addBookmark");
         return bookmarkDao.addBookmark(bookmark);
     }
 

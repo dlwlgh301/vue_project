@@ -29,7 +29,7 @@
                             <button class="close-icon" type="reset"></button>
                         </form>
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
-                        <md-icon>search</md-icon>
+                        <!-- <md-icon>search</md-icon> -->
 
                         <center style="position : fixed; z-index: 1;">
                             <md-list class="md-triple-line" style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;">
