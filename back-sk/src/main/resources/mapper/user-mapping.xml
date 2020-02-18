@@ -59,4 +59,9 @@
         select * from user
         where nickName like CONCAT('%', #{nickName}, '%')
     </select>
+
+    <delete id="deleteUser" parameterType="string"> 
+        delete from user 
+        where email=#{value}
+    </delete>
 </mapper>

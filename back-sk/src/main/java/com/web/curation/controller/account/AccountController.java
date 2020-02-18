@@ -283,4 +283,15 @@ public class AccountController {
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("/account/deleteUser")
+    @ApiOperation(value = "탈퇴하기")
+    public Object deleteUser(@RequestParam(required = true) final String email) throws Exception {
+        final BasicResponse result = new BasicResponse();
+        System.out.println(email);
+        userServiceImpl.deleteUser(email);
+        result.status = true;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

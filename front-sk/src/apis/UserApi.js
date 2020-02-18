@@ -24,7 +24,8 @@ const UserApi = {
     deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
     requestReview: (data, callback) => requestReview(data, callback),
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
-    apitest: () => apitest()
+    apitest: () => apitest(),
+    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -328,5 +329,17 @@ const apitest = () => {
     // .catch(() => {
     //     errorCallback;
     // });
+};
+
+const getReviewByproduct = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/product`, data)
+        .then(res => {
+            console.log('리뷰가져오기 성공!!!');
+            callback(res);
+        })
+        .catch(() => {
+            errorCallback;
+        });
 };
 export default UserApi;

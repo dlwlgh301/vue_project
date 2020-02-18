@@ -89,4 +89,9 @@ public class UserDaoImpl implements UserDao {
     public List<User> searchMember(String nickName) throws Exception {
         return sqlSession.selectList("searchMember", nickName);
     }
+
+    @Override
+    public int deleteUser(String email) throws Exception {
+        return sqlSession.delete("deleteUser", email);
+    }
 }

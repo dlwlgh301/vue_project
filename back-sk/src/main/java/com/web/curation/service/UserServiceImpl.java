@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService {
         return userDaoImpl.searchMember(nickName);
     }
 
+    @Override
+    public int deleteUser(String email) throws Exception {
+        return userDaoImpl.deleteUser(email);
+    }
+
 }
