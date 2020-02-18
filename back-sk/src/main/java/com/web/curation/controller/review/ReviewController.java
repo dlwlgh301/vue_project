@@ -299,14 +299,25 @@ public class ReviewController {
 
     @PostMapping("/review/like")
     @ApiOperation(value = "좋아요")
+    @Transactional
     public Object insertInterest(@RequestParam(required = true) final int reviewNum,
             @RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
         Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
+        int likeNum = reviewServiceImpl.getLikeNumber(reviewNum) + 1;
+        Review review = new Review();
+        review.setRid(reviewNum);
+        review.setLikeNumber(likeNum);
+        reviewServiceImpl.updateLike(review);
+
+        JSONObject data = new JSONObject();
+        data.put("likeNumber", likeNum);
+
         if (interestServiceImpl.insertInterest(interest)) {
             result.status = true;
             result.data = "success";
+            result.object = data.toMap();
         } else {
             result.status = false;
             result.data = "fail";
@@ -322,9 +333,19 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
+        int likeNum = reviewServiceImpl.getLikeNumber(reviewNum) - 1;
+        Review review = new Review();
+        review.setRid(reviewNum);
+        review.setLikeNumber(likeNum);
+        reviewServiceImpl.updateLike(review);
+
+        JSONObject data = new JSONObject();
+        data.put("likeNumber", likeNum);
+
         if (interestServiceImpl.deleteInterest(interest)) {
             result.status = true;
             result.data = "success";
+            result.object = data.toMap();
         } else {
             result.status = false;
             result.data = "fail";
