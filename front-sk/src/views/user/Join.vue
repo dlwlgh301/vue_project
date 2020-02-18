@@ -75,7 +75,7 @@
                             <img src="../../assets/images/프로필아이콘.png" />
                         </div>
                         <div v-else>
-                            <img :src="image" style="width:150px; height:150px" />
+                            <img :src="image" style="width:1 50px; height:150px" />
                             <button @click="removeImage">삭제하기</button>
                         </div>
                     </div>
@@ -336,12 +336,18 @@ export default {
             this.checkForm();
         },
         email: function() {
+            this.error.emailAuth = true;
+            sessionStorage.setItem('key', '이거는  아무도 못 마추겠지?');
+            this.key = '이거는  아무도 못 마추겠지?';
+            this.isSendEmail = false;
+            this.emailAuth = '';
             this.checkForm();
         },
         passwordConfirm: function() {
             this.checkForm();
         },
         nickName: function() {
+            this.error.nickNameCheck = true;
             this.checkForm();
         },
         name: function() {
@@ -482,78 +488,12 @@ export default {
             });
 
             this.$router.push('/');
-            // Axios.post(`http://192.168.100.90:8080/account/signup`, { JSON.stringfy(user), file }).then(() => {
-            //     alert('good');
-
-            // });
-            // UserApi.join(test);
-            // this.$router.push('/user/certComplete');
         },
-        // join() {
-        //     alert('join');
-        //     console.log('ddddddddddddddddddddddd ' + this.imgURL);
 
-        //     if (this.isSubmit) {
-        //         var { file, email, password, nickName, comment, name, imgURL } = this;
-
-        //         // eslint-disable-next-line no-unused-vars
-        //         var data = {
-        //             file,
-        //             email,
-        //             password,
-        //             nickName,
-        //             comment,
-        //             name,
-        //             imgURL
-        //         };
-        //         console.log(this.email);
-        //         //요청 후에는 버튼 비활성화
-        //         this.isSubmit = false;
-
-        //         //console.log('axios 하기전!!!');
-
-        //         /* var body = {
-        //             password: this.password,
-        //             email: this.email,
-        //             nickName: this.nickName,
-        //             name: this.name,
-        //             comment: this.comment
-        //         }; */
-        //         sessionStorage.setItem('email', this.email);
-        //         sessionStorage.setItem('password', this.password);
-        //         sessionStorage.setItem('nickName', this.nickName);
-        //         sessionStorage.setItem('name', this.name);
-        //         sessionStorage.setItem('comment', this.comment);
-        //         sessionStorage.setItem('imgURL', this.imgURL);
-        //         sessionStorage.setItem('file', this.file);
-
-        //         UserApi.cert(
-        //             data,
-        //             res => {
-        //                 console.log('???????????????');
-        //                 //console.log(res);
-        //                 //console.log(res.data.object.key);
-        //                 this.key = res.data.object.key;
-        //                 console.log(this.key);
-        //                 sessionStorage.clear;
-        //                 sessionStorage.setItem('key', this.key);
-        //                 console.log('join 인증키 발급');
-        //             },
-        //             error => {
-        //                 console.log(error);
-        //             }
-        //         );
-        //         this.$router.push('/user/keyword');
-        //         // UserApi.join(body);
-        //         console.log('join 라우터');
-        //         // console.log('axios 함!!!');
-        //     }
-        // },
         sendEmailAuth() {
             UserApi.cert(
                 { email: this.email },
                 res => {
-                    this.isSendEmail = true;
                     console.log('???????????????');
                     //console.log(res);
                     //console.log(res.data.object.key);
@@ -589,6 +529,7 @@ export default {
                 res => {
                     console.log(res);
                     if (res.data.status == true) {
+                        this.isSendEmail = true;
                         this.sendEmailAuth();
                         Swal.fire({
                             icon: 'success', //"info,success,warning,error" 중 택1

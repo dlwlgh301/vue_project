@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.curation.dao.bookmark.BookmarkDao">
+    <select id="getBookmarkListByEmail" parameterType="string" resultType="com.web.curation.model.vo.Bookmark">
+        select * from product where productName in (select procutName from
+        bookmark where email=#{email})
+    </select>
+
+    <insert id="addBookmark" parameterType="com.web.curation.model.vo.Bookmark">
+        insert into bookmark(email, productName)
+        values(#{email}, #{productName})
+    </insert>
+
+    <delete id="deleteBookmark" parameterType="com.web.curation.model.vo.Bookmark">
+        delete from bookmark
+        where email=#{email} and productName = #{productName}
+    </delete>
+
+    <select id="likeCheck" resultType="int" parameterType="com.web.curation.model.vo.Bookmark">
+        select count(*) from bookmark
+        where email=#{email} and productName = #{productName}
+    </select>
+
+</mapper>
