@@ -11,8 +11,8 @@ public class APIExamSearchBlog {
         String clientId = "SWUyt16NYZU6MvQrluEV";// 애플리케이션 클라이언트 아이디값";
         String clientSecret = "zPy366mvC9";// 애플리케이션 클라이언트 시크릿값";
         try {
-            String text = URLEncoder.encode("여자친구 선물", "UTF-8");
-            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text; // json 결과
+            String text = URLEncoder.encode("심플한", "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/search/shop?query=" + text + "&display=100"; // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text;
             // // xml 결과
             URL url = new URL(apiURL);
@@ -33,7 +33,7 @@ public class APIExamSearchBlog {
                 response.append(inputLine);
             }
             br.close();
-            System.out.println(response.toString());
+            System.out.println(response);
         } catch (Exception e) {
             System.out.println(e);
         }

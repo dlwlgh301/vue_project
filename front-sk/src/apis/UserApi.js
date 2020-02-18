@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 const host = 'http://192.168.100.90:8080';
-const noticePort = 'http://192.168.100.90:8080';
+const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
@@ -26,7 +26,8 @@ const UserApi = {
     updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback),
     searchMember: (data, callback, errorCallback) => searchMember(data, callback, errorCallback),
     deleteUser: (data, callback, errorCallback) => deleteUser(data, callback, errorCallback),
-    apitest: () => apitest()
+    apitest: () => apitest(),
+    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -337,7 +338,7 @@ const requestReview = (data, callback) => {
 };
 
 const apitest = () => {
-    fetch(`${host}/product/searchProduct`, {
+    fetch(`${host}/product/getAPI`, {
         method: 'GET',
         mode: 'no-cors'
     });
@@ -353,5 +354,17 @@ const apitest = () => {
     // .catch(() => {
     //     errorCallback;
     // });
+};
+
+const getReviewByproduct = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/product`, data)
+        .then(res => {
+            console.log('리뷰가져오기 성공!!!');
+            callback(res);
+        })
+        .catch(() => {
+            errorCallback;
+        });
 };
 export default UserApi;

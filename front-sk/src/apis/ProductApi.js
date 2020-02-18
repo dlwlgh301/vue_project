@@ -6,22 +6,7 @@ const UserApi = {
     getAPI: (data, callback, errorCallback) => getAPI(data, callback, errorCallback),
     getProductListByEmail: (data, callback, errorCallback) => getProductListByEmail(data, callback, errorCallback),
     addBookmark: (data, callback, errorCallback) => addBookmark(data, callback, errorCallback),
-    deleteBookmark: (data, callback, errorCallback) => deleteBookmark(data, callback, errorCallback),
-    getProductListByKeyword: (data, callback, errorCallback) => getProductListByKeyword(data, callback, errorCallback)
-};
-
-const getProductListByKeyword = (data, callback, errorCallback) => {
-    alert(data);
-    axios
-        .get(`${host}/product/getProductListByKeyword?keyword=` + data)
-        .then(res => {
-            console.log('상품 가져오기 성공');
-            callback(res);
-        })
-        .catch(error => {
-            console.log('상품 가져오기 실패');
-            errorCallback(error);
-        });
+    deleteBookmark: (data, callback, errorCallback) => deleteBookmark(data, callback, errorCallback)
 };
 
 const getAPI = (data, callback, errorCallback) => {

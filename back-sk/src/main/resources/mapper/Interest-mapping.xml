@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.curation.dao.review.InterestDao">
+    <insert id="insertInterest" parameterType="com.web.curation.model.vo.Interest">
+        insert into Interest(reviewNum, email, nickName) 
+        values(#{reviewNum}, #{email}, #{nickName})
+    </insert>
+    <delete id="deleteInterest" parameterType="com.web.curation.model.vo.Interest">
+        delete from interest where reviewNum = #{reviewNum} and email = #{email}
+    </delete>
+    <select id="getInterests" parameterType="int" resultType="com.web.curation.model.vo.Interest">
+        select * from interest where reviewNum = #{value}
+    </select>
+    <select id="isInterest" parameterType="com.web.curation.model.vo.Interest">
+        select * from interest where reviewNum = #{reviewNum} and email = #{email}
+    </select>
+    <select id="getMyInterest" parameterType="string" resultType="com.web.curation.model.vo.Interest">
+        select * from interest where email = #{value}
+    </select>
+</mapper>

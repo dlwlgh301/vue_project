@@ -162,11 +162,14 @@ public class FollowController {
 
         String followerNickName = userServiceImpl.getNickNameByEmail(follower);
         String followingnickName = userServiceImpl.getNickNameByEmail(following);
-        String imgURL = userServiceImpl.getImgURL(follower);
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
         boolean check = noticeServiceImpl.insertNotice(follower, following, followerNickName + " 님이 팔로우 요청을 하였습니다.");
+        System.out.println(check + "dddd");
+        System.out.println(check + "dddd");
+        System.out.println(check + "dddd");
+        System.out.println(check + "dddd");
         if (check) {
             JSONObject dummyUser = new JSONObject();
             dummyUser.put("sender", follower);

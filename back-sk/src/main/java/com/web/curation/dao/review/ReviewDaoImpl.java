@@ -23,7 +23,31 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public List<Review> getMainReview(Review review) throws Exception {
-        return sqlSession.selectList("getMainReview", review);
+    public List<Review> getMainReview(String keyword) throws Exception {
+        return sqlSession.selectList("getMainReview", keyword);
+    }
+
+    @Override
+    public List<Review> getUserReview(String email) throws Exception {
+        return sqlSession.selectList("getUserReview", email);
+    }
+
+    @Override
+    public List<Review> getProductReview(String productName) throws Exception {
+        return sqlSession.selectList("getProductReview", productName);
+    }
+
+    @Override
+    public Review getReviewByRId(int rid) throws Exception {
+        return sqlSession.selectOne("getReviewByRId", rid);
+    }
+
+    @Override
+    public boolean deleteReview(int rid) throws Exception {
+        int row = sqlSession.delete("deleteReview", rid);
+        if (row > 0)
+            return true;
+        else
+            return false;
     }
 }

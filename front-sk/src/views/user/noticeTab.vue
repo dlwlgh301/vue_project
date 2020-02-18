@@ -124,7 +124,7 @@ export default {
                         for (let i = new_data.length - 1; i >= 0; i--) {
                             new_noticeItem = {
                                 nid: new_data[i].nid,
-                                avatar: 'http://192.168.100.90:8080/image/' + new_data[i].imgURL,
+                                avatar: 'http://192.168.100.90:8080/image/' + new_data[i].senderImg,
                                 userId: new_data[i].senderNick,
                                 subtitle: new_data[i].msg
                             };
@@ -138,7 +138,7 @@ export default {
                         for (let i = old_data.length - 1; i >= 0; i--) {
                             new_noticeItem = {
                                 nid: old_data[i].nid,
-                                avatar: require('../../assets/images/light-bulb.png'),
+                                avatar: 'http://192.168.100.90:8080/image/' + old_data[i].senderImg,
                                 userId: old_data[i].senderNick,
                                 subtitle: old_data[i].msg
                             };
@@ -161,7 +161,7 @@ export default {
                         for (let i = follow_data.length - 1; i >= 0; i--) {
                             follow_item = {
                                 rid: follow_data[i].rid,
-                                avatar: require('../../assets/images/light-bulb.png'),
+                                avatar: 'http://192.168.100.90:8080/image/' + follow_data[i].requesterImg,
                                 userId: follow_data[i].requesterNick,
                                 is_following: false
                             };
