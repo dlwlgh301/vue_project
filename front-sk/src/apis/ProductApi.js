@@ -33,10 +33,29 @@ const getProductListByEmail = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-const addBookmark = (data, callback, errorCallback) => {
-    alert(data['email'] + ' ' + data['name']);
-    axios
-        .post(`${host}/bookMark/addProduct?email=` + data['email'] + '&productName=' + data['name'])
+const addBookmark = (body, callback, errorCallback) => {
+    // alert(data['email'] + ' ' + data['productName']);
+    // axios
+    //     .post(`${host}/bookmark/addProduct?email=` + data['email'] + '&productName=' + data['productName'])
+    //     .then(res => {
+    //         console.log('상품 추가하기성공~');
+    //         callback(res);
+    //     })
+    //     .catch(error => {
+    //         console.log('상품 추가하기 실패ㅜㅜ');
+    //         errorCallback(error);
+    //     });
+    var value = {
+        email: body.email,
+        productName: body.productName
+    };
+    alert(value.email + ' ' + value.productName);
+    axios({
+        url: `${host}/bookmark/addProduct`,
+        method: 'post',
+        data: JSON.stringify(value),
+        headers: { 'Content-Type': 'application/json' }
+    })
         .then(res => {
             console.log('상품 추가하기성공~');
             callback(res);
@@ -46,16 +65,24 @@ const addBookmark = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-const deleteBookmark = (data, callback, errorCallback) => {
-    alert(data['email'] + ' ' + data['name']);
-    axios
-        .post(`${host}/bookMark/deleteProduct ?email=` + data['email'] + '&productName=' + data['name'])
+const deleteBookmark = (body, callback, errorCallback) => {
+    var value = {
+        email: body.email,
+        productName: body.productName
+    };
+    alert(value.email + ' ' + value.productName);
+    axios({
+        url: `${host}/bookmark/deleteProduct`,
+        method: 'post',
+        data: JSON.stringify(value),
+        headers: { 'Content-Type': 'application/json' }
+    })
         .then(res => {
-            console.log('상품 삭제하기성공~');
+            console.log('상품 제거하기성공~');
             callback(res);
         })
         .catch(error => {
-            console.log('상품 삭제하기 실패ㅜㅜ');
+            console.log('상품 제거하기 실패ㅜㅜ');
             errorCallback(error);
         });
 };

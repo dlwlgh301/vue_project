@@ -135,7 +135,7 @@ export default {
                     console.log('user: ', this.users);
                     this.likeList = res.data.object.likeCheckList;
                     console.log('likeList: ', this.likeList);
-                    this.likeList[0] = true;
+
                     for (var i = 0; i < this.likeList.length; i++) {
                         // this.users[i].isLike = this.likeList[i];
                         this.users[i]['isLike'] = this.likeList[i];
@@ -160,7 +160,8 @@ export default {
                 email: this.email,
                 productName: name
             };
-            ProductApi.addProduct(
+
+            ProductApi.addBookmark(
                 data,
                 res => {
                     console.log(res);
@@ -175,7 +176,8 @@ export default {
                 email: this.email,
                 productName: name
             };
-            ProductApi.deleteProduct(
+
+            ProductApi.deleteBookmark(
                 data,
                 res => {
                     console.log(res);
