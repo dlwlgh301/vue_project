@@ -34,8 +34,9 @@ const getProductListByEmail = (data, callback, errorCallback) => {
         });
 };
 const addBookmark = (data, callback, errorCallback) => {
+    alert(data['email'] + ' ' + data['name']);
     axios
-        .post(`${host}/product/addProduct?email=` + data['email'] + '&productName=' + data['productName'])
+        .post(`${host}/bookMark/addProduct?email=` + data['email'] + '&productName=' + data['name'])
         .then(res => {
             console.log('상품 추가하기성공~');
             callback(res);
@@ -46,8 +47,9 @@ const addBookmark = (data, callback, errorCallback) => {
         });
 };
 const deleteBookmark = (data, callback, errorCallback) => {
+    alert(data['email'] + ' ' + data['name']);
     axios
-        .post(`${host}/product/deleteProduct` + data)
+        .post(`${host}/bookMark/deleteProduct ?email=` + data['email'] + '&productName=' + data['name'])
         .then(res => {
             console.log('상품 삭제하기성공~');
             callback(res);

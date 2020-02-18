@@ -167,9 +167,15 @@ export default {
     },
     methods: {
         goOtherpage(e) {
+            this.user = '';
             this.member = [];
-            if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
-            else this.$router.push('/user/OtherProfile/' + e);
+            if (e == sessionStorage.getItem('email')) {
+                this.member = [];
+                this.$router.push('/user/profile');
+            } else {
+                this.member = [];
+                this.$router.push('/user/OtherProfile/' + e);
+            }
         },
         getNotice() {
             let data = sessionStorage.getItem('email');

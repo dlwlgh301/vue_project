@@ -35,7 +35,8 @@
 
                     <div class="profile2-bio">
                         <p style="padding-right:50px">
-                            <span class="profile2-real-name">{{ info.nickName }}</span> <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
+                            <span class="profile2-real-name">{{ info.nickName }}</span>
+                            <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
                         </p>
                     </div>
                 </div>
@@ -191,10 +192,11 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
-                                {{
-                                    item.followingnickName
-                                }}
+                            <ul style="margin-left:25px; cursor: pointer;">
+                                <span @click="goOtherpage(item.following)">
+                                    {{ item.followingnickName }}
+                                </span>
+
                                 <div class="myfollowList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우

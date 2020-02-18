@@ -43,9 +43,9 @@
         </div>
 
         <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <md-table-toolbar>
-                <h1 class="md-title">Users</h1>
-            </md-table-toolbar>
+            <div style="text-align:center;" v-if="users.length == 0 && isTime">
+                <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+            </div>
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!-- <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
                 <!-- <td><img v-bind:src="item.image" /></td> -->
@@ -57,54 +57,16 @@
                 <!-- <md-table-cell md-label="Link" md-sort-by="link">{{ item.link }}</md-table-cell> -->
                 <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
                 <md-table-cell md-sort-by="Like" md-label="Like" width="10%">
-                    <md-button class="md-icon-button md-list-action">
-                        <md-icon class="md-primary" v-show="item.isLike">star</md-icon>
-                        <md-icon class="md-primary" v-show="!item.isLike">star_border</md-icon>
+                    <md-button @click="addProduct(item.productName)" class="md-icon-button md-list-action" v-show="!item.isLike">
+                        <md-icon class="md-primary">star_border</md-icon>
+                    </md-button>
+
+                    <md-button @click="deleteProduct(item.productName)" class="md-icon-button md-list-action" v-show="item.isLike">
+                        <md-icon class="md-primary">star</md-icon>
                     </md-button>
                 </md-table-cell>
             </md-table-row>
         </md-table>
-
-        <!-- <md-table v-model="likeList" md-sort="name" md-sort-order="asc" md-card md-fixed-header style="width:20%">
-            <md-table-row slot="md-table-row">
-                <md-table-cell md-label="Like" width="10%">
-                    <md-button class="md-icon-button md-list-action">
-                        <md-icon class="md-primary" v-show="likeList">star</md-icon>
-                        <md-icon class="md-primary" v-show="!likeList">star_border</md-icon>
-                    </md-button></md-table-cell
-                >
-            </md-table-row>
-        </md-table> -->
-
-        <!-- <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <md-table-toolbar>
-                <h1 class="md-title">Users</h1>
-            </md-table-toolbar>
-            <md-table style="margin-top : 50px">
-                <md-table-row>
-                    <md-table-head md-label="Image" width="100px">Image</md-table-head>
-                    <md-table-head md-label="ProductName" md-sort-by="productName" width="50%">ProductName</md-table-head>
-                    <md-table-head md-label="Price" md-sort-by="price" width="20%">Price</md-table-head>
-                    <md-table-head md-label="Like" md-sort-by="Like" width="10%">Like</md-table-head>
-                </md-table-row>
-
-                <md-table-row slot="md-table-row" v-for="(item, index) in product" v-bind:key="index">
-                    {{ item.image }}   
-                    <md-table-cell md-label="Image" width="100px"><img v-bind:src="item.image" alt class="People"/></md-table-cell>
-                    <md-table-cell md-label="ProductName" md-sort-by="productName" width="50%"
-                        >{{ item.productName }} <br />
-                        <a v-bind:href="item.link">{{ item.link }}</a>
-                    </md-table-cell>
-                    <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
-                    <md-table-cell md-label="Like" md-sort-by="Like" width="10%">
-                        <md-button class="md-icon-button md-list-action">
-                            <md-icon class="md-primary" v-show="likeList[index] == true">star</md-icon>
-                            <md-icon class="md-primary" v-show="likeList[index] == false">star_border</md-icon>
-                        </md-button>
-                    </md-table-cell>
-                </md-table-row>
-            </md-table>
-        </md-table> -->
     </div>
 </template>
 <script>
@@ -113,6 +75,7 @@ export default {
     name: 'TableFixed',
     data() {
         return {
+            isTime: false,
             product: [], // 물건 리스트
             likeList: [], //찜 한거 목록 리스트
             selected: '',
@@ -152,6 +115,8 @@ export default {
     },
     methods: {
         searchProduct() {
+            this.users = [];
+            this.isTime = true;
             if (this.sub1 == '' && this.sub2 == '') {
                 this.keyword;
             } else {
@@ -168,11 +133,8 @@ export default {
                 res => {
                     this.users = res.data.object.list;
                     console.log('user: ', this.users);
-
                     this.likeList = res.data.object.likeCheckList;
-
                     console.log('likeList: ', this.likeList);
-
                     this.likeList[0] = true;
                     for (var i = 0; i < this.likeList.length; i++) {
                         // this.users[i].isLike = this.likeList[i];
@@ -186,16 +148,17 @@ export default {
             );
             this.sub1 = '';
             this.sub2 = '';
+
             console.log('user ==>');
             console.log(this.users);
         },
         getImgUrl(pic) {
             return require('../../assets/images/' + pic);
         },
-        addProduct() {
+        addProduct(name) {
             var data = {
                 email: this.email,
-                productName: this.productName
+                productName: name
             };
             ProductApi.addProduct(
                 data,
@@ -207,10 +170,10 @@ export default {
                 }
             );
         },
-        deleteProduct() {
+        deleteProduct(name) {
             var data = {
                 email: this.email,
-                productName: this.productName
+                productName: name
             };
             ProductApi.deleteProduct(
                 data,
