@@ -16,4 +16,8 @@ public interface ReviewDao {
     Review getReviewByRId(int rid) throws Exception;
 
     boolean deleteReview(int rid) throws Exception;
+
+    boolean updateLike(Review review) throws Exception;
+
+    int getLikeNumber(int rid) throws Exception;
 }

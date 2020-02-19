@@ -108,21 +108,16 @@ public class AccountController {
     @ApiOperation(value = "중복확인하기")
     public Object doubleCheck(@RequestParam(required = true) final int num,
             @RequestParam(required = true) final String value) throws Exception {
-        // 이메일, 닉네임 중복처리 필수
 
         final BasicResponse result = new BasicResponse();
 
         System.out.println(num);
         System.out.println(value);
 
-        // System.out.println("value : " + value);
-        // System.out.println("num : " + num);
-
-        if (num == 1) { // 이메일
+        if (num == 1) {
             String email = userServiceImpl.getEmail(value);
             System.out.println("db에 이메일이 있는지 확인 :" + email);
 
-            // 이메일 중복검사
             if (email != null && email.equals(value)) {
                 result.data = "이메일이 이미 존재합니다.";
                 result.status = false;
@@ -131,11 +126,10 @@ public class AccountController {
             }
         }
 
-        else if (num == 2) { // 닉네임
+        else if (num == 2) {
             String nickName = userServiceImpl.getNickName(value);
             System.out.println("db에 닉네임이 있는지 확인 : " + nickName);
 
-            // 닉네임 중복검사
             if (nickName != null && nickName.equals(value)) {
                 result.data = "닉네임이 이미 존재합니다.";
                 result.status = false;
@@ -152,7 +146,7 @@ public class AccountController {
     public Object sendEmail(@RequestParam(required = true) final String email) {
 
         Random r = new Random();
-        int dice = r.nextInt(4589362) + 49311; // 이메일로 받는 인증코드 부분 (난수)
+        int dice = r.nextInt(4589362) + 49311;
         final BasicResponse result = new BasicResponse();
         JSONObject dummyUser = new JSONObject();
 
@@ -175,11 +169,7 @@ public class AccountController {
     public Object profile(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        System.out.println("user 이메일 : " + email);
-
         User user = userServiceImpl.getUserByEmail(email);
-
-        System.out.println("가져온 user 확인 : " + user);
 
         result.object = user;
         result.status = true;
@@ -191,30 +181,13 @@ public class AccountController {
     @PostMapping("/account/signup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody final User user) throws Exception {
-        // 이메일, 닉네임 중복처리 필수
-        // 회원가입단을 생성해 보세요.
-        System.out.println("signup up~~~~~~~~~~~~~~~~~~~~~~~~~");
-        System.out.println(user);
-
-        System.out.println(1);
-
         user.setImgURL(user.getImgURL());
         final BasicResponse result = new BasicResponse();
-
-        System.out.println("uuuuuuuuuuuuuu" + user);
-
-        System.out.println("가입하기 들어옴");
 
         User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
                 user.getComment(), user.getKeyword(), user.getImgURL());
 
-        System.out.println("====================");
-        System.out.println(puser);
-        System.out.println("====================");
-
         userServiceImpl.insertUser(puser);
-
-        System.out.println("가입하기 완료~~!!!");
         result.status = true;
         result.data = "success";
 
@@ -270,10 +243,7 @@ public class AccountController {
     @ApiOperation(value = "닉네임으로 유저 찾기")
     public Object searchMember(@RequestParam(required = true) final String nickName) throws Exception {
         final BasicResponse result = new BasicResponse();
-        System.out.println(nickName);
         List<User> list = userServiceImpl.searchMember(nickName);
-
-        System.out.println("size::::" + list.size());
 
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getNickName());
@@ -288,7 +258,6 @@ public class AccountController {
     @ApiOperation(value = "탈퇴하기")
     public Object deleteUser(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
-        System.out.println(email);
         userServiceImpl.deleteUser(email);
         result.status = true;
 

@@ -28,4 +28,9 @@ public class CommentServiceImpl implements CommentService {
         return commentDao.deleteComment(cid);
     }
 
+    @Override
+    public int getCommentNum(int reviewNum) throws Exception {
+        return commentDao.getCommentNum(reviewNum);
+    }
+
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.90:8080';
-const noticePort = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
+const noticePort = 'http://192.168.100.58:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -30,7 +30,11 @@ const UserApi = {
     apitest: () => apitest(),
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
-    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback)
+    getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
+    getReviewDetail: (data, callback) => getReviewDetail(data, callback),
+    insertComment: data => insertComment(data),
+    plusLike: (data, callback) => plusLike(data, callback),
+    cancelLike: data => cancelLike(data)
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
@@ -120,13 +124,13 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
 };
 const deletNoticeTabFollowing = (data, callback, errorCallback) => {
     axios
-        .post(`${noticePort}/request/cancel/` + data)
+        .delete(`${noticePort}/request/cancel/` + data)
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('팔로워 요청 삭제 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('팔로워 요청 삭제 실패');
             errorCallback(error);
         });
 };
@@ -429,6 +433,65 @@ const getReviewByproduct = (data, callback, errorCallback) => {
         })
         .catch(() => {
             errorCallback;
+        });
+};
+const getReviewDetail = (data, callback) => {
+    axios
+        .get(`${host}/review/show/detail`, {
+            params: {
+                email: data.email,
+                rid: data.rid
+            }
+        })
+        .then(res => {
+            console.log(res);
+            callback(res);
+        });
+};
+const insertComment = data => {
+    axios.post(`${host}/review/comment`, data).then(res => {
+        console.log(res);
+    });
+};
+const plusLike = (value, callback) => {
+    console.log(value.reviewNum);
+    console.log(value.email);
+    // axios
+    //     .post(`${host}/review/like/`, {
+    //         headers: {
+    //             'Access-Control-Allow-Origin': '*',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         params: {
+    //             rid: value.reviewNum,
+    //             email: 'dlwlgh301@gmail.com'
+    //         }
+    //     })
+    //     .then(res => {
+    //         console.log(res);
+    //     });
+    fetch(`${host}/review/like/?rid=${value.reviewNum}&email=${value.email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        callback(res);
+        console.log(res);
+    });
+};
+const cancelLike = data => {
+    console.log(data.reviewNum);
+    console.log(data.email);
+    axios
+        .delete(`${host}/review/like/cancel`, {
+            params: {
+                reviewNum: data.reviewNum,
+                email: data.email
+            }
+        })
+        .then(res => {
+            console.log(res);
         });
 };
 export default UserApi;

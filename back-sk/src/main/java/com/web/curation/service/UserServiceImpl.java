@@ -15,7 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByEmail(String email) {
-        System.out.println("service : " + email);
         return userDaoImpl.getUserByEmail(email);
     }
 
@@ -26,12 +25,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getEmail(String email) throws Exception {
-        System.out.println("here email service");
         return userDaoImpl.getEmail(email);
     }
 
     public String getNickName(String nickName) throws Exception {
-        System.out.println("here service");
         return userDaoImpl.getNickName(nickName);
     }
 
