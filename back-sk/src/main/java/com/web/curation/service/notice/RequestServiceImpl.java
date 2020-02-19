@@ -32,4 +32,9 @@ public class RequestServiceImpl implements RequestService {
     public Request getInfo(int rid) throws Exception {
         return requestDaoImpl.getInfo(rid);
     }
+
+    @Override
+    public boolean isRequest(Request request) throws Exception {
+        return requestDaoImpl.isRequest(request);
+    }
 }

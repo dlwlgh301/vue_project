@@ -47,4 +47,13 @@ public class RequestDaoImpl implements RequestDao {
         return sqlSession.selectOne("getInfo", rid);
     }
 
+    @Override
+    public boolean isRequest(Request request) throws Exception {
+        int row = sqlSession.selectOne("isRequest", request);
+        if (row > 0)
+            return true;
+        else
+            return false;
+    }
+
 }
