@@ -1,6 +1,9 @@
 import Axios from 'axios';
 
 export default {
+    setNoticeNum: (state, data) => {
+        state.noticeNum = data;
+    },
     setPageTitle: function(state, data) {
         state.pageTitle = data;
     },
