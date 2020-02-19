@@ -75,6 +75,8 @@ export default {
     name: 'TableFixed',
     data() {
         return {
+            tempsub1: '',
+            tempsub2: '',
             isTime: false,
             product: [], // 물건 리스트
             likeList: [], //찜 한거 목록 리스트
@@ -137,7 +139,6 @@ export default {
                     console.log('likeList: ', this.likeList);
 
                     for (var i = 0; i < this.likeList.length; i++) {
-                        // this.users[i].isLike = this.likeList[i];
                         this.users[i]['isLike'] = this.likeList[i];
                     }
                     console.log(this.users);
@@ -146,6 +147,9 @@ export default {
                     console.log(error);
                 }
             );
+            this.tempsub1 = this.sub1;
+            this.tempsub2 = this.sub2;
+
             this.sub1 = '';
             this.sub2 = '';
 
@@ -170,7 +174,47 @@ export default {
                     console.log(error);
                 }
             );
-            this.searchProduct();
+            this.researchProduct();
+        },
+        researchProduct() {
+            this.users = [];
+            this.isTime = true;
+            if (this.tempsub1 == '' && this.tempsub2 == '') {
+                this.keyword;
+            } else {
+                this.keyword = this.tempsub1 + ' ' + this.tempsub2;
+            }
+            this.email = sessionStorage.getItem('email');
+            let { keyword, email } = this;
+            let data = {
+                keyword,
+                email
+            };
+            ProductApi.getAPI(
+                data,
+                res => {
+                    this.users = res.data.object.list;
+                    console.log('user: ', this.users);
+                    this.likeList = res.data.object.likeCheckList;
+                    console.log('likeList: ', this.likeList);
+
+                    for (var i = 0; i < this.likeList.length; i++) {
+                        this.users[i]['isLike'] = this.likeList[i];
+                    }
+                    console.log(this.users);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.tempsub1 = this.sub1;
+            this.tempsub2 = this.sub2;
+
+            this.sub1 = '';
+            this.sub2 = '';
+
+            console.log('user ==>');
+            console.log(this.users);
         },
         deleteProduct(name) {
             var data = {
@@ -187,6 +231,7 @@ export default {
                     console.log(error);
                 }
             );
+            this.searchProduct();
         }
     },
     create() {

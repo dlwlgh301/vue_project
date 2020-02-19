@@ -4,7 +4,7 @@ const host = 'http://192.168.100.90:8080';
 // const noticePort = 'http://172.30.1.54:8080';
 const UserApi = {
     getAPI: (data, callback, errorCallback) => getAPI(data, callback, errorCallback),
-    getProductListByEmail: (data, callback, errorCallback) => getProductListByEmail(data, callback, errorCallback),
+    getProductListInterest: (data, callback, errorCallback) => getProductListInterest(data, callback, errorCallback),
     addBookmark: (data, callback, errorCallback) => addBookmark(data, callback, errorCallback),
     deleteBookmark: (data, callback, errorCallback) => deleteBookmark(data, callback, errorCallback)
 };
@@ -21,9 +21,9 @@ const getAPI = (data, callback, errorCallback) => {
             errorCallback(error);
         });
 };
-const getProductListByEmail = (data, callback, errorCallback) => {
+const getProductListInterest = (data, callback, errorCallback) => {
     axios
-        .get(`${host}/product/getProductListByEmail?email=` + data['email'])
+        .get(`${host}/bookmark/getBookmarkList?email=` + data['email'])
         .then(res => {
             console.log('상품 가져오기 성공');
             callback(res);

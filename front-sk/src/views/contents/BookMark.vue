@@ -69,6 +69,7 @@
         </md-table>
     </div>
 </template>
+
 <script>
 import ProductApi from '../../apis/ProductApi';
 export default {
@@ -187,10 +188,25 @@ export default {
                     console.log(error);
                 }
             );
+            this.searchProduct();
         }
     },
-    create() {
+    mounted() {
         this.email = sessionStorage.getItem('email');
+        ProductApi.getProductListInterest(
+            this.email,
+            res => {
+                this.users = res.data.object.list;
+                console.log('user: ', this.users);
+                this.likeList = res.data.object.likeCheckList;
+                console.log('likeList: ', this.likeList);
+
+                console.log(this.users);
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 };
 </script>
