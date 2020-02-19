@@ -37,4 +37,9 @@ public class CommentDaoImpl implements CommentDao {
             return false;
     }
 
+    @Override
+    public int getCommentNum(int reviewNum) throws Exception {
+        return sqlSession.selectOne("getCommentNum", reviewNum);
+    }
+
 }
