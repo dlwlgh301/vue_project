@@ -88,12 +88,13 @@ public class BookmarkController {
         System.out.println("getProductListByEmail~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
         System.out.println("받아온 email : " + email);
 
-        List<Product> list = new ArrayList<>();
+        List<Bookmark> list = new ArrayList<>();
         List<Boolean> likeCheckList = new ArrayList<>();
         list = bookmarkServiceImpl.getBookmarkListByEmail(email);
 
         for (int i = 0; i < list.size(); i++) {
-            if (bookmarkServiceImpl.likeCheck(new Bookmark(email, list.get(i).getProductName())) > 0) {
+            if (bookmarkServiceImpl.likeCheck(new Bookmark(email, list.get(i).getProductName(), list.get(i).getLink(),
+                    list.get(i).getImage(), list.get(i).getPrice())) > 0) {
                 likeCheckList.add(true);
             } else {
                 likeCheckList.add(false);
@@ -119,9 +120,10 @@ public class BookmarkController {
 
         System.out.println("addProduct~~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!");
         System.out.println("받아온 email : " + bm.getEmail());
-        System.out.println("받아온 productName : " + bm.getProductName());
+        System.out.println("받아온 product : " + bm);
 
-        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName());
+        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName(), bm.getLink(), bm.getImage(),
+                bm.getPrice());
 
         bookmarkServiceImpl.addBookmark(bookmark);
 
@@ -143,7 +145,8 @@ public class BookmarkController {
         System.out.println("받아온 email : " + bm.getEmail());
         System.out.println("받아온 productName : " + bm.getProductName());
 
-        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName());
+        Bookmark bookmark = new Bookmark(bm.getEmail(), bm.getProductName(), bm.getLink(), bm.getImage(),
+                bm.getPrice());
 
         bookmarkServiceImpl.deleteBookmark(bookmark);
 

@@ -31,13 +31,16 @@
                                     required
                                     class="search-box"
                                     placeholder="User 검색"
+                                    @focus="serchBoxFocus"
+                                    @blur="searchBoxNotFoucs"
                                 />
                             </form>
                         </div>
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
                         <!-- <md-icon>search</md-icon> -->
-                        <center v-model="user" style="position : fixed; z-index: 1;">
-                            <md-list class="md-triple-line" style=" margin-top: 25px; width:17rem; text-align: center; vertical-align: middle;">
+
+                        <center v-model="user" class="UserAutoList" v-show="flag">
+                            <md-list class="md-triple-line" style="padding:0px; width:17rem; text-align: center; vertical-align: middle;">
                                 <div v-for="(item, index) in member" v-bind:key="index">
                                     <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
                                         <md-avatar>
@@ -148,6 +151,20 @@ https://randomuser.me/api/portraits/men/78.jpg
 </template>
 
 <style>
+.UserAutoList {
+    overflow-y: scroll;
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    z-index: -99;
+    ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.UserAutoList::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
 .search-box,
 .close-icon,
 .search-wrapper {
@@ -233,10 +250,17 @@ export default {
             items: [
                 { title: 'Home', icon: 'dashboard' },
                 { title: 'About', icon: 'question_answer' }
-            ]
+            ],
+            flag: false
         };
     },
     methods: {
+        serchBoxFocus() {
+            this.flag = true;
+        },
+        searchBoxNotFoucs() {
+            this.flag = false;
+        },
         getKeyword() {
             console.log(this.user);
         },

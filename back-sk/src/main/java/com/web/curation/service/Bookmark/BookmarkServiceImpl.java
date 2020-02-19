@@ -27,7 +27,8 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public List<Product> getBookmarkListByEmail(String email) throws Exception {
+    public List<Bookmark> getBookmarkListByEmail(String email) throws Exception {
+        System.out.println("service : getBookmarkListByEmail");
         return bookmarkDao.getBookmarkListByEmail(email);
     }
 
