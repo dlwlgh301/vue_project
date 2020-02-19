@@ -11,4 +11,6 @@ public interface CommentDao {
     List<Comment> getComment(int reviewNum) throws Exception;
 
     boolean deleteComment(int cid) throws Exception;
+
+    int getCommentNum(int reviewNum) throws Exception;
 }

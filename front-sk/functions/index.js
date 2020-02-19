@@ -25,48 +25,47 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
     res.redirect(303, snapshot.ref.toString());
 });
 
-exports.notice = functions.firestore
-    .document('/notices/{notice}')
-    .onCreate((context, change) => {
-        console.log('시작');
+exports.notice = functions.firestore.document('/notices/{notice}').onCreate((context, change) => {
+    console.log('시작');
 
-        admin
-            .firestore()
-            .collection('tokens')
-            .doc(context.data().receiver)
-            .get()
-            .then(res => {
-                let messageInfo = {
-                    data: {
-                        msg: context.data().msg
-                    },
-                    token: res.data().token
-                };
+    admin
+        .firestore()
+        .collection('tokens')
+        .doc(context.data().receiver)
+        .get()
+        .then(res => {
+            let messageInfo = {
+                data: {
+                    msg: context.data().msg,
+                    img: context.data().img
+                },
+                token: res.data().token
+            };
 
-                const sendCase = admin.messaging();
+            const sendCase = admin.messaging();
 
-                sendCase
-                    .send(messageInfo)
-                    .then(res => {
-                        console.log('성공');
-                        console.log(res);
-                        return res;
-                    })
-                    .catch(err => {
-                        console.log('실패');
-                        console.log(err);
-                        throw err;
-                    });
-                return true;
-            })
-            .catch(error => {
-                throw error;
-            });
-        console.log('end');
+            sendCase
+                .send(messageInfo)
+                .then(res => {
+                    console.log('성공');
+                    console.log(res);
+                    return res;
+                })
+                .catch(err => {
+                    console.log('실패');
+                    console.log(err);
+                    throw err;
+                });
+            return true;
+        })
+        .catch(error => {
+            throw error;
+        });
+    console.log('end');
 
-        // const snapshot = admin
-        //     .database()
-        //     .ref('/messages')
-        //     .push({ original: 'who 어디에 댓글', text: context.data().msg });
-        return true;
-    });
+    // const snapshot = admin
+    //     .database()
+    //     .ref('/messages')
+    //     .push({ original: 'who 어디에 댓글', text: context.data().msg });
+    return true;
+});

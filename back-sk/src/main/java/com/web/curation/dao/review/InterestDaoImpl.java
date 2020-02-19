@@ -38,7 +38,7 @@ public class InterestDaoImpl implements InterestDao {
 
     @Override
     public boolean isInterest(Interest interest) throws Exception {
-        int row = sqlSession.delete("isInterest", interest);
+        int row = sqlSession.selectOne("isInterest", interest);
         if (row > 0)
             return true;
         else

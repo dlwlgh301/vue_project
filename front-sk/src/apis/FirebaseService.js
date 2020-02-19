@@ -64,7 +64,7 @@ messaging.onMessage(payload => {
 
     store.state.noticeNum += 1;
     console.log('test:' + store.state.noticeNum);
-    // alert('포그라운드 왜안되냐고오오오오옹오오ㅃㄸ!!@#오!!!!');
+    alert('포그라운드 왜안되냐고오오오오옹오오ㅃㄸ!!@#오!!!!');
     // var title = '포그라운드 알림';
     // var options = {
     //     body: payload.data.msg

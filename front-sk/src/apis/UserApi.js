@@ -31,7 +31,10 @@ const UserApi = {
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
-    getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
+    getReviewDetail: (data, callback) => getReviewDetail(data, callback),
+    insertComment: data => insertComment(data),
+    plusLike: (data, callback) => plusLike(data, callback),
+    cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
     myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
     insertComment: data => insertComment(data)
@@ -148,13 +151,13 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
 };
 const deletNoticeTabFollowing = (data, callback, errorCallback) => {
     axios
-        .post(`${noticePort}/request/cancel/` + data)
+        .delete(`${noticePort}/request/cancel/` + data)
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('팔로워 요청 삭제 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('팔로워 요청 삭제 실패');
             errorCallback(error);
         });
 };
@@ -459,7 +462,7 @@ const getReviewByproduct = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const getReviewDetail = (data, callback, errorCallback) => {
+const getReviewDetail = (data, callback) => {
     axios
         .get(`${host}/review/show/detail`, {
             params: {
@@ -470,15 +473,52 @@ const getReviewDetail = (data, callback, errorCallback) => {
         .then(res => {
             console.log(res);
             callback(res);
-        })
-        .catch(error => {
-            console.log(error);
-            errorCallback(error);
         });
 };
 const insertComment = data => {
     axios.post(`${host}/review/comment`, data).then(res => {
         console.log(res);
     });
+};
+const plusLike = (value, callback) => {
+    console.log(value.reviewNum);
+    console.log(value.email);
+    // axios
+    //     .post(`${host}/review/like/`, {
+    //         headers: {
+    //             'Access-Control-Allow-Origin': '*',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         params: {
+    //             rid: value.reviewNum,
+    //             email: 'dlwlgh301@gmail.com'
+    //         }
+    //     })
+    //     .then(res => {
+    //         console.log(res);
+    //     });
+    fetch(`${host}/review/like/?rid=${value.reviewNum}&email=${value.email}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        callback(res);
+        console.log(res);
+    });
+};
+const cancelLike = data => {
+    console.log(data.reviewNum);
+    console.log(data.email);
+    axios
+        .delete(`${host}/review/like/cancel`, {
+            params: {
+                reviewNum: data.reviewNum,
+                email: data.email
+            }
+        })
+        .then(res => {
+            console.log(res);
+        });
 };
 export default UserApi;
