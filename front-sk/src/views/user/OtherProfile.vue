@@ -213,9 +213,14 @@ export default {
                         });
                     } else {
                         this.myboard = res.data.object;
+
                         // alert(info.email);
                         console.log(res.data.status);
-                        console.log('게시물 ------->', res);
+                        if (res.data.data == 'none') {
+                            this.myBoard.length = 0;
+                        }
+                        if (this.myboard == null) this.myBoard.length = 0;
+                        console.log('myboard', this.myboard);
                     }
                 },
                 error => {
