@@ -215,11 +215,7 @@ export default {
 
             var images = this.images;
             console.log(images + 'vue 부분');
-<<<<<<< HEAD
             var productName = this.productName;
-=======
-            var productName = '카메라';
->>>>>>> 05a383ccdcd88513a2059b2f2c8ef679a40f4d02
             var email = this.email;
             var review = {
                 email: email,
