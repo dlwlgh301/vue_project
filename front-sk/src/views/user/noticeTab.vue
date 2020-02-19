@@ -218,7 +218,7 @@ export default {
         deleteFollow(idx, rid) {
             this.follow_items[idx].is_following = !this.follow_items[idx].is_following;
             let data = rid;
-            UserApi.noticeTabFollowing(
+            UserApi.deletNoticeTabFollowing(
                 data,
                 res => {
                     console.log(res.status);
