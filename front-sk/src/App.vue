@@ -122,10 +122,25 @@ https://randomuser.me/api/portraits/men/78.jpg
                         <router-link to="/contents/FollowingPage">
                             <v-list-item>
                                 <v-list-item-icon>
-                                    <v-icon>shopping_cart</v-icon>
+                                    <i class="material-icons">
+                                        accessibility
+                                    </i>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>팔로잉 페이지</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+
+                        <router-link to="/contents/FollowingPage">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <i class="material-icons">
+                                        favorite
+                                    </i>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>좋아요 페이지</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>

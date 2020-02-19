@@ -8,7 +8,7 @@
                             <img :src="getImgUrl(n.review.imgURL)" />
                         </md-avatar>
                         <v-list-item-content>
-                            <v-list-item-title class="headline">{{ n.review.nickName }}</v-list-item-title>
+                            <v-list-item-title class="headline" @click="goOtherpage(n.review.email)">{{ n.review.nickName }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
@@ -82,6 +82,10 @@ export default {
         };
     },
     methods: {
+        goOtherpage(e) {
+            if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
+            else this.$router.push('/user/OtherProfile/' + e);
+        },
         logout() {
             Kakao.Auth.logout();
             Kakao.Auth.setAccessToken('', false);

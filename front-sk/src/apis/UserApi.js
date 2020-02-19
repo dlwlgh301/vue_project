@@ -36,8 +36,7 @@ const UserApi = {
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
-    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
-    insertComment: data => insertComment(data)
+    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback)
 };
 const myFollowingBoard = (data, callback, errorCallback) => {
     axios
