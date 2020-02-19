@@ -23,33 +23,25 @@ const getAPI = (data, callback, errorCallback) => {
 };
 const getProductListInterest = (data, callback, errorCallback) => {
     axios
-        .get(`${host}/bookmark/getBookmarkList?email=` + data['email'])
+        .get(`${host}/bookmark/getBookmarkList?email=` + data)
         .then(res => {
-            console.log('상품 가져오기 성공');
+            console.log('찜목록 가져오기 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('상품 가져오기 실패');
+            console.log('찜목록 가져오기 실패');
             errorCallback(error);
         });
 };
 const addBookmark = (body, callback, errorCallback) => {
-    // alert(data['email'] + ' ' + data['productName']);
-    // axios
-    //     .post(`${host}/bookmark/addProduct?email=` + data['email'] + '&productName=' + data['productName'])
-    //     .then(res => {
-    //         console.log('상품 추가하기성공~');
-    //         callback(res);
-    //     })
-    //     .catch(error => {
-    //         console.log('상품 추가하기 실패ㅜㅜ');
-    //         errorCallback(error);
-    //     });
     var value = {
         email: body.email,
-        productName: body.productName
+        productName: body.productName,
+        link: body.link,
+        image: body.image,
+        price: body.price
     };
-    alert(value.email + ' ' + value.productName);
+
     axios({
         url: `${host}/bookmark/addProduct`,
         method: 'post',
@@ -68,12 +60,14 @@ const addBookmark = (body, callback, errorCallback) => {
 const deleteBookmark = (body, callback, errorCallback) => {
     var value = {
         email: body.email,
-        productName: body.productName
+        productName: body.productName,
+        link: body.link,
+        image: body.image,
+        price: body.price
     };
-    alert(value.email + ' ' + value.productName);
     axios({
         url: `${host}/bookmark/deleteProduct`,
-        method: 'post',
+        method: 'delete',
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
     })

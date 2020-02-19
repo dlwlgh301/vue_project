@@ -24,11 +24,11 @@
                     <div class="profile2-stats">
                         <ul>
                             <li><span class="profile2-stat-count">164</span> posts</li>
-                            <li>
-                                <span class="profile2-stat-count" @click="showDialog = true">{{ followList.length }}</span> followers
+                            <li @click="showDialog = true">
+                                <span class="profile2-stat-count">{{ followList.length }}</span> followers
                             </li>
-                            <li>
-                                <span class="profile2-stat-count" @click="followerDialog = true">{{ followingList.length }}</span> following
+                            <li @click="followerDialog = true">
+                                <span class="profile2-stat-count">{{ followingList.length }}</span> following
                             </li>
                         </ul>
                     </div>

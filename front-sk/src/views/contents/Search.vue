@@ -46,6 +46,9 @@
             <div style="text-align:center;" v-if="users.length == 0 && isTime">
                 <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
             </div>
+            <md-table-toolbar>
+                <h1 class="md-title">상품</h1>
+            </md-table-toolbar>
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!-- <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
                 <!-- <td><img v-bind:src="item.image" /></td> -->
@@ -57,11 +60,11 @@
                 <!-- <md-table-cell md-label="Link" md-sort-by="link">{{ item.link }}</md-table-cell> -->
                 <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
                 <md-table-cell md-sort-by="Like" md-label="Like" width="10%">
-                    <md-button @click="addProduct(item.productName)" class="md-icon-button md-list-action" v-show="!item.isLike">
+                    <md-button @click="addProduct(item)" class="md-icon-button md-list-action" v-show="!item.isLike">
                         <md-icon class="md-primary">star_border</md-icon>
                     </md-button>
 
-                    <md-button @click="deleteProduct(item.productName)" class="md-icon-button md-list-action" v-show="item.isLike">
+                    <md-button @click="deleteProduct(item)" class="md-icon-button md-list-action" v-show="item.isLike">
                         <md-icon class="md-primary">star</md-icon>
                     </md-button>
                 </md-table-cell>
@@ -159,10 +162,15 @@ export default {
         getImgUrl(pic) {
             return require('../../assets/images/' + pic);
         },
-        addProduct(name) {
+        addProduct(item) {
+            console.log('item : ', item.productName);
+
             var data = {
                 email: this.email,
-                productName: name
+                productName: item.productName,
+                link: item.link,
+                image: item.image,
+                price: item.price
             };
 
             ProductApi.addBookmark(
@@ -216,12 +224,14 @@ export default {
             console.log('user ==>');
             console.log(this.users);
         },
-        deleteProduct(name) {
+        deleteProduct(item) {
             var data = {
                 email: this.email,
-                productName: name
+                productName: item.productName,
+                link: item.link,
+                image: item.image,
+                price: item.price
             };
-
             ProductApi.deleteBookmark(
                 data,
                 res => {

@@ -16,7 +16,9 @@
 
                     <div class="profile2-user-settings">
                         <h1 class="profile2-user-name">{{ info.name }}</h1>
-                        <button style="background-color: #2589cc" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="!isfollowing">팔로우</button>
+                        <button style="background-color: #2589cc" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="!isfollowing">
+                            팔로우
+                        </button>
 
                         <button style="background-color: rgb(52, 207, 122)" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="isfollowing">
                             <div class="icon-ok"></div>
@@ -27,18 +29,19 @@
                     <div class="profile2-stats">
                         <ul>
                             <li><span class="profile2-stat-count">164</span> posts</li>
-                            <li>
-                                <span class="profile2-stat-count" @click="showDialog = true">{{ followList.length }}</span> followers
+                            <li @click="showDialog = true">
+                                <span class="profile2-stat-count">{{ followList.length }}</span> followers
                             </li>
-                            <li>
-                                <span class="profile2-stat-count" @click="followerDialog = true">{{ followingList.length }}</span> following
+                            <li @click="followerDialog = true">
+                                <span class="profile2-stat-count">{{ followingList.length }}</span> following
                             </li>
                         </ul>
                     </div>
 
                     <div class="profile2-bio">
                         <p style="padding-right:50px">
-                            <span class="profile2-real-name">{{ info.nickName }}</span> <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
+                            <span class="profile2-real-name">{{ info.nickName }}</span>
+                            <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
                         </p>
                     </div>
                 </div>
@@ -168,11 +171,11 @@
                                 <span style="cursor : pointer" @click="goOtherpage(item.follower)">
                                     {{ item.followernickName }}
                                 </span>
-                                <div class="myfollowList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == false">
+                                <div class="myfollowList" v-show="followCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
                                 </div>
-                                <div class="myfollowingList" @click="FollowListBtnCheck(index)" v-show="followCheck[index] == true">
+                                <div class="myfollowingList" v-show="followCheck[index] == true">
                                     <div class="icon-ok"></div>
                                     팔로잉
                                 </div>
