@@ -62,7 +62,9 @@ messaging.onTokenRefresh(() => {
 messaging.onMessage(payload => {
     console.log('Message received. ', payload);
 
-    this.$store.commit('setNoticeNum', store.state.noticeNum + 1);
+    store.state.noticeNum += 1;
+
+    // this.$store.commit('setNoticeNum', store.state.noticeNum + 1);
     console.log('포그라운드 알림: ' + payload);
     console.log('test:' + store.state.noticeNum);
     // alert('포그라운드 왜안되냐고오오오오옹오오ㅃㄸ!!@#오!!!!');
