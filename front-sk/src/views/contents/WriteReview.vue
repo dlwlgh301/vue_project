@@ -1,6 +1,6 @@
 <template>
     <div class="wrapC">
-        <div class="wrap" style="margin-top: 19%">
+        <div class="wrap" style="margin-top: 10%">
             <h1>글 쓰기</h1>
             <div class="quest" style="padding-top:5%">
                 이 제품이 어울리는 사람을 골라주세요
@@ -61,6 +61,20 @@
                     type="text"
                 />
                 <label for="title">제목</label>
+                <div class="error-text" v-if="error.title">{{ error.title }}</div>
+            </div>
+            <div class="input-with-label">
+                <input
+                    v-model="productName"
+                    v-bind:class="{
+                        error: error.productName,
+                        complete: !error.productName && productName.length !== 0
+                    }"
+                    id="productName"
+                    placeholder="제품을 입력해 주세요."
+                    type="text"
+                />
+                <label for="product">제품</label>
                 <div class="error-text" v-if="error.title">{{ error.title }}</div>
             </div>
             <div class="wrap" id="score">
@@ -167,6 +181,9 @@ export default {
         title: function() {
             this.checkForm();
         },
+        productName: function() {
+            this.checkForm();
+        },
         content: function(value) {
             let length = this.maxLength;
             value = value.length > length ? value.substr(0, length) : value;
@@ -198,7 +215,7 @@ export default {
             /*    console.log(this.fileList);
             console.log(this.keyword);
             let test = new FormData();
-            test.append('File', this.fileList[0]); 
+            test.append('File', this.fileList[0]);
             console.log(test);*/
             for (var i = 0; i < this.fileList.length; i++) {
                 this.images += this.fileList[i].raw.name + ',';
@@ -252,10 +269,18 @@ export default {
                 this.error.title = false;
                 this.error.submit = false;
             }
+            if (this.productName.length == 0) {
+                this.error.submit = true;
+                this.error.productName = '';
+            } else if (this.productName.length === 0) this.error.productName = '제품을 입력해주세요';
+            else {
+                this.error.productName = false;
+                this.error.submit = false;
+            }
             if (this.content.length == 0) {
                 this.error.submit = true;
                 this.error.content = '';
-            } else if (this.content.length === 0) this.error.content = '제목을 입력해주세요';
+            } else if (this.content.length === 0) this.error.content = '후기를 입력해주세요';
             else {
                 this.error.content = false;
                 this.error.submit = false;
