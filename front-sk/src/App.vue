@@ -62,8 +62,8 @@
                         <md-icon>exit_to_app</md-icon>
                     </md-button>
                     <md-button class="md-icon-button" @click="refreshNotice">
-                        <v-badge color="#009FF4" v-model="$store.state.noticeNum" overlap>
-                            <span slot="badge" v-if="$store.state.noticeNum" v-text="Number($store.state.noticeNum)"></span>
+                        <v-badge color="#009FF4" v-model="noticeNum" overlap>
+                            <span slot="badge" v-if="noticeNum" v-text="Number(noticeNum)"></span>
                             <md-icon style="color: #009FF4 ;">notifications</md-icon>
                         </v-badge>
                     </md-button>
@@ -71,14 +71,16 @@
                 <v-navigation-drawer v-model="drawer" fixed temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img
+                            <v-img v-bind:src="'http://192.168.100.90:8080/image/' + img" alt />
+
+                            <!-- <v-img
                                 src="https://randomuser.me/api/portraits/men/78.jpg(5 kB)
 https://randomuser.me/api/portraits/men/78.jpg
 "
-                            ></v-img>
+                            ></v-img> -->
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title>nickName</v-list-item-title>
+                            <v-list-item-title>{{ nickName }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
@@ -136,7 +138,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                             </v-list-item>
                         </router-link>
 
-                        <router-link to="/contents/FollowingPage">
+                        <router-link to="/contents/Like">
                             <v-list-item>
                                 <v-list-item-icon>
                                     <i class="material-icons">
@@ -159,7 +161,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
-                        <v-list-item v-on:click="logout()">
+                        <v-list-item @click="logout()">
                             <v-list-item-icon>
                                 <md-icon>exit_to_app</md-icon>
                             </v-list-item-icon>
@@ -253,12 +255,16 @@ import './assets/css/components.scss';
 import UserApi from './apis/UserApi';
 import firebase from './apis/FirebaseService';
 import Kakao from './kakao';
+
+import { mapState } from 'vuex';
+
 export default {
     name: 'app',
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
         console.log(this.$store.state.pageTitle);
         if (sessionStorage.getItem('email') != null) this.getNotice();
+
         // setInterval(function() {
         // this.loadNoticeNum();
         // }, 2000);
@@ -268,6 +274,8 @@ export default {
     },
     data: () => {
         return {
+            img: '',
+            nickName: '',
             member: [],
             hide: true,
             route: '',
@@ -277,7 +285,9 @@ export default {
                 { title: 'Home', icon: 'dashboard' },
                 { title: 'About', icon: 'question_answer' }
             ],
-            flag: false
+            flag: false,
+            // noticeNum: 0
+            num: 0
         };
     },
     methods: {
@@ -307,8 +317,8 @@ export default {
             UserApi.requestNoticeNum(
                 data,
                 res => {
-                    console.log(res.data);
-                    this.$store.state.noticeNum = res.data.object.num;
+                    this.num = res.data.object.num;
+                    console.log(this.num);
                 },
                 error => {
                     console.log(error);
@@ -316,7 +326,8 @@ export default {
             );
         },
         refreshNotice: function() {
-            this.$store.state.noticeNum = 0;
+            // this.$store.state.noticeNum = 0;
+            this.$store.commit('setNoticeNum', 0);
             if (sessionStorage.getItem('email')) {
                 this.$router.push('/user/noticeTab');
             }
@@ -330,14 +341,25 @@ export default {
         }
     },
     mounted() {
+        this.img = sessionStorage.getItem('imgURL');
+        this.nickName = sessionStorage.getItem('nickName');
+
         this.route = this.$router;
     },
     computed: {
+        ...mapState({
+            noticeNum: state => state.noticeNum
+        }),
         checkNoticeNum() {
             return this.noticeNum;
         }
     },
     watch: {
+        noticeNum: function(newValue, oldValue) {
+            // this.noticeNum = this.$store.state.noticeNum;
+            console.log('NEW: ', newValue);
+            console.log('OLD: ', oldValue);
+        },
         user: function(user) {
             if (user == '') {
                 this.member = [];

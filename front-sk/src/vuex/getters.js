@@ -1,1 +1,3 @@
-export default {};
+export default {
+    getNoticeNum: state => state.noticeNum
+};

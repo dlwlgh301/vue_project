@@ -1,6 +1,9 @@
 import Axios from 'axios';
 
 export default {
+    setNoticeNum: (state, data) => {
+        state.noticeNum = data;
+    },
     setPageTitle: function(state, data) {
         state.pageTitle = data;
     },
@@ -20,7 +23,7 @@ export default {
         }
     },
     loginCheck: function(state) {
-        Axios.get('http://192.168.100.58:8080/auth/check', {
+        Axios.get('http://192.168.100.90:8080/auth/check', {
             headers: {
                 'x-access-token': state.token
             }

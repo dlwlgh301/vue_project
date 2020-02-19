@@ -201,14 +201,15 @@ export default {
                             });
                         } else {
                             console.log(res.data.status);
-                            this.keyword = res.data.keyword;
-                            this.imgURL = res.data.imgURL;
-                            this.nickName = res.data.nickName;
+                            this.keyword = res.data.object.keyword;
+                            this.imgURL = res.data.object.imgURL;
+                            this.nickName = res.data.object.nickName;
                             sessionStorage.setItem('keyword', this.keyword);
                             sessionStorage.setItem('imgURL', this.imgURL);
                             sessionStorage.setItem('nickName', this.nickName);
                             sessionStorage.setItem('email', this.email);
-
+                            // console.log('imgURL : ', this.imgURL);
+                            // console.log('nickName : ', this.nickName);
                             this.getNotice();
 
                             // this.$router.push('/main');

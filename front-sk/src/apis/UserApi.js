@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.58:8080';
-const noticePort = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
+const noticePort = 'http://192.168.100.90:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -37,7 +37,8 @@ const UserApi = {
     cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
     myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
-    deleteReview: data => deleteReview(data)
+    deleteReview: data => deleteReview(data),
+    myLikeBoard: (data, callback, errorCallback) => myLikeBoard(data, callback, errorCallback)
 };
 const myFollowingBoard = (data, callback, errorCallback) => {
     axios
@@ -48,6 +49,18 @@ const myFollowingBoard = (data, callback, errorCallback) => {
         })
         .catch(error => {
             console.log('팔로잉게시물 가져오기 실패!');
+            errorCallback(error);
+        });
+};
+const myLikeBoard = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/mylike?email=` + data)
+        .then(res => {
+            console.log('좋아요게시물 가져오기 성공!');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('좋아요게시물 가져오기 실패!');
             errorCallback(error);
         });
 };
