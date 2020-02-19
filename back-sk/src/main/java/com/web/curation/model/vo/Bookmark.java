@@ -18,9 +18,21 @@ public class Bookmark {
     private int bid;
     private String email;
     private String productName;
+    private String link;
+    private String image;
+    private int price;
 
-    public Bookmark(String email, String productName) {
+    public Bookmark(String email, String productName, String link, String image, int price) {
         this.email = email;
         this.productName = productName;
+        this.link = link;
+        this.image = image;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Bookmark [email=" + email + ", image=" + image + ", link=" + link + ", price=" + price
+                + ", productName=" + productName + "]";
     }
 }

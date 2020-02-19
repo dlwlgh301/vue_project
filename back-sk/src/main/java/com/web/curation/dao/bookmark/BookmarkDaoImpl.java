@@ -27,7 +27,8 @@ public class BookmarkDaoImpl implements BookmarkDao {
     }
 
     @Override
-    public List<Product> getBookmarkListByEmail(String email) throws Exception {
+    public List<Bookmark> getBookmarkListByEmail(String email) throws Exception {
+        System.out.println("dao : getBookmarkListByEmail");
         return sqlSession.selectList("getBookmarkListByEmail", email);
     }
 

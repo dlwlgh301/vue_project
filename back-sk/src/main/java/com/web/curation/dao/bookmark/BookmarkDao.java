@@ -11,7 +11,7 @@ public interface BookmarkDao {
 
     int deleteBookmark(Bookmark bookmark) throws Exception;
 
-    List<Product> getBookmarkListByEmail(String email) throws Exception;
+    List<Bookmark> getBookmarkListByEmail(String email) throws Exception;
 
     int likeCheck(Bookmark bookmark) throws Exception;
 }
