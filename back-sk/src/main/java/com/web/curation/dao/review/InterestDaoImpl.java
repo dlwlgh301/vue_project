@@ -47,6 +47,6 @@ public class InterestDaoImpl implements InterestDao {
 
     @Override
     public List<Interest> getMyInterest(String email) throws Exception {
-        return sqlSession.selectList("statement", email);
+        return sqlSession.selectList("getMyInterest", email);
     }
 }
