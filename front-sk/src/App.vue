@@ -303,12 +303,17 @@ export default {
         goOtherpage(e) {
             this.user = '';
             this.member = [];
+
+            console.log("asdasdasdasdassad~~~~~~~~~~~~~~~~~~~~~`");
+            console.log(this.$route.params);
+
             if (e == sessionStorage.getItem('email')) {
                 this.member = [];
                 this.$router.push('/user/profile');
             } else {
                 this.member = [];
-                this.$router.replace('/user/OtherProfile/' + e);
+
+                this.$router.push('/user/OtherProfile/' + e);
             }
         },
         getNotice() {
