@@ -1,7 +1,7 @@
 <template>
     <v-container style="width:100%;">
         <v-row>
-            <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
+            <v-col v-for="(n, index) in data" :key="index" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
                         <md-avatar>
@@ -13,8 +13,9 @@
                     </v-list-item>
 
                     <v-img height="250" :src="getImgUrl(n.img[0])" style="margin-bottom:0.5rem"></v-img>
-                    <md-button class="md-icon-button" @click="toggle(index)">
-                        <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
+
+                    <md-button class="md-icon-button" @click="toggle(n.interest, n.review.rid, index)">
+                        <md-icon v-if="n.interest" class="md-accent">favorite</md-icon>
                         <md-icon v-else>favorite_border</md-icon>
                     </md-button>
                     <md-button class="md-icon-button" @click="detail(n.review.rid)">
@@ -27,7 +28,7 @@
                         <v-row align="center" class="mx-0">
                             <v-rating :value="n.review.score" color="amber" dense half-increments readonly size="14"></v-rating>
 
-                            <div class="grey--text ml-4" v-bind="rating"></div>
+                            <div class="grey--text ml-4">({{ n.review.score }})</div>
                         </v-row>
 
                         <!--<div class="my-4 subtitle-1 black--text">카페</div>-->
@@ -52,9 +53,10 @@ export default {
             email,
             res => {
                 this.data = res.data.object;
-                this.favorite = res.data.interest;
+                this.favorite = res.data.object[0].interest;
                 console.log(this.data);
                 console.log('입력완료');
+                console.log(this.favorite);
             },
             error => {
                 console.log(error);
@@ -76,7 +78,7 @@ export default {
             photo: '',
             keyword2: '',
             like: '',
-            favorite: false
+            favorite: []
         };
     },
     methods: {
@@ -90,11 +92,56 @@ export default {
             Kakao.Auth.cleanup();
             this.$router.push('/');
         },
-        toggle() {
-            if (this.favorite) {
-                this.favorite = false;
+        toggle(interest, rid, index) {
+            var email = sessionStorage.getItem('email');
+
+            this.data[index].interest = !this.data[index].interest;
+
+            if (interest) {
+                var cancel = {
+                    reviewNum: rid,
+                    email: email
+                };
+                // interest = !interest;
+                UserApi.cancelLike(cancel);
+
+                UserApi.requestReview(
+                    email,
+                    res => {
+                        // this.data = res.data.object;
+                        this.favorite = res.data.object[0].interest;
+                        console.log(this.data);
+                        console.log('입력완료');
+                        console.log(this.favorite);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
             } else {
-                this.favorite = true;
+                var like = {
+                    reviewNum: rid,
+                    email: email
+                };
+                // interest = !interest;
+                console.log(like);
+                UserApi.plusLike(like, res => {
+                    console.log(res);
+                });
+
+                UserApi.requestReview(
+                    email,
+                    res => {
+                        // this.data = res.data.object;
+                        this.favorite = res.data.object[0].interest;
+                        console.log(this.data);
+                        console.log('입력완료');
+                        console.log(this.favorite);
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
             }
         },
         detail(rid) {

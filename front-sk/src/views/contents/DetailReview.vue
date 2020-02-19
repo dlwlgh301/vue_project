@@ -6,7 +6,7 @@
                 <md-card style="height:550px; z-index:0 ">
                     <md-card-header>
                         <md-avatar>
-                            <md-icon>account_circle</md-icon>
+                            <img :src="getImgUrl(review.imgURL)" />
                         </md-avatar>
                         <div class="md-title">{{ review.nickName }}</div>
                         <div class="md-subhead">{{ review.productName }}</div>
@@ -22,7 +22,7 @@
                             delimiter-icon="mdi-minus"
                             height="300"
                         >
-                            <v-carousel-item v-for="i in imgs" :key="i" :src="getImgUrl(i)">
+                            <v-carousel-item v-for="(img, index) in imgs" :key="index" :src="getImgUrl(img)">
                                 <v-img height="250"></v-img>
                             </v-carousel-item>
                         </v-carousel>
@@ -35,9 +35,9 @@
                     <md-card-content style="padding-top:0.3rem">
                         <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
                     </md-card-content>
-                    <md-card-content style="padding-top:0">{{ review.content }}</md-card-content>
+                    <md-card-content style="padding-top:0; overflow: auto;">{{ review.content }}</md-card-content>
                     <div style="margin-left:0.5rem;">
-                        <el-tag v-for="i in mtags" :key="i" style="margin-left:0.5rem">{{ i }} </el-tag>
+                        <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }} </el-tag>
                     </div>
                 </md-card>
             </div>
@@ -45,7 +45,7 @@
                 <md-card style="height:550px; z-index:0">
                     <md-subheader>댓글</md-subheader>
                     <md-list class="md-double-line md-scrollbar" style="height:400px; overflow: auto;">
-                        <div v-for="comment in viewcomment" :key="comment">
+                        <div v-for="(comment, index) in viewcomment" :key="index">
                             <md-divider></md-divider>
                             <md-list-item>
                                 <md-avatar>
@@ -62,8 +62,8 @@
                         </div>
                     </md-list>
                     <md-divider></md-divider>
-                    <md-button class="md-icon-button" @click="toggle()">
-                        <md-icon v-if="favorite" class="md-accent">favorite</md-icon>
+                    <md-button class="md-icon-button" @click="toggle(interest, review.rid)">
+                        <md-icon v-if="interest" class="md-accent">favorite</md-icon>
                         <md-icon v-else>favorite_border</md-icon>
                     </md-button>
                     <md-button class="md-icon-button">
@@ -101,6 +101,7 @@ export default {
                 this.data = res.data.object;
                 this.review = res.data.object.review;
                 this.imgs = res.data.object.img;
+                this.interest = res.data.object.interest;
                 this.viewcomment = res.data.object.comment;
                 var value = res.data.object.review.keywordMain;
                 var valueList = value.split(',');
@@ -136,15 +137,39 @@ export default {
             keyword2: '',
             photo: '',
             like: '',
-            favorite: false
+            interest: ''
         };
     },
     methods: {
-        toggle() {
-            if (this.favorite) {
-                this.favorite = false;
+        toggle(interest, rid) {
+            var email = sessionStorage.getItem('email');
+
+            this.interest = !this.interest;
+            var data = {
+                email: email,
+                rid: this.rid
+            };
+            if (interest) {
+                var cancel = {
+                    reviewNum: rid,
+                    email: email
+                };
+
+                UserApi.cancelLike(cancel);
+
+                UserApi.getReviewDetail(data);
             } else {
-                this.favorite = true;
+                var like = {
+                    reviewNum: rid,
+                    email: email
+                };
+
+                console.log(like);
+                UserApi.plusLike(like, res => {
+                    console.log(res);
+                });
+
+                UserApi.getReviewDetail(data);
             }
         },
         sendComment() {
