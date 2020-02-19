@@ -101,6 +101,7 @@
 </template>
 <script>
 import UserApi from '../../apis/UserApi';
+import firebase from '../../apis/FirebaseService';
 export default {
     mounted() {
         this.rid = sessionStorage.getItem('rid');

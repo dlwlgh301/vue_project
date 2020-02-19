@@ -43,7 +43,7 @@
 </template>
 <script>
 import UserApi from '../../apis/UserApi';
-
+import firebase from '../../apis/FirebaseService';
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
