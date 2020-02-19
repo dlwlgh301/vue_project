@@ -42,25 +42,30 @@
             </v-row>
         </div>
 
-        <div>
-            <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-        </div>
-
         <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
+            <div style="text-align:center;" v-if="users.length == 0 && isTime">
+                <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+            </div>
+            <md-table-toolbar>
+                <h1 class="md-title">상품</h1>
+            </md-table-toolbar>
             <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <!-- <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
                 <!-- <td><img v-bind:src="item.image" /></td> -->
                 <md-table-cell md-label="Image" md-sort-by="image"><img v-bind:src="item.image"/></md-table-cell>
                 <md-table-cell md-label="ProductName" md-sort-by="productName" width="50%"
                     >{{ item.productName }} <br />
-                    <a v-bind:href="item.link">{{ item.link }}</a></md-table-cell
+                    <a target="_blank" v-bind:href="item.link">{{ item.link }}</a></md-table-cell
                 >
                 <!-- <md-table-cell md-label="Link" md-sort-by="link">{{ item.link }}</md-table-cell> -->
                 <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
                 <md-table-cell md-sort-by="Like" md-label="Like" width="10%">
-                    <md-button class="md-icon-button md-list-action">
-                        <md-icon class="md-primary" v-show="item.isLike">star</md-icon>
-                        <md-icon class="md-primary" v-show="!item.isLike">star_border</md-icon>
+                    <md-button @click="addProduct(item)" class="md-icon-button md-list-action" v-show="!item.isLike">
+                        <md-icon class="md-primary">star_border</md-icon>
+                    </md-button>
+
+                    <md-button @click="deleteProduct(item)" class="md-icon-button md-list-action" v-show="item.isLike">
+                        <md-icon class="md-primary">star</md-icon>
                     </md-button>
                 </md-table-cell>
             </md-table-row>
@@ -73,6 +78,9 @@ export default {
     name: 'TableFixed',
     data() {
         return {
+            tempsub1: '',
+            tempsub2: '',
+            isTime: false,
             product: [], // 물건 리스트
             likeList: [], //찜 한거 목록 리스트
             selected: '',
@@ -112,6 +120,8 @@ export default {
     },
     methods: {
         searchProduct() {
+            this.users = [];
+            this.isTime = true;
             if (this.sub1 == '' && this.sub2 == '') {
                 this.keyword;
             } else {
@@ -128,14 +138,10 @@ export default {
                 res => {
                     this.users = res.data.object.list;
                     console.log('user: ', this.users);
-
                     this.likeList = res.data.object.likeCheckList;
-
                     console.log('likeList: ', this.likeList);
 
-                    this.likeList[0] = true;
                     for (var i = 0; i < this.likeList.length; i++) {
-                        // this.users[i].isLike = this.likeList[i];
                         this.users[i]['isLike'] = this.likeList[i];
                     }
                     console.log(this.users);
@@ -144,20 +150,30 @@ export default {
                     console.log(error);
                 }
             );
+            this.tempsub1 = this.sub1;
+            this.tempsub2 = this.sub2;
+
             this.sub1 = '';
             this.sub2 = '';
+
             console.log('user ==>');
             console.log(this.users);
         },
         getImgUrl(pic) {
             return require('../../assets/images/' + pic);
         },
-        addProduct() {
+        addProduct(item) {
+            console.log('item : ', item.productName);
+
             var data = {
                 email: this.email,
-                productName: this.productName
+                productName: item.productName,
+                link: item.link,
+                image: item.image,
+                price: item.price
             };
-            ProductApi.addProduct(
+
+            ProductApi.addBookmark(
                 data,
                 res => {
                     console.log(res);
@@ -166,13 +182,57 @@ export default {
                     console.log(error);
                 }
             );
+            this.researchProduct();
         },
-        deleteProduct() {
+        researchProduct() {
+            this.users = [];
+            this.isTime = true;
+            if (this.tempsub1 == '' && this.tempsub2 == '') {
+                this.keyword;
+            } else {
+                this.keyword = this.tempsub1 + ' ' + this.tempsub2;
+            }
+            this.email = sessionStorage.getItem('email');
+            let { keyword, email } = this;
+            let data = {
+                keyword,
+                email
+            };
+            ProductApi.getAPI(
+                data,
+                res => {
+                    this.users = res.data.object.list;
+                    console.log('user: ', this.users);
+                    this.likeList = res.data.object.likeCheckList;
+                    console.log('likeList: ', this.likeList);
+
+                    for (var i = 0; i < this.likeList.length; i++) {
+                        this.users[i]['isLike'] = this.likeList[i];
+                    }
+                    console.log(this.users);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.tempsub1 = this.sub1;
+            this.tempsub2 = this.sub2;
+
+            this.sub1 = '';
+            this.sub2 = '';
+
+            console.log('user ==>');
+            console.log(this.users);
+        },
+        deleteProduct(item) {
             var data = {
                 email: this.email,
-                productName: this.productName
+                productName: item.productName,
+                link: item.link,
+                image: item.image,
+                price: item.price
             };
-            ProductApi.deleteProduct(
+            ProductApi.deleteBookmark(
                 data,
                 res => {
                     console.log(res);
@@ -181,6 +241,7 @@ export default {
                     console.log(error);
                 }
             );
+            this.searchProduct();
         }
     },
     create() {

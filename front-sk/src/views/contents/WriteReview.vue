@@ -142,7 +142,7 @@ export default {
             keyowrdSub: '',
             score: 0,
             isSubmit: false,
-            email: 'dlwlgh301@naver.com',
+            email: sessionStorage.getItem('email'),
             error: {
                 age: false,
                 gender: false,
@@ -216,7 +216,7 @@ export default {
             var images = this.images;
             console.log(images + 'vue 부분');
             var productName = '카메라';
-            var email = 'dlwlgh301@gmail.com';
+            var email = this.email;
             var review = {
                 email: email,
                 productName: productName,

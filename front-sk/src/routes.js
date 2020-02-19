@@ -15,7 +15,6 @@ import CertComplete from './views/user/CertComplete.vue';
 import UserUpdate from './views/user/UserUpdate.vue';
 import noticeTab from './views/user/noticeTab';
 import Main from './views/contents/Main.vue';
-import Test from './views/user/test.vue';
 import Keyword from './views/user/UserKeyword.vue';
 import UpdatePass from './views/user/UpdatePass.vue';
 import OtherProfile from './views/user/OtherProfile.vue';
@@ -26,6 +25,7 @@ import Bookmark from './views/contents/BookMark.vue';
 import Detail from './views/contents/DetailReview';
 import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
+import FollowingPage from './views/contents/FollowingPage.vue';
 import store from './vuex/store';
 
 Vue.use(Router);
@@ -103,11 +103,6 @@ const router = new Router({
             component: noticeTab
         },
         {
-            path: '/user/test',
-            name: 'test',
-            component: Test
-        },
-        {
             path: '/user/userUpdate',
             name: 'UserUpdate',
             component: UserUpdate
@@ -165,6 +160,11 @@ const router = new Router({
             path: '/contents/like',
             name: 'Like',
             component: Like
+        },
+        {
+            path: '/contents/FollowingPage',
+            name: 'FollowingPage',
+            component: FollowingPage
         }
     ]
 });
