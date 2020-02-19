@@ -19,4 +19,8 @@
     <select id="getInfo" parameterType="int" resultType="com.web.curation.model.vo.Request">
         select * from request where rid = #{value}
     </select>
+
+    <select id="isRequest" parameterType="com.web.curation.model.vo.Request" resultType="int">
+        select count(*) from request where requester = #{requester} and requestee = #{requestee} 
+    </select>
 </mapper>

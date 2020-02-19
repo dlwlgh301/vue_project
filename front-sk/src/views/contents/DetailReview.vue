@@ -3,7 +3,7 @@
         <div class="md-layout md-alignment-center" style="height:60%">
             <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
-                <md-card style="height:550px; z-index:0 ">
+                <md-card style="height:600px; z-index:0 ">
                     <md-card-header>
                         <md-avatar>
                             <img :src="getImgUrl(review.imgURL)" />
@@ -35,14 +35,14 @@
                     <md-card-content style="padding-top:0.3rem">
                         <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
                     </md-card-content>
-                    <md-card-content style="padding-top:0; overflow: auto;">{{ review.content }}</md-card-content>
+                    <md-card-content class=" md-scrollbar" style="padding-top:0; height: 80px;overflow: auto;">{{ review.content }}</md-card-content>
                     <div style="margin-left:0.5rem;">
                         <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }} </el-tag>
                     </div>
                 </md-card>
             </div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
-                <md-card style="height:550px; z-index:0">
+                <md-card style="height:600px; z-index:0">
                     <md-subheader>댓글</md-subheader>
                     <md-list class="md-double-line md-scrollbar" style="height:400px; overflow: auto;">
                         <div v-for="(comment, index) in viewcomment" :key="index">
@@ -166,6 +166,15 @@ export default {
 
                 console.log(like);
                 UserApi.plusLike(like, res => {
+                    console.log('좋아요: ' + res);
+                    let info = res.data.object;
+                    firebase.noticePush({
+                        sender: info.sender,
+                        senderNick: info.senderNick,
+                        receiver: info.receiver,
+                        msg: info.msg,
+                        img: info.img
+                    });
                     console.log(res);
                 });
 
@@ -179,7 +188,17 @@ export default {
                 content: this.comment
             };
             console.log(data);
-            UserApi.insertComment(data);
+            UserApi.insertComment(data, res => {
+                console.log('댓글 등록: ' + res);
+                let info = res.data.object;
+                firebase.noticePush({
+                    sender: info.sender,
+                    senderNick: info.senderNick,
+                    receiver: info.receiver,
+                    msg: info.msg,
+                    img: info.img
+                });
+            });
             this.comment = '';
             var redata = {
                 email: this.email,

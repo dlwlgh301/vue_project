@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.58:8080';
+const host = 'http://192.168.100.90:8080';
 const noticePort = 'http://192.168.100.90:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
@@ -31,7 +31,7 @@ const UserApi = {
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
-    getReviewDetail: (data, callback) => getReviewDetail(data, callback),
+    getReviewDetail: data => getReviewDetail(data),
     insertComment: data => insertComment(data),
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
@@ -474,7 +474,7 @@ const getReviewByproduct = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const getReviewDetail = (data, callback) => {
+const getReviewDetail = data => {
     axios
         .get(`${host}/review/show/detail`, {
             params: {
@@ -484,7 +484,6 @@ const getReviewDetail = (data, callback) => {
         })
         .then(res => {
             console.log(res);
-            callback(res);
         });
 };
 const insertComment = data => {
