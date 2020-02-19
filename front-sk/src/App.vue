@@ -38,7 +38,7 @@
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
                         <!-- <md-icon>search</md-icon> -->
 
-                        <center v-model="user" class="UserAutoList">
+                        <center v-if="member != null && member.length != 0" v-model="user" class="UserAutoList">
                             <md-list class="md-triple-line" style="padding:0px; width:17rem; text-align: center; vertical-align: middle;">
                                 <div v-for="(item, index) in member" v-bind:key="index">
                                     <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
