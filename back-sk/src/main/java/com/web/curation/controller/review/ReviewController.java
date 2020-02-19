@@ -16,6 +16,7 @@ import com.web.curation.model.vo.Review;
 import com.web.curation.model.vo.apiData;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
+import com.web.curation.service.notice.NoticeService;
 import com.web.curation.service.review.CommentService;
 import com.web.curation.service.review.ImgService;
 import com.web.curation.service.review.InterestService;
@@ -65,6 +66,9 @@ public class ReviewController {
 
     @Autowired
     InterestService interestServiceImpl;
+
+    @Autowired
+    NoticeService noticeServiceImpl;
 
     // @RequestMapping(method = RequestMethod.POST, value = "/review")
     @PostMapping("/review")
@@ -143,13 +147,15 @@ public class ReviewController {
     public <T> Object getFollowReview(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
+        System.out.println("following한 리뷰 리스트: " + email);
         List<Follow> followingList = followServiceImpl.followingList(email);
         List<Review> list = new ArrayList<>();
         for (Follow info : followingList) {
-            for (Review r : reviewServiceImpl.getUserReview(info.getFollower())) {
+            for (Review r : reviewServiceImpl.getUserReview(info.getFollowing())) {
                 list.add(r);
             }
         }
+        System.out.println(followingList);
 
         Collections.sort(list, new Comparator<Review>() {
             @Override
@@ -226,15 +232,31 @@ public class ReviewController {
         final BasicResponse result = new BasicResponse();
 
         String email = comment.getEmail();
+        String senderN = userServiceImpl.getNickNameByEmail(email);
         Comment info = new Comment(comment.getReviewNum(), comment.getContent(), email,
                 userServiceImpl.getNickNameByEmail(email), userServiceImpl.getImgURL(email));
 
+        Review review = reviewServiceImpl.getReviewByRId(comment.getReviewNum());
+        String receiver = review.getEmail();
+
+        JSONObject data = new JSONObject();
+        result.status = false;
+        result.data = "fail";
+
         if (commentServiceImpl.insertComment(info)) {
+            if (!email.equalsIgnoreCase(receiver)) {
+                noticeServiceImpl.insertNotice(email, receiver, senderN + " 님이 회원님의 게시글에 댓글을 달았습니다.");
+                data.put("sender", email);
+                data.put("senderNick", senderN);
+                data.put("receiver", receiver);
+                data.put("msg", senderN + " 님이 회원님의 게시글에 댓글을 달았습니다.");
+                data.put("img", userServiceImpl.getImgURL(email));
+                data.put("reviewNum", info.getReviewNum());
+
+                result.object = data.toMap();
+            }
             result.status = true;
             result.data = "success";
-        } else {
-            result.status = false;
-            result.data = "fail";
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -282,7 +304,8 @@ public class ReviewController {
         final List<apiData> arr = new ArrayList<>();
         for (final Review r : list) {
             Interest interest = new Interest(r.getRid(), email);
-            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
+            arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest),
+                    commentServiceImpl.getCommentNum(r.getRid())));
         }
 
         if (list.size() > 0) {
@@ -297,30 +320,44 @@ public class ReviewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/review/like")
+    @GetMapping("/review/like")
     @ApiOperation(value = "좋아요")
     @Transactional
-    public Object insertInterest(@RequestParam(required = true) final int reviewNum,
-            @RequestParam(required = true) final String email) throws Exception {
+    public Object insertInterest(@RequestParam(required = true) final int rid, @RequestParam final String email)
+            throws Exception {
         final BasicResponse result = new BasicResponse();
 
-        Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
-        int likeNum = reviewServiceImpl.getLikeNumber(reviewNum) + 1;
+        System.out.println("좋아요:" + rid);
+        Interest interest = new Interest(rid, email, userServiceImpl.getNickNameByEmail(email));
+        int likeNum = reviewServiceImpl.getLikeNumber(rid) + 1;
         Review review = new Review();
-        review.setRid(reviewNum);
+        review.setRid(rid);
         review.setLikeNumber(likeNum);
         reviewServiceImpl.updateLike(review);
 
         JSONObject data = new JSONObject();
         data.put("likeNumber", likeNum);
+        Review info = reviewServiceImpl.getReviewByRId(rid);
+        String receiver = info.getEmail();
+        String senderN = userServiceImpl.getNickNameByEmail(email);
+
+        result.status = false;
+        result.data = "fail";
 
         if (interestServiceImpl.insertInterest(interest)) {
+            if (!email.equalsIgnoreCase(receiver)) {
+                noticeServiceImpl.insertNotice(email, receiver, senderN + " 님이 회원님의 게시글을 좋아합니다.");
+                data.put("sender", email);
+                data.put("senderNick", senderN);
+                data.put("receiver", receiver);
+                data.put("msg", senderN + " 님이 회원님의 게시글을 좋아합니다.");
+                data.put("img", userServiceImpl.getImgURL(email));
+                data.put("reviewNum", rid);
+
+                result.object = data.toMap();
+            }
             result.status = true;
             result.data = "success";
-            result.object = data.toMap();
-        } else {
-            result.status = false;
-            result.data = "fail";
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);
@@ -332,6 +369,7 @@ public class ReviewController {
             @RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 
+        System.out.println("좋아요 취소:" + reviewNum);
         Interest interest = new Interest(reviewNum, email, userServiceImpl.getNickNameByEmail(email));
         int likeNum = reviewServiceImpl.getLikeNumber(reviewNum) - 1;
         Review review = new Review();
@@ -354,26 +392,8 @@ public class ReviewController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/review/like/{lid}")
-    @ApiOperation(value = "해당 리뷰에 좋아요 한 사람들")
-    public Object getInterests(@PathVariable("rid") int rid) throws Exception {
-        final BasicResponse result = new BasicResponse();
-
-        List<Interest> list = interestServiceImpl.getInterests(rid);
-        if (list.size() > 0) {
-            result.status = true;
-            result.data = "success";
-            result.object = list;
-        } else {
-            result.status = false;
-            result.data = "none";
-        }
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
     @GetMapping("/review/mylike")
-    @ApiOperation(value = "내가 좋아요 한 리뷰")
+    @ApiOperation(value = "'좋아요' 한 리뷰 리스트")
     public Object getMyInterest(@RequestParam(required = true) final String email) throws Exception {
         final BasicResponse result = new BasicResponse();
 

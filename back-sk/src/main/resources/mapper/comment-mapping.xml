@@ -11,4 +11,7 @@
     <delete id="deleteComment" parameterType="int">
         delete from comment where reviewNum = #{value}
     </delete>
+    <select id="getCommentNum" parameterType="int" resultType="int">
+        select count(*) from comment where reviewNum = #{value}
+    </select>
 </mapper>

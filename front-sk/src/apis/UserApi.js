@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 const host = 'http://192.168.100.58:8080';
-const noticePort = 'http://192.168.100.90:8080';
+const noticePort = 'http://192.168.100.58:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -124,13 +124,13 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
 };
 const deletNoticeTabFollowing = (data, callback, errorCallback) => {
     axios
-        .post(`${noticePort}/request/cancel/` + data)
+        .delete(`${noticePort}/request/cancel/` + data)
         .then(res => {
-            console.log('팔로워 추가 성공');
+            console.log('팔로워 요청 삭제 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 추가 실패');
+            console.log('팔로워 요청 삭제 실패');
             errorCallback(error);
         });
 };
