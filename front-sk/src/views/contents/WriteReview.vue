@@ -142,7 +142,7 @@ export default {
             keyowrdSub: '',
             score: 0,
             isSubmit: false,
-            email: 'dlwlgh301@naver.com',
+            email: sessionStorage.getItem('email'),
             error: {
                 age: false,
                 gender: false,
@@ -215,8 +215,8 @@ export default {
 
             var images = this.images;
             console.log(images + 'vue 부분');
-            var productName = '카메라';
-            var email = 'dlwlgh301@gmail.com';
+            var productName = this.productName;
+            var email = this.email;
             var review = {
                 email: email,
                 productName: productName,
@@ -230,6 +230,7 @@ export default {
             // console.log(JSON.stringify(review), images);
             UserApi.insertReview(review, images);
             this.images = '';
+            this.$router.push('/user/Profile');
         },
         checkForm() {
             if (this.age == '') {

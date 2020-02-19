@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.deser.UnresolvedForwardReference;
 import com.web.curation.model.BasicResponse;
 import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
+import com.web.curation.model.vo.Request;
 import com.web.curation.service.FollowService;
 import com.web.curation.service.UserService;
 import com.web.curation.service.notice.NoticeService;
@@ -146,11 +147,14 @@ public class FollowController {
 
         Follow follow = new Follow(follower, followerNickName, following, followingnickName);
         followServiceImpl.addFollow(follow);
-        boolean requestChk = requestServiceImpl.insertRequest(follower, following);
+        Request request = new Request(follower, following);
+
+        if (!requestServiceImpl.isRequest(request))
+            requestServiceImpl.insertRequest(follower, following);
         boolean noticeChk = noticeServiceImpl.insertNotice(follower, following,
                 followerNickName + " 님이 팔로우 요청을 하였습니다.");
 
-        if (requestChk && noticeChk) {
+        if (noticeChk) {
             JSONObject dummyUser = new JSONObject();
             dummyUser.put("sender", follower);
             dummyUser.put("senderNick", followerNickName);
