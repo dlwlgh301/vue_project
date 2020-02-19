@@ -67,7 +67,7 @@ export default {
                                             msg: email + '님이 로그인하였습니다.',
                                             receiver: email
                                         });
-                                        router.push('/main');
+                                        router.push('/contents/main');
                                         //store.commit('loginToken', res.data.token);
 
                                         //router.push('/main');

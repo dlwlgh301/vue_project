@@ -58,7 +58,7 @@
                     </div>
                     <!-- 현준이형 여기 부터 만들면 될듯  -->
                     <v-spacer></v-spacer>
-                    <md-button @click="logout">
+                    <md-button @click="logout()">
                         <md-icon>exit_to_app</md-icon>
                     </md-button>
                     <md-button class="md-icon-button" @click="refreshNotice">
@@ -159,7 +159,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
-                        <v-list-item @click="logout">
+                        <v-list-item v-on:click="logout()">
                             <v-list-item-icon>
                                 <md-icon>exit_to_app</md-icon>
                             </v-list-item-icon>

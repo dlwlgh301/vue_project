@@ -215,7 +215,7 @@ export default {
 
             var images = this.images;
             console.log(images + 'vue 부분');
-            var productName = '카메라';
+            var productName = this.productName;
             var email = this.email;
             var review = {
                 email: email,
@@ -230,6 +230,7 @@ export default {
             // console.log(JSON.stringify(review), images);
             UserApi.insertReview(review, images);
             this.images = '';
+            this.$router.push('/user/Profile');
         },
         checkForm() {
             if (this.age == '') {
