@@ -135,7 +135,7 @@ public class ProductController {
 
             for (int i = 1; i < temp.length; i++) {
 
-                temp[i] = temp[i].replace("\\}", "");
+                temp[i] = temp[i].replace("\\}", "").replace("💋", "");
 
                 String[] arr;
                 arr = temp[i].split(",\"mallName");
@@ -182,7 +182,8 @@ public class ProductController {
             // System.out.println(response.toString());
 
             for (int i = 0; i < list.size(); i++) {
-                if (bookmarkDao.likeCheck(new Bookmark(email, list.get(i).getProductName())) > 0) {
+                if (bookmarkDao.likeCheck(new Bookmark(email, list.get(i).getProductName(), list.get(i).getLink(),
+                        list.get(i).getImage(), list.get(i).getPrice())) > 0) {
                     likeCheckList.add(true);
                 } else {
                     likeCheckList.add(false);
