@@ -16,7 +16,9 @@
 
                     <div class="profile2-user-settings">
                         <h1 class="profile2-user-name">{{ info.name }}</h1>
-                        <button style="background-color: #2589cc" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="!isfollowing">팔로우</button>
+                        <button style="background-color: #2589cc" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="!isfollowing">
+                            팔로우
+                        </button>
 
                         <button style="background-color: rgb(52, 207, 122)" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="isfollowing">
                             <div class="icon-ok"></div>
@@ -38,7 +40,8 @@
 
                     <div class="profile2-bio">
                         <p style="padding-right:50px">
-                            <span class="profile2-real-name">{{ info.nickName }}</span> <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
+                            <span class="profile2-real-name">{{ info.nickName }}</span>
+                            <span style="padding-right:80px" class="profile2-user-intro"> {{ info.comment }}</span>
                         </p>
                     </div>
                 </div>
@@ -235,6 +238,17 @@ export default {
             return value ? '팔로잉' : '팔로우';
         }
     },
+    watch: {
+        $route(to, from) {
+            console.log(to);
+            console.log(from);
+            this.doFollow();
+            this.retrieveQuestion(); // 회원 정보
+            this.showFollower(); // 팔로우
+            this.showFollowing(); //팔로잉
+        }
+    },
+
     data: () => {
         return {
             isfollowing: false,
