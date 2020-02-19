@@ -317,7 +317,6 @@ export default {
             UserApi.requestNoticeNum(
                 data,
                 res => {
-                    console.log('가져오냐고오오오!!!ㄹ');
                     this.num = res.data.object.num;
                     console.log(this.num);
                 },
