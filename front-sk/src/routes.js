@@ -25,6 +25,7 @@ import Bookmark from './views/contents/BookMark.vue';
 import Detail from './views/contents/DetailReview';
 import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
+import FollowingPage from './views/contents/FollowingPage.vue';
 import store from './vuex/store';
 
 Vue.use(Router);
@@ -159,6 +160,11 @@ const router = new Router({
             path: '/contents/like',
             name: 'Like',
             component: Like
+        },
+        {
+            path: '/contents/FollowingPage',
+            name: 'FollowingPage',
+            component: FollowingPage
         }
     ]
 });

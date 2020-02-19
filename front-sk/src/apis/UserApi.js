@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
-const host = 'http://192.168.100.90:8080';
-const noticePort = 'http://192.168.100.90:8080';
+const host = 'http://192.168.100.58:8080';
+const noticePort = 'http://192.168.100.58:8080';
 const filehost = 'http://192.168.100.90:8080';
 const UserApi = {
     requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
@@ -32,7 +32,33 @@ const UserApi = {
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
     getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
+    myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
+    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
     insertComment: data => insertComment(data)
+};
+const myFollowingBoard = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/following?email=` + data)
+        .then(res => {
+            console.log('팔로잉게시물 가져오기 성공!');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('팔로잉게시물 가져오기 실패!');
+            errorCallback(error);
+        });
+};
+const myboardLoad = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/user?email=` + data)
+        .then(res => {
+            console.log('게시물 가져오기 성공!');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('게시물 가져오기 실패!');
+            errorCallback(error);
+        });
 };
 const isFollowing = (data, callback, errorCallback) => {
     axios
