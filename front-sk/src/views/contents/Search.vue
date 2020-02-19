@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <form action="#" @submit.prevent="searchProduct()" enctype="multipart/form-data" id="insertMemberForm"> -->
         <div class="search-bar" style="display: block;">
             <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword" />
             <button @click="searchProduct()">
@@ -41,37 +40,77 @@
                 </v-col>
             </v-row>
         </div>
+        <div id="shopping_chart">
+            <ul class="product-list">
+                <div style="text-align:center;" v-if="users.length == 0 && isTime">
+                    <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
+                </div>
+                <li v-for="item in users" v-bind:key="item">
+                    <span class="product-img">
+                        <img style="width : 150px; height :150px" v-bind:src="item.image" alt="" />
+                    </span>
 
-        <md-table v-model="users" md-sort="name" md-sort-order="asc" md-card md-fixed-header>
-            <div style="text-align:center;" v-if="users.length == 0 && isTime">
-                <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
-            </div>
-            <md-table-toolbar>
-                <h1 class="md-title">상품</h1>
-            </md-table-toolbar>
-            <md-table-row slot="md-table-row" slot-scope="{ item }">
-                <!-- <md-table-cell md-label="ID" md-sort-by="id" md-numeric>{{ item.id }}</md-table-cell> -->
-                <!-- <td><img v-bind:src="item.image" /></td> -->
-                <md-table-cell md-label="Image" md-sort-by="image"><img v-bind:src="item.image"/></md-table-cell>
-                <md-table-cell md-label="ProductName" md-sort-by="productName" width="50%"
-                    >{{ item.productName }} <br />
-                    <a target="_blank" v-bind:href="item.link">{{ item.link }}</a></md-table-cell
-                >
-                <!-- <md-table-cell md-label="Link" md-sort-by="link">{{ item.link }}</md-table-cell> -->
-                <md-table-cell md-label="Price" md-sort-by="price" width="20%">{{ item.price }}</md-table-cell>
-                <md-table-cell md-sort-by="Like" md-label="Like" width="10%">
-                    <md-button @click="addProduct(item)" class="md-icon-button md-list-action" v-show="!item.isLike">
-                        <md-icon class="md-primary">star_border</md-icon>
-                    </md-button>
-
-                    <md-button @click="deleteProduct(item)" class="md-icon-button md-list-action" v-show="item.isLike">
-                        <md-icon class="md-primary">star</md-icon>
-                    </md-button>
-                </md-table-cell>
-            </md-table-row>
-        </md-table>
+                    <span class="product-title">{{ item.productName }}</span>
+                    <a target="_blank" v-bind:href="item.link"
+                        ><span class="product-title">{{ item.link }}</span></a
+                    >
+                    <div style="font-size : 2em; margin: 2%;" class="product-count">{{ item.price }} 원</div>
+                    <div @click="addProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
+                        star
+                    </div>
+                    <div
+                        @click="deleteProduct(item)"
+                        style="font-size : 2em; cursor : pointer; margin: 2%;"
+                        class="material-icons"
+                        v-show="!item.isLike"
+                    >
+                        star_border
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
+
+<style scoped>
+.product-list li {
+    border: 1px solid #ccc;
+    list-style: none;
+    overflow: auto;
+    border-bottom: 1px dashed #0073ff;
+}
+.product-list span[class|='product'] {
+    font-family: Microsoft JhengHei;
+    margin: 2%;
+    float: left;
+}
+.product-list li:last-child {
+    border-bottom: 1px solid #ccc;
+    padding: 2% 5%;
+}
+.product-check {
+    float: left;
+}
+.product-img {
+    border: 1px solid #eee;
+    padding: 2px;
+}
+.product-title {
+    text-decoration: underline;
+    color: #ff8c00;
+    width: 60%;
+}
+.product-price {
+    float: right;
+    font-weight: bold;
+    width: 10%;
+}
+.product-count input {
+    float: left;
+    width: 25%;
+}
+</style>
+
 <script>
 import ProductApi from '../../apis/ProductApi';
 export default {

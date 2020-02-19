@@ -71,14 +71,16 @@
                 <v-navigation-drawer v-model="drawer" fixed temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img
+                            <v-img v-bind:src="'http://192.168.100.90:8080/image/' + img" alt />
+
+                            <!-- <v-img
                                 src="https://randomuser.me/api/portraits/men/78.jpg(5 kB)
 https://randomuser.me/api/portraits/men/78.jpg
 "
-                            ></v-img>
+                            ></v-img> -->
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title>nickName</v-list-item-title>
+                            <v-list-item-title>{{ nickName }}</v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                     <v-divider></v-divider>
@@ -136,7 +138,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                             </v-list-item>
                         </router-link>
 
-                        <router-link to="/contents/FollowingPage">
+                        <router-link to="/contents/Like">
                             <v-list-item>
                                 <v-list-item-icon>
                                     <i class="material-icons">
@@ -268,6 +270,8 @@ export default {
     },
     data: () => {
         return {
+            img: '',
+            nickName: '',
             member: [],
             hide: true,
             route: '',
@@ -332,6 +336,9 @@ export default {
         }
     },
     mounted() {
+        this.img = sessionStorage.getItem('imgURL');
+        this.nickName = sessionStorage.getItem('nickName');
+
         this.route = this.$router;
     },
     computed: {
