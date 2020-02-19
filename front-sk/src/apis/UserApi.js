@@ -233,6 +233,7 @@ const requestNoticeNum = (data, callback) => {
             }
         })
         .then(res => {
+            console.log('ㄴㅁ아럼나ㅣㅇ러ㅏㅣ;ㅁ넝샵ㅈㄷ서ㅑㅁ넝ㄹ');
             callback(res);
         })
         .catch(error => {

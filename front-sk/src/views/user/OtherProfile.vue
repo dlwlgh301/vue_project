@@ -310,6 +310,8 @@ export default {
                             msg: info.msg,
                             img: info.img
                         });
+                        this.$store.state.noticeNum += 1;
+                        console.log('VUEX: ', this.$store.state.noticeNum);
                     },
                     error => {
                         console.log('팔로우요청 실패: ' + error);
