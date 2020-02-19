@@ -224,9 +224,14 @@ export default {
                         });
                     } else {
                         this.myboard = res.data.object;
+
                         // alert(info.email);
                         console.log(res.data.status);
-                        console.log('게시물 ------->', res);
+                        if (res.data.data == 'none') {
+                            this.myBoard.length = 0;
+                        }
+                        if (this.myboard == null) this.myBoard.length = 0;
+                        console.log('myboard', this.myboard);
                     }
                 },
                 error => {
@@ -321,6 +326,8 @@ export default {
                             msg: info.msg,
                             img: info.img
                         });
+                        // this.$store.state.noticeNum += 1;
+                        // console.log('VUEX: ', this.$store.state.noticeNum);
                     },
                     error => {
                         console.log('팔로우요청 실패: ' + error);

@@ -315,6 +315,7 @@ public class ReviewController {
         } else {
             result.status = false;
             result.data = "none";
+            result.object = list;
         }
 
         return new ResponseEntity<>(result, HttpStatus.OK);

@@ -36,7 +36,8 @@ const UserApi = {
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
-    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback)
+    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
+    myLikeBoard: (data, callback, errorCallback) => myLikeBoard(data, callback, errorCallback)
 };
 const myFollowingBoard = (data, callback, errorCallback) => {
     axios
@@ -47,6 +48,18 @@ const myFollowingBoard = (data, callback, errorCallback) => {
         })
         .catch(error => {
             console.log('팔로잉게시물 가져오기 실패!');
+            errorCallback(error);
+        });
+};
+const myLikeBoard = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/mylike?email=` + data)
+        .then(res => {
+            console.log('좋아요게시물 가져오기 성공!');
+            callback(res);
+        })
+        .catch(error => {
+            console.log('좋아요게시물 가져오기 실패!');
             errorCallback(error);
         });
 };
@@ -233,6 +246,7 @@ const requestNoticeNum = (data, callback) => {
             }
         })
         .then(res => {
+            console.log('ㄴㅁ아럼나ㅣㅇ러ㅏㅣ;ㅁ넝샵ㅈㄷ서ㅑㅁ넝ㄹ');
             callback(res);
         })
         .catch(error => {

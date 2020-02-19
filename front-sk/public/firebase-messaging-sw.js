@@ -12,7 +12,8 @@ messaging.setBackgroundMessageHandler(function(payload) {
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
     // Customize notification here
     console.log('백그라운드 알림: ' + payload.data.img);
-    store.state.noticeNum += 1;
+
+    // store.state.noticeNum += 1;
     // console.log('test:' + store.state.noticeNum);
 
     const notificationTitle = 'SHOP+';
