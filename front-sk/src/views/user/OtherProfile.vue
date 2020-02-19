@@ -316,7 +316,6 @@ export default {
                     data,
                     res => {
                         console.log('팔로우요청: ' + res);
-                        this.restart();
                         this.isfollowing = true;
                         let info = res.data.object;
                         firebase.noticePush({
@@ -326,6 +325,8 @@ export default {
                             msg: info.msg,
                             img: info.img
                         });
+                        this.restart();
+
                         // this.$store.state.noticeNum += 1;
                         // console.log('VUEX: ', this.$store.state.noticeNum);
                     },

@@ -166,6 +166,15 @@ export default {
 
                 console.log(like);
                 UserApi.plusLike(like, res => {
+                    console.log('좋아요: ' + res);
+                    let info = res.data.object;
+                    firebase.noticePush({
+                        sender: info.sender,
+                        senderNick: info.senderNick,
+                        receiver: info.receiver,
+                        msg: info.msg,
+                        img: info.img
+                    });
                     console.log(res);
                 });
 
@@ -179,7 +188,17 @@ export default {
                 content: this.comment
             };
             console.log(data);
-            UserApi.insertComment(data);
+            UserApi.insertComment(data, res => {
+                console.log('댓글 등록: ' + res);
+                let info = res.data.object;
+                firebase.noticePush({
+                    sender: info.sender,
+                    senderNick: info.senderNick,
+                    receiver: info.receiver,
+                    msg: info.msg,
+                    img: info.img
+                });
+            });
             this.comment = '';
             var redata = {
                 email: this.email,
