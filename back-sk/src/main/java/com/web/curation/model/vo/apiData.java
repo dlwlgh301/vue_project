@@ -14,4 +14,11 @@ public class apiData {
     Review review;
     List<String> img;
     boolean interest;
+    int commentNum;
+
+    public apiData(Review review, List<String> img, boolean interest) {
+        this.review = review;
+        this.img = img;
+        this.interest = interest;
+    }
 }

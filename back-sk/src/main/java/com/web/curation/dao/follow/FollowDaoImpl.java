@@ -3,7 +3,6 @@ package com.web.curation.dao.follow;
 
 import java.util.List;
 
-import com.web.curation.model.user.User;
 import com.web.curation.model.vo.Follow;
 
 import org.apache.ibatis.session.SqlSession;
@@ -37,7 +36,6 @@ public class FollowDaoImpl implements FollowDao {
 
     @Override
     public int followCheck(Follow follow) throws Exception {
-        System.out.println("DaoImpl : followCheck");
         return sqlSession.selectOne("followCheck", follow);
     }
 
