@@ -132,6 +132,15 @@ export default {
                 // interest = !interest;
                 console.log(like);
                 UserApi.plusLike(like, res => {
+                    console.log('좋아요: ' + res);
+                    let info = res.data.object;
+                    firebase.noticePush({
+                        sender: info.sender,
+                        senderNick: info.senderNick,
+                        receiver: info.receiver,
+                        msg: info.msg,
+                        img: info.img
+                    });
                     console.log(res);
                 });
 

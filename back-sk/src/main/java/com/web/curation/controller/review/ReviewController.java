@@ -283,6 +283,7 @@ public class ReviewController {
     public Object deleteReview(@PathVariable("rid") int rid) throws Exception {
         final BasicResponse result = new BasicResponse();
 
+        System.out.println("게시글 삭제: " + rid);
         if (reviewServiceImpl.deleteReview(rid)) {
             result.status = true;
             result.data = "success";
