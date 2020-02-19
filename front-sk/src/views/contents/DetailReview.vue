@@ -80,7 +80,7 @@
                                 <span>수정하기</span>
                             </md-menu-item>
 
-                            <md-menu-item @click="deleteReview()">
+                            <md-menu-item @click="deleteReview(review.rid)">
                                 <span>삭제하기</span>
                             </md-menu-item>
                         </md-menu-content>
@@ -164,7 +164,10 @@ export default {
     },
     methods: {
         updateReview() {},
-        deleteReview() {},
+        deleteReview(rid) {
+            UserApi.deleteReview(rid);
+            this.$router.push('/contents/main');
+        },
         toggle(interest, rid) {
             var email = sessionStorage.getItem('email');
 

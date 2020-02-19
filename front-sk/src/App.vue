@@ -322,8 +322,6 @@ export default {
             }
         },
         logout() {
-            Kakao.Auth.logout();
-
             firebase.logout(sessionStorage.getItem('email'));
             localStorage.clear();
             sessionStorage.clear();

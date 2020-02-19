@@ -41,8 +41,7 @@
 </template>
 <script>
 import UserApi from '../../apis/UserApi';
-import firebase from '../../apis/FirebaseService';
-import Kakao from '../../kakao';
+
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
@@ -85,16 +84,6 @@ export default {
         goOtherpage(e) {
             if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
             else this.$router.push('/user/OtherProfile/' + e);
-        },
-        logout() {
-            Kakao.Auth.logout();
-            Kakao.Auth.setAccessToken('', false);
-            firebase.logout(sessionStorage.getItem('email'));
-
-            localStorage.clear();
-            sessionStorage.clear();
-            Kakao.Auth.cleanup();
-            this.$router.push('/');
         },
         toggle(interest, rid, index) {
             var email = sessionStorage.getItem('email');

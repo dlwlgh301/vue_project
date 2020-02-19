@@ -163,8 +163,10 @@ export default {
                 status: false,
                 title: false,
                 content: false,
-                submit: false
+                submit: false,
+                file: false
             },
+            filecount: 0,
             dialogVisible: false
         };
     },
@@ -190,17 +192,24 @@ export default {
 
             this.content = value;
             this.checkForm();
+        },
+        filecount: function() {
+            this.checkForm();
         }
     },
     methods: {
         handleChange(file, fileList) {
             this.file = file.raw;
             this.fileList = fileList;
+            this.filecount += 1;
+            console.log(this.filecount);
         },
         handleRemove(file, fileList) {
+            this.filecount -= 1;
             console.log(file);
             this.fileList = fileList;
             console.log(fileList);
+            console.log(this.filecount);
         },
         handlePictureCardPreview(file) {
             this.images = file.url;
@@ -285,6 +294,16 @@ export default {
                 this.error.content = false;
                 this.error.submit = false;
             }
+            if (this.filecount == 0) {
+                this.error.submit = true;
+                this.error.file = '';
+            } else if (this.filecount === 0) this.error.file = '그림파일을 넣어주세요';
+            else {
+                this.error.submit = false;
+                this.error.file = false;
+            }
+            console.log(this.filecount);
+
             let isSubmit = true;
             Object.values(this.error).map(v => {
                 if (v) isSubmit = false;

@@ -36,7 +36,8 @@ const UserApi = {
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
-    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback)
+    myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
+    deleteReview: data => deleteReview(data)
 };
 const myFollowingBoard = (data, callback, errorCallback) => {
     axios
@@ -519,5 +520,8 @@ const cancelLike = data => {
         .then(res => {
             console.log(res);
         });
+};
+const deleteReview = data => {
+    axios.delete(`${host}/review/` + data);
 };
 export default UserApi;
