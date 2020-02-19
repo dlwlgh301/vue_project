@@ -123,6 +123,32 @@ https://randomuser.me/api/portraits/men/78.jpg
                                 </v-list-item-content>
                             </v-list-item>
                         </router-link>
+                        <router-link to="/contents/FollowingPage">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <i class="material-icons">
+                                        accessibility
+                                    </i>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>팔로잉 페이지</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+
+                        <router-link to="/contents/FollowingPage">
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <i class="material-icons">
+                                        favorite
+                                    </i>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>좋아요 페이지</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </router-link>
+
                         <router-link to="/user/profile">
                             <v-list-item>
                                 <v-list-item-icon>
@@ -169,7 +195,7 @@ https://randomuser.me/api/portraits/men/78.jpg
 .close-icon,
 .search-wrapper {
     position: relative;
-    padding: 10px;
+    padding: 5px;
 }
 .search-wrapper {
     width: 500px;
@@ -315,7 +341,9 @@ export default {
     },
     watch: {
         user: function(user) {
-            if (user == '') this.member = [];
+            if (user == '') {
+                this.member = [];
+            }
             if (user != '') {
                 UserApi.searchMember(
                     user,

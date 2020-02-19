@@ -23,12 +23,14 @@
 
                     <div class="profile2-stats">
                         <ul>
-                            <li><span class="profile2-stat-count">164</span> posts</li>
                             <li>
-                                <span class="profile2-stat-count" @click="showDialog = true">{{ followList.length }}</span> followers
+                                <span class="profile2-stat-count">{{ myboard.length }}</span> posts
                             </li>
-                            <li>
-                                <span class="profile2-stat-count" @click="followerDialog = true">{{ followingList.length }}</span> following
+                            <li @click="showDialog = true">
+                                <span class="profile2-stat-count">{{ followList.length }}</span> followers
+                            </li>
+                            <li @click="followerDialog = true">
+                                <span class="profile2-stat-count">{{ followingList.length }}</span> following
                             </li>
                         </ul>
                     </div>
@@ -42,105 +44,20 @@
                 </div>
                 <!-- 게시물 section 시작 -->
                 <section class="post-list">
-                    <a href="#" class="post">
+                    <div class="post" v-for="(item, index) in myboard" v-bind:key="index" @click="detail(item.review.rid)">
                         <figure class="post-image">
-                            <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" />
+                            <img v-bind:src="'http://192.168.100.90:8080/image/' + item.img[0]" alt class="portrait" />
+
+                            <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
+                            <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
                         </figure>
                         <span class="post-overlay">
                             <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
+                                <span class="post-likes"><i class="fas fa-heart"></i> {{ item.review.likeNumber }}</span>
+                                <span class="post-comments"><i class="fas fa-comment"></i> {{ item.commentNum }}</span>
                             </p>
                         </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://static-cdn.123rf.com/images/v5/index-thumbnail/84170952-b.jpg" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://g3.img-dpreview.com/127D6CC2FB664001B4DB396CE3AFC764.jpg" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://g3.img-dpreview.com/2EBA2EB3AAD74B10B7F2D3E5A9FE4E1B.jpg" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://g4.img-dpreview.com/8958B0BB8410404F80D2E0B2FBDF99A1.jpg" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://picsum.photos/300/300/?random" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://picsum.photos/300/300/?image=15" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://picsum.photos/400/400/?random" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
-                    <a href="#" class="post">
-                        <figure class="post-image">
-                            <img src="https://picsum.photos/500/500/?random" alt="" />
-                        </figure>
-                        <span class="post-overlay">
-                            <p>
-                                <span class="post-likes"><i class="fas fa-heart"></i> 150</span>
-                                <span class="post-comments"><i class="fas fa-comment"></i> 10</span>
-                            </p>
-                        </span>
-                    </a>
+                    </div>
                 </section>
                 <!-- 게시물 section 끝 -->
             </div>
@@ -187,15 +104,17 @@
                             <span @click="restart()" aria-hidden="true">x</span>
                         </button>
                     </h2>
+
                     <hr />
                     <br />
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
-                                {{
-                                    item.followingnickName
-                                }}
+                            <ul style="margin-left:25px; cursor: pointer;">
+                                <span @click="goOtherpage(item.following)">
+                                    {{ item.followingnickName }}
+                                </span>
+
                                 <div class="myfollowList" @click="FollowingListBtnCheck(index)" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
@@ -234,6 +153,8 @@ export default {
     },
     data: () => {
         return {
+            len: '',
+            myboard: [],
             isButtonDisabled: false,
             ischeck1: true,
             age: '',
@@ -268,6 +189,11 @@ export default {
         };
     },
     methods: {
+        detail(rid) {
+            sessionStorage.setItem('rid', rid);
+            console.log(rid);
+            this.$router.push('/contents/detail');
+        },
         goOtherpage(e) {
             if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
             else this.$router.push('/user/OtherProfile/' + e);
@@ -496,6 +422,30 @@ export default {
                 }
             );
         },
+        myBoard() {
+            UserApi.myboardLoad(
+                this.email,
+                res => {
+                    console.log(res);
+                    if (res.data.data == 'fail') {
+                        console.log(res.data.status);
+                        Swal.fire({
+                            icon: 'error',
+                            text: '연결실패'
+                        });
+                    } else {
+                        this.myboard = res.data.object;
+                        // alert(info.email);
+                        console.log(res.data.status);
+                        console.log('게시물 ------->', res);
+                    }
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.len = this.board.length;
+        },
         restart() {
             this.retrieveQuestion(); // 회원 정보
             this.showFollower(); // 팔로우
@@ -536,6 +486,7 @@ export default {
         //  this.email = this.$store.state.email;
 
         this.retrieveQuestion(); // 회원 정보
+        this.myBoard(); // 게시물 가져오기
         this.showFollower(); // 팔로우
         this.showFollowing(); //팔로잉
     }

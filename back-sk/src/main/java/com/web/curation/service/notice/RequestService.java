@@ -13,4 +13,6 @@ public interface RequestService {
     boolean deleteRequest(int rid) throws Exception;
 
     Request getInfo(int rid) throws Exception;
+
+    boolean isRequest(Request request) throws Exception;
 }
