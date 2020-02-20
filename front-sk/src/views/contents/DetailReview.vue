@@ -8,7 +8,8 @@
                         <md-avatar>
                             <img :src="getImgUrl(review.imgURL)" />
                         </md-avatar>
-                        <div class="md-title">{{ review.nickName }}</div>
+                        <!-- @click="goOtherpage(review.email)" -->
+                        <div class="md-title" style="cursor:pointer" @click="goOtherpage(review.email)">{{ review.nickName }}</div>
                         <div class="md-subhead">{{ review.productName }}</div>
 
                         <!--제품이름 넣기-->
@@ -164,6 +165,10 @@ export default {
         };
     },
     methods: {
+        goOtherpage(e) {
+            if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
+            else this.$router.push('/user/OtherProfile/' + e);
+        },
         updateReview() {},
         deleteReview(rid) {
             UserApi.deleteReview(rid);
@@ -254,7 +259,7 @@ export default {
             );
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     }
 };

@@ -55,11 +55,11 @@
                         ><span class="product-title">{{ item.link }}</span></a
                     >
                     <div style="font-size : 1em; margin: 2%;" class="product-count">{{ item.price }} 원</div>
-                    <div @click="addProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
+                    <div @click="deleteProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
                         star
                     </div>
                     <div
-                        @click="deleteProduct(item)"
+                        @click="addProduct(item)"
                         style="font-size : 2em; cursor : pointer; margin: 2%;"
                         class="material-icons"
                         v-show="!item.isLike"
@@ -275,7 +275,7 @@ export default {
                     console.log(error);
                 }
             );
-            this.searchProduct();
+            this.researchProduct();
         }
     },
     create() {

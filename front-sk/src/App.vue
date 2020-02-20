@@ -31,12 +31,9 @@
                                     required
                                     class="search-box"
                                     placeholder="User 검색"
-<<<<<<< HEAD
                                     @focus="serchBoxFocus"
                                     @blur="searchBoxNotFoucs"
                                     autocomplete="off"
-=======
->>>>>>> 85a88d8768e9673491bc4490b1062efae9315af6
                                 />
                             </form>
                         </div>
@@ -49,7 +46,7 @@
                                 <div v-for="(item, index) in member" v-bind:key="index">
                                     <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
                                         <md-avatar>
-                                            <img v-bind:src="'http://192.168.100.90:8080/image/' + item.imgURL" alt class="People" />
+                                            <img v-bind:src="'http://192.168.100.58:8080/image/' + item.imgURL" alt class="People" />
                                         </md-avatar>
                                         <div style="cursor: pointer;" class="md-list-item-text" @click="goOtherpage(item.email)">
                                             <span>{{ item.nickName }}</span>
@@ -76,7 +73,7 @@
                 <v-navigation-drawer v-model="drawer" fixed temporary style="height:100%">
                     <v-list-item>
                         <v-list-item-avatar>
-                            <v-img v-bind:src="'http://192.168.100.90:8080/image/' + img" alt />
+                            <v-img v-bind:src="'http://192.168.100.58:8080/image/' + img" alt />
 
                             <!-- <v-img
                                 src="https://randomuser.me/api/portraits/men/78.jpg(5 kB)

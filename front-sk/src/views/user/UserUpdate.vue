@@ -95,7 +95,7 @@
                 <div id="imageMain">
                     <div v-if="!image">
                         <!-- <img src="../../assets/images/프로필아이콘.png" /> -->
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
                     </div>
                     <div v-else>
                         <img :src="image" style="width:150px; height:150px" />

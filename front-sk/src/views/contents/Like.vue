@@ -88,7 +88,7 @@ export default {
             this.$router.push('/contents/detail');
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     },
     mounted() {

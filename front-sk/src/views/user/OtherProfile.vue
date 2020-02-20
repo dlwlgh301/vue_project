@@ -11,7 +11,7 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
                     </div>
 
                     <div class="profile2-user-settings">
@@ -51,7 +51,7 @@
                 <section class="post-list">
                     <div class="post" v-for="(item, index) in myboard" v-bind:key="index" @click="detail(item.review.rid)">
                         <figure class="post-image">
-                            <img v-bind:src="'http://192.168.100.90:8080/image/' + item.img[0]" alt class="portrait" />
+                            <img v-bind:src="'http://192.168.100.58:8080/image/' + item.img[0]" alt class="portrait" />
 
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
@@ -114,10 +114,10 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
-                                {{
-                                    item.followingnickName
-                                }}
+                            <ul style="margin-left:25px; cursor: pointer;">
+                                <span @click="goOtherpage(item.following)">
+                                    {{ item.followingnickName }}
+                                </span>
                                 <div class="myfollowList" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
@@ -430,62 +430,6 @@ export default {
                 );
 
                 this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
-            }
-        },
-        FollowListBtnCheck(idx) {
-            if (this.followCheck[idx] == true) {
-                // 팔로잉
-                Swal.fire({
-                    icon: 'error',
-                    title: '팔로우를 취소하시겠습니까??',
-                    showCancelButton: true
-                }).then(YES => {
-                    if (YES.value) {
-                        this.followerEmail = this.followingList[idx].follower;
-                        this.followingEmail = this.followingList[idx].following;
-                        let { followerEmail, followingEmail } = this;
-                        // alert(this.followerEmail + ' ' + this.followingEmail);
-                        let data = {
-                            followingEmail, // 나
-                            followerEmail // 상대방
-                        };
-                        UserApi.deleteFollower(
-                            data,
-                            res => {
-                                console.log(res);
-                            },
-                            error => {
-                                console.log(error);
-                            }
-                        );
-                        this.$set(this.followCheck, idx, !this.followCheck[idx]);
-                    } else {
-                        //alert(YES.value);
-                        this.$set(this.followCheck, idx, this.followCheck[idx]);
-                    }
-                });
-            } else {
-                this.followerEmail = this.followList[idx].follower;
-                this.followingEmail = this.followList[idx].following;
-                let { followerEmail, followingEmail } = this;
-
-                let data = {
-                    followingEmail,
-                    followerEmail
-                };
-                // alert(followingEmail + ' ' + followerEmail);
-                //  alert(this.followerEmail);
-                UserApi.addFollower(
-                    data,
-                    res => {
-                        console.log(res);
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-
-                this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
         },
         retrieveQuestion() {
