@@ -13,8 +13,8 @@
                     <div class="md-small-hide">
                         <v-toolbar-title>
                             <!-- <img src="../../assets/#+.png" alt="" /> -->
-                            {{ $store.state.pageTitle }}</v-toolbar-title
-                        >
+                            {{ $store.state.pageTitle }}
+                        </v-toolbar-title>
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
@@ -79,7 +79,7 @@
                                 src="https://randomuser.me/api/portraits/men/78.jpg(5 kB)
 https://randomuser.me/api/portraits/men/78.jpg
 "
-                            ></v-img> -->
+                            ></v-img>-->
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title>{{ nickName }}</v-list-item-title>
@@ -130,9 +130,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                         <router-link to="/contents/FollowingPage">
                             <v-list-item>
                                 <v-list-item-icon>
-                                    <i class="material-icons">
-                                        accessibility
-                                    </i>
+                                    <i class="material-icons">accessibility</i>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>팔로잉 페이지</v-list-item-title>
@@ -143,9 +141,7 @@ https://randomuser.me/api/portraits/men/78.jpg
                         <router-link to="/contents/Like">
                             <v-list-item>
                                 <v-list-item-icon>
-                                    <i class="material-icons">
-                                        favorite
-                                    </i>
+                                    <i class="material-icons">favorite</i>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>좋아요 페이지</v-list-item-title>

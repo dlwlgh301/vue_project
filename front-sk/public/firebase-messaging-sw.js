@@ -19,7 +19,7 @@ messaging.setBackgroundMessageHandler(function(payload) {
     const notificationTitle = 'SHOP+';
     const notificationOptions = {
         body: payload.data.msg,
-        icon: 'http://192.168.100.90:8080/image/' + payload.data.img
+        icon: 'http://192.168.100.58:8080/image/' + payload.data.img
     };
 
     return self.registration.showNotification(notificationTitle, notificationOptions);
