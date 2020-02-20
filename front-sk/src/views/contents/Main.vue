@@ -1,22 +1,40 @@
 <template>
     <v-container style="width:100%;">
         <v-row>
-            <v-col v-for="(n, index) in data" :key="index" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
+            <v-col
+                v-for="(n, index) in data"
+                :key="index"
+                cols="12"
+                lg="4"
+                md="6"
+                sm="12"
+                xs="12"
+                xl="3"
+            >
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
                         <md-avatar>
                             <img :src="getImgUrl(n.review.imgURL)" />
                         </md-avatar>
                         <v-list-item-content>
-                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">{{
+                            <v-list-item-title
+                                class="headline"
+                                style="cursor : pointer"
+                                @click="goOtherpage(n.review.email)"
+                            >
+                                {{
                                 n.review.nickName
-                            }}</v-list-item-title>
+                                }}
+                            </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
                     <v-img height="250" :src="getImgUrl(n.img[0])" style="margin-bottom:0.5rem"></v-img>
 
-                    <md-button class="md-icon-button" @click="toggle(n.interest, n.review.rid, index)">
+                    <md-button
+                        class="md-icon-button"
+                        @click="toggle(n.interest, n.review.rid, index)"
+                    >
                         <md-icon v-if="n.interest" class="md-accent">favorite</md-icon>
                         <md-icon v-else>favorite_border</md-icon>
                     </md-button>
@@ -28,7 +46,14 @@
 
                     <v-card-text>
                         <v-row align="center" class="mx-0">
-                            <v-rating :value="n.review.score" color="amber" dense half-increments readonly size="14"></v-rating>
+                            <v-rating
+                                :value="n.review.score"
+                                color="amber"
+                                dense
+                                half-increments
+                                readonly
+                                size="14"
+                            ></v-rating>
 
                             <div class="grey--text ml-4">({{ n.review.score }})</div>
                         </v-row>
@@ -154,7 +179,7 @@ export default {
             this.$router.push('/contents/detail');
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     }
 };
