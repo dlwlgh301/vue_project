@@ -43,7 +43,7 @@
                                 <div v-for="(item, index) in member" v-bind:key="index">
                                     <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
                                         <md-avatar>
-                                            <!-- <img v-bind:src="'http://192.168.100.58:8080/image/' + item.imgURL" alt class="People" /> -->
+                                            <img v-bind:src="'http://192.168.100.58:8080/image/' + item.imgURL" alt class="People" />
                                         </md-avatar>
                                         <div style="cursor: pointer;" class="md-list-item-text" @click="goOtherpage(item.email)">
                                             <span>{{ item.nickName }}</span>
