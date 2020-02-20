@@ -45,12 +45,12 @@
                 <div style="text-align:center;" v-if="users.length == 0 && isTime">
                     <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
                 </div>
-                <li v-for="item in users" v-bind:key="item">
+                <li v-for="(item, index) in users" v-bind:key="index">
                     <span class="product-img">
                         <img style="width : 150px; height :150px" v-bind:src="item.image" alt="" />
                     </span>
 
-                    <span class="product-title">{{ item.productName }}</span>
+                    <span class="product-title" style="cursor:pointer" @click="moveReaview(item.productName)">{{ item.productName }}</span>
                     <a target="_blank" v-bind:href="item.link"
                         ><span class="product-title">{{ item.link }}</span></a
                     >
@@ -114,7 +114,6 @@
 <script>
 import ProductApi from '../../apis/ProductApi';
 export default {
-    name: 'TableFixed',
     data() {
         return {
             tempsub1: '',
@@ -158,6 +157,9 @@ export default {
         }
     },
     methods: {
+        moveReaview(e) {
+            this.$router.push('/contents/ProductList/' + e);
+        },
         searchProduct() {
             this.users = [];
             this.isTime = true;

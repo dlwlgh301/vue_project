@@ -6,7 +6,8 @@ const UserApi = {
     getAPI: (data, callback, errorCallback) => getAPI(data, callback, errorCallback),
     getProductListInterest: (data, callback, errorCallback) => getProductListInterest(data, callback, errorCallback),
     addBookmark: (data, callback, errorCallback) => addBookmark(data, callback, errorCallback),
-    deleteBookmark: (data, callback, errorCallback) => deleteBookmark(data, callback, errorCallback)
+    deleteBookmark: (data, callback, errorCallback) => deleteBookmark(data, callback, errorCallback),
+    showProduct: (data, callback, errorCallback) => showProduct(data, callback, errorCallback)
 };
 
 const getAPI = (data, callback, errorCallback) => {
@@ -18,6 +19,23 @@ const getAPI = (data, callback, errorCallback) => {
         })
         .catch(error => {
             console.log('상품 가져오기 실패');
+            errorCallback(error);
+        });
+};
+const showProduct = (data, callback, errorCallback) => {
+    axios
+        .get(`${host}/review/show/product`, {
+            params: {
+                email: data.email,
+                productName: data.productName
+            }
+        })
+        .then(res => {
+            console.log(res);
+            callback(res);
+        })
+        .catch(error => {
+            console.log('찜목록 가져오기 실패');
             errorCallback(error);
         });
 };
