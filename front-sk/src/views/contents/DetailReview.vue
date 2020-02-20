@@ -40,6 +40,7 @@
                     <md-card-content class="md-scrollbar" style="padding-top:0; height: 80px;overflow: auto;">{{ review.content }}</md-card-content>
                     <div style="margin-left:0.5rem;">
                         <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }}</el-tag>
+                        <el-tag v-for="(n1, idx1) in stags" :key="idx1" style="margin-left:0.5rem">{{ n1 }}</el-tag>
                     </div>
                 </md-card>
             </div>
@@ -127,8 +128,9 @@ export default {
                 console.log(this.email + ',' + writer_email);
                 //console.log(valueList);
                 this.mtags = valueList;
-
-                this.stags = res.data.object.review.keywordSub;
+                var svalue = res.data.object.review.keywordSub;
+                var svalueList = svalue.split(',');
+                this.stags = svalueList;
                 //console.log(this.viewcomment);
                 // console.log(this.imgs);
                 if (this.email == writer_email) {
@@ -196,16 +198,18 @@ export default {
 
                 console.log(like);
                 UserApi.plusLike(like, res => {
-                    console.log('좋아요: ' + res);
-                    let info = res.data.object;
-                    firebase.noticePush({
-                        sender: info.sender,
-                        senderNick: info.senderNick,
-                        receiver: info.receiver,
-                        msg: info.msg,
-                        img: info.img
-                    });
-                    console.log(res);
+                    if (res.data == 'success') {
+                        console.log('좋아요: ' + res);
+                        let info = res.data.object;
+                        firebase.noticePush({
+                            sender: info.sender,
+                            senderNick: info.senderNick,
+                            receiver: info.receiver,
+                            msg: info.msg,
+                            img: info.img
+                        });
+                        console.log(res);
+                    }
                 });
 
                 UserApi.getReviewDetail(data);
@@ -219,15 +223,17 @@ export default {
             };
             console.log(data);
             UserApi.insertComment(data, res => {
-                console.log('댓글 등록: ' + res);
-                let info = res.data.object;
-                firebase.noticePush({
-                    sender: info.sender,
-                    senderNick: info.senderNick,
-                    receiver: info.receiver,
-                    msg: info.msg,
-                    img: info.img
-                });
+                if (res.data == 'success') {
+                    console.log('댓글 등록: ' + res);
+                    let info = res.data.object;
+                    firebase.noticePush({
+                        sender: info.sender,
+                        senderNick: info.senderNick,
+                        receiver: info.receiver,
+                        msg: info.msg,
+                        img: info.img
+                    });
+                }
             });
             var commentdata = {
                 imgURL: sessionStorage.getItem('imgURL'),
