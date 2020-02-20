@@ -1,20 +1,9 @@
 <template>
     <div>
         <link rel="stylesheet" href="css/estilos.css" />
-        <link
-            href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="https://fonts.googleapis.com/css?family=Lato:400,300"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css"
-            rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,300" rel="stylesheet" type="text/css" />
+        <link href="https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet" />
         <header>
             <br />
             <br />
@@ -25,6 +14,7 @@
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <img
                             style="width:150px; height:150px"
+                            v-if="info.imgURL != ''"
                             v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
                             alt
                             class="portrait"
@@ -33,20 +23,13 @@
 
                     <div class="profile2-user-settings">
                         <h1 class="profile2-user-name">{{ info.name }}</h1>
-                        <button
-                            style="background-color: #2589cc"
-                            class="btn2 profile2-edit-btn"
-                            @click="iniciar()"
-                            v-show="!isfollowing"
-                        >팔로우</button>
+                        <button style="background-color: #2589cc" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="!isfollowing">
+                            팔로우
+                        </button>
 
-                        <button
-                            style="background-color: rgb(52, 207, 122)"
-                            class="btn2 profile2-edit-btn"
-                            @click="iniciar()"
-                            v-show="isfollowing"
-                        >
-                            <div class="icon-ok"></div>팔로잉
+                        <button style="background-color: rgb(52, 207, 122)" class="btn2 profile2-edit-btn" @click="iniciar()" v-show="isfollowing">
+                            <div class="icon-ok"></div>
+                            팔로잉
                         </button>
                     </div>
                     <!--btn2 profile2-edit-btn-->
@@ -67,27 +50,15 @@
                     <div class="profile2-bio">
                         <p style="padding-right:50px">
                             <span class="profile2-real-name">{{ info.nickName }}</span>
-                            <span
-                                style="padding-right:80px"
-                                class="profile2-user-intro"
-                            >{{ info.comment }}</span>
+                            <span style="padding-right:80px" class="profile2-user-intro">{{ info.comment }}</span>
                         </p>
                     </div>
                 </div>
                 <!-- 게시물 section 시작 -->
                 <section class="post-list">
-                    <div
-                        class="post"
-                        v-for="(item, index) in myboard"
-                        v-bind:key="index"
-                        @click="detail(item.review.rid)"
-                    >
+                    <div class="post" v-for="(item, index) in myboard" v-bind:key="index" @click="detail(item.review.rid)">
                         <figure class="post-image">
-                            <img
-                                v-bind:src="'http://192.168.100.58:8080/image/' + item.img[0]"
-                                alt
-                                class="portrait"
-                            />
+                            <img v-bind:src="'http://192.168.100.58:8080/image/' + item.img[0]" alt class="portrait" />
 
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
@@ -116,12 +87,7 @@
                     <div>
                         <h2 class="content" style="text-align:center">
                             팔로워
-                            <button
-                                type="button"
-                                class="close"
-                                aria-label="Close"
-                                style="float:right"
-                            >
+                            <button type="button" class="close" aria-label="Close" style="float:right">
                                 <!-- <span @click="showDialog = false" aria-hidden="true">x</span> -->
                                 <span @click="restart()" aria-hidden="true">x</span>
                             </button>
@@ -129,23 +95,17 @@
                     </div>
                     <hr />
                     <br />
-                    <div
-                        style="margin 10px;"
-                        class="content"
-                        v-for="(item, index) in followList"
-                        v-bind:key="index"
-                    >
+                    <div style="margin 10px;" class="content" v-for="(item, index) in followList" v-bind:key="index">
                         <li>
                             <ul style="margin-left:25px; cursor: pointer;">
-                                <span
-                                    style="cursor : pointer"
-                                    @click="goOtherpage(item.follower)"
-                                >{{ item.followernickName }}</span>
+                                <span style="cursor : pointer" @click="goOtherpage(item.follower)">{{ item.followernickName }}</span>
                                 <div class="myfollowList" v-show="followCheck[index] == false">
-                                    <div class="icon-instagram"></div>팔로우
+                                    <div class="icon-instagram"></div>
+                                    팔로우
                                 </div>
                                 <div class="myfollowingList" v-show="followCheck[index] == true">
-                                    <div class="icon-ok"></div>팔로잉
+                                    <div class="icon-ok"></div>
+                                    팔로잉
                                 </div>
                             </ul>
                         </li>
@@ -156,37 +116,26 @@
                     <!-- <section class="wrapper"> -->
                     <h2 class="content" style="text-align:center">
                         팔로잉
-                        <button
-                            type="button"
-                            class="close"
-                            aria-label="Close"
-                            style="float:right"
-                        >
+                        <button type="button" class="close" aria-label="Close" style="float:right">
                             <span @click="restart()" aria-hidden="true">x</span>
                         </button>
                     </h2>
                     <hr />
                     <br />
 
-                    <div
-                        style="margin 10px;"
-                        class="content"
-                        v-for="(item, index) in followingList"
-                        v-bind:key="index"
-                    >
+                    <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul
-                                style="margin-left:25px; cursor: pointer;"
-                                @click="goOtherpage(item.following)"
-                            >
+                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
                                 {{
-                                item.followingnickName
+                                    item.followingnickName
                                 }}
                                 <div class="myfollowList" v-show="followingCheck[index] == false">
-                                    <div class="icon-instagram"></div>팔로우
+                                    <div class="icon-instagram"></div>
+                                    팔로우
                                 </div>
                                 <div class="myfollowingList" v-show="followingCheck[index] == true">
-                                    <div class="icon-ok"></div>팔로잉
+                                    <div class="icon-ok"></div>
+                                    팔로잉
                                 </div>
                             </ul>
                         </li>
@@ -221,6 +170,7 @@ export default {
         $route(to, from) {
             console.log(to);
             console.log(from);
+            this.myBoard(this.$route.params.email);
             this.doFollow();
             this.retrieveQuestion(); // 회원 정보
             this.showFollower(); // 팔로우
@@ -242,7 +192,9 @@ export default {
             follower: 2,
             following: 1,
             ischeck2: false,
-            info: [],
+            info: {
+                imgURL: ''
+            },
             followingCheck: [],
             followCheck: [], // 팔로우/팔로잉 버튼
             // followingListCheck: [true, true], // 팔로잉 버튼
@@ -268,6 +220,8 @@ export default {
         };
     },
     methods: {
+        getUser() {},
+
         detail(rid) {
             sessionStorage.setItem('rid', rid);
             console.log(rid);
