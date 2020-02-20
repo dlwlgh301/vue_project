@@ -12,7 +12,13 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
+                        <img
+                            style="width:150px; height:150px"
+                            v-if="info.imgURL != ''"
+                            v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
+                            alt
+                            class="portrait"
+                        />
                     </div>
 
                     <div class="profile2-user-settings">
@@ -164,6 +170,7 @@ export default {
         $route(to, from) {
             console.log(to);
             console.log(from);
+            this.myBoard(this.$route.params.email);
             this.doFollow();
             this.retrieveQuestion(); // 회원 정보
             this.showFollower(); // 팔로우
@@ -185,7 +192,9 @@ export default {
             follower: 2,
             following: 1,
             ischeck2: false,
-            info: [],
+            info: {
+                imgURL: ''
+            },
             followingCheck: [],
             followCheck: [], // 팔로우/팔로잉 버튼
             // followingListCheck: [true, true], // 팔로잉 버튼
@@ -211,6 +220,8 @@ export default {
         };
     },
     methods: {
+        getUser() {},
+
         detail(rid) {
             sessionStorage.setItem('rid', rid);
             console.log(rid);

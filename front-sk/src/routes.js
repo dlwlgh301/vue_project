@@ -27,6 +27,7 @@ import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
 import FollowingPage from './views/contents/FollowingPage.vue';
 import store from './vuex/store';
+import Test from './views/user/test.vue';
 
 Vue.use(Router);
 
@@ -166,6 +167,11 @@ const router = new Router({
             path: '/contents/FollowingPage',
             name: 'FollowingPage',
             component: FollowingPage
+        },
+        {
+            path: '/user/test',
+            name: 'Test',
+            component: Test
         }
     ]
 });
