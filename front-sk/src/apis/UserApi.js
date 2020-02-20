@@ -31,12 +31,13 @@ const UserApi = {
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
-    getReviewDetail: data => getReviewDetail(data),
+    getReviewDetail: (data, callback) => getReviewDetail(data, callback),
     insertComment: data => insertComment(data),
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
     myboardLoad: (data, callback, errorCallback) => myboardLoad(data, callback, errorCallback),
     myFollowingBoard: (data, callback, errorCallback) => myFollowingBoard(data, callback, errorCallback),
+    deleteReview: data => deleteReview(data),
     myLikeBoard: (data, callback, errorCallback) => myLikeBoard(data, callback, errorCallback)
 };
 const myFollowingBoard = (data, callback, errorCallback) => {
@@ -474,7 +475,7 @@ const getReviewByproduct = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const getReviewDetail = data => {
+const getReviewDetail = (data, callback) => {
     axios
         .get(`${host}/review/show/detail`, {
             params: {
@@ -483,6 +484,7 @@ const getReviewDetail = data => {
             }
         })
         .then(res => {
+            callback(res);
             console.log(res);
         });
 };
@@ -531,5 +533,8 @@ const cancelLike = data => {
         .then(res => {
             console.log(res);
         });
+};
+const deleteReview = data => {
+    axios.delete(`${host}/review/` + data);
 };
 export default UserApi;
