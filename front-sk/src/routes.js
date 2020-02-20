@@ -50,7 +50,8 @@ const router = new Router({
         {
             path: '/user/OtherProfile/:email',
             name: 'OtherProfile',
-            component: OtherProfile
+            component: OtherProfile,
+            props: true
         },
         {
             path: '/user/join',

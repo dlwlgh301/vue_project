@@ -31,16 +31,20 @@
                                     required
                                     class="search-box"
                                     placeholder="User 검색"
+<<<<<<< HEAD
                                     @focus="serchBoxFocus"
                                     @blur="searchBoxNotFoucs"
                                     autocomplete="off"
+=======
+>>>>>>> 85a88d8768e9673491bc4490b1062efae9315af6
                                 />
                             </form>
                         </div>
+
                         <!-- <input class="MainSearchInput" v-on:input="user = $event.target.value" style="z-index: 2;" /> -->
                         <!-- <md-icon>search</md-icon> -->
 
-                        <center v-model="user" class="UserAutoList" v-show="flag">
+                        <center v-if="member != null && member.length != 0" v-model="user" class="UserAutoList">
                             <md-list class="md-triple-line" style="padding:0px; width:17rem; text-align: center; vertical-align: middle;">
                                 <div v-for="(item, index) in member" v-bind:key="index">
                                     <md-list-item style=" margin-top: 0.5px; border: 0.01em inset  #1E7AD3; ">
@@ -293,6 +297,7 @@ export default {
     },
     methods: {
         serchBoxFocus() {
+            console.log('flag on');
             this.flag = true;
         },
         searchBoxNotFoucs() {
@@ -304,11 +309,18 @@ export default {
         goOtherpage(e) {
             this.user = '';
             this.member = [];
+
+            //console.log("asdasdasdasdassad~~~~~~~~~~~~~~~~~~~~~`");
+            console.log();
+
+            var param = this.$route.params;
+
             if (e == sessionStorage.getItem('email')) {
                 this.member = [];
                 this.$router.push('/user/profile');
-            } else {
+            } else if (param != null && param.email != e) {
                 this.member = [];
+
                 this.$router.push('/user/OtherProfile/' + e);
             }
         },
@@ -318,6 +330,7 @@ export default {
             UserApi.requestNoticeNum(
                 data,
                 res => {
+                    console.log('가져오냐고오오오!!!ㄹ');
                     this.num = res.data.object.num;
                     console.log(this.num);
                 },
