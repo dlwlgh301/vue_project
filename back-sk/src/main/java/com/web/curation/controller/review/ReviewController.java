@@ -197,6 +197,8 @@ public class ReviewController {
             arr.add(new apiData(r, imgServiceImpl.getImgs(r.getRid()), interestServiceImpl.isInterest(interest)));
         }
 
+        System.out.println("제품별동일리뷰");
+        System.out.println(list);
         if (list.size() > 0) {
             result.status = true;
             result.data = "success";
