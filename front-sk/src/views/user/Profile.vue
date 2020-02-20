@@ -12,13 +12,7 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-                        <img
-                            v-if="info.imgURL != '' && info.imgURL != null"
-                            style="width:150px; height:150px"
-                            v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
-                            alt
-                            class="portrait"
-                        />
+                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
                     </div>
 
                     <div class="profile2-user-settings">
