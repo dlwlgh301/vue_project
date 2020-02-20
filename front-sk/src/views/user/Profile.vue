@@ -23,16 +23,12 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-<<<<<<< HEAD
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
-=======
                         <img
                             style="width:150px; height:150px"
                             v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
                             alt
                             class="portrait"
                         />
->>>>>>> f1b68e2a886071119a4465b169475bfec73ee02c
                     </div>
 
                     <div class="profile2-user-settings">
@@ -75,15 +71,11 @@
                         @click="detail(item.review.rid)"
                     >
                         <figure class="post-image">
-<<<<<<< HEAD
-                            <img v-bind:src="'http://192.168.100.58:8080/image/' + item.img[0]" alt class="portrait" />
-=======
                             <img
                                 v-bind:src="'http://192.168.100.58:8080/image/' + item.img[0]"
                                 alt
                                 class="portrait"
                             />
->>>>>>> f1b68e2a886071119a4465b169475bfec73ee02c
 
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->
                             <!-- <img src="https://github.com/AngelCabrera/instagram-layout-w-css-grid/blob/master/compu.jpg?raw=true" alt="" /> -->

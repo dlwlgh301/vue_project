@@ -1,11 +1,6 @@
 <template>
     <!---->
-    <form
-        action="#"
-        @submit.prevent="insertMember()"
-        enctype="multipart/form-data"
-        id="insertMemberForm"
-    >
+    <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
         <div class="wrapC" style="padding-top: 100px;" v-if="!passwordNext">
             <h1>
                 가입할때 입력하셨던
@@ -92,16 +87,7 @@
                 <div id="imageMain">
                     <div v-if="!image">
                         <!-- <img src="../../assets/images/프로필아이콘.png" /> -->
-<<<<<<< HEAD
                         <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
-=======
-                        <img
-                            style="width:150px; height:150px"
-                            v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
-                            alt
-                            class="portrait"
-                        />
->>>>>>> f1b68e2a886071119a4465b169475bfec73ee02c
                     </div>
                     <div v-else>
                         <img :src="image" style="width:150px; height:150px" />
@@ -112,13 +98,7 @@
                 <div>
                     <form id="imageInputform">
                         파일 :
-                        <input
-                            id="imageInput"
-                            type="file"
-                            name="file"
-                            ref="file"
-                            @change="onFileChange"
-                        />
+                        <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
                         <!-- <input type="submit" name="업로드" value="제출" /><br /><br /> -->
                     </form>
                 </div>
