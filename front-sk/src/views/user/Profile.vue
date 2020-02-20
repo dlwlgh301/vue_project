@@ -818,6 +818,7 @@ img {
     }
 
     .profile2-edit-btn {
+        size: 30px;
         order: 1;
         padding: 0;
         text-align: center;
