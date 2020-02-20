@@ -47,6 +47,9 @@ import Kakao from '../../kakao';
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     data: () => {
         return {
