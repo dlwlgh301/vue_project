@@ -148,6 +148,9 @@ import Swal from 'sweetalert2';
 export default {
     created() {
         this.$store.commit('setPageTitle', '유저 정보');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     filters: {
         handleFollowFilter: value => {

@@ -67,6 +67,7 @@
             </div>
             <div class="input-with-label">
                 <v-autocomplete
+                    v-model="productName"
                     v-bind:class="{
                         error: error.productName,
                         complete: !error.productName && productName.length !== 0
@@ -151,6 +152,9 @@ import ProductApi from '../../apis/ProductApi';
 export default {
     created() {
         this.$store.commit('setPageTitle', '글쓰기');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     data: () => {
         return {
@@ -167,7 +171,7 @@ export default {
             age: '',
             images: [],
             status: '',
-            productName: '키보드',
+            productName: '',
             keywordMain: '',
             keyowrdSub: '',
             score: 0,
@@ -287,6 +291,7 @@ export default {
             this.keywordMain = this.age + ',' + this.gender + ',' + this.status;
             this.keywordSub = this.addtag;
             this.email = sessionStorage.getItem('email');
+            console.log(this.productName);
             /*    console.log(this.fileList);
             console.log(this.keyword);
             let test = new FormData();
@@ -307,11 +312,10 @@ export default {
 
             var images = this.images;
 
-            var productName = this.productName;
             var email = this.email;
             var review = {
                 email: email,
-                productName: productName,
+                productName: this.productName,
                 keywordMain: this.keywordMain,
                 keywordSub: this.keywordSub,
                 title: this.title,
