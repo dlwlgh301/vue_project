@@ -304,13 +304,15 @@ export default {
             this.user = '';
             this.member = [];
 
-            console.log("asdasdasdasdassad~~~~~~~~~~~~~~~~~~~~~`");
-            console.log(this.$route.params);
+            //console.log("asdasdasdasdassad~~~~~~~~~~~~~~~~~~~~~`");
+            console.log();
+
+            var param = this.$route.params;
 
             if (e == sessionStorage.getItem('email')) {
                 this.member = [];
                 this.$router.push('/user/profile');
-            } else {
+            } else if (param != null && param.email != e) {
                 this.member = [];
 
                 this.$router.push('/user/OtherProfile/' + e);
@@ -322,6 +324,7 @@ export default {
             UserApi.requestNoticeNum(
                 data,
                 res => {
+                    console.log('가져오냐고오오오!!!ㄹ');
                     this.num = res.data.object.num;
                     console.log(this.num);
                 },

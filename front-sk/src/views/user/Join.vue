@@ -463,6 +463,11 @@ export default {
                 comment: this.comment,
                 imgURL: this.file.name
             };
+
+            if (this.files.length <= 0) {
+                user.imgURL = 'default.png';
+            }
+
             console.log('userrrr');
             console.log(user);
             UserApi.join(user);
