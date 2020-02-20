@@ -4,11 +4,13 @@
             <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
-                        <v-list-item-avatar><v-img :src="getImgUrl(n.review.imgURL)" style="margin-bottom:0.5rem"></v-img></v-list-item-avatar>
+                        <v-list-item-avatar>
+                            <v-img :src="getImgUrl(n.review.imgURL)" style="margin-bottom:0.5rem"></v-img>
+                        </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">{{
-                                n.review.nickName
-                            }}</v-list-item-title>
+                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">
+                                {{ n.review.nickName }}
+                            </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
@@ -88,7 +90,7 @@ export default {
             this.$router.push('/contents/detail');
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     },
     mounted() {

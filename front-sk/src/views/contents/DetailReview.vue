@@ -1,5 +1,5 @@
-<template
-    ><div>
+<template>
+    <div>
         <div class="md-layout md-alignment-center" style="height:60%">
             <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
@@ -30,15 +30,16 @@
                     </md-card-media>
                     <md-card-content style="padding-bottom:0; padding-top: 0.7rem">
                         <p id="nick">
-                            {{ review.nickName }} &nbsp; <span id="title">{{ review.title }}</span>
+                            {{ review.nickName }} &nbsp;
+                            <span id="title">{{ review.title }}</span>
                         </p>
                     </md-card-content>
                     <md-card-content style="padding-top:0.3rem">
                         <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
                     </md-card-content>
-                    <md-card-content class=" md-scrollbar" style="padding-top:0; height: 80px;overflow: auto;">{{ review.content }}</md-card-content>
+                    <md-card-content class="md-scrollbar" style="padding-top:0; height: 80px;overflow: auto;">{{ review.content }}</md-card-content>
                     <div style="margin-left:0.5rem;">
-                        <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }} </el-tag>
+                        <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }}</el-tag>
                     </div>
                 </md-card>
             </div>
@@ -261,7 +262,7 @@ export default {
             // );
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     }
 };
