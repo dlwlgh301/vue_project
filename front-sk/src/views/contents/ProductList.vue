@@ -34,7 +34,7 @@
                         </v-row>
 
                         <!--<div class="my-4 subtitle-1 black--text">카페</div>-->
-                        <div>{{ n.review.productName }}</div>
+                        <div>{{ n.review.content }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -42,31 +42,17 @@
     </v-container>
 </template>
 <script>
-import UserApi from '../../apis/UserApi';
-import firebase from '../../apis/FirebaseService';
+// import UserApi from '../../apis/UserApi';
+
+import ProductApi from '../../apis/ProductApi';
 export default {
     created() {
         this.$store.commit('setPageTitle', 'SHOP+');
-        //var keyword = sessionStorage.getItem('keyword');
-        var email = sessionStorage.getItem('email');
-
-        UserApi.requestReview(
-            email,
-            res => {
-                this.data = res.data.object;
-                this.favorite = res.data.object[0].interest;
-            },
-            // eslint-disable-next-line no-unused-vars
-            error => {}
-        );
-
-        //console.log(this.data);
-        if (sessionStorage.getItem('email') == null) {
-            this.$router.push('/');
-        }
     },
     data: () => {
         return {
+            productName: '',
+            email: '',
             data: [],
             title: '',
             content: '',
@@ -75,68 +61,20 @@ export default {
             photo: '',
             keyword2: '',
             like: '',
-            favorite: []
+            favorite: false
         };
     },
     methods: {
         goOtherpage(e) {
-            // this.email = this.$route.params.email;
             if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
             else this.$router.push('/user/OtherProfile/' + e);
         },
-        toggle(interest, rid, index) {
-            var email = sessionStorage.getItem('email');
 
-            this.data[index].interest = !this.data[index].interest;
-
-            if (interest) {
-                var cancel = {
-                    reviewNum: rid,
-                    email: email
-                };
-                // interest = !interest;
-                UserApi.cancelLike(cancel);
-
-                UserApi.requestReview(
-                    email,
-                    res => {
-                        // this.data = res.data.object;
-                        this.favorite = res.data.object[0].interest;
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
+        toggle() {
+            if (this.favorite) {
+                this.favorite = false;
             } else {
-                var like = {
-                    reviewNum: rid,
-                    email: email
-                };
-                // interest = !interest;
-
-                UserApi.plusLike(like, res => {
-                    if (res.data == 'success') {
-                        let info = res.data.object;
-                        firebase.noticePush({
-                            sender: info.sender,
-                            senderNick: info.senderNick,
-                            receiver: info.receiver,
-                            msg: info.msg,
-                            img: info.img
-                        });
-                    }
-                });
-
-                UserApi.requestReview(
-                    email,
-                    res => {
-                        // this.data = res.data.object;
-                        this.favorite = res.data.object[0].interest;
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
+                this.favorite = true;
             }
         },
         detail(rid) {
@@ -147,6 +85,28 @@ export default {
         getImgUrl(pic) {
             return `http://192.168.100.58:8080/image/${pic}`;
         }
+    },
+    mounted() {
+        this.productName = this.$route.params.productName;
+        this.email = sessionStorage.getItem('email');
+        alert(this.productName);
+        // this.email = sessionStorage.getItem('email');
+
+        var data = {
+            productName: this.productName,
+            email: this.email
+        };
+
+        ProductApi.showProduct(
+            data,
+            res => {
+                this.data = res.data.object;
+                this.favorite = res.data.object[0].interest;
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 };
 </script>

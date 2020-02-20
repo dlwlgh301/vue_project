@@ -26,6 +26,7 @@ import Detail from './views/contents/DetailReview';
 import Like from './views/contents/Like.vue';
 import DeleteUser from './views/user/DeleteUser.vue';
 import FollowingPage from './views/contents/FollowingPage.vue';
+import ProductList from './views/contents/ProductList.vue';
 import store from './vuex/store';
 import Test from './views/user/test.vue';
 
@@ -47,6 +48,12 @@ const router = new Router({
             path: '/user/DeleteUser',
             name: 'DeleteUser',
             component: DeleteUser
+        },
+        {
+            path: '/contents/ProductList/:productName',
+            name: 'ProductList',
+            component: ProductList,
+            props: true
         },
         {
             path: '/user/OtherProfile/:email',
