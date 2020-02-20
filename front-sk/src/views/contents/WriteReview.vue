@@ -77,6 +77,15 @@
                 <label for="product">제품</label>
                 <div class="error-text" v-if="error.title">{{ error.title }}</div>
             </div>
+            <v-autocomplete
+                :disabled="isEditing"
+                :items="states"
+                :filter="customFilter"
+                color="white"
+                item-text="name"
+                label="State"
+                @keyup="searchProduct"
+            ></v-autocomplete>
             <div class="wrap" id="score">
                 <v-row>
                     <v-col>
@@ -131,6 +140,7 @@
 </template>
 <script>
 import UserApi from '../../apis/UserApi';
+import ProductApi from '../../apis/ProductApi';
 //import UserApi from '../../apis/UserApi';
 export default {
     created() {
@@ -167,7 +177,18 @@ export default {
                 file: false
             },
             filecount: 0,
-            dialogVisible: false
+            dialogVisible: false,
+            hasSaved: false,
+            isEditing: null,
+            model: null,
+            states: [
+                // { name: 'Florida', abbr: 'FL', id: 1 },
+                // { name: 'Georgia', abbr: 'GA', id: 2 },
+                // { name: 'Nebraska', abbr: 'NE', id: 3 },
+                // { name: 'California', abbr: 'CA', id: 4 },
+                // { name: 'New York', abbr: 'NY', id: 5 }
+            ],
+            keyword: ''
         };
     },
     watch: {
@@ -198,6 +219,51 @@ export default {
         }
     },
     methods: {
+        customFilter(item, queryText) {
+            const textOne = item.name.toLowerCase();
+            // const textTwo = item.abbr.toLowerCase();
+            const searchText = queryText.toLowerCase();
+
+            return textOne.indexOf(searchText) > -1;
+        },
+        save() {
+            this.hasSaved = true;
+        },
+        searchProduct(e) {
+            console.log(e.target.value);
+
+            this.keyword = e.target.value;
+            let data = {
+                keyword: this.keyword,
+                email: sessionStorage.getItem('email')
+            };
+
+            ProductApi.getAPI(
+                data,
+                res => {
+                    this.users = res.data.object.list;
+                    console.log('user: ', this.users);
+                    console.log(this.users);
+                    var autoCom = [];
+
+                    for (let i = 0; i < this.users.length; i++) {
+                        autoCom.push({ name: this.users[i].productName, id: i + 1 });
+                    }
+                    this.states = autoCom;
+
+                    this.likeList = res.data.object.likeCheckList;
+
+                    console.log('likeList: ', this.likeList);
+                },
+                error => {
+                    console.log(error);
+                }
+            );
+            this.sub1 = '';
+            this.sub2 = '';
+            console.log('user ==>');
+            console.log(this.users);
+        },
         handleChange(file, fileList) {
             this.file = file.raw;
             this.fileList = fileList;
