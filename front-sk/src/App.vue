@@ -18,8 +18,8 @@
                     </div>
                     <v-spacer></v-spacer>
                     <!-- 현준이형 여기 사이 만들면 될듯  -->
-                    <div style="width:19rem; ">
-                        <div class="search-wrapper">
+                    <div style="width:20rem; ">
+                        <div class="search-wrapper" style="width:100%">
                             <form>
                                 <button class="close-icon" type="reset"></button>
 
@@ -333,12 +333,10 @@ export default {
             }
         },
         logout() {
-            Kakao.Auth.logout();
-            Kakao.Auth.setAccessToken('', false);
             firebase.logout(sessionStorage.getItem('email'));
             localStorage.clear();
             sessionStorage.clear();
-            Kakao.Auth.cleanup();
+
             this.$router.push('/');
         }
     },

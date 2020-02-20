@@ -4,12 +4,13 @@
             <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
                 <md-card style="height:600px; z-index:0 ">
-                    <md-card-header>
+                    <md-card-header style="width:100%;">
                         <md-avatar>
                             <img :src="getImgUrl(review.imgURL)" />
                         </md-avatar>
                         <div class="md-title">{{ review.nickName }}</div>
                         <div class="md-subhead">{{ review.productName }}</div>
+
                         <!--제품이름 넣기-->
                     </md-card-header>
 
@@ -69,6 +70,21 @@
                     <md-button class="md-icon-button">
                         <md-icon>chat_bubble_outline</md-icon>
                     </md-button>
+                    <md-menu md-size="small" md-direction="bottom-start" v-if="check">
+                        <md-button class="md-icon-button" md-menu-trigger>
+                            <md-icon>more_vert</md-icon>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item @click="updateReview()">
+                                <span>수정하기</span>
+                            </md-menu-item>
+
+                            <md-menu-item @click="deleteReview(review.rid)">
+                                <span>삭제하기</span>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
                     <md-divider></md-divider>
                     <md-field style="padding-left:1rem">
                         <md-input v-model="comment" placeholder="댓글을 입력하세요"></md-input>
@@ -85,6 +101,7 @@
 </template>
 <script>
 import UserApi from '../../apis/UserApi';
+import firebase from '../../apis/FirebaseService';
 export default {
     mounted() {
         this.rid = sessionStorage.getItem('rid');
@@ -103,14 +120,19 @@ export default {
                 this.imgs = res.data.object.img;
                 this.interest = res.data.object.interest;
                 this.viewcomment = res.data.object.comment;
+                var writer_email = res.data.object.review.email;
                 var value = res.data.object.review.keywordMain;
                 var valueList = value.split(',');
-                console.log(valueList);
+                console.log(this.email + ',' + writer_email);
+                //console.log(valueList);
                 this.mtags = valueList;
 
                 this.stags = res.data.object.review.keywordSub;
-                console.log(this.viewcomment);
-                console.log(this.imgs);
+                //console.log(this.viewcomment);
+                // console.log(this.imgs);
+                if (this.email == writer_email) {
+                    this.check = true;
+                }
             },
             error => {
                 console.log(error);
@@ -119,6 +141,7 @@ export default {
     },
     data: () => {
         return {
+            check: false,
             data: [],
             mtags: [],
             stags: [],
@@ -141,6 +164,11 @@ export default {
         };
     },
     methods: {
+        updateReview() {},
+        deleteReview(rid) {
+            UserApi.deleteReview(rid);
+            this.$router.push('/contents/main');
+        },
         toggle(interest, rid) {
             var email = sessionStorage.getItem('email');
 
