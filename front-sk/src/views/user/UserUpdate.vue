@@ -1,6 +1,11 @@
 <template>
     <!---->
-    <form action="#" @submit.prevent="insertMember()" enctype="multipart/form-data" id="insertMemberForm">
+    <form
+        action="#"
+        @submit.prevent="insertMember()"
+        enctype="multipart/form-data"
+        id="insertMemberForm"
+    >
         <div class="wrapC" style="padding-top: 100px;" v-if="!passwordNext">
             <h1>
                 가입할때 입력하셨던
@@ -18,16 +23,12 @@
                     placeholder="비밀번호를 입력하세요."
                 />
                 <label for="checkpassword">비밀번호</label>
-                <div class="error-text" v-if="error.checkpassword">
-                    {{ error.checkpassword }}
-                </div>
+                <div class="error-text" v-if="error.checkpassword">{{ error.checkpassword }}</div>
             </div>
             <!-- <button class="btn btn--back btn--login" v-on:click="checkPw()" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
                 다음페이지
-            </button> -->
-            <button class="btn btn--back btn--login" v-on:click="checkPw()">
-                다음페이지
-            </button>
+            </button>-->
+            <button class="btn btn--back btn--login" v-on:click="checkPw()">다음페이지</button>
         </div>
         <div class="wrapC" v-if="passwordNext && !next">
             <br />
@@ -81,21 +82,22 @@
                 </md-field>
             </div>
 
-            <button class="btn btn--back" type="button" v-on:click="next = true">
-                다음화면으로
-            </button>
+            <button class="btn btn--back" type="button" v-on:click="next = true">다음화면으로</button>
         </div>
 
         <div class="wrapC" style="padding-top: 100px;" v-if="next">
-            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">
-                유저정보변경
-            </h1>
+            <h1 class="title" style="padding-bottom: 1em; font-weight : 600">유저정보변경</h1>
 
             <div class="join">
                 <div id="imageMain">
                     <div v-if="!image">
                         <!-- <img src="../../assets/images/프로필아이콘.png" /> -->
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.90:8080/image/' + info.imgURL" alt class="portrait" />
+                        <img
+                            style="width:150px; height:150px"
+                            v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
+                            alt
+                            class="portrait"
+                        />
                     </div>
                     <div v-else>
                         <img :src="image" style="width:150px; height:150px" />
@@ -106,7 +108,13 @@
                 <div>
                     <form id="imageInputform">
                         파일 :
-                        <input id="imageInput" type="file" name="file" ref="file" @change="onFileChange" />
+                        <input
+                            id="imageInput"
+                            type="file"
+                            name="file"
+                            ref="file"
+                            @change="onFileChange"
+                        />
                         <!-- <input type="submit" name="업로드" value="제출" /><br /><br /> -->
                     </form>
                 </div>
@@ -133,9 +141,7 @@
                         type="text"
                     />
                     <label for="nickname">한줄소개</label>
-                    <div class="error-text" v-if="error.comment">
-                        {{ error.comment }}
-                    </div>
+                    <div class="error-text" v-if="error.comment">{{ error.comment }}</div>
                 </div>
 
                 <div class="input-with-label">
@@ -150,9 +156,7 @@
                         type="text"
                     />
                     <label for="name">이름</label>
-                    <div class="error-text" v-if="error.name">
-                        {{ error.name }}
-                    </div>
+                    <div class="error-text" v-if="error.name">{{ error.name }}</div>
                 </div>
 
                 <div class="input-with-label">
@@ -167,9 +171,7 @@
                         placeholder="비밀번호를 입력하세요."
                     />
                     <label for="changepassword">비밀번호</label>
-                    <div class="error-text" v-if="error.changepassword">
-                        {{ error.changepassword }}
-                    </div>
+                    <div class="error-text" v-if="error.changepassword">{{ error.changepassword }}</div>
                 </div>
 
                 <div class="input-with-label">
@@ -184,18 +186,12 @@
                         placeholder="비밀번호를 다시한번 입력하세요."
                     />
                     <label for="password-confirm">비밀번호 확인</label>
-                    <div class="error-text" v-if="error.passwordConfirm">
-                        {{ error.passwordConfirm }}
-                    </div>
+                    <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
                 </div>
             </div>
 
-            <button class="btn btn--back" v-on:click="check = true" type="submit">
-                정보수정
-            </button>
-            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">
-                이전화면으로 돌아가기
-            </button>
+            <button class="btn btn--back" v-on:click="check = true" type="submit">정보수정</button>
+            <button class="btn btn--back" v-on:click="back" style="margin-top:10px">이전화면으로 돌아가기</button>
         </div>
     </form>
 </template>

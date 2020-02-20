@@ -202,6 +202,9 @@ public class AccountController {
         // "\\resources"; // 웹프로젝트 경로 위치
         System.out.println("fileupload~~~~~~~~~~~~~~!!!!!!!!!!!!!!!!!!!");
         String path = System.getProperty("user.dir") + "\\back-sk\\src\\main\\resources\\static\\image\\";
+
+        System.out.println(file);
+
         System.out.println(1);
         System.out.println("path : " + path);
         File copyFile = new File(path + file.getOriginalFilename());

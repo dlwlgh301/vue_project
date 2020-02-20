@@ -1,5 +1,6 @@
 <template
-    ><div>
+    >
+    <div>
         <div class="md-layout md-alignment-center" style="height:60%">
             <div class="md-layout-item md-small-size-10 md-xsmall-hide"></div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
@@ -23,29 +24,51 @@
                             delimiter-icon="mdi-minus"
                             height="300"
                         >
-                            <v-carousel-item v-for="(img, index) in imgs" :key="index" :src="getImgUrl(img)">
+                            <v-carousel-item
+                                v-for="(img, index) in imgs"
+                                :key="index"
+                                :src="getImgUrl(img)"
+                            >
                                 <v-img height="250"></v-img>
                             </v-carousel-item>
                         </v-carousel>
                     </md-card-media>
                     <md-card-content style="padding-bottom:0; padding-top: 0.7rem">
                         <p id="nick">
-                            {{ review.nickName }} &nbsp; <span id="title">{{ review.title }}</span>
+                            {{ review.nickName }} &nbsp;
+                            <span id="title">{{ review.title }}</span>
                         </p>
                     </md-card-content>
                     <md-card-content style="padding-top:0.3rem">
-                        <v-rating :value="review.score" color="amber" dense half-increments readonly size="20"></v-rating>
+                        <v-rating
+                            :value="review.score"
+                            color="amber"
+                            dense
+                            half-increments
+                            readonly
+                            size="20"
+                        ></v-rating>
                     </md-card-content>
-                    <md-card-content class=" md-scrollbar" style="padding-top:0; height: 80px;overflow: auto;">{{ review.content }}</md-card-content>
+                    <md-card-content
+                        class="md-scrollbar"
+                        style="padding-top:0; height: 80px;overflow: auto;"
+                    >{{ review.content }}</md-card-content>
                     <div style="margin-left:0.5rem;">
-                        <el-tag v-for="(n, idx) in mtags" :key="idx" style="margin-left:0.5rem">{{ n }} </el-tag>
+                        <el-tag
+                            v-for="(n, idx) in mtags"
+                            :key="idx"
+                            style="margin-left:0.5rem"
+                        >{{ n }}</el-tag>
                     </div>
                 </md-card>
             </div>
             <div class="md-layout-item md-medium-size-33 md-small-size-100 md-xsamll-size-100">
                 <md-card style="height:600px; z-index:0">
                     <md-subheader>댓글</md-subheader>
-                    <md-list class="md-double-line md-scrollbar" style="height:400px; overflow: auto;">
+                    <md-list
+                        class="md-double-line md-scrollbar"
+                        style="height:400px; overflow: auto;"
+                    >
                         <div v-for="(comment, index) in viewcomment" :key="index">
                             <md-divider></md-divider>
                             <md-list-item>
@@ -254,7 +277,7 @@ export default {
             );
         },
         getImgUrl(pic) {
-            return `http://192.168.100.90:8080/image/${pic}`;
+            return `http://192.168.100.58:8080/image/${pic}`;
         }
     }
 };
