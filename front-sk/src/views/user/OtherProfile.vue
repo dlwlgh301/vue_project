@@ -155,6 +155,17 @@ export default {
             return value ? '팔로잉' : '팔로우';
         }
     },
+    watch: {
+        $route(to, from) {
+            console.log(to);
+            console.log(from);
+            this.doFollow();
+            this.retrieveQuestion(); // 회원 정보
+            this.showFollower(); // 팔로우
+            this.showFollowing(); //팔로잉
+        }
+    },
+
     data: () => {
         return {
             myboard: [],
