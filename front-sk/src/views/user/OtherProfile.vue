@@ -12,9 +12,6 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-<<<<<<< HEAD
-                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
-=======
                         <img
                             style="width:150px; height:150px"
                             v-if="info.imgURL != ''"
@@ -22,7 +19,6 @@
                             alt
                             class="portrait"
                         />
->>>>>>> 6c296c24641c8a777a2dbccdf7dcbc3a58a7f34c
                     </div>
 
                     <div class="profile2-user-settings">
