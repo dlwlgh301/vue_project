@@ -79,10 +79,6 @@
                         </md-button>
 
                         <md-menu-content>
-                            <md-menu-item @click="updateReview()">
-                                <span>수정하기</span>
-                            </md-menu-item>
-
                             <md-menu-item @click="deleteReview(review.rid)">
                                 <span>삭제하기</span>
                             </md-menu-item>
@@ -108,40 +104,34 @@ import firebase from '../../apis/FirebaseService';
 export default {
     mounted() {
         this.rid = sessionStorage.getItem('rid');
-        console.log('rid출력' + this.rid);
+
         this.email = sessionStorage.getItem('email');
         this.nickName = sessionStorage.getItem('nickName');
         var data = {
             email: this.email,
             rid: this.rid
         };
-        UserApi.getReviewDetail(
-            data,
-            res => {
-                this.data = res.data.object;
-                this.review = res.data.object.review;
-                this.imgs = res.data.object.img;
-                this.interest = res.data.object.interest;
-                this.viewcomment = res.data.object.comment;
-                var writer_email = res.data.object.review.email;
-                var value = res.data.object.review.keywordMain;
-                var valueList = value.split(',');
-                console.log(this.email + ',' + writer_email);
-                //console.log(valueList);
-                this.mtags = valueList;
-                var svalue = res.data.object.review.keywordSub;
-                var svalueList = svalue.split(',');
-                this.stags = svalueList;
-                //console.log(this.viewcomment);
-                // console.log(this.imgs);
-                if (this.email == writer_email) {
-                    this.check = true;
-                }
-            },
-            error => {
-                console.log(error);
+        UserApi.getReviewDetail(data, res => {
+            this.data = res.data.object;
+            this.review = res.data.object.review;
+            this.imgs = res.data.object.img;
+            this.interest = res.data.object.interest;
+            this.viewcomment = res.data.object.comment;
+            var writer_email = res.data.object.review.email;
+            var value = res.data.object.review.keywordMain;
+            var valueList = value.split(',');
+
+            //console.log(valueList);
+            this.mtags = valueList;
+            var svalue = res.data.object.review.keywordSub;
+            var svalueList = svalue.split(',');
+            this.stags = svalueList;
+            //console.log(this.viewcomment);
+            // console.log(this.imgs);
+            if (this.email == writer_email) {
+                this.check = true;
             }
-        );
+        });
     },
     updated() {},
     data: () => {
@@ -153,6 +143,7 @@ export default {
             rid: '',
             review: '',
             imgs: '',
+            productName: '',
             viewcomment: '',
             comment: '',
             email: '',
@@ -201,10 +192,8 @@ export default {
                     email: email
                 };
 
-                console.log(like);
                 UserApi.plusLike(like, res => {
                     if (res.data == 'success') {
-                        console.log('좋아요: ' + res);
                         let info = res.data.object;
                         firebase.noticePush({
                             sender: info.sender,
@@ -213,7 +202,6 @@ export default {
                             msg: info.msg,
                             img: info.img
                         });
-                        console.log(res);
                     }
                 });
 
@@ -226,10 +214,9 @@ export default {
                 email: this.email,
                 content: this.comment
             };
-            console.log(data);
+
             UserApi.insertComment(data, res => {
                 if (res.data == 'success') {
-                    console.log('댓글 등록: ' + res);
                     let info = res.data.object;
                     firebase.noticePush({
                         sender: info.sender,

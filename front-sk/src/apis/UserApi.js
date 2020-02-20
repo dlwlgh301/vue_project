@@ -31,7 +31,7 @@ const UserApi = {
     uploadtest: data => uploadtest(data),
     requestReview: (data, callback, errorCallback) => requestReview(data, callback, errorCallback),
     getReviewByproduct: (data, callback, errorCallback) => getReviewByproduct(data, callback, errorCallback),
-    getReviewDetail: (data, callback) => getReviewDetail(data, callback),
+    getReviewDetail: (data, callback, errorCallback) => getReviewDetail(data, callback, errorCallback),
     insertComment: data => insertComment(data),
     plusLike: (data, callback) => plusLike(data, callback),
     cancelLike: data => cancelLike(data),
@@ -475,7 +475,7 @@ const getReviewByproduct = (data, callback, errorCallback) => {
             errorCallback;
         });
 };
-const getReviewDetail = (data, callback) => {
+const getReviewDetail = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/show/detail`, {
             params: {
@@ -486,6 +486,10 @@ const getReviewDetail = (data, callback) => {
         .then(res => {
             callback(res);
             console.log(res);
+        })
+        .catch(error => {
+            console.log(error);
+            errorCallback(error);
         });
 };
 const insertComment = data => {

@@ -148,6 +148,9 @@ import Swal from 'sweetalert2';
 export default {
     created() {
         this.$store.commit('setPageTitle', '유저 정보');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     filters: {
         handleFollowFilter: value => {
@@ -245,9 +248,8 @@ export default {
                         console.log(res.data.status);
                     }
                 },
-                error => {
-                    console.log(error);
-                }
+                // eslint-disable-next-line no-unused-vars
+                error => {}
             );
             //index 순서 flag 1 :팔로우 2 : 언팔 num = 1:팔로잉 2: 팔로워
             this.followListSize = this.followList.length;
