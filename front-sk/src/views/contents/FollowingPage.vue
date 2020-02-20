@@ -1,30 +1,15 @@
 <template>
     <v-container style="width:100%;">
         <v-row>
-            <v-col
-                v-for="(n, index) in data"
-                :key="n"
-                cols="12"
-                lg="4"
-                md="6"
-                sm="12"
-                xs="12"
-                xl="3"
-            >
+            <v-col v-for="(n, index) in data" :key="n" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
                         <v-list-item-avatar>
                             <v-img :src="getImgUrl(n.review.imgURL)" style="margin-bottom:0.5rem"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title
-                                class="headline"
-                                style="cursor : pointer"
-                                @click="goOtherpage(n.review.email)"
-                            >
-                                {{
-                                n.review.nickName
-                                }}
+                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">
+                                {{ n.review.nickName }}
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
@@ -42,14 +27,7 @@
 
                     <v-card-text>
                         <v-row align="center" class="mx-0">
-                            <v-rating
-                                :value="n.review.score"
-                                color="amber"
-                                dense
-                                half-increments
-                                readonly
-                                size="14"
-                            ></v-rating>
+                            <v-rating :value="n.review.score" color="amber" dense half-increments readonly size="14"></v-rating>
 
                             <div class="grey--text ml-4" v-bind="rating"></div>
                         </v-row>
