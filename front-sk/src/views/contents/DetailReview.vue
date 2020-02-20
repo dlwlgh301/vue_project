@@ -139,6 +139,7 @@ export default {
             }
         );
     },
+    updated() {},
     data: () => {
         return {
             check: false,
@@ -227,31 +228,37 @@ export default {
                     img: info.img
                 });
             });
-            this.comment = '';
-            var redata = {
-                email: this.email,
-                rid: this.rid
+            var commentdata = {
+                imgURL: sessionStorage.getItem('imgURL'),
+                nickName: sessionStorage.getItem('nickName'),
+                content: this.comment
             };
-            UserApi.getReviewDetail(
-                redata,
-                res => {
-                    this.data = res.data.object;
-                    this.review = res.data.object.review;
-                    this.imgs = res.data.object.img;
-                    this.viewcomment = res.data.object.comment;
-                    var value = res.data.object.review.keywordMain;
-                    var valueList = value.split(',');
-                    console.log(valueList);
-                    this.mtags = valueList;
+            this.viewcomment.push(commentdata);
+            this.comment = '';
+            // var redata = {
+            //     email: this.email,
+            //     rid: this.rid
+            // };
+            // UserApi.getReviewDetail(
+            //     redata,
+            //     res => {
+            //         // this.data = res.data.object;
+            //         // this.review = res.data.object.review;
+            //         // this.imgs = res.data.object.img;
+            //         this.viewcomment = res.data.object.comment;
+            //         // var value = res.data.object.review.keywordMain;
+            //         // var valueList = value.split(',');
+            //         // console.log(valueList);
+            //         // this.mtags = valueList;
 
-                    this.stags = res.data.object.review.keywordSub;
-                    console.log(this.viewcomment);
-                    console.log(this.imgs);
-                },
-                error => {
-                    console.log(error);
-                }
-            );
+            //         // this.stags = res.data.object.review.keywordSub;
+            //         //  console.log(this.viewcomment);
+            //         //  console.log(this.imgs);
+            //     },
+            //     error => {
+            //         console.log(error);
+            //     }
+            // );
         },
         getImgUrl(pic) {
             return `http://192.168.100.90:8080/image/${pic}`;

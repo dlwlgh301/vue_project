@@ -8,9 +8,9 @@
                             <img :src="getImgUrl(n.review.imgURL)" />
                         </md-avatar>
                         <v-list-item-content>
-                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">{{
-                                n.review.nickName
-                            }}</v-list-item-title>
+                            <v-list-item-title class="headline" style="cursor : pointer" @click="goOtherpage(n.review.email)">
+                                {{ n.review.nickName }}
+                            </v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
 
@@ -121,7 +121,7 @@ export default {
                 // interest = !interest;
                 console.log(like);
                 UserApi.plusLike(like, res => {
-                    console.log('좋아요: ' + res);
+                    console.log('좋아요: ' + res.object);
                     let info = res.data.object;
                     firebase.noticePush({
                         sender: info.sender,
