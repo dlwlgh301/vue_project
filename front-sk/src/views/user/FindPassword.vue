@@ -58,14 +58,13 @@ export default {
                 { email: this.email },
                 res => {
                     this.isSendEmail = true;
-                    console.log('???????????????');
+
                     //console.log(res);
                     //console.log(res.data.object.key);
                     this.key = res.data.object.key;
-                    console.log(this.key);
+
                     sessionStorage.clear;
                     sessionStorage.setItem('key', this.key);
-                    console.log('join 인증키 발급');
                 },
                 error => {
                     console.log(error);

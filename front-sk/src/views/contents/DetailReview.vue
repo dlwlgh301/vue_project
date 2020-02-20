@@ -86,7 +86,7 @@
                     </md-menu>
                     <md-divider></md-divider>
                     <md-field style="padding-left:1rem">
-                        <md-input v-model="comment" placeholder="댓글을 입력하세요"></md-input>
+                        <md-input v-model="comment" placeholder="댓글을 입력하세요" @keyup.enter="sendComment()"></md-input>
                         <md-button class="md-icon-button" @click="sendComment()">
                             <md-icon>send</md-icon>
                         </md-button>

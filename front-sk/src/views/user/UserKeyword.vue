@@ -118,7 +118,7 @@ export default {
             // sessionStorage.setItem('keyword', this.keyword);
 
             let test = new FormData(document.getElementById('insertMemberForm'));
-            console.log(test);
+
             // let body = {
             //     password: this.password,
             //     email: this.email,

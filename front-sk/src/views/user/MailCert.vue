@@ -21,7 +21,9 @@
                 <input id="emailAuth" v-model="emailAuth" placeholder="인증 코드를 적으세요." type="text" />
                 <div class="error-text" v-if="error.emailAuth">{{ error.emailAuth }}</div>
                 <br /><br /><br />
-                <button type="button" class="btn btn--back btn--login" @click="emailAuthFunc" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">인증하기</button>
+                <button type="button" class="btn btn--back btn--login" @click="emailAuthFunc" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                    인증하기
+                </button>
                 <button class="btn btn--back btn--login" @click="sendEmailAuth" style="margin-top:10px">
                     메일이 도착하지 않았나요?
                 </button>
@@ -55,7 +57,9 @@
                     <label for="password-confirm">비밀번호 확인</label>
                     <div class="error-text" v-if="error.passwordConfirm">{{ error.passwordConfirm }}</div>
                 </div>
-                <button class="btn btn--back btn--login" v-on:click="changePassword()" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">비밀번호 변경</button>
+                <button class="btn btn--back btn--login" v-on:click="changePassword()" :disabled="!isSubmit" :class="{ disabled: !isSubmit }">
+                    비밀번호 변경
+                </button>
             </div>
         </div>
     </div>
@@ -123,10 +127,12 @@ export default {
                 comment: '',
                 imgURL: sessionStorage.getItem('imgURL')
             };
-            console.log('바뀐 password : ' + this.password);
+
             UserApi.updatePass(
                 user,
+
                 res => {
+                    // eslint-disable-next-line no-unused-vars
                     console.log(res);
                 },
                 error => {
@@ -142,7 +148,8 @@ export default {
             if (this.password.length == 0) {
                 this.error.submit = true;
                 this.error.password = '';
-            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
+            } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password))
+                this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             else {
                 this.error.password = false;
                 this.error.submit = false;
@@ -151,7 +158,8 @@ export default {
             if (this.passwordConfirm.length == 0) {
                 this.error.submit = true;
                 this.error.passwordConfirm = '';
-            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm) this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
+            } else if (this.passwordConfirm.length >= 0 && this.password != this.passwordConfirm)
+                this.error.passwordConfirm = '비밀번호가 일치하지 않습니다.';
             else {
                 this.error.passwordConfirm = false;
                 this.error.submit = false;
@@ -166,7 +174,6 @@ export default {
         emailAuthFunc() {
             if (sessionStorage.getItem('key') != null) {
                 let key = sessionStorage.getItem('key');
-                console.log('success');
 
                 if (this.emailAuth.length >= 0 && this.emailAuth != key) {
                     this.error.emailAuth = '인증번호가 일치하지 않습니다.';
@@ -183,12 +190,11 @@ export default {
                 { email: this.email },
                 res => {
                     this.isSendEmail = true;
-                    console.log('???????????????');
+
                     this.key = res.data.object.key;
-                    console.log(this.key);
+
                     sessionStorage.clear;
                     sessionStorage.setItem('key', this.key);
-                    console.log('join 인증키 발급');
                 },
                 error => {
                     console.log(error);

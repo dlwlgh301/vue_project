@@ -242,15 +242,12 @@ export default {
         UserApi.profileLoad(
             data,
             res => {
-                console.log(res);
                 if (res.data.data == 'fail') {
-                    console.log(res.data.status);
                     Swal.fire({
                         icon: 'error',
                         text: '연결실패'
                     });
                 } else {
-                    console.log('성공임니다!!!!!');
                     this.info = res.data.object;
 
                     // alert(info.email);
@@ -410,22 +407,13 @@ export default {
                 if (v) isSubmit = false;
             });
             this.isSubmit = isSubmit;
-
-            console.log('submit:' + this.error.submit);
         },
         insertMember() {
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
 
-            console.log('테스트 입니다 : ');
-            console.log(test);
-
             if (this.changepassword.length > 0) this.password = this.changepassword;
-            console.log('바뀐 비밀번호');
-            console.log(this.changepassword);
-            console.log('바뀌기전 비밀번호');
-            console.log(this.password);
 
             var user = {
                 email: this.email,
@@ -436,17 +424,12 @@ export default {
                 comment: this.comment,
                 imgURL: this.file.name
             };
-            console.log('정보 수정페이지 정보 ~~~');
-            console.log(this.files);
-            console.log(user);
 
             if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
-                    res => {
-                        console.log('사진 수정 성공2!!!');
-                        console.log(res);
-                    },
+                    // eslint-disable-next-line no-unused-vars
+                    res => {},
                     error => {
                         console.log(error);
                     }
@@ -457,13 +440,8 @@ export default {
             UserApi.updateUser(
                 user,
                 res => {
-                    console.log('회원수정 RES : ');
-                    console.log(res);
                     if (res.data.status == true) {
                         if (this.check) {
-                            console.log('회원정보 files : ');
-                            console.log(this.files);
-
                             Swal.fire({
                                 icon: 'success',
                                 title: '수정이 완료 되었습니다!!'
@@ -471,7 +449,7 @@ export default {
 
                             this.$router.push('/user/Profile');
                         }
-                        console.log(this.check);
+
                         // this.$router.push('/user/Profile');
                     } else {
                         Swal.fire({
@@ -516,8 +494,6 @@ export default {
             UserApi.doubleCheck(
                 body,
                 res => {
-                    console.log(res);
-
                     if (body.num == 1) {
                         if (this.email == '') {
                             Swal.fire({
@@ -569,14 +545,12 @@ export default {
 
         fileSelect() {
             let test = new FormData(document.getElementById('myform'));
-            console.log(test);
 
             if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
-                    Response => {
-                        console.log(Response);
-                    },
+                    // eslint-disable-next-line no-unused-vars
+                    Response => {},
                     error => {
                         console.log(error);
                     }
@@ -588,7 +562,6 @@ export default {
             if (!this.files.length) return;
             this.createImage(this.files[0]);
             this.file = this.files[0];
-            console.log(this.$refs.file.files[0]);
         },
         createImage(file) {
             // var image = new Image();

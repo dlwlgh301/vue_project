@@ -119,13 +119,9 @@ export default {
             UserApi.requestNotice(
                 data,
                 res => {
-                    console.log('~~~~~~~~~~~~~~~~~~');
-                    console.log(res.data);
                     let new_data = res.data.object.newNotice;
                     if (new_data != null) {
                         for (let i = new_data.length - 1; i >= 0; i--) {
-                            console.log(new_data[i]);
-
                             new_noticeItem = {
                                 nid: new_data[i].nid,
                                 avatar: 'http://192.168.100.58:8080/image/' + new_data[i].senderImg,
@@ -158,7 +154,6 @@ export default {
             UserApi.requestFollow(
                 data,
                 res => {
-                    console.log(res.data);
                     let follow_data = res.data.object;
                     let follow_item = {};
                     if (follow_data != null) {
@@ -195,7 +190,6 @@ export default {
             });
         },
         addFollower: function(rid) {
-            console.log(5);
             let data = rid;
             UserApi.noticeTabFollowing(
                 data,
@@ -208,7 +202,6 @@ export default {
                         msg: info.msg,
                         img: info.img
                     });
-                    console.log(res.status);
                 },
                 error => {
                     console.log(error);
@@ -221,6 +214,7 @@ export default {
             UserApi.deletNoticeTabFollowing(
                 data,
                 res => {
+                    // eslint-disable-next-line no-unused-vars
                     console.log(res.status);
                 },
                 error => {

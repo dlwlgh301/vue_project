@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div style=" width:80%; margin:0 auto;">
         <div class="search-bar" style="display: block;">
-            <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword" />
+            <input type="text" placeholder="검색어를 입력해주세요." v-model="keyword" @keyup.enter="searchProduct()" />
             <button @click="searchProduct()">
                 <md-icon>search</md-icon>
             </button>

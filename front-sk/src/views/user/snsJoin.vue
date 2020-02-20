@@ -262,7 +262,7 @@ export default {
     },
     created() {
         this.email = sessionStorage.getItem('email');
-        console.log(this.email + 'snsJoin');
+
         this.$store.commit('setPageTitle', '회원가입');
     },
     watch: {
@@ -341,14 +341,12 @@ export default {
                 if (v) isSubmit = false;
             });
             this.isSubmit = isSubmit;
-
-            console.log('submit:' + this.error.submit);
         },
         insertMember() {
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
-            console.log(test);
+
             var user = {
                 email: this.email,
                 name: this.name,
@@ -357,16 +355,14 @@ export default {
                 comment: this.comment,
                 imgURL: this.file.name
             };
-            console.log('userrrr');
-            console.log(user);
+
             UserApi.join(user);
 
             if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
-                    res => {
-                        console.log(res);
-                    },
+                    // eslint-disable-next-line no-unused-vars
+                    res => {},
                     error => {
                         console.log(error);
                     }
@@ -404,7 +400,6 @@ export default {
             UserApi.doubleCheck(
                 { num: 1, value: this.email },
                 res => {
-                    console.log(res);
                     if (res.data.status == true) {
                         this.sendEmailAuth();
                         Swal.fire({
@@ -429,7 +424,6 @@ export default {
             UserApi.doubleCheck(
                 { num: 2, value: this.nickName },
                 res => {
-                    console.log(res);
                     if (res.data.status == true) {
                         Swal.fire({
                             icon: 'success', //"info,success,warning,error" 중 택1
@@ -452,14 +446,12 @@ export default {
 
         fileSelect() {
             let test = new FormData(document.getElementById('myform'));
-            console.log(test);
 
             if (this.files.length > 0) {
                 UserApi.fileUpload(
                     test,
-                    Response => {
-                        console.log(Response);
-                    },
+                    // eslint-disable-next-line no-unused-vars
+                    Response => {},
                     error => {
                         console.log(error);
                     }

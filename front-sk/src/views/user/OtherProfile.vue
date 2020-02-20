@@ -12,13 +12,7 @@
                     <div class="profile2-image">
                         <!-- <img src="http://192.168.100.90:8080/image/프사6.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
                         <!-- <img src="../../assets/images/tm-easy-profile.jpg" style="width:150px; height:150px" alt class="portrait" /> -->
-                        <img
-                            style="width:150px; height:150px"
-                            v-if="info.imgURL != ''"
-                            v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL"
-                            alt
-                            class="portrait"
-                        />
+                        <img style="width:150px; height:150px" v-bind:src="'http://192.168.100.58:8080/image/' + info.imgURL" alt class="portrait" />
                     </div>
 
                     <div class="profile2-user-settings">
@@ -125,10 +119,10 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;">
-                                <span @click="goOtherpage(item.following)">
-                                    {{ item.followingnickName }}
-                                </span>
+                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
+                                {{
+                                    item.followingnickName
+                                }}
                                 <div class="myfollowList" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
@@ -167,9 +161,8 @@ export default {
         }
     },
     watch: {
+        // eslint-disable-next-line no-unused-vars
         $route(to, from) {
-            console.log(to);
-            console.log(from);
             this.myBoard(this.$route.params.email);
             this.doFollow();
             this.retrieveQuestion(); // 회원 정보
@@ -224,14 +217,13 @@ export default {
 
         detail(rid) {
             sessionStorage.setItem('rid', rid);
-            console.log(rid);
+
             this.$router.push('/contents/detail');
         },
         myBoard(otherEmail) {
             UserApi.myboardLoad(
                 otherEmail,
                 res => {
-                    console.log(res);
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                         Swal.fire({
@@ -242,12 +234,11 @@ export default {
                         this.myboard = res.data.object;
 
                         // alert(info.email);
-                        console.log(res.data.status);
+
                         if (res.data.data == 'none') {
                             this.myBoard.length = 0;
                         }
                         if (this.myboard == null) this.myBoard.length = 0;
-                        console.log('myboard', this.myboard);
                     }
                 },
                 error => {
@@ -269,20 +260,14 @@ export default {
                 data,
                 // index = 순서 flag = 1 팔로 2 팔로잉
                 res => {
-                    console.log(res);
-                    console.log('ㅇㅇㅇㅇ');
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
                         this.followingList = res.data.object.list;
                         this.followingCheck = res.data.object.followCheckList;
-                        console.log('팔로잉 리스트 이미미미' + this.followingList[0] + 'ss ' + this.followingList[1]);
-
-                        console.log(res.data.status);
                     }
                 },
                 error => {
-                    console.log('Noop');
                     console.log(error);
                 }
             );
@@ -298,15 +283,12 @@ export default {
             UserApi.follower(
                 data,
                 res => {
-                    console.log(res);
                     if (res.data.data == 'fail') {
                         console.log(res.data.status);
                     } else {
                         this.followList = res.data.object.list;
                         this.followCheck = res.data.object.followCheckList;
                         // alert(info.email);
-                        console.log('Asdasdasdasdasdasd' + this.followList[0] + 'ss ' + this.followList[1]);
-                        console.log(res.data.status);
                     }
                 },
                 error => {
@@ -331,7 +313,6 @@ export default {
                 UserApi.addFollower(
                     data,
                     res => {
-                        console.log('팔로우요청: ' + res);
                         this.isfollowing = true;
                         let info = res.data.object;
                         firebase.noticePush({
@@ -347,7 +328,6 @@ export default {
                         // console.log('VUEX: ', this.$store.state.noticeNum);
                     },
                     error => {
-                        console.log('팔로우요청 실패: ' + error);
                         console.log(error);
                     }
                 );
@@ -403,9 +383,11 @@ export default {
                         UserApi.deleteFollower(
                             data,
                             res => {
+                                // eslint-disable-next-line no-unused-vars
                                 console.log(res);
                             },
                             error => {
+                                // eslint-disable-next-line no-unused-vars
                                 console.log(error);
                             }
                         );
@@ -428,8 +410,9 @@ export default {
                 //  alert(this.followerEmail);
                 UserApi.addFollower(
                     data,
+                    // eslint-disable-next-line no-unused-vars
                     res => {
-                        console.log(res);
+                        // eslint-disable-next-line no-unused-vars
                         // if (res.data.data == 'fail') {
                         //     console.log(res.data.status);
                         // } else {
@@ -441,11 +424,67 @@ export default {
                         // }
                     },
                     error => {
+                        // eslint-disable-next-line no-unused-vars
                         console.log(error);
                     }
                 );
 
                 this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
+            }
+        },
+        FollowListBtnCheck(idx) {
+            if (this.followCheck[idx] == true) {
+                // 팔로잉
+                Swal.fire({
+                    icon: 'error',
+                    title: '팔로우를 취소하시겠습니까??',
+                    showCancelButton: true
+                }).then(YES => {
+                    if (YES.value) {
+                        this.followerEmail = this.followingList[idx].follower;
+                        this.followingEmail = this.followingList[idx].following;
+                        let { followerEmail, followingEmail } = this;
+                        // alert(this.followerEmail + ' ' + this.followingEmail);
+                        let data = {
+                            followingEmail, // 나
+                            followerEmail // 상대방
+                        };
+                        UserApi.deleteFollower(
+                            data,
+                            // eslint-disable-next-line no-unused-vars
+                            res => {},
+                            error => {
+                                // eslint-disable-next-line no-unused-vars
+                                console.log(error);
+                            }
+                        );
+                        this.$set(this.followCheck, idx, !this.followCheck[idx]);
+                    } else {
+                        //alert(YES.value);
+                        this.$set(this.followCheck, idx, this.followCheck[idx]);
+                    }
+                });
+            } else {
+                this.followerEmail = this.followList[idx].follower;
+                this.followingEmail = this.followList[idx].following;
+                let { followerEmail, followingEmail } = this;
+
+                let data = {
+                    followingEmail,
+                    followerEmail
+                };
+                // alert(followingEmail + ' ' + followerEmail);
+                //  alert(this.followerEmail);
+                UserApi.addFollower(
+                    data,
+                    // eslint-disable-next-line no-unused-vars
+                    res => {},
+                    error => {
+                        console.log(error);
+                    }
+                );
+
+                this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
         },
         retrieveQuestion() {
@@ -465,9 +504,7 @@ export default {
             UserApi.profileLoad(
                 data,
                 res => {
-                    console.log(res);
                     if (res.data.data == 'fail') {
-                        console.log(res.data.status);
                         Swal.fire({
                             icon: 'error',
                             text: '연결실패'
@@ -475,7 +512,7 @@ export default {
                     } else {
                         this.info = res.data.object;
                         // alert(info.email);
-                        console.log(res.data.status);
+
                         var idx = 0;
                         for (var i = 0; i < this.info.keyword.length; i++) {
                             if (this.info.keyword[i] == ',') {
@@ -526,14 +563,12 @@ export default {
                 myemail,
                 email
             };
-            console.log(this.myemail + ' ' + this.email);
+
             UserApi.isFollowing(
                 data,
                 res => {
                     this.isfollowing = res.data.object;
-                    console.log(res.data.object);
-                    console.log('this.following???');
-                    console.log('asdasd' + this.isfollowing);
+
                     // if (res.data.data == 'fail') {
                     //     console.log(res.data.status);
                     // } else {
