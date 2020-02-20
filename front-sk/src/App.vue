@@ -31,6 +31,9 @@
                                     required
                                     class="search-box"
                                     placeholder="User 검색"
+                                    @focus="serchBoxFocus"
+                                    @blur="searchBoxNotFoucs"
+                                    autocomplete="off"
                                 />
                             </form>
                         </div>
