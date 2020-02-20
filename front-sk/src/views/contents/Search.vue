@@ -54,12 +54,12 @@
                     <a target="_blank" v-bind:href="item.link"
                         ><span class="product-title">{{ item.link }}</span></a
                     >
-                    <div style="font-size : 2em; margin: 2%;" class="product-count">{{ item.price }} 원</div>
-                    <div @click="addProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
+                    <div style="font-size : 1em; margin: 2%;" class="product-count">{{ item.price }} 원</div>
+                    <div @click="deleteProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
                         star
                     </div>
                     <div
-                        @click="deleteProduct(item)"
+                        @click="addProduct(item)"
                         style="font-size : 2em; cursor : pointer; margin: 2%;"
                         class="material-icons"
                         v-show="!item.isLike"
@@ -97,7 +97,7 @@
 }
 .product-title {
     text-decoration: underline;
-    color: #ff8c00;
+    color: black;
     width: 60%;
 }
 .product-price {
@@ -254,11 +254,6 @@ export default {
                     console.log(error);
                 }
             );
-            this.tempsub1 = this.sub1;
-            this.tempsub2 = this.sub2;
-
-            this.sub1 = '';
-            this.sub2 = '';
 
             console.log('user ==>');
             console.log(this.users);
@@ -280,7 +275,7 @@ export default {
                     console.log(error);
                 }
             );
-            this.searchProduct();
+            this.researchProduct();
         }
     },
     create() {

@@ -6,9 +6,10 @@
                 <md-card style="height:600px; z-index:0 ">
                     <md-card-header style="width:100%;">
                         <md-avatar>
-                            <img :src="getImgUrl(review.imgURL)" />
+                            <img v-if="review.imgURL != null" :src="getImgUrl(review.imgURL)" />
                         </md-avatar>
-                        <div class="md-title">{{ review.nickName }}</div>
+                        <!-- @click="goOtherpage(review.email)" -->
+                        <div class="md-title" style="cursor:pointer" @click="goOtherpage(review.email)">{{ review.nickName }}</div>
                         <div class="md-subhead">{{ review.productName }}</div>
 
                         <!--제품이름 넣기-->
@@ -57,7 +58,7 @@
                                 <!-- 이미지 -->
 
                                 <div class="md-list-item-text">
-                                    <span>{{ comment.nickName }}</span>
+                                    <span style="cursor:pointer" @click="goOtherpage(comment.email)">{{ comment.nickName }}</span>
                                     <span>{{ comment.content }}</span>
                                 </div>
                             </md-list-item>
@@ -168,6 +169,10 @@ export default {
         };
     },
     methods: {
+        goOtherpage(e) {
+            if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');
+            else this.$router.push('/user/OtherProfile/' + e);
+        },
         updateReview() {},
         deleteReview(rid) {
             UserApi.deleteReview(rid);

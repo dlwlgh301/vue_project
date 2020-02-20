@@ -125,10 +125,10 @@
 
                     <div style="margin 10px;" class="content" v-for="(item, index) in followingList" v-bind:key="index">
                         <li>
-                            <ul style="margin-left:25px; cursor: pointer;" @click="goOtherpage(item.following)">
-                                {{
-                                    item.followingnickName
-                                }}
+                            <ul style="margin-left:25px; cursor: pointer;">
+                                <span @click="goOtherpage(item.following)">
+                                    {{ item.followingnickName }}
+                                </span>
                                 <div class="myfollowList" v-show="followingCheck[index] == false">
                                     <div class="icon-instagram"></div>
                                     팔로우
@@ -446,62 +446,6 @@ export default {
                 );
 
                 this.$set(this.followingCheck, idx, !this.followingCheck[idx]);
-            }
-        },
-        FollowListBtnCheck(idx) {
-            if (this.followCheck[idx] == true) {
-                // 팔로잉
-                Swal.fire({
-                    icon: 'error',
-                    title: '팔로우를 취소하시겠습니까??',
-                    showCancelButton: true
-                }).then(YES => {
-                    if (YES.value) {
-                        this.followerEmail = this.followingList[idx].follower;
-                        this.followingEmail = this.followingList[idx].following;
-                        let { followerEmail, followingEmail } = this;
-                        // alert(this.followerEmail + ' ' + this.followingEmail);
-                        let data = {
-                            followingEmail, // 나
-                            followerEmail // 상대방
-                        };
-                        UserApi.deleteFollower(
-                            data,
-                            res => {
-                                console.log(res);
-                            },
-                            error => {
-                                console.log(error);
-                            }
-                        );
-                        this.$set(this.followCheck, idx, !this.followCheck[idx]);
-                    } else {
-                        //alert(YES.value);
-                        this.$set(this.followCheck, idx, this.followCheck[idx]);
-                    }
-                });
-            } else {
-                this.followerEmail = this.followList[idx].follower;
-                this.followingEmail = this.followList[idx].following;
-                let { followerEmail, followingEmail } = this;
-
-                let data = {
-                    followingEmail,
-                    followerEmail
-                };
-                // alert(followingEmail + ' ' + followerEmail);
-                //  alert(this.followerEmail);
-                UserApi.addFollower(
-                    data,
-                    res => {
-                        console.log(res);
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-
-                this.$set(this.followCheck, idx, !this.followCheck[idx]);
             }
         },
         retrieveQuestion() {

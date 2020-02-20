@@ -40,6 +40,7 @@
                     </v-col>
                 </v-row>
             </div>
+
             <div class="wrap">
                 <div>
                     <md-chips v-model="addtag" md-placeholder="추가 키워드를 한개씩 입력하고 엔터를 눌러주세요."></md-chips>
@@ -49,6 +50,7 @@
                     </button>-->
                 </div>
             </div>
+
             <div class="input-with-label">
                 <input
                     v-model="title"
@@ -64,7 +66,19 @@
                 <div class="error-text" v-if="error.title">{{ error.title }}</div>
             </div>
             <div class="input-with-label">
-                <input
+                <v-autocomplete
+                    v-bind:class="{
+                        error: error.productName,
+                        complete: !error.productName && productName.length !== 0
+                    }"
+                    :disabled="isEditing"
+                    :items="states"
+                    :filter="customFilter"
+                    color="white"
+                    item-text="name"
+                    @keyup="searchProduct"
+                ></v-autocomplete>
+                <!-- <input
                     v-model="productName"
                     v-bind:class="{
                         error: error.productName,
@@ -73,19 +87,11 @@
                     id="productName"
                     placeholder="제품을 입력해 주세요."
                     type="text"
-                />
+                /> -->
                 <label for="product">제품</label>
                 <div class="error-text" v-if="error.title">{{ error.title }}</div>
             </div>
-            <v-autocomplete
-                :disabled="isEditing"
-                :items="states"
-                :filter="customFilter"
-                color="white"
-                item-text="name"
-                label="State"
-                @keyup="searchProduct"
-            ></v-autocomplete>
+
             <div class="wrap" id="score">
                 <v-row>
                     <v-col>

@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapC">
+    <div>
         <div id="shopping_chart">
             <ul class="product-list">
                 <div style="text-align:center;" v-if="users.length == 0 && isTime">
@@ -9,16 +9,23 @@
                     <span class="product-img">
                         <img style="width : 150px; height :150px" v-bind:src="item.image" alt="" />
                     </span>
+
+                    <span class="product-title">{{ item.productName }}</span>
                     <a target="_blank" v-bind:href="item.link"
-                        ><span class="product-title">{{ item.productName }}</span></a
+                        ><span class="product-title">{{ item.link }}</span></a
                     >
-                    <span class="product-count">{{ item.price }} 원</span>
-                    <span @click="deleteProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
+                    <div style="font-size : 1em; margin: 2%;" class="product-count">{{ item.price }} 원</div>
+                    <div @click="deleteProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="item.isLike">
                         star
-                    </span>
-                    <span @click="addProduct(item)" style="cursor : pointer; margin: 2%;" class="material-icons" v-show="!item.isLike">
+                    </div>
+                    <div
+                        @click="addProduct(item)"
+                        style="font-size : 2em; cursor : pointer; margin: 2%;"
+                        class="material-icons"
+                        v-show="!item.isLike"
+                    >
                         star_border
-                    </span>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -50,8 +57,8 @@
 }
 .product-title {
     text-decoration: underline;
-    color: #ff8c00;
-    width: 30%;
+    color: black;
+    width: 60%;
 }
 .product-price {
     font-weight: bold;
@@ -171,7 +178,7 @@ export default {
                     console.log(error);
                 }
             );
-            this.searchProduct();
+            this.researchProduct();
         }
     },
     create() {
