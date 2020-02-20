@@ -304,7 +304,6 @@ export default {
             this.user = '';
             this.member = [];
 
-            //console.log("asdasdasdasdassad~~~~~~~~~~~~~~~~~~~~~`");
             console.log();
 
             var param = this.$route.params;
