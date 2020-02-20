@@ -57,7 +57,7 @@
                                 <!-- 이미지 -->
 
                                 <div class="md-list-item-text">
-                                    <span>{{ comment.nickName }}</span>
+                                    <span style="cursor:pointer" @click="goOtherpage(comment.email)">{{ comment.nickName }}</span>
                                     <span>{{ comment.content }}</span>
                                 </div>
                             </md-list-item>
@@ -251,7 +251,7 @@ export default {
                     this.mtags = valueList;
 
                     this.stags = res.data.object.review.keywordSub;
-                    console.log(this.viewcomment);
+                    console.log('asdasdasd', this.viewcomment);
                     console.log(this.imgs);
                 },
                 error => {
