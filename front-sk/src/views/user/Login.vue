@@ -151,7 +151,6 @@ export default {
                 this.error.submit = true;
                 this.error.password = '';
             } else if (this.password.length > 0 && !this.passwordSchema.validate(this.password)) {
-                console.log('형식맞음!!!');
                 this.error.password = '영문,숫자 포함 8 자리이상이어야 합니다.';
             } else {
                 this.error.password = false;
@@ -169,7 +168,6 @@ export default {
             UserApi.requestNoticeNum(
                 data,
                 res => {
-                    console.log(res.data);
                     this.$store.state.noticeNum = res.data.object.num;
                 },
                 error => {
@@ -190,9 +188,7 @@ export default {
                 UserApi.requestLogin(
                     data,
                     res => {
-                        console.log(res);
                         if (res.data.data == 'fail') {
-                            console.log(res.data.status);
                             this.password = '';
                             Swal.fire({
                                 icon: 'error',
@@ -200,7 +196,6 @@ export default {
                                 text: '아이디 혹은 비밀번호가 틀렸습니다'
                             });
                         } else {
-                            console.log(res.data.status);
                             this.keyword = res.data.object.keyword;
                             this.imgURL = res.data.object.imgURL;
                             this.nickName = res.data.object.nickName;
@@ -223,7 +218,6 @@ export default {
                         }
                     },
                     error => {
-                        ``;
                         console.log(error);
                     }
                 );

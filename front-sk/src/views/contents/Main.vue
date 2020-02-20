@@ -34,7 +34,7 @@
                         </v-row>
 
                         <!--<div class="my-4 subtitle-1 black--text">카페</div>-->
-                        <div>{{ n.review.content }}</div>
+                        <div>{{ n.review.productName }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -49,25 +49,21 @@ export default {
         this.$store.commit('setPageTitle', 'SHOP+');
         //var keyword = sessionStorage.getItem('keyword');
         var email = sessionStorage.getItem('email');
-        console.log(email + '여기는 이메일 출력');
+
         UserApi.requestReview(
             email,
             res => {
                 this.data = res.data.object;
                 this.favorite = res.data.object[0].interest;
-                console.log(this.data);
-                console.log('입력완료');
-                console.log(this.favorite);
             },
-            error => {
-                console.log(error);
-            }
+            // eslint-disable-next-line no-unused-vars
+            error => {}
         );
 
         //console.log(this.data);
-        /*  if (sessionStorage.getItem('email') == null) {
+        if (sessionStorage.getItem('email') == null) {
             this.$router.push('/');
-        } */
+        }
     },
     data: () => {
         return {
@@ -106,9 +102,6 @@ export default {
                     res => {
                         // this.data = res.data.object;
                         this.favorite = res.data.object[0].interest;
-                        console.log(this.data);
-                        console.log('입력완료');
-                        console.log(this.favorite);
                     },
                     error => {
                         console.log(error);
@@ -120,9 +113,8 @@ export default {
                     email: email
                 };
                 // interest = !interest;
-                console.log(like);
+
                 UserApi.plusLike(like, res => {
-                    console.log('좋아요: ' + res.object);
                     if (res.data == 'success') {
                         let info = res.data.object;
                         firebase.noticePush({
@@ -132,7 +124,6 @@ export default {
                             msg: info.msg,
                             img: info.img
                         });
-                        console.log(res);
                     }
                 });
 
@@ -141,9 +132,6 @@ export default {
                     res => {
                         // this.data = res.data.object;
                         this.favorite = res.data.object[0].interest;
-                        console.log(this.data);
-                        console.log('입력완료');
-                        console.log(this.favorite);
                     },
                     error => {
                         console.log(error);

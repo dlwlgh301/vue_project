@@ -200,10 +200,9 @@
                                     <div class="modal-header">
                                         <slot name="header"></slot>
                                     </div>
-                                    <div class="modal-body"></div>
+                                    <div class="modal-body">여기에 동의하는순간 당신의 영혼과 개인정보는 저희 것입니다.</div>
                                     <div class="modal-footer">
                                         <slot name="footer">
-                                            약관입니다.
                                             <br />
                                             <br />
                                             <button @click="showmodal()">확인</button>
@@ -319,13 +318,11 @@ export default {
         emailAuth: function() {
             if (sessionStorage.getItem('key') != null) {
                 let key = sessionStorage.getItem('key');
-                console.log('success');
 
                 if (this.emailAuth.length >= 0 && this.emailAuth != key) this.error.emailAuth = '인증번호가 일치하지 않습니다.';
                 else this.error.emailAuth = false;
 
                 this.isSubmit = this.checkSubmit();
-                console.log('isSubmit:' + this.isSubmit);
             }
         },
         password: function() {
@@ -443,16 +440,12 @@ export default {
             }
 
             this.isSubmit = this.checkSubmit();
-
-            console.log('checkFomr():' + this.isSubmit);
         },
         insertMember() {
             alert('insertMember');
             this.keyword = this.age + ',' + this.gender + ',' + this.status;
 
             let test = new FormData(document.getElementById('imageInputform'));
-            console.log('테스트 임니다 ~~~~~');
-            console.log(test);
 
             var user = {
                 email: this.email,
@@ -468,8 +461,6 @@ export default {
                 user.imgURL = 'default.png';
             }
 
-            console.log('userrrr');
-            console.log(user);
             UserApi.join(user);
 
             if (this.files.length > 0) {
@@ -495,14 +486,12 @@ export default {
             UserApi.cert(
                 { email: this.email },
                 res => {
-                    console.log('???????????????');
                     //console.log(res);
                     //console.log(res.data.object.key);
                     this.key = res.data.object.key;
-                    console.log(this.key);
+
                     sessionStorage.clear;
                     sessionStorage.setItem('key', this.key);
-                    console.log('join 인증키 발급');
                 },
                 error => {
                     console.log(error);
@@ -528,7 +517,6 @@ export default {
             UserApi.doubleCheck(
                 { num: 1, value: this.email },
                 res => {
-                    console.log(res);
                     if (res.data.status == true) {
                         this.isSendEmail = true;
                         this.sendEmailAuth();
@@ -555,7 +543,6 @@ export default {
             UserApi.doubleCheck(
                 { num: 2, value: this.nickName },
                 res => {
-                    console.log(res);
                     if (res.data.status == true) {
                         Swal.fire({
                             icon: 'success', //"info,success,warning,error" 중 택1
@@ -579,7 +566,6 @@ export default {
 
         fileSelect() {
             let test = new FormData(document.getElementById('imageInputform'));
-            console.log(test);
 
             if (this.files.length > 0) {
                 UserApi.fileUpload(
@@ -595,13 +581,10 @@ export default {
         },
 
         onFileChange(e) {
-            console.log(e);
-
             this.files = e.target.files || e.dataTransfer.files;
             if (!this.files.length) return;
             this.createImage(this.files[0]);
             this.file = this.files[0];
-            console.log(this.$refs.file.files[0]);
         },
         createImage(file) {
             // var image = new Image();

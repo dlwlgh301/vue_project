@@ -184,7 +184,7 @@ public class AccountController {
         user.setImgURL(user.getImgURL());
         final BasicResponse result = new BasicResponse();
 
-        User puser = new User(user.getPassword(), user.getEmail(), user.getName(), user.getNickName(),
+        User puser = new User(user.getPassword(), user.getEmail(), user.getNickName(), user.getName(),
                 user.getComment(), user.getKeyword(), user.getImgURL());
 
         userServiceImpl.insertUser(puser);

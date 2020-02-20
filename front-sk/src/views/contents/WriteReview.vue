@@ -67,6 +67,7 @@
             </div>
             <div class="input-with-label">
                 <v-autocomplete
+                    v-model="productName"
                     v-bind:class="{
                         error: error.productName,
                         complete: !error.productName && productName.length !== 0
@@ -151,6 +152,9 @@ import ProductApi from '../../apis/ProductApi';
 export default {
     created() {
         this.$store.commit('setPageTitle', '글쓰기');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     },
     data: () => {
         return {
@@ -167,7 +171,7 @@ export default {
             age: '',
             images: [],
             status: '',
-            productName: '키보드',
+            productName: '',
             keywordMain: '',
             keyowrdSub: '',
             score: 0,
@@ -248,8 +252,6 @@ export default {
                 data,
                 res => {
                     this.users = res.data.object.list;
-                    console.log('user: ', this.users);
-                    console.log(this.users);
                     var autoCom = [];
 
                     for (let i = 0; i < this.users.length; i++) {
@@ -274,18 +276,14 @@ export default {
             this.file = file.raw;
             this.fileList = fileList;
             this.filecount += 1;
-            console.log(this.filecount);
         },
         handleRemove(file, fileList) {
             this.filecount -= 1;
-            console.log(file);
+
             this.fileList = fileList;
-            console.log(fileList);
-            console.log(this.filecount);
         },
         handlePictureCardPreview(file) {
             this.images = file.url;
-            console.log(this.images);
             this.dialogVisible = true;
         },
         write() {
@@ -293,6 +291,7 @@ export default {
             this.keywordMain = this.age + ',' + this.gender + ',' + this.status;
             this.keywordSub = this.addtag;
             this.email = sessionStorage.getItem('email');
+            console.log(this.productName);
             /*    console.log(this.fileList);
             console.log(this.keyword);
             let test = new FormData();
@@ -312,19 +311,18 @@ export default {
             }
 
             var images = this.images;
-            console.log(images + 'vue 부분');
-            var productName = this.productName;
+
             var email = this.email;
             var review = {
                 email: email,
-                productName: productName,
+                productName: this.productName,
                 keywordMain: this.keywordMain,
                 keywordSub: this.keywordSub,
                 title: this.title,
                 score: this.score,
                 content: this.content
             };
-            console.log(review);
+
             // console.log(JSON.stringify(review), images);
             UserApi.insertReview(review, images);
             this.images = '';
@@ -374,7 +372,6 @@ export default {
                 this.error.submit = false;
                 this.error.file = false;
             }
-            console.log(this.filecount);
 
             let isSubmit = true;
             Object.values(this.error).map(v => {

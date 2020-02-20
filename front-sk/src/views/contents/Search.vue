@@ -282,6 +282,9 @@ export default {
     },
     create() {
         this.email = sessionStorage.getItem('email');
+        if (sessionStorage.getItem('email') == null) {
+            this.$router.push('/');
+        }
     }
 };
 </script>
