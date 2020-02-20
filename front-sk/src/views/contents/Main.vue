@@ -1,6 +1,13 @@
 <template>
     <v-container style="width:100%;">
-        <v-row>
+        <v-row v-show="!flag">
+            <v-col>
+                <md-empty-state md-icon="devices_other" md-label="관심 키워드에 맞는 리뷰가 없어요 ㅠㅠ">
+                    <md-button class="md-primary md-raised" @click="write()">글쓰러 가기!</md-button>
+                </md-empty-state>
+            </v-col>
+        </v-row>
+        <v-row v-show="flag">
             <v-col v-for="(n, index) in data" :key="index" cols="12" lg="4" md="6" sm="12" xs="12" xl="3">
                 <v-card :elevation="4" max-width="387" style="margin: 0 auto;">
                     <v-list-item>
@@ -54,7 +61,13 @@ export default {
             email,
             res => {
                 this.data = res.data.object;
-                this.favorite = res.data.object[0].interest;
+                console.log(this.data.length);
+                if (this.data.length == 0) {
+                    this.flag = false;
+                } else {
+                    this.flag = true;
+                    this.favorite = res.data.object[0].interest;
+                }
             },
             // eslint-disable-next-line no-unused-vars
             error => {}
@@ -65,6 +78,7 @@ export default {
             this.$router.push('/');
         }
     },
+
     data: () => {
         return {
             data: [],
@@ -75,10 +89,14 @@ export default {
             photo: '',
             keyword2: '',
             like: '',
-            favorite: []
+            favorite: [],
+            flag: false
         };
     },
     methods: {
+        write() {
+            this.$router.push('/contents/write');
+        },
         goOtherpage(e) {
             // this.email = this.$route.params.email;
             if (e == sessionStorage.getItem('email')) this.$router.push('/user/profile');

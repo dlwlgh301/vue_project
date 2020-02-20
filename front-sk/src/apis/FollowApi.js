@@ -1,28 +1,13 @@
 import axios from 'axios';
-import Swal from 'sweetalert2';
 const host = 'http://192.168.100.58:8080';
 const noticePort = 'http://192.168.100.58:8080';
 const UserApi = {
-    requestLogin: (data, callback, errorCallback) => requestLogin(data, callback, errorCallback),
     follower: (data, callback, errorCallback) => follower(data, callback, errorCallback),
     addFollower: (data, callback, errorCallback) => addFollower(data, callback, errorCallback),
     deleteFollower: (data, callback, errorCallback) => deleteFollower(data, callback, errorCallback),
     noticeTabFollowing: (data, callback, errorCallback) => noticeTabFollowing(data, callback, errorCallback),
     deletNoticeTabFollowing: (data, callback, errorCallback) => deletNoticeTabFollowing(data, callback, errorCallback),
-    following: (data, callback, errorCallback) => following(data, callback, errorCallback),
-    updateUser: (data, callback, errorCallback) => updateUser(data, callback, errorCallback),
-    join: data => join(data),
-    cert: (data, callback) => cert(data, callback),
-    snsDuplicate: (data, callback) => snsDuplicate(data, callback),
-    doubleCheck: (data, callback, errorCallback) => doubleCheck(data, callback, errorCallback),
-    requestNotice: (data, callback) => requestNotice(data, callback),
-    requestFollow: (data, callback) => requestFollow(data, callback),
-    requestNoticeNum: (data, callback) => requestNoticeNum(data, callback),
-    profileLoad: (data, callback, error) => profileLoad(data, callback, error),
-    fileUpload: (data, callback, error) => fileUpload(data, callback, error),
-    deleteNotice: (nid, callback, errorCallback) => deleteNotice(nid, callback, errorCallback),
-    requestReview: (data, callback) => requestReview(data, callback),
-    updatePass: (data, callback, errorCallback) => updatePass(data, callback, errorCallback)
+    following: (data, callback, errorCallback) => following(data, callback, errorCallback)
 };
 const follower = (data, callback, errorCallback) => {
     axios

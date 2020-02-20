@@ -44,11 +44,9 @@ const myFollowingBoard = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/show/following?email=` + data)
         .then(res => {
-            console.log('팔로잉게시물 가져오기 성공!');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로잉게시물 가져오기 실패!');
             errorCallback(error);
         });
 };
@@ -56,11 +54,9 @@ const myLikeBoard = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/mylike?email=` + data)
         .then(res => {
-            console.log('좋아요게시물 가져오기 성공!');
             callback(res);
         })
         .catch(error => {
-            console.log('좋아요게시물 가져오기 실패!');
             errorCallback(error);
         });
 };
@@ -68,11 +64,9 @@ const myboardLoad = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/user?email=` + data)
         .then(res => {
-            console.log('게시물 가져오기 성공!');
             callback(res);
         })
         .catch(error => {
-            console.log('게시물 가져오기 실패!');
             errorCallback(error);
         });
 };
@@ -80,11 +74,9 @@ const isFollowing = (data, callback, errorCallback) => {
     axios
         .get(`${host}/follow/followCheck?follower=` + data['myemail'] + '&following=' + data['email'])
         .then(res => {
-            console.log('팔로체크성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로체크 실패');
             errorCallback(error);
         });
 };
@@ -92,11 +84,9 @@ const deleteUser = (data, callback, errorCallback) => {
     axios
         .post(`${host}/account/deleteUser?email=` + data)
         .then(res => {
-            console.log('삭제성공');
             callback(res);
         })
         .catch(error => {
-            console.log('삭제실패');
             errorCallback(error);
         });
 };
@@ -104,11 +94,9 @@ const searchMember = (data, callback, errorCallback) => {
     axios
         .get(`${host}/account/searchMember?nickName=` + data)
         .then(res => {
-            console.log('멤버서치성공');
             callback(res);
         })
         .catch(error => {
-            console.log('멤버서치실패');
             errorCallback(error);
         });
 };
@@ -116,11 +104,9 @@ const follower = (data, callback, errorCallback) => {
     axios
         .get(`${host}/follow/followList?num=2&email=` + data['email'])
         .then(res => {
-            console.log('팔로우성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로우 실패');
             errorCallback(error);
         });
 };
@@ -128,12 +114,11 @@ const addFollower = (data, callback, errorCallback) => {
     axios
         .post(`${host}/follow/addFollow?follower=` + data['followingEmail'] + '&following=' + data['followerEmail'])
         .then(res => {
-            console.log('팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
             // console.log(data['followerEmail'] + ' ' + data['followingEmail']);
-            console.log('팔로워 추가 실패');
+
             errorCallback(error);
         });
 };
@@ -141,12 +126,11 @@ const deleteFollower = (data, callback, errorCallback) => {
     axios
         .post(`${host}/follow/deleteFollow?follower=` + data['followerEmail'] + '&following=' + data['followingEmail'])
         .then(res => {
-            console.log('팔로잉 제거 성공');
             callback(res);
         })
         .catch(error => {
             // console.log(data['followerEmail'] + ' ' + data['followingEmail']);
-            console.log('팔로잉 제거 실패');
+
             errorCallback(error);
         });
 };
@@ -154,11 +138,9 @@ const noticeTabFollowing = (data, callback, errorCallback) => {
     axios
         .post(`${noticePort}/request/allow/` + data)
         .then(res => {
-            console.log('nnn 팔로워 추가 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('nnn 팔로워 추가 실패');
             errorCallback(error);
         });
 };
@@ -166,11 +148,9 @@ const deletNoticeTabFollowing = (data, callback, errorCallback) => {
     axios
         .delete(`${noticePort}/request/cancel/` + data)
         .then(res => {
-            console.log('팔로워 요청 삭제 성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로워 요청 삭제 실패');
             errorCallback(error);
         });
 };
@@ -179,11 +159,9 @@ const following = (data, callback, errorCallback) => {
     axios
         .get(`${host}/follow/followList?num=1&email=` + data['email'])
         .then(res => {
-            console.log('팔로잉성공');
             callback(res);
         })
         .catch(error => {
-            console.log('팔로잉 실패');
             errorCallback(error);
         });
 };
@@ -201,7 +179,6 @@ const profileLoad = (data, callback, errorCallback) => {
     axios
         .get(`${host}/account/profile?email=` + data['email'])
         .then(res => {
-            console.log('들어오나');
             callback(res);
         })
         .catch(error => {
@@ -334,9 +311,8 @@ const join = body => {
         data: JSON.stringify(value),
         headers: { 'Content-Type': 'application/json' }
     })
-        .then(res => {
-            console.log(res);
-        })
+        // eslint-disable-next-line no-unused-vars
+        .then(res => {})
         .catch(error => {
             alert('error' + error);
         });
@@ -389,9 +365,9 @@ const insertReview = (data, image) => {
         imgs: image
     };
     // var images = image;
-    console.log('userAPI쪽');
+
     // console.log(JSON.stringify(value));
-    console.log(value);
+
     // console.log(images);
     fetch(`${host}/review`, {
         method: 'POST',
@@ -414,14 +390,13 @@ const insertReview = (data, image) => {
 const uploadtest = (data, callback, errorCallback) => {
     const formData = new FormData();
     formData.append('file', data);
-    console.log(formData);
+
     fetch(`${filehost}/account/fileUpload`, {
         method: 'POST',
         mode: 'no-cors',
         body: formData
     })
         .then(() => {
-            console.log('업로드!');
             callback;
         })
         .catch(() => {
@@ -447,8 +422,6 @@ const apitest = () => {
     // });
 };
 const requestReview = (data, callback, errorCallback) => {
-    console.log('request');
-    console.log(data);
     axios
         .get(`${host}/review/show/main`, {
             params: {
@@ -456,11 +429,9 @@ const requestReview = (data, callback, errorCallback) => {
             }
         })
         .then(res => {
-            console.log(res);
             callback(res);
         })
         .catch(error => {
-            console.log(error);
             errorCallback(error);
         });
 };
@@ -468,7 +439,6 @@ const getReviewByproduct = (data, callback, errorCallback) => {
     axios
         .get(`${host}/review/show/product`, data)
         .then(res => {
-            console.log('리뷰가져오기 성공!!!');
             callback(res);
         })
         .catch(() => {
@@ -485,21 +455,16 @@ const getReviewDetail = (data, callback, errorCallback) => {
         })
         .then(res => {
             callback(res);
-            console.log(res);
         })
         .catch(error => {
-            console.log(error);
             errorCallback(error);
         });
 };
 const insertComment = data => {
-    axios.post(`${host}/review/comment`, data).then(res => {
-        console.log(res);
-    });
+    // eslint-disable-next-line no-unused-vars
+    axios.post(`${host}/review/comment`, data).then(res => {});
 };
 const plusLike = (value, callback) => {
-    console.log(value.reviewNum);
-    console.log(value.email);
     // axios
     //     .post(`${host}/review/like/`, {
     //         headers: {
@@ -521,12 +486,9 @@ const plusLike = (value, callback) => {
         }
     }).then(res => {
         callback(res);
-        console.log(res);
     });
 };
 const cancelLike = data => {
-    console.log(data.reviewNum);
-    console.log(data.email);
     axios
         .delete(`${host}/review/like/cancel`, {
             params: {
@@ -534,9 +496,8 @@ const cancelLike = data => {
                 email: data.email
             }
         })
-        .then(res => {
-            console.log(res);
-        });
+        // eslint-disable-next-line no-unused-vars
+        .then(res => {});
 };
 const deleteReview = data => {
     axios.delete(`${host}/review/` + data);
